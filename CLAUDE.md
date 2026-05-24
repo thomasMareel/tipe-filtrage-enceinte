@@ -143,9 +143,9 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - [x] Slide annexe / glossaire pour le jury non spécialiste.
 - [x] Exemple travaillé de propagation d'incertitude sur f_c (annexe B).
 - [ ] Sélecteur de thème clair/sombre (au cas où la salle est sombre).
-- [ ] Illustrer la somme des deux voies (1er ordre) : la reconstruction électrique plate.
+- [x] Illustrer la somme des deux voies (1er ordre) : reconstruction plate (annexe C).
 - [x] Détailler le dimensionnement actif (valeurs R, C concrètes + AOP exemple).
-- [ ] README : ajouter section sur les deux livrables et la structure SVG.
+- [x] README : section sur les deux livrables et la structure SVG.
 
 ### Itérations
 - Itération 1 (01:01–) : CSS mutualisé dans custom.css ; pré-soutenance nettoyée
@@ -162,3 +162,6 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   ajoutées à la version finale (glossaire pour jury non spécialiste + propagation
   d'incertitude sur f_c, ±11 % avec R±5 %/C±10 %).
   Note : passage en mode multi-itérations par tour (pas d'attente entre itérations).
+- Itérations 5-6 (~01:16, même tour) : README enrichi (tableau des deux livrables +
+  structure SVG) ; annexe C ajoutée à la version finale (somme des voies au 1er ordre
+  H_PB+H_PH=1 → reconstruction plate, avec SVG). Version finale = 18 sections (15 + 3 annexes).

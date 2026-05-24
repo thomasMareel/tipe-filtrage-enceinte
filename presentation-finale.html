@@ -481,6 +481,33 @@
         </aside>
       </section>
 
+      <!-- ===================== ANNEXE C — SOMME DES VOIES ===================== -->
+      <section>
+        <h2>Annexe — reconstruction des deux voies</h2>
+        <div class="viz">
+          <svg viewBox="0 0 1000 340" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Somme des deux voies du premier ordre redonnant une réponse plate">
+            <line x1="120" y1="40" x2="120" y2="270" stroke="#5b6770" stroke-width="2"/>
+            <line x1="120" y1="270" x2="920" y2="270" stroke="#5b6770" stroke-width="2"/>
+            <g stroke="#d7dbe0" stroke-width="1"><line x1="120" y1="80" x2="920" y2="80"/><line x1="120" y1="110" x2="920" y2="110"/></g>
+            <g fill="#5b6770" font-size="14" text-anchor="end"><text x="112" y="85">0 dB</text><text x="112" y="115">-3 dB</text></g>
+            <!-- passe-bas -->
+            <path d="M120,80 L440,80 Q500,80 520,110 Q620,170 720,210 L820,240" fill="none" stroke="#1f4e5f" stroke-width="3.5"/>
+            <!-- passe-haut -->
+            <path d="M200,240 Q300,200 460,130 Q500,110 520,110 Q620,82 720,80 L920,80" fill="none" stroke="#6b8a94" stroke-width="3.5"/>
+            <!-- somme = plat 0 dB -->
+            <path d="M120,80 L920,80" fill="none" stroke="#b8612f" stroke-width="4.5" stroke-dasharray="2 9" stroke-linecap="round"/>
+            <line x1="520" y1="40" x2="520" y2="270" stroke="#1f4e5f" stroke-width="1.2" stroke-dasharray="4 4"/>
+            <text x="520" y="293" fill="#1f4e5f" font-size="15" text-anchor="middle" font-weight="700">f_c = 100 Hz</text>
+            <text x="640" y="70" fill="#b8612f" font-size="15" font-weight="700">somme ≈ plate</text>
+          </svg>
+        </div>
+        <p class="cle">Au 1<sup>er</sup> ordre : \( \underline{H}_{PB}+\underline{H}_{PH}=\dfrac{1}{1+jx}+\dfrac{jx}{1+jx}=1 \) → reconstruction électrique plate.</p>
+        <aside class="notes">
+          — Chaque voie est à −3 dB à f_c, mais déphasées : la somme vectorielle vaut 1.<br>
+          — Argument fort, mais valable électriquement ; acoustiquement, la position des HP intervient.
+        </aside>
+      </section>
+
     </div>
   </div>
 

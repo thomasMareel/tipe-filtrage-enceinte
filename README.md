@@ -22,18 +22,32 @@ et mesurable : la **fidélité de la réponse au raccord** (plateau le plus plat
 possible autour de 100 Hz + raccord de phase propre). Le travail est centré sur
 l'**électrique** et l'**expérimental** ; l'acoustique sert de confrontation au réel.
 
+## Deux livrables
+
+| Fichier | Public | Durée | État |
+|---|---|---|---|
+| `pre-soutenance.html` | Professeurs (annonce du sujet) | ~5 min, 8 slides | rédigé, visuel |
+| `presentation-finale.html` | Jury TIPE | ~10 min, 15 slides + annexes | structuré, en attente des mesures |
+
+`index.html` est une page d'accueil qui pointe vers les deux. Les deux présentations
+partagent `css/custom.css` et le dossier `assets/`. Les visuels sont des **schémas SVG
+inline** (nets à l'impression PDF, sans image externe) ; le texte à l'écran est réduit
+au minimum, le détail est dans les notes du présentateur (touche `S`).
+
 ## Structure des dossiers
 
 ```
 TIPE/
-├── index.html         Présentation reveal.js (point d'entrée)
+├── index.html               Page d'accueil (liens vers les deux présentations)
+├── pre-soutenance.html      Pré-soutenance ~5 min (visuelle)
+├── presentation-finale.html Présentation finale ~10 min + annexes
 ├── css/
-│   └── custom.css     Thème clair sobre (surcharge le thème white)
-├── assets/            Photos de l'enceinte, schémas, courbes de mesure
-├── README.md          Ce fichier
-├── CLAUDE.md          Mémoire de projet entre sessions (sujet, état, étapes)
-├── EXPORT-PDF.md      Procédure d'export PDF (à venir)
-└── NOTES-TIPE.md      Questions probables du jury + pistes (à venir)
+│   └── custom.css           Thème clair sobre + helpers visuels partagés
+├── assets/                  Photos de l'enceinte, schémas, courbes de mesure
+├── README.md                Ce fichier
+├── CLAUDE.md                Mémoire de projet entre sessions (sujet, état, journal)
+├── EXPORT-PDF.md            Procédure d'export PDF
+└── NOTES-TIPE.md            Questions probables du jury + pistes de réponse
 ```
 
 ## Lancer la présentation
