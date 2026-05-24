@@ -57,3 +57,14 @@ Ouvrir le PDF et contrôler :
   ce qui dépasse est perdu.
 - `pdfSeparateFragments: false` est déjà réglé : les apparitions progressives ne
   créent pas de pages en double.
+
+## Slides d'annexe (version finale)
+
+La présentation finale se termine sur « Merci de votre attention » ; viennent ensuite
+trois **slides d'annexe** (glossaire, incertitude sur f_c, reconstruction des voies).
+Ce sont des slides de **secours pour les questions du jury**, pas de la présentation
+orale des 10 minutes.
+
+- Si tu veux les **garder** dans le PDF (recommandé, utile en soutenance) : ne touche à rien.
+- Si tu veux un PDF **strictement limité** à l'exposé : supprime (ou commente) les
+  sections marquées `ANNEXE A/B/C` dans `presentation-finale.html` avant l'export.

@@ -170,5 +170,9 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   finale rendus explicites (noms de fichiers attendus). NB : l'outil de preview
   (screenshot/eval) time out de façon répétée pendant le chargement MathJax — souci
   d'environnement, vérifier le rendu via rechargement manuel ou export PDF.
+- Itération 8 (~01:22, même tour) : EXPORT-PDF.md complété (note sur les 3 slides
+  d'annexe : secours questions, comment les exclure pour un PDF strict 10 min).
+  Vérification numérique des valeurs clés (toutes exactes) : L≈12,7 mH ; C≈199 µF ;
+  actif R≈15,9 kΩ pour C=100 nF ; u(f_c)/f_c≈11 %.
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
