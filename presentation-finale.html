@@ -279,8 +279,10 @@
             <figcaption><strong>Bi-amplification</strong> : 1 ampli par voie (coût système)</figcaption>
           </figure>
         </div>
+        <p class="cle" style="font-size:.92em">Ex. : \( C=100~\text{nF}\Rightarrow R=\dfrac{1}{2\pi f_c C}\approx 16~\text{k}\Omega \) &nbsp;·&nbsp; AOP type TL072 (alim ±15 V)</p>
         <aside class="notes">
           — Actif : R/C minuscules, réponse indépendante du HP.<br>
+          — Dimensionnement : on fixe C (100 nF), on en déduit R ≈ 16 kΩ pour 100 Hz.<br>
           — Mais filtrage avant l'ampli → un ampli par voie + alim AOP.
         </aside>
       </section>
@@ -445,6 +447,38 @@
         <h2>Merci de votre attention</h2>
         <p class="cle">Questions ?</p>
         <aside class="notes">— Renvoyer aux notes NOTES-TIPE.md pour les Q/R probables.</aside>
+      </section>
+
+      <!-- ===================== ANNEXE A — GLOSSAIRE ===================== -->
+      <section>
+        <h2>Annexe — glossaire</h2>
+        <table style="font-size:.7em">
+          <tr><th>Terme</th><th>En une phrase</th></tr>
+          <tr><td>Fonction de transfert \( \underline{H} \)</td><td>Rapport sortie/entrée en régime sinusoïdal ; donne gain et déphasage</td></tr>
+          <tr><td>Fréquence de coupure \( f_c \)</td><td>Frontière du filtre ; gain à \( -3 \) dB</td></tr>
+          <tr><td>Diagramme de Bode</td><td>Gain (dB) et phase (°) en fonction de la fréquence (log)</td></tr>
+          <tr><td>Impédance \( \underline{Z} \)</td><td>« Résistance » d'un dipôle en alternatif ; dépend de la fréquence</td></tr>
+          <tr><td>Filtrage passif / actif</td><td>Sans / avec composant amplificateur (AOP)</td></tr>
+          <tr><td>Bi-amplification</td><td>Un amplificateur de puissance par voie</td></tr>
+        </table>
+        <aside class="notes">— Slide de secours pour le jury non spécialiste.</aside>
+      </section>
+
+      <!-- ===================== ANNEXE B — INCERTITUDE ===================== -->
+      <section>
+        <h2>Annexe — incertitude sur \( f_c \)</h2>
+        <div class="encadre">
+          \( f_c=\dfrac{1}{2\pi RC} \) &nbsp;⇒&nbsp;
+          \( \dfrac{u(f_c)}{f_c}=\sqrt{\left(\dfrac{u(R)}{R}\right)^2+\left(\dfrac{u(C)}{C}\right)^2} \)
+        </div>
+        <p class="cle">Avec R à ±5 % et C à ±10 % :
+          \( \sqrt{0{,}05^2+0{,}10^2}\approx 0{,}11 \) → \( f_c = 100~\text{Hz} \pm 11~\text{Hz} \).</p>
+        <p style="font-size:.78em;color:var(--texte-doux);text-align:center">
+          La tolérance des composants domine l'incertitude : argument de plus pour le réglage fin de l'actif.</p>
+        <aside class="notes">
+          — Propagation quadratique des incertitudes relatives.<br>
+          — Le condensateur (±10–20 %) pèse le plus → l'actif, ajustable, reprend la main.
+        </aside>
       </section>
 
     </div>

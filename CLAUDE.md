@@ -140,11 +140,11 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - [x] Enrichir NOTES-TIPE.md (plus de Q/R, surtout maths + déphasage + choix mesure).
 - [x] Page d'accueil : petit visuel/motif de raccord.
 - [ ] Vérif qualité : rendu PDF (print-pdf), liens, lisibilité.
-- [ ] Slide annexe / glossaire pour le jury non spécialiste.
-- [ ] Exemple travaillé de propagation d'incertitude sur f_c (slide ou annexe).
+- [x] Slide annexe / glossaire pour le jury non spécialiste.
+- [x] Exemple travaillé de propagation d'incertitude sur f_c (annexe B).
 - [ ] Sélecteur de thème clair/sombre (au cas où la salle est sombre).
 - [ ] Illustrer la somme des deux voies (1er ordre) : la reconstruction électrique plate.
-- [ ] Détailler le dimensionnement actif (valeurs R, C concrètes + AOP exemple).
+- [x] Détailler le dimensionnement actif (valeurs R, C concrètes + AOP exemple).
 - [ ] README : ajouter section sur les deux livrables et la structure SVG.
 
 ### Itérations
@@ -157,3 +157,8 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   NOTES-TIPE.md enrichi (sections 8 maths détaillée, 9 déphasage/somme des voies,
   10 choix expérimentaux REW + mesure d'impédance). Motif visuel « raccord 100 Hz »
   ajouté à la page d'accueil.
+- Itérations 3-4 (~01:15, en continu dans le même tour) : dimensionnement actif
+  concret sur slide 8 (C=100 nF ⇒ R≈16 kΩ, AOP TL072 ±15 V) ; deux slides d'annexe
+  ajoutées à la version finale (glossaire pour jury non spécialiste + propagation
+  d'incertitude sur f_c, ±11 % avec R±5 %/C±10 %).
+  Note : passage en mode multi-itérations par tour (pas d'attente entre itérations).
