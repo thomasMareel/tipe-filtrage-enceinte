@@ -102,7 +102,10 @@ filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
 - [x] Étape 3 — plans validés : finale 14 slides + pré-version 7 slides.
 - [x] Étape 4 — questions de contenu posées et répondues (voir section Matériel).
 - [~] Étape 5 — rédaction : **pré-soutenance rédigée** (8 slides). Version finale = stub.
-- [~] Étape 6 — EXPORT-PDF.md et NOTES-TIPE.md créés. Reste : push GitHub + Pages.
+- [x] Étape 6 — EXPORT-PDF.md, NOTES-TIPE.md créés ; dépôt GitHub poussé + Pages actif.
+      Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
+      Site  : https://thomasmareel.github.io/tipe-filtrage-enceinte/
+      Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH du shell).
 
 ## Prochaines étapes
 

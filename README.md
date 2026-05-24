@@ -3,6 +3,8 @@
 Présentation reveal.js pour le TIPE 2026–2027 (PTSI).
 Thème national : **Sobriété, efficacité, optimisation**.
 
+**Présentation en ligne :** <https://thomasmareel.github.io/tipe-filtrage-enceinte/>
+
 ## Objet du projet
 
 Étude du **raccord fréquentiel à 100 Hz** d'une enceinte fabriquée maison
