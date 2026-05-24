@@ -165,3 +165,10 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - Itérations 5-6 (~01:16, même tour) : README enrichi (tableau des deux livrables +
   structure SVG) ; annexe C ajoutée à la version finale (somme des voies au 1er ordre
   H_PB+H_PH=1 → reconstruction plate, avec SVG). Version finale = 18 sections (15 + 3 annexes).
+- Itération 7 (~01:18, même tour) : guide assets/LISEZMOI.md (quels fichiers déposer,
+  où ils apparaissent, comment remplacer un placeholder par <img>). Placeholders de la
+  finale rendus explicites (noms de fichiers attendus). NB : l'outil de preview
+  (screenshot/eval) time out de façon répétée pendant le chargement MathJax — souci
+  d'environnement, vérifier le rendu via rechargement manuel ou export PDF.
+- Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
+  est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
