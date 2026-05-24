@@ -188,3 +188,28 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   Finale = 19 sections (15 + 4 annexes : glossaire, incertitude, reconstruction, sources).
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
+
+### Bilan final de la boucle (arrêt ~01:28 le 2026-05-25, après itération 12)
+
+Boucle arrêtée volontairement : tout le travail à valeur réelle réalisable **sans
+les données de l'étudiant** est fait. Continuer aurait été du churn. État livré :
+
+- **Pré-soutenance** (`pre-soutenance.html`) : 9 vues, visuelle, prête pour l'oral ~5 min.
+- **Présentation finale** (`presentation-finale.html`) : 15 slides + 4 annexes
+  (glossaire, incertitude, reconstruction des voies, sources), à dominante SVG.
+- **Docs** : README (livrables + structure), EXPORT-PDF (procédure + annexes),
+  NOTES-TIPE (Q/R jury étoffées : maths, déphasage, équivalence des ordres, mesure),
+  assets/LISEZMOI (guide d'insertion des médias).
+- Tout est commité et poussé ; site Pages à jour.
+
+### Ce qui reste à faire par l'étudiant (nécessite ses données)
+1. Renseigner le nom (slides de titre).
+2. Mesurer/confirmer f_s du médium et du sub (REW + jig d'impédance).
+3. Faire les manips et insérer les courbes (cf. assets/LISEZMOI.md) : réponse
+   initiale, Bode passif (résistance + HP), Bode actif, somme acoustique.
+4. Remplir le tableau comparatif (ligne « écart à la cible ») et la conclusion.
+5. Compléter la bibliographie (annexe Sources) avec les références exactes.
+6. Photo de l'enceinte (slide 3).
+7. Relire le rendu PDF une fois les médias insérés (EXPORT-PDF.md).
+
+Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
