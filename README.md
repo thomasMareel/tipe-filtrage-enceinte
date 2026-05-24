@@ -26,8 +26,8 @@ l'**électrique** et l'**expérimental** ; l'acoustique sert de confrontation au
 
 | Fichier | Public | Durée | État |
 |---|---|---|---|
-| `pre-soutenance.html` | Professeurs (annonce du sujet) | ~5 min, 8 slides | rédigé, visuel |
-| `presentation-finale.html` | Jury TIPE | ~10 min, 15 slides + annexes | structuré, en attente des mesures |
+| `pre-soutenance.html` | Professeurs (annonce du sujet) | ~5 min, 9 vues | rédigé, visuel |
+| `presentation-finale.html` | Jury TIPE | ~10 min, 15 slides + 3 annexes | structuré, en attente des mesures |
 
 `index.html` est une page d'accueil qui pointe vers les deux. Les deux présentations
 partagent `css/custom.css` et le dossier `assets/`. Les visuels sont des **schémas SVG

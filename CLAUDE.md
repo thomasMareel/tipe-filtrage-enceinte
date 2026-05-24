@@ -177,5 +177,8 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - Itération 9 (~01:23) : QA balises (<section> équilibrées 18/18 finale, 9/9 pré-version).
   Tableau comparatif enrichi (ajout encombrement + réglage fin de f_c, critères de la
   démarche initiale) ; police table réduite à .66em pour tenir la slide.
+- Itération 10 (~01:25) : correction d'incohérence — l'accueil affichait encore
+  « en construction » pour la finale (désormais bâtie). Libellés alignés sur les
+  compteurs reveal : pré-soutenance 9 vues, finale 15 slides + 3 annexes (accueil + README).
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
