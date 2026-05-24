@@ -101,7 +101,9 @@ filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
       (reveal.js CDN + MathJax + thème clair), css/custom.css. Premier commit.
 - [x] Étape 3 — plans validés : finale 14 slides + pré-version 7 slides.
 - [x] Étape 4 — questions de contenu posées et répondues (voir section Matériel).
-- [~] Étape 5 — rédaction : **pré-soutenance rédigée** (8 slides). Version finale = stub.
+- [~] Étape 5 — rédaction : **pré-soutenance rédigée** (8 slides), refonte **visuelle**
+      (schémas SVG inline, texte minimal, notes orales allégées). Version finale = stub.
+      Convention : support PDF → le visuel porte le message, peu de texte à l'écran.
 - [x] Étape 6 — EXPORT-PDF.md, NOTES-TIPE.md créés ; dépôt GitHub poussé + Pages actif.
       Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
       Site  : https://thomasmareel.github.io/tipe-filtrage-enceinte/
