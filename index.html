@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TIPE — Filtrage fréquentiel d'une enceinte audio</title>
+
+  <!-- reveal.js (CDN, pas de npm) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <!-- thème de base clair, surchargé par notre feuille sobre -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+  <!-- thème personnalisé : clair sobre -->
+  <link rel="stylesheet" href="css/custom.css">
+  <!-- coloration syntaxique éventuelle (schémas de code/circuits ascii) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ============================================================ -->
+      <!-- SLIDE DE TITRE                                               -->
+      <!-- ============================================================ -->
+      <section class="titre">
+        <h1>Filtrage fréquentiel d'une enceinte audio</h1>
+        <h3>Passif ou actif : quel raccord à 100 Hz pour le meilleur rendu ?</h3>
+        <p class="auteur">
+          <!-- TODO: remplacer par ton nom -->
+          Prénom NOM &middot; PTSI
+        </p>
+        <p class="meta">
+          TIPE 2026&ndash;2027 &middot; Thème : <em>Sobriété, efficacité, optimisation</em>
+        </p>
+        <aside class="notes">
+          Bonjour, je m'appelle ... Je vous présente mon TIPE sur le filtrage
+          fréquentiel d'une enceinte que j'ai fabriquée. Le fil rouge :
+          comment raccorder proprement le grave et le médium à 100 Hz, et
+          faut-il pour cela un filtre passif ou actif.
+        </aside>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PLACEHOLDER : le plan détaillé sera ajouté à l'Étape 3-5     -->
+      <!-- ============================================================ -->
+      <section>
+        <h2>Présentation en construction</h2>
+        <p>Le squelette du projet est en place.</p>
+        <p>Le plan détaillé (12&ndash;15 slides) sera validé à l'étape suivante,
+           puis le contenu rédigé slide par slide.</p>
+        <!-- TODO: remplacer cette slide par le contenu réel (cf. CLAUDE.md) -->
+        <aside class="notes">
+          Slide provisoire — à supprimer une fois le contenu rédigé.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- reveal.js coeur + plugins (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+
+  <script>
+    Reveal.initialize({
+      // --- Affichage ---
+      width: 1280,
+      height: 720,
+      margin: 0.08,
+      minScale: 0.2,
+      maxScale: 1.5,
+      center: false,            // contenu calé en haut : plus lisible pour des slides denses
+      hash: true,
+      transition: 'fade',       // sobre, sans distraction
+      transitionSpeed: 'fast',
+      slideNumber: 'c/t',
+      controls: true,
+      progress: true,
+
+      // --- Export PDF propre ---
+      // Lancer avec  index.html?print-pdf  puis imprimer en PDF depuis Chrome.
+      pdfSeparateFragments: false,   // les fragments ne créent pas de pages séparées
+      pdfMaxPagesPerSlide: 1,        // une slide = une page
+
+      // --- MathJax 3 pour les formules LaTeX ---
+      math: {
+        mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+        config: 'TeX-AMS_HTML-full',
+        tex: {
+          inlineMath: [['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        }
+      },
+
+      plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+  </script>
+</body>
+</html>

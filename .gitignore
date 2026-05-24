@@ -1,0 +1,20 @@
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Réglages locaux Claude Code (permissions propres à la machine)
+.claude/settings.local.json
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Exports temporaires
+*.tmp
+~$*
+
+# Le PDF exporté est un livrable régénérable : on ne le versionne pas par défaut.
+# (décommente la ligne suivante si tu préfères le suivre)
+# presentation.pdf
