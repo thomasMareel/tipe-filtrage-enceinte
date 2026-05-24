@@ -213,3 +213,10 @@ les données de l'étudiant** est fait. Continuer aurait été du churn. État l
 7. Relire le rendu PDF une fois les médias insérés (EXPORT-PDF.md).
 
 Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
+
+### Reprise de boucle
+- Itération 13 (~01:30) : boucle relancée par l'étudiant. Création de **MCOT.md**
+  (brouillon de la fiche MCOT SCEI : titre, ancrage au thème, mots-clés FR/EN,
+  positionnement, problématique, objectifs, étapes, bibliographie commentée — avec
+  placeholders [[à compléter]] pour motivation/sources, rien d'inventé). Référencé
+  dans le README. Nouveau doc TIPE requis, hors slides.

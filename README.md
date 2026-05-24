@@ -46,6 +46,7 @@ TIPE/
 ├── assets/                  Photos de l'enceinte, schémas, courbes de mesure
 ├── README.md                Ce fichier
 ├── CLAUDE.md                Mémoire de projet entre sessions (sujet, état, journal)
+├── MCOT.md                  Brouillon de la fiche MCOT (ancrage thème, problématique, biblio)
 ├── EXPORT-PDF.md            Procédure d'export PDF
 └── NOTES-TIPE.md            Questions probables du jury + pistes de réponse
 ```
