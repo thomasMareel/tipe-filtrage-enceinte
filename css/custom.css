@@ -95,6 +95,20 @@
 .reveal .progress { color: var(--accent); height: 3px; }
 .reveal .slide-number { background: transparent; color: var(--texte-doux); }
 
+/* --- Visuels SVG : le visuel porte le message, texte minimal --- */
+.reveal .viz { display:flex; justify-content:center; align-items:center; }
+.reveal .viz svg { width:100%; height:auto; max-height:520px; }
+.reveal .deux-viz { display:flex; gap:2.2em; align-items:flex-start; justify-content:center; }
+.reveal .deux-viz > figure { flex:1; margin:0; text-align:center; }
+.reveal .deux-viz svg { width:100%; height:auto; max-height:430px; }
+.reveal figcaption { font-size:.7em; color:var(--texte-doux); margin-top:.2em; }
+.reveal .cle { font-size:1.15em; color:var(--accent); font-weight:600; text-align:center; }
+.reveal .chips { display:flex; gap:1em; justify-content:center; margin-top:.4em; }
+.reveal .chip { border:1px solid var(--trait); border-top:3px solid var(--accent);
+                border-radius:6px; padding:.5em .9em; text-align:center; flex:1; }
+.reveal .chip b { color:var(--accent); display:block; font-size:.95em; }
+.reveal .chip span { font-size:.72em; color:var(--texte-doux); }
+
 /* --- Rendu impression / export PDF : fond bien blanc, contrastes nets --- */
 @media print {
   :root { --fond: #ffffff; }

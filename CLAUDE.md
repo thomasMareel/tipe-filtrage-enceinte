@@ -122,3 +122,32 @@ filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
 - Câblage des deux médiums (série / parallèle / voies séparées).
 - Sensibilités (dB/W/m) pour l'égalisation des niveaux.
 - Référence d'AOP et alimentation symétrique pour le filtre actif (2e année).
+
+## Journal de la boucle autonome (lancée 2026-05-25 01:01, fin visée ~05:01)
+
+Boucle auto-rythmée : à chaque réveil, NOUVELLES idées dans le périmètre
+(pré-soutenance / version finale / docs), implémenter, vérifier, commit+push,
+journaliser. Pas de scope creep, pas d'invention de résultats.
+
+### Backlog d'idées (cocher quand fait, ajouter au fil de l'eau)
+- [x] Mutualiser le CSS des visuels (.viz/.deux-viz/.cle/.chip) dans custom.css.
+- [x] Construire la version finale (15 slides) avec visuels SVG + placeholders data.
+- [x] Bode finale enrichi : gain ET phase.
+- [x] SVG courbe d'impédance d'un HP (pic à f_s) pour la slide « HP ≠ résistance ».
+- [x] SVG architecture bi-amplification (actif) vs mono-ampli (passif).
+- [~] Dimensionnement chiffré (fait passif) + propagation d'incertitude (exemple à détailler).
+- [x] Tableau comparatif final (critères × passif/actif) — version de base.
+- [ ] Enrichir NOTES-TIPE.md (plus de Q/R, surtout maths).
+- [ ] Page d'accueil : petit visuel/motif de raccord.
+- [ ] Vérif qualité : rendu PDF (print-pdf), liens, lisibilité.
+- [ ] Slide annexe / glossaire pour le jury non spécialiste.
+- [ ] Exemple travaillé de propagation d'incertitude sur f_c (slide ou annexe).
+- [ ] Sélecteur de thème clair/sombre (au cas où la salle est sombre).
+- [ ] Vérifier le déphasage au raccord : illustrer la somme des deux voies (1er ordre).
+
+### Itérations
+- Itération 1 (01:01–) : CSS mutualisé dans custom.css ; pré-soutenance nettoyée
+  (style inline retiré) ; **version finale construite** (15 slides : contexte, enceinte,
+  réponse initiale [placeholder], HP≠résistance [courbe Z avec pic f_s], Bode gain+phase,
+  passif dimensionné, actif + bi-amp, protocole, résultats [placeholders], acoustique,
+  tableau comparatif, limites, conclusion). Vérifié : 15 sections, 13 SVG, 0 débordement.
