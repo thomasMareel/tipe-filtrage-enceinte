@@ -183,5 +183,8 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - Itération 11 (~01:26) : ajout d'une Q/R jury à forte valeur dans NOTES-TIPE.md
   (« si les deux sont du 1er ordre, le filtrage n'est-il pas identique ? ») — point
   subtil : théorie identique, l'écart est dans le réel (Z(f), pertes, tolérances).
+- Itération 12 (~01:27) : annexe D « Sources » ajoutée à la finale (gabarit de
+  bibliographie à compléter — le TIPE exige des sources ; rien d'inventé, des TODO).
+  Finale = 19 sections (15 + 4 annexes : glossaire, incertitude, reconstruction, sources).
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
