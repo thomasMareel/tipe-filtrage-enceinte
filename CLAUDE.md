@@ -137,13 +137,15 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - [x] SVG architecture bi-amplification (actif) vs mono-ampli (passif).
 - [~] Dimensionnement chiffré (fait passif) + propagation d'incertitude (exemple à détailler).
 - [x] Tableau comparatif final (critères × passif/actif) — version de base.
-- [ ] Enrichir NOTES-TIPE.md (plus de Q/R, surtout maths).
-- [ ] Page d'accueil : petit visuel/motif de raccord.
+- [x] Enrichir NOTES-TIPE.md (plus de Q/R, surtout maths + déphasage + choix mesure).
+- [x] Page d'accueil : petit visuel/motif de raccord.
 - [ ] Vérif qualité : rendu PDF (print-pdf), liens, lisibilité.
 - [ ] Slide annexe / glossaire pour le jury non spécialiste.
 - [ ] Exemple travaillé de propagation d'incertitude sur f_c (slide ou annexe).
 - [ ] Sélecteur de thème clair/sombre (au cas où la salle est sombre).
-- [ ] Vérifier le déphasage au raccord : illustrer la somme des deux voies (1er ordre).
+- [ ] Illustrer la somme des deux voies (1er ordre) : la reconstruction électrique plate.
+- [ ] Détailler le dimensionnement actif (valeurs R, C concrètes + AOP exemple).
+- [ ] README : ajouter section sur les deux livrables et la structure SVG.
 
 ### Itérations
 - Itération 1 (01:01–) : CSS mutualisé dans custom.css ; pré-soutenance nettoyée
@@ -151,3 +153,7 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   réponse initiale [placeholder], HP≠résistance [courbe Z avec pic f_s], Bode gain+phase,
   passif dimensionné, actif + bi-amp, protocole, résultats [placeholders], acoustique,
   tableau comparatif, limites, conclusion). Vérifié : 15 sections, 13 SVG, 0 débordement.
+- Itération 2 (~01:18) : cadence ramenée au minimum (réveil 60 s, enchaînement).
+  NOTES-TIPE.md enrichi (sections 8 maths détaillée, 9 déphasage/somme des voies,
+  10 choix expérimentaux REW + mesure d'impédance). Motif visuel « raccord 100 Hz »
+  ajouté à la page d'accueil.
