@@ -174,5 +174,8 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
   d'annexe : secours questions, comment les exclure pour un PDF strict 10 min).
   Vérification numérique des valeurs clés (toutes exactes) : L≈12,7 mH ; C≈199 µF ;
   actif R≈15,9 kΩ pour C=100 nF ; u(f_c)/f_c≈11 %.
+- Itération 9 (~01:23) : QA balises (<section> équilibrées 18/18 finale, 9/9 pré-version).
+  Tableau comparatif enrichi (ajout encombrement + réglage fin de f_c, critères de la
+  démarche initiale) ; police table réduite à .66em pour tenir la slide.
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
