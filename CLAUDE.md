@@ -61,6 +61,29 @@ Impédance complexe ; fonction de transfert H(jω), module/argument ;
 filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
 −20 dB/décade) ; AOP idéal en régime linéaire ; incertitudes et propagation.
 
+## Deux livrables
+
+1. **Pré-soutenance** (`pre-soutenance.html`) — ~5 min, 8 slides, **démarche seulement,
+   aucun résultat demandé**. À présenter aux professeurs ~2026-06-01 (dans 1 semaine).
+   But : annoncer le sujet et la démarche, comme une validation avant de démarrer.
+2. **Présentation finale** (`presentation-finale.html`) — ~10 min, 14 slides, version
+   complète avec mesures et comparaison. À rédiger après les premières mesures.
+3. `index.html` = page d'accueil qui pointe vers les deux. CSS et assets partagés.
+
+## Matériel et caractéristiques (réponses de l'étudiant, 2026-05-24)
+
+- **Subwoofer** : 8 Ω, **18 pouces**, f_s non encore mesurée.
+- **Médium-aigu** (×2) : 8 Ω, f_s « vers 50 Hz » (à confirmer), câblage à préciser.
+- **Mesure** : carte son de haute qualité (perso), GBF du lycée, micro de mesure
+  (compatible carte son/interface). Logiciel recommandé : **REW (gratuit)**.
+- **Avancement** : enceinte fabriquée et 100 % fonctionnelle ; utilise actuellement un
+  **crossover de fréquence réglable** (= déjà du filtrage actif, à formaliser dans le TIPE).
+  **Aucun filtre fabriqué maison, aucune mesure faite.** Projet en cours, tout à venir.
+- **Composants** : matériel de base du lycée + achats prévus, **budget max 500 €**
+  (à réserver aux composants, pas au logiciel).
+- **Actif** : pas encore étudié (programme de 2e année) — sera approfondi pendant le TIPE.
+  Décision validée : **on garde l'axe passif vs actif**.
+
 ## Conventions du projet
 
 - **Tout en français** : interface, commentaires, commits, notes.
@@ -76,20 +99,21 @@ filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
 - [x] Étape 1 — analyse critique du sujet (faite).
 - [x] Étape 2 — squelette projet : git, README, CLAUDE.md, index.html
       (reveal.js CDN + MathJax + thème clair), css/custom.css. Premier commit.
-- [ ] Étape 3 — plan détaillé 12–15 slides (à valider).
-- [ ] Étape 4 — questions à l'étudiant (matériel, HP, avancement, composants).
-- [ ] Étape 5 — rédaction du contenu slide par slide.
-- [ ] Étape 6 — EXPORT-PDF.md, NOTES-TIPE.md, push GitHub + Pages.
+- [x] Étape 3 — plans validés : finale 14 slides + pré-version 7 slides.
+- [x] Étape 4 — questions de contenu posées et répondues (voir section Matériel).
+- [~] Étape 5 — rédaction : **pré-soutenance rédigée** (8 slides). Version finale = stub.
+- [~] Étape 6 — EXPORT-PDF.md et NOTES-TIPE.md créés. Reste : push GitHub + Pages.
 
 ## Prochaines étapes
 
-1. Proposer le plan détaillé (Étape 3) et le faire valider.
-2. Poser les 5–8 questions de contenu (Étape 4).
-3. Rédiger les slides après réponses.
+1. Relecture de la pré-soutenance par l'étudiant ; ajuster nom, schémas, f_s.
+2. Insérer les assets (photo enceinte, schéma fonctionnel, Bode théorique).
+3. Étape 6 : EXPORT-PDF.md + NOTES-TIPE.md, puis GitHub + Pages.
+4. Plus tard : rédiger la version finale une fois les premières mesures faites.
 
-## Données à obtenir de l'étudiant (encore manquantes)
+## Données encore à confirmer par l'étudiant
 
-- Caractéristiques des HP : impédance nominale, sensibilité, f_s mesurée.
-- Matériel de mesure : oscilloscope, GBF, micro de mesure, logiciel (REW ?).
-- Avancement des manips et résultats préliminaires.
-- Composants disponibles au lycée, budget, référence d'AOP.
+- f_s réelle du médium et du subwoofer (à mesurer à l'impédancemètre / REW).
+- Câblage des deux médiums (série / parallèle / voies séparées).
+- Sensibilités (dB/W/m) pour l'égalisation des niveaux.
+- Référence d'AOP et alimentation symétrique pour le filtre actif (2e année).

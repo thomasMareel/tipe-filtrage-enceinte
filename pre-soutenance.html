@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pré-soutenance — Filtrage fréquentiel d'une enceinte audio</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================= 1. TITRE ========================= -->
+      <section class="titre">
+        <h1>Filtrage fréquentiel d'une enceinte audio</h1>
+        <h3>Vers le meilleur raccord à 100 Hz : filtrage passif ou actif ?</h3>
+        <p class="auteur">
+          <!-- TODO: remplacer par ton nom -->
+          Prénom NOM &middot; PTSI
+        </p>
+        <p class="meta">
+          Pré-soutenance &middot; présentation du sujet &middot; TIPE 2026&ndash;2027<br>
+          Thème : <em>Sobriété, efficacité, optimisation</em>
+        </p>
+        <aside class="notes">
+          Bonjour. Je vais vous présenter le sujet que je compte travailler pour
+          mon TIPE. Il ne s'agit pas encore de résultats, mais de vous exposer le
+          problème physique, ma problématique et la démarche expérimentale que je
+          prévois. Le sujet : le filtrage fréquentiel d'une enceinte que j'ai
+          fabriquée, et plus précisément le raccord entre le grave et le médium
+          autour de 100 Hz.
+        </aside>
+      </section>
+
+      <!-- ============== 2. PROBLÉMATIQUE & CRITÈRE ============== -->
+      <section>
+        <h2>Le problème : raccorder deux voies à 100 Hz</h2>
+        <p>Mon enceinte sépare le son en deux voies : un <strong>subwoofer</strong>
+           pour le grave, deux <strong>haut-parleurs médium-aigu</strong> pour le reste.
+           Il faut envoyer à chacun la bonne plage de fréquences au moyen de filtres.</p>
+        <div class="encadre">
+          <strong>Problématique.</strong> À fréquence de coupure fixée à 100 Hz, le
+          filtrage <strong>actif</strong> permet-il un meilleur compromis entre
+          <strong>sobriété</strong> des composants et <strong>fidélité</strong> de la
+          réponse que le filtrage <strong>passif</strong>, et à quel coût système ?
+        </div>
+        <p class="legende">Objectif : le meilleur rendu sonore — ramené à un critère
+           <em>objectif et mesurable</em>, et non à un jugement à l'oreille.</p>
+        <aside class="notes">
+          Une enceinte de qualité ne peut pas reproduire tout le spectre avec un seul
+          haut-parleur. On la divise en voies. Le point délicat, c'est la zone de
+          recouvrement, ici 100 Hz, où les deux voies se rencontrent : c'est là que
+          des défauts apparaissent — un creux ou une bosse dans la réponse. Ma
+          question : pour réussir ce raccord, vaut-il mieux un filtre passif, fait de
+          bobines et condensateurs, ou un filtre actif à amplificateur opérationnel ?
+          Et je veux y répondre objectivement.
+        </aside>
+      </section>
+
+      <!-- ============== 3. CRITÈRE OBJECTIF ============== -->
+      <section>
+        <h2>Définir « bon raccord » de façon mesurable</h2>
+        <p>« Qualité sonore » est subjectif. Je la remplace par un critère physique :</p>
+        <div class="encadre">
+          <strong>Fidélité = réponse en fréquence la plus plate possible au raccord.</strong>
+          La somme des deux voies doit rester proche d'une réponse cible plate
+          (écart mesuré en dB), avec un raccord de phase propre.
+        </div>
+        <p>Concrètement, je mesurerai l'écart \( \Delta G \) entre la réponse réelle
+           et la cible autour de 100 Hz, et je le minimiserai.</p>
+        <aside class="notes">
+          C'est le point que je veux rendre rigoureux. Je ne vais pas dire « ça sonne
+          mieux ». Je définis la qualité comme la fidélité de la réponse : autour de
+          100 Hz, l'addition des deux haut-parleurs doit donner une courbe la plus
+          plate possible, sans trou ni bosse, et sans saut de phase. Je quantifie ça
+          par un écart en décibels à une réponse cible. C'est ça que je chercherai à
+          minimiser, et ça me donne un critère objectif comparable entre passif et actif.
+        </aside>
+      </section>
+
+      <!-- ============== 4. L'ENCEINTE + POURQUOI 100 Hz ============== -->
+      <section>
+        <h2>L'enceinte et le choix de 100 Hz</h2>
+        <div class="colonnes">
+          <div>
+            <!-- TODO: insérer une photo de l'enceinte fabriquée -->
+            <div class="placeholder">Photo de l'enceinte<br>(à insérer)</div>
+          </div>
+          <div>
+            <!-- TODO: insérer le schéma fonctionnel (source → filtre → sub / médiums) -->
+            <div class="placeholder">Schéma fonctionnel<br>source → filtres → sub 18″ / médiums<br>(à insérer)</div>
+          </div>
+        </div>
+        <p class="legende">Subwoofer 18&Prime; (8 &Omega;) &middot; deux médium-aigu (8 &Omega;)
+           &middot; fabrication maison.</p>
+        <div class="encadre">
+          <strong>Pourquoi 100 Hz ?</strong> Le médium a une résonance vers
+          \( f_s \approx 50~\text{Hz} \) <!-- TODO: confirmer f_s mesurée -->. Couper à
+          100 Hz le maintient bien au-dessus de sa résonance (facteur 2) : on ne le
+          pousse pas là où il distord, et on confie le grave au subwoofer 18&Prime;.
+        </div>
+        <aside class="notes">
+          Voici l'enceinte, que j'ai construite. Elle a un subwoofer de 18 pouces pour
+          le grave et deux haut-parleurs pour le médium. Pourquoi couper à 100 Hz ?
+          Parce que mes médiums ont une fréquence de résonance autour de 50 hertz :
+          en dessous, ils travaillent mal et distordent. Couper à 100 hertz, soit le
+          double, les protège et laisse le grave au gros subwoofer, qui est fait pour ça.
+          Le choix de 100 Hz n'est donc pas arbitraire, il est dicté par les
+          haut-parleurs eux-mêmes.
+        </aside>
+      </section>
+
+      <!-- ============== 5. CADRE THÉORIQUE PRÉVU ============== -->
+      <section>
+        <h2>Cadre théorique : filtre du 1er ordre</h2>
+        <p>Je modéliserai chaque voie par un filtre du 1er ordre, en notation complexe :</p>
+        <div class="colonnes">
+          <div>
+            <p>Passe-bas (vers le subwoofer)</p>
+            \[ \underline{H} = \frac{1}{\,1 + j\,\omega/\omega_c\,} \]
+          </div>
+          <div>
+            <p>Passe-haut (vers les médiums)</p>
+            \[ \underline{H} = \frac{j\,\omega/\omega_c}{\,1 + j\,\omega/\omega_c\,} \]
+          </div>
+        </div>
+        <p>Fréquence de coupure visée : \( f_c = \dfrac{1}{2\pi RC} = 100~\text{Hz} \),
+           avec un gain de \( -3~\text{dB} \) à \( f_c \) et une pente de
+           \( \pm 20~\text{dB/décade} \).</p>
+        <!-- TODO: insérer les diagrammes de Bode (gain + phase) théoriques -->
+        <div class="placeholder">Diagrammes de Bode théoriques (gain & phase)<br>(à insérer)</div>
+        <aside class="notes">
+          Côté théorie, je reste au premier ordre, qui est au programme. Chaque voie
+          est un filtre : un passe-bas vers le subwoofer, un passe-haut vers les
+          médiums. En notation complexe, leurs fonctions de transfert s'écrivent
+          simplement avec la pulsation de coupure. Ce qui m'intéresse, ce sont les
+          diagrammes de Bode : le gain qui chute de 20 décibels par décade, et le
+          déphasage. La fréquence de coupure, où le gain vaut moins 3 décibels, je la
+          fixe à 100 hertz en choisissant les valeurs des composants.
+        </aside>
+      </section>
+
+      <!-- ============== 6. LES DEUX PISTES À COMPARER ============== -->
+      <section>
+        <h2>Les deux pistes à comparer</h2>
+        <table>
+          <tr>
+            <th></th>
+            <th>Filtrage passif</th>
+            <th>Filtrage actif</th>
+          </tr>
+          <tr>
+            <td>Composants</td>
+            <td>Bobine \(L\), condensateur \(C\) en sortie d'ampli</td>
+            <td>RC + amplificateur opérationnel, en amont</td>
+          </tr>
+          <tr>
+            <td>Ordres de grandeur à 100 Hz (8 &Omega;)</td>
+            <td>\(L \approx 12{,}7~\text{mH}\), \(C \approx 199~\mu\text{F}\) — gros, lourds</td>
+            <td>\(R \sim \text{k}\Omega\), \(C \sim \mu\text{F}\) — minuscules</td>
+          </tr>
+          <tr>
+            <td>Coût</td>
+            <td>Pertes Joule (résistance de la bobine), composants imprécis</td>
+            <td>Sobre en composants, mais impose une <strong>bi-amplification</strong></td>
+          </tr>
+        </table>
+        <p class="legende">Le cœur de mon TIPE : ce compromis chiffré entre sobriété et fidélité.</p>
+        <aside class="notes">
+          Voici les deux solutions que je vais opposer. En passif, on place une bobine
+          et un condensateur après l'amplificateur. Le problème : à 100 hertz, ces
+          composants sont énormes — une bobine de presque 13 millihenrys, un
+          condensateur de 200 microfarads — encombrants, et la bobine a une résistance
+          qui dissipe de la puissance. En actif, on filtre avant l'amplification avec
+          un petit circuit et un amplificateur opérationnel : composants minuscules,
+          mais il faut alors un amplificateur par voie. C'est ce compromis que je veux
+          mesurer.
+        </aside>
+      </section>
+
+      <!-- ============== 7. PROTOCOLE DE MESURE PRÉVU ============== -->
+      <section>
+        <h2>Protocole de mesure prévu</h2>
+        <div class="colonnes">
+          <div>
+            <h3>Banc électrique</h3>
+            <ul>
+              <li>GBF balayant 40&ndash;500 Hz</li>
+              <li>Oscilloscope : gain et déphasage entrée/sortie → <strong>Bode expérimental</strong></li>
+              <li>D'abord sur <strong>résistance équivalente</strong> (8 &Omega;), puis sur le <strong>vrai HP</strong></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Banc acoustique</h3>
+            <ul>
+              <li>Carte son + micro de mesure + <strong>REW</strong></li>
+              <li>Mesure en <strong>champ proche</strong> (limiter l'effet de la pièce)</li>
+              <li>Mesure préalable de l'<strong>impédance</strong> des HP (pour \(f_s\))</li>
+            </ul>
+          </div>
+        </div>
+        <div class="encadre">
+          <strong>Pourquoi « résistance puis vrai HP » ?</strong> Un HP n'est pas une
+          résistance pure : son impédance varie. Tester d'abord sur résistance isole
+          le filtre ; tester ensuite sur le HP révèle l'écart réel.
+        </div>
+        <aside class="notes">
+          Pour les mesures, deux bancs. D'abord l'électrique, le plus rigoureux : un
+          générateur balaie les fréquences, l'oscilloscope me donne le gain et le
+          déphasage, donc le diagramme de Bode réel du filtre. Astuce de méthode : je
+          teste d'abord sur une résistance de 8 ohms, qui remplace idéalement le
+          haut-parleur, puis sur le vrai haut-parleur — car un haut-parleur n'est pas
+          une résistance pure, son impédance varie avec la fréquence. Ensuite le banc
+          acoustique : carte son, micro de mesure et le logiciel REW, en plaçant le
+          micro tout près du haut-parleur pour m'affranchir des réflexions de la pièce,
+          qui faussent les mesures dans le grave.
+        </aside>
+      </section>
+
+      <!-- ============== 8. CRITÈRES & PLANNING ============== -->
+      <section>
+        <h2>Critères d'évaluation & étapes</h2>
+        <table>
+          <tr><th>Thème</th><th>Critères mesurés</th></tr>
+          <tr><td><strong>Sobriété</strong></td><td>Nombre de composants, encombrement, coût système</td></tr>
+          <tr><td><strong>Efficacité</strong></td><td>Pertes Joule, pente d'atténuation réelle (dB/oct)</td></tr>
+          <tr><td><strong>Optimisation</strong></td><td>Écart à la réponse cible, f_c réelle, raccord de phase</td></tr>
+        </table>
+        <p style="margin-top:.6em">Étapes prévues : mesure d'impédance (f_s) →
+           dimensionnement → tests électriques → tests acoustiques → comparaison
+           théorie/expérience avec incertitudes.</p>
+        <p class="legende">Ouverture : filtres d'ordre supérieur (Linkwitz-Riley),
+           correction numérique (DSP).</p>
+        <aside class="notes">
+          Enfin, comment je trancherai. Je compare les deux solutions sur des critères
+          objectifs, rangés selon les trois mots du thème : la sobriété par le nombre
+          et la taille des composants et le coût ; l'efficacité par les pertes et la
+          pente réelle du filtre ; l'optimisation par l'écart à la réponse cible. Le
+          planning : je commence par mesurer l'impédance pour connaître mes
+          haut-parleurs, puis je dimensionne, je teste électriquement, puis
+          acoustiquement, et je confronte à la théorie avec les incertitudes. En
+          ouverture, on pourrait aller vers des filtres plus raides ou une correction
+          numérique. Voilà le projet — je suis preneur de vos remarques.
+        </aside>
+      </section>
+
+      <!-- ============== 9. MERCI ============== -->
+      <section class="titre">
+        <h2>Merci de votre attention</h2>
+        <p>Vos remarques sur la démarche sont les bienvenues.</p>
+        <aside class="notes">
+          Merci. Je vous écoute pour vos retours et vos questions sur la faisabilité
+          et la rigueur de la démarche.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, margin: 0.08,
+      minScale: 0.2, maxScale: 1.5,
+      center: false, hash: true,
+      transition: 'fade', transitionSpeed: 'fast',
+      slideNumber: 'c/t', controls: true, progress: true,
+      pdfSeparateFragments: false,
+      pdfMaxPagesPerSlide: 1,
+      math: {
+        mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+        config: 'TeX-AMS_HTML-full',
+        tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }
+      },
+      plugins: [ RevealMath.MathJax3, RevealNotes ]
+    });
+  </script>
+</body>
+</html>
