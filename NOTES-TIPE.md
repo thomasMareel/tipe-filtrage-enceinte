@@ -28,6 +28,13 @@ l'ampli (composants de puissance, lourds) ; l'actif filtre avant (petits composa
 mais impose un ampli par voie. Je compare donc des compromis, pas des équivalents —
 d'où le « à quel coût système » de ma problématique.
 
+**« Si les deux sont du 1er ordre, le filtrage n'est-il pas identique ? »** (piège fréquent)
+→ En théorie, oui : même fonction de transfert, même pente (−20 dB/déc), même −3 dB
+à \( f_c \). La différence est dans le **réel** : le passif voit l'impédance variable du
+HP (sa coupure dévie), subit les pertes de la bobine et les tolérances des gros
+composants ; l'actif garde une réponse idéale et ajustable. Donc à modèle identique,
+l'écart se mesure sur la **fidélité réelle** et la **sobriété**, pas sur la théorie.
+
 ## 2. Sur la physique des filtres (cœur PTSI)
 
 **« Écrivez la fonction de transfert d'un passe-bas du 1er ordre. »**

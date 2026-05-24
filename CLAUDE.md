@@ -180,5 +180,8 @@ journaliser. Pas de scope creep, pas d'invention de résultats.
 - Itération 10 (~01:25) : correction d'incohérence — l'accueil affichait encore
   « en construction » pour la finale (désormais bâtie). Libellés alignés sur les
   compteurs reveal : pré-soutenance 9 vues, finale 15 slides + 3 annexes (accueil + README).
+- Itération 11 (~01:26) : ajout d'une Q/R jury à forte valeur dans NOTES-TIPE.md
+  (« si les deux sont du 1er ordre, le filtrage n'est-il pas identique ? ») — point
+  subtil : théorie identique, l'écart est dans le réel (Z(f), pertes, tolérances).
 - Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
   est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
