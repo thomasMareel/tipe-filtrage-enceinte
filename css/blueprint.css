@@ -23,15 +23,17 @@
   color: var(--ink);
 }
 
-/* Fond bleu nuit + grille millimétrée sur chaque diapo */
-.reveal .slides section {
+/* Fond bleu nuit + grille millimétrée sur TOUTE la surface
+   (sur body : couvre la diapo entière, pas seulement derrière le contenu) */
+html, body {
   background-color: var(--bg);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 32px 32px;
 }
-.reveal .backgrounds { background: var(--bg); }
+.reveal-viewport, .reveal, .reveal .backgrounds { background-color: transparent !important; }
+.reveal .slides section { background-color: transparent; background-image: none; }
 
 .reveal .slides { text-align: left; }
 
