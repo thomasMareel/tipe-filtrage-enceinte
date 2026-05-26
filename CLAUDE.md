@@ -3,49 +3,81 @@
 Ce fichier est la mémoire entre sessions. À relire en début de session et à
 tenir à jour à la fin de chaque session de travail.
 
+> ⚠️ RÉVISION MAJEURE DU SUJET — brief étudiant du 2026-05-25 (FAIT FOI).
+> Remplace le cadrage initial (1er ordre, binaire passif/actif). Les slides et
+> docs créés AVANT cette date reposent sur l'ancien cadrage et **doivent être
+> refondus** pour coller au nouveau brief ci-dessous.
+
 ## Sujet
 
-- **Auteur** : étudiant en PTSI (fin de 1re année), TIPE 2026–2027.
+- **Auteur** : étudiant en PTSI (fin de 1re année), TIPE 2026–2027 (travail mené en 2e année).
 - **Thème national** : Sobriété, efficacité, optimisation.
-- **Sujet** : filtrage fréquentiel d'une enceinte fabriquée maison
-  (1 subwoofer grave + 2 HP médium-aigu). Raccord à **100 Hz** :
-  filtre passe-bas vers le sub, passe-haut vers les médium-aigu.
+- **Enceinte deux voies (DIY)** : 1 subwoofer **8 Ω** (grave) + 2 médium-aigu
+  **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**.
+- Type de caisse (clos / bass-reflex) à documenter.
 
-## Problématique validée
+## Problématique
 
-> À fréquence de coupure fixée à 100 Hz, le filtrage **actif** permet-il un
-> meilleur compromis entre **sobriété** des composants et **fidélité** de la
-> réponse fréquentielle que le filtrage **passif**, et à quel coût système ?
+> « Filtrage passif ou filtrage actif : quelle architecture offre le meilleur
+> compromis sobriété/efficacité pour le raccord à 100 Hz d'une enceinte deux
+> voies subwoofer/médium-aigu ? »
 
-- **Objectif affiché** : meilleur rendu sonore final.
-- **Critère scientifique objectif** : fidélité de la réponse au raccord 100 Hz
-  = plateau le plus plat possible (écart en dB à une réponse cible) + raccord
-  de phase propre. On ne juge PAS le son à l'oreille.
+## Trois architectures comparées
 
-## Décisions cadrantes (validées avec l'étudiant)
+1. **Passif POST-amplification** — filtre **LC 2ⁿᵈ ordre Butterworth** (12 dB/oct)
+   entre ampli et HP. PB sub : L₁=18 mH série + C₁=150 µF //. PH médium : C₂=150 µF
+   série + L₂=18 mH //. (Valeurs cohérentes Butterworth 100 Hz/8 Ω ; voir critique :
+   C théorique ≈ 141 µF, 150 µF = valeur normalisée → léger décalage de fc.)
+2. **Passif RC signal faible (1er ordre, 6 dB/oct)** — entre pré-ampli et ampli.
+   R, C à recalculer selon Zs(pré-ampli, à mesurer) et Zin(ampli, 10 k asym/20 k sym).
+   Architecture « naïve » dont on veut démontrer expérimentalement les limites.
+3. **Actif Sallen-Key 2ⁿᵈ ordre Butterworth (Q=1/√2)** — avant ampli (bi-amplification).
+   AOP : NE5532 (audio, faible bruit) recommandé, ou TL072. Alim symétrique ±15 V.
 
-1. **Centrage électrique** : la rigueur repose sur la mesure électrique
-   (Bode au GBF + oscilloscope : gain et phase). L'acoustique vient en
-   confrontation au réel, de façon illustrative, avec ses limites assumées.
-2. **Filtres du 1er ordre** : passe-bas / passe-haut 1er ordre.
-   - Passif : RC / RL.
-   - Actif : RC + AOP (régime linéaire).
-   - 2e ordre (Sallen-Key, facteur Q) : hors périmètre pour l'instant.
-3. **Thème visuel** : clair sobre (fond blanc cassé, accent bleu-pétrole),
-   pour robustesse en salle d'oral et bon export PDF.
+## Matériel (brief 2026-05-25)
 
-## Arguments physiques forts à exploiter (fil rouge)
+- Pré-ampli **JB Systems SMX SX-801** (2 sorties identiques) — Zs à mesurer.
+- Ampli **t.amp E-800** : 2×350 W/8 Ω, 2×500 W/4 Ω ; Zin 20 k sym / 10 k asym ;
+  sensibilité 0,775 V / 1,4 V (sélectable).
+- Mesure lycée : GBF, oscillo numérique, multimètre.
+- Mesure perso : micro de mesure + interface audio (modèle à documenter).
+- Logiciels : **REW** (acoustique), **LTspice** (simulation filtres), **Python**
+  (numpy/scipy/matplotlib : Bode théoriques + confrontation).
 
-- À 100 Hz le **passif est coûteux en composants** : L ≈ 12,7 mH et
-  C ≈ 199 µF pour 8 Ω → bobine grosse et résistive (pertes Joule, DCR),
-  condensateur bipolaire de forte valeur et imprécis. → argument "sobriété".
-- Le **HP n'est pas une résistance pure** : inductance de bobine L_e, pic
-  d'impédance à la résonance f_s. En passif, la coupure réelle dépend de
-  l'impédance du HP qui varie → protocole "d'abord sur résistance, puis sur
-  vrai HP" pour isoler l'effet.
-- L'**actif filtre en amont de l'ampli** (entrée AOP, impédance élevée et
-  constante) → réponse prévisible, indépendante du HP. MAIS impose une
-  **bi-amplification** (ampli + alim en plus) → c'est le "coût système".
+## Déroulé expérimental (5 phases)
+
+1. **Caractérisation** : T/S du sub (datasheet), Z(f) sub et bloc médiums (GBF +
+   R étalon 100 Ω, 20–500 Hz au 1/3 d'oct), Fs mesurée vs datasheet, Zs pré-ampli,
+   réponse acoustique sans filtre (micro 1 m).
+2. **Dimensionnement + simulation** : les 3 archis, Bode Python + LTspice, d'abord
+   HP=8 Ω pur puis Z(f) mesurée.
+3. **Tests électriques sur résistance de puissance 8 Ω** (amplitude faible) : fc à
+   −3 dB, pente, pertes en bande passante.
+4. **Tests acoustiques sur HP réels** (REW, 20–500 Hz) : fc acoustique vs électrique,
+   sommation des deux voies au raccord.
+5. **Analyse comparative** : tableau (précision fc, pente, pertes, coût, encombrement,
+   complexité, sensibilité à Z(f)) ; coût système de l'actif ; mentions réseau de
+   Zobel (remédiation archi 1) et Linkwitz-Riley (alternative à Butterworth).
+
+## Priorités pédagogiques (étudiant)
+
+1. Rigueur expérimentale : incertitudes calculées + propagées, barres d'erreur, méthode documentée.
+2. Démarche d'ingénieur : cahier des charges, critères pondérés, arbitrage justifié.
+3. Modélisation : Bode gain+phase, facteur Q, complexes, confrontation théorie/expérience.
+
+## Points scientifiques à NE PAS oublier (issus de la critique prof, 2026-05-25)
+
+- **2ⁿᵈ ordre Butterworth ⇒ inversion de polarité d'une voie OBLIGATOIRE** : les deux
+  sorties sont à 180° à fc. Sans inversion → trou profond (annulation) ; avec inversion
+  → bosse +3 dB. La « bosse +3 dB attendue » suppose la polarité inversée.
+- **Comparaison non iso-ordre** : archi 2 = 1er ordre (6 dB/oct) vs archis 1 et 3 =
+  2ⁿᵈ ordre (12 dB/oct). À assumer explicitement (archi 2 = contre-exemple).
+- **Fs en caisse ≠ Fs datasheet (champ libre)** : un HP monté voit sa résonance décalée
+  (Fc sealed > Fs ; bass-reflex = deux pics). Mesurer le pic d'impédance en caisse ≠ erreur.
+- **Z exacte sans approximation courant constant** : mesurer V_HP ET V_Rref →
+  Z = Rref·(V_HP/V_Rref). À 100 Ω l'hypothèse I≈cst se dégrade au pic (Z~40–60 Ω).
+- **DCR de L₁=18 mH (archi 1)** : pertes Joule + modifie le Q du grave → argument sobriété/efficacité.
+- **Scope** : 3 archis × 4 traitements = énorme pour 10 min. Prioriser pour l'oral.
 
 ## Pièges à ne pas oublier
 
