@@ -252,3 +252,22 @@ Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
   positionnement, problématique, objectifs, étapes, bibliographie commentée — avec
   placeholders [[à compléter]] pour motivation/sources, rien d'inventé). Référencé
   dans le README. Nouveau doc TIPE requis, hors slides.
+
+## Refonte des supports (nouveau brief) — 2026-05-25
+
+- **Identité visuelle choisie : « Blueprint technique »** (fond bleu nuit + grille,
+  accent cyan, titres Space Grotesk, étiquettes JetBrains Mono). Feuille dédiée
+  **css/blueprint.css** (réutilisable par la finale). Démo des 5 styles : styles-demo.html.
+- **Diapo de titre** : « Thomas Mareel · PTSI 2 », dates **2025-2027**.
+- **Périmètre transducteurs** : raccord 100 Hz = sub 18″ vs **2 HP latéraux** ; pavillons
+  d'aigu **hors périmètre**.
+- **Alignement** : Butterworth partout (récit carré), Linkwitz-Riley en perspective.
+  Rappel : inversion de polarité d'une voie au 2ⁿᵈ ordre (bosse +3 dB sinon trou).
+- **Valeurs Sallen-Key corrigées** (à utiliser dans la finale) : sub R=10 kΩ, C₁=220/C₂=110 nF ;
+  médiums R'₁=11 kΩ, R'₂=22 kΩ, C=100 nF (le doc montages_tipe.html de l'étudiant a fc≈66/93 Hz à corriger).
+- **Pré-soutenance REFAITE** en Blueprint sur le nouveau brief : 9 vues (titre, enceinte+photos,
+  raccord/problématique, cahier des charges, 3 architectures [duel 1.B vs 3], Bode 2ⁿᵈ ordre
+  gain+phase, protocole, planning+perspectives, merci). 6 SVG, 0 débordement. Photos en repli
+  élégant tant que assets/enceinte-face.jpg et assets/enceinte-banc.jpg ne sont pas déposées.
+- **RESTE À FAIRE** : refondre presentation-finale.html (10 min) + index.html (accueil) dans
+  le même style Blueprint ; l'étudiant doit déposer les 2 photos dans assets/.

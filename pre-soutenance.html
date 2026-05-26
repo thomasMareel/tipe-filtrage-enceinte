@@ -3,347 +3,296 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Pré-soutenance — Filtrage fréquentiel d'une enceinte audio</title>
+  <title>Pré-soutenance — Filtrage à 100 Hz d'une enceinte deux voies</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
-  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/blueprint.css">
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
 
-      <!-- ========================= 1. TITRE ========================= -->
+      <!-- ===================== 1. TITRE ===================== -->
       <section class="titre">
-        <h1>Filtrage fréquentiel d'une enceinte audio</h1>
-        <h3>Le raccord à 100 Hz : passif ou actif ?</h3>
-        <p class="auteur"><!-- TODO: ton nom -->Prénom NOM &middot; PTSI</p>
-        <p class="meta">Pré-soutenance &middot; TIPE 2026&ndash;2027<br>
-          Thème : <em>Sobriété, efficacité, optimisation</em></p>
+        <div class="kicker">TIPE 2025–2027 · Sobriété · Efficacité · Optimisation</div>
+        <h1>Filtrage passif ou actif :<br>le <em>raccord à 100 Hz</em></h1>
+        <div class="sous">Enceinte deux voies — réalisation personnelle</div>
+        <div class="auteur">THOMAS MAREEL · PTSI 2</div>
+        <div class="meta">Pré-soutenance · présentation du sujet &amp; de la démarche</div>
         <aside class="notes">
-          — Sujet : filtrage d'une enceinte faite maison.<br>
-          — Aujourd'hui : le problème + la démarche, pas de résultats.
+          — Enceinte construite maison ; je présente le sujet et la démarche, pas de résultats.<br>
+          — Fil rouge : comment raccorder grave et médiums à 100 Hz, et faut-il un filtre passif ou actif ?
         </aside>
       </section>
 
-      <!-- ============== 2. LE PROBLÈME (axe fréquences) ============== -->
+      <!-- ===================== 2. L'ENCEINTE ===================== -->
       <section>
-        <h2>Deux voies, un raccord à 100 Hz</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 400" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Axe de fréquences : grave et médium se raccordent à 100 Hz">
-            <!-- zone de raccord -->
-            <rect x="255" y="55" width="70" height="275" fill="#cfe0e4" opacity="0.55"/>
-            <!-- axe -->
-            <line x1="90" y1="330" x2="950" y2="330" stroke="#5b6770" stroke-width="2"/>
-            <!-- courbe grave (passe-bas) -->
-            <path d="M90,95 L215,95 C265,95 285,150 290,165 C360,255 430,315 545,322 L950,328"
-                  fill="none" stroke="#1f4e5f" stroke-width="5"/>
-            <!-- courbe médium (passe-haut) -->
-            <path d="M90,322 L200,318 C285,312 285,180 290,165 C300,120 360,95 470,90 L950,88"
-                  fill="none" stroke="#6b8a94" stroke-width="5"/>
-            <!-- ligne 100 Hz + badge -->
-            <line x1="290" y1="55" x2="290" y2="330" stroke="#1f4e5f" stroke-width="2" stroke-dasharray="6 6"/>
-            <rect x="243" y="22" width="94" height="34" rx="6" fill="#1f4e5f"/>
-            <text x="290" y="45" fill="#fff" font-size="22" font-weight="700" text-anchor="middle">100 Hz</text>
-            <!-- libellés zones -->
-            <text x="110" y="215" fill="#1f4e5f" font-size="26" font-weight="700">GRAVE</text>
-            <text x="110" y="244" fill="#5b6770" font-size="18">subwoofer 18&#8243;</text>
-            <text x="690" y="215" fill="#6b8a94" font-size="26" font-weight="700">MÉDIUM-AIGU</text>
-            <text x="690" y="244" fill="#5b6770" font-size="18">&times; 2</text>
-            <!-- graduations -->
-            <text x="90"  y="356" fill="#5b6770" font-size="17" text-anchor="middle">20 Hz</text>
-            <text x="577" y="356" fill="#5b6770" font-size="17" text-anchor="middle">1 kHz</text>
-            <text x="950" y="356" fill="#5b6770" font-size="17" text-anchor="middle">20 kHz</text>
-            <text x="520" y="388" fill="#5b6770" font-size="18" text-anchor="middle">fréquence</text>
-          </svg>
-        </div>
-        <p class="cle">Le défaut se joue dans la zone de raccord.</p>
-        <aside class="notes">
-          — Une enceinte sépare le son en voies.<br>
-          — Point sensible = recouvrement à 100 Hz (creux/bosse).<br>
-          — Question : passif ou actif pour ce raccord ?
-        </aside>
-      </section>
-
-      <!-- ============== 3. CRITÈRE OBJECTIF ============== -->
-      <section>
-        <h2>« Bonne qualité » = réponse plate</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 330" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Comparaison réponse avec creux versus réponse plate">
-            <!-- panneau gauche : raté -->
-            <rect x="40" y="40" width="420" height="245" rx="6" fill="#fff" stroke="#d7dbe0"/>
-            <line x1="70" y1="245" x2="430" y2="245" stroke="#d7dbe0" stroke-width="2"/>
-            <path d="M70,130 L175,130 C205,130 215,205 250,205 C285,205 295,130 320,130 L430,130"
-                  fill="none" stroke="#9c6b1f" stroke-width="5"/>
-            <text x="62" y="78" fill="#9c6b1f" font-size="40" font-weight="700">&#10007;</text>
-            <text x="250" y="240" fill="#9c6b1f" font-size="18" text-anchor="middle">creux au raccord</text>
-            <!-- panneau droit : bon -->
-            <rect x="540" y="40" width="420" height="245" rx="6" fill="#fff" stroke="#d7dbe0"/>
-            <line x1="570" y1="245" x2="930" y2="245" stroke="#d7dbe0" stroke-width="2"/>
-            <path d="M570,130 L930,130" fill="none" stroke="#1f4e5f" stroke-width="5"/>
-            <text x="556" y="78" fill="#1f4e5f" font-size="40" font-weight="700">&#10003;</text>
-            <text x="750" y="240" fill="#1f4e5f" font-size="18" text-anchor="middle">réponse plate</text>
-          </svg>
-        </div>
-        <p class="cle">Critère objectif et mesurable — pas un jugement à l'oreille.</p>
-        <aside class="notes">
-          — Je ne dis pas « ça sonne mieux ».<br>
-          — Qualité = écart en dB à une réponse plate + phase propre.<br>
-          — C'est ça que je minimise.
-        </aside>
-      </section>
-
-      <!-- ============== 4. SCHÉMA FONCTIONNEL + 100 Hz ============== -->
-      <section>
-        <h2>L'enceinte et le choix de 100 Hz</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 360" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Schéma fonctionnel de l'enceinte">
-            <defs>
-              <marker id="aF" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-                <path d="M0,0 L9,4.5 L0,9 z" fill="#5b6770"/>
-              </marker>
-            </defs>
-            <!-- source -->
-            <rect x="40" y="140" width="170" height="80" rx="6" fill="#fff" stroke="#1f4e5f" stroke-width="2"/>
-            <text x="125" y="175" fill="#1f2933" font-size="22" text-anchor="middle">Source</text>
-            <text x="125" y="202" fill="#1f2933" font-size="22" text-anchor="middle">+ ampli</text>
-            <!-- branches -->
-            <path d="M210,180 L290,180 L290,90 L370,90" fill="none" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aF)"/>
-            <path d="M210,180 L290,180 L290,270 L370,270" fill="none" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aF)"/>
-            <!-- filtre passe-bas -->
-            <rect x="375" y="55" width="215" height="70" rx="6" fill="#eef3f4" stroke="#1f4e5f" stroke-width="2"/>
-            <text x="482" y="97" fill="#1f4e5f" font-size="21" text-anchor="middle">Filtre passe-bas</text>
-            <!-- filtre passe-haut -->
-            <rect x="375" y="235" width="215" height="70" rx="6" fill="#eef3f4" stroke="#6b8a94" stroke-width="2"/>
-            <text x="482" y="277" fill="#1f4e5f" font-size="21" text-anchor="middle">Filtre passe-haut</text>
-            <!-- vers HP -->
-            <path d="M590,90 L660,90" fill="none" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aF)"/>
-            <path d="M590,270 L660,270" fill="none" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aF)"/>
-            <rect x="665" y="55" width="270" height="70" rx="6" fill="#1f4e5f"/>
-            <text x="800" y="97" fill="#fff" font-size="21" text-anchor="middle">Subwoofer 18&#8243;</text>
-            <rect x="665" y="235" width="270" height="70" rx="6" fill="#6b8a94"/>
-            <text x="800" y="277" fill="#fff" font-size="21" text-anchor="middle">Médiums &times; 2</text>
-          </svg>
-        </div>
-        <p class="cle">f<sub>s</sub> ≈ 50 Hz <!-- TODO: confirmer -->&nbsp;→&nbsp;couper à 100 Hz protège le médium.</p>
-        <aside class="notes">
-          — Enceinte faite maison, sub 18″ + 2 médiums.<br>
-          — Médium résonne vers 50 Hz → couper à 100 Hz (×2) le protège.<br>
-          — Choix dicté par les HP, pas arbitraire.<br>
-          — TODO : insérer une photo de l'enceinte.
-        </aside>
-      </section>
-
-      <!-- ============== 5. CADRE THÉORIQUE : BODE 1er ORDRE ============== -->
-      <section>
-        <h2>Modèle : filtre du 1<sup>er</sup> ordre</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 440" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Diagrammes de Bode passe-bas et passe-haut croisant à 100 Hz">
-            <!-- grille -->
-            <line x1="120" y1="40" x2="120" y2="360" stroke="#5b6770" stroke-width="2"/>
-            <line x1="120" y1="360" x2="920" y2="360" stroke="#5b6770" stroke-width="2"/>
-            <g stroke="#d7dbe0" stroke-width="1">
-              <line x1="120" y1="90" x2="920" y2="90"/>
-              <line x1="120" y1="190" x2="920" y2="190"/>
-              <line x1="120" y1="290" x2="920" y2="290"/>
-            </g>
-            <g fill="#5b6770" font-size="16" text-anchor="end">
-              <text x="110" y="95">0</text><text x="110" y="195">-20</text><text x="110" y="295">-40</text>
-            </g>
-            <text x="60" y="50" fill="#5b6770" font-size="17">G (dB)</text>
-            <!-- asymptotes -->
-            <path d="M120,90 L520,90 L920,290" fill="none" stroke="#1f4e5f" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.6"/>
-            <path d="M120,290 L520,90 L920,90" fill="none" stroke="#6b8a94" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.6"/>
-            <!-- courbes réelles -->
-            <path d="M120,90 L420,90 Q500,90 520,110 Q620,160 720,200 Q820,250 920,290"
-                  fill="none" stroke="#1f4e5f" stroke-width="5"/>
-            <path d="M120,290 Q300,200 460,130 Q500,115 520,110 Q620,93 720,91 L920,90"
-                  fill="none" stroke="#6b8a94" stroke-width="5"/>
-            <!-- point de coupure -->
-            <line x1="520" y1="110" x2="520" y2="360" stroke="#1f4e5f" stroke-width="1.6" stroke-dasharray="4 4"/>
-            <circle cx="520" cy="110" r="6" fill="#1f4e5f"/>
-            <text x="535" y="104" fill="#1f4e5f" font-size="17">-3 dB</text>
-            <!-- pente -->
-            <text x="770" y="245" fill="#5b6770" font-size="16">-20 dB/déc</text>
-            <!-- graduations f -->
-            <g fill="#5b6770" font-size="16" text-anchor="middle">
-              <text x="320" y="384">10 Hz</text>
-              <text x="520" y="384" font-weight="700" fill="#1f4e5f">100 Hz</text>
-              <text x="720" y="384">1 kHz</text>
-            </g>
-            <text x="880" y="384" fill="#5b6770" font-size="17">f (log)</text>
-            <!-- légende courbes -->
-            <line x1="150" y1="415" x2="190" y2="415" stroke="#1f4e5f" stroke-width="5"/>
-            <text x="198" y="421" fill="#1f2933" font-size="17">passe-bas → sub</text>
-            <line x1="470" y1="415" x2="510" y2="415" stroke="#6b8a94" stroke-width="5"/>
-            <text x="518" y="421" fill="#1f2933" font-size="17">passe-haut → médiums</text>
-          </svg>
-        </div>
-        <p class="cle">\( f_c = \dfrac{1}{2\pi RC} = 100~\text{Hz} \) &nbsp;·&nbsp; pente \( \pm 20~\text{dB/déc} \)</p>
-        <aside class="notes">
-          — 1er ordre (au programme).<br>
-          — −3 dB à f_c, pente 20 dB/décade.<br>
-          — On choisit R, C (ou L) pour viser 100 Hz.
-        </aside>
-      </section>
-
-      <!-- ============== 6. PASSIF vs ACTIF (circuits) ============== -->
-      <section>
-        <h2>Deux solutions à comparer</h2>
+        <div class="kicker">Le système étudié</div>
+        <h2>Une enceinte deux voies, <span class="accent">construite maison</span></h2>
         <div class="deux-viz">
           <figure>
-            <svg viewBox="0 0 480 380" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Filtre passif : grosse bobine et gros condensateur">
-              <!-- voie passe-bas : ampli -> L -> sub -->
-              <polygon points="30,70 30,130 85,100" fill="none" stroke="#1f4e5f" stroke-width="2.5"/>
-              <line x1="85" y1="100" x2="150" y2="100" stroke="#1f2933" stroke-width="2.5"/>
-              <path d="M150,100 q12,-26 24,0 q12,-26 24,0 q12,-26 24,0 q12,-26 24,0"
-                    fill="none" stroke="#1f4e5f" stroke-width="4"/>
-              <line x1="246" y1="100" x2="300" y2="100" stroke="#1f2933" stroke-width="2.5"/>
-              <rect x="300" y="82" width="16" height="36" fill="#1f4e5f"/>
-              <polygon points="316,72 316,128 350,148 350,52" fill="#1f4e5f"/>
-              <text x="198" y="55" fill="#1f4e5f" font-size="22" font-weight="700" text-anchor="middle">L ≈ 12,7 mH</text>
-              <text x="375" y="105" fill="#5b6770" font-size="17">sub</text>
-              <!-- voie passe-haut : ampli -> C -> médium -->
-              <polygon points="30,250 30,310 85,280" fill="none" stroke="#6b8a94" stroke-width="2.5"/>
-              <line x1="85" y1="280" x2="180" y2="280" stroke="#1f2933" stroke-width="2.5"/>
-              <line x1="180" y1="252" x2="180" y2="308" stroke="#6b8a94" stroke-width="5"/>
-              <line x1="206" y1="252" x2="206" y2="308" stroke="#6b8a94" stroke-width="5"/>
-              <line x1="206" y1="280" x2="300" y2="280" stroke="#1f2933" stroke-width="2.5"/>
-              <rect x="300" y="262" width="16" height="36" fill="#6b8a94"/>
-              <polygon points="316,252 316,308 350,328 350,232" fill="#6b8a94"/>
-              <text x="193" y="225" fill="#6b8a94" font-size="22" font-weight="700" text-anchor="middle">C ≈ 199 µF</text>
-              <text x="375" y="285" fill="#5b6770" font-size="17">médium</text>
-            </svg>
-            <figcaption><b style="color:#1f4e5f">PASSIF</b> — gros, lourds, pertes &middot; après l'ampli</figcaption>
+            <img class="photo" src="assets/enceinte-face.jpg" alt="Enceinte vue de face"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none">déposer<br>assets/enceinte-face.jpg</div>
+            <figcaption>Caisson pin massif · 18″ en façade + 2 HP latéraux</figcaption>
           </figure>
           <figure>
-            <svg viewBox="0 0 480 380" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Filtre actif : petits R et C avec amplificateur opérationnel">
-              <!-- signal -> R/C -> AOP -> ampli -> HP -->
-              <text x="20" y="185" fill="#5b6770" font-size="17">signal</text>
-              <line x1="75" y1="180" x2="110" y2="180" stroke="#1f2933" stroke-width="2"/>
-              <!-- résistance -->
-              <path d="M110,180 l8,-9 l12,18 l12,-18 l12,18 l8,-9" fill="none" stroke="#1f4e5f" stroke-width="2.5"/>
-              <line x1="162" y1="180" x2="190" y2="180" stroke="#1f2933" stroke-width="2"/>
-              <!-- condensateur petit vers la masse -->
-              <line x1="190" y1="180" x2="190" y2="210" stroke="#1f2933" stroke-width="2"/>
-              <line x1="178" y1="210" x2="202" y2="210" stroke="#1f4e5f" stroke-width="3"/>
-              <line x1="182" y1="218" x2="198" y2="218" stroke="#1f4e5f" stroke-width="3"/>
-              <line x1="190" y1="180" x2="220" y2="180" stroke="#1f2933" stroke-width="2"/>
-              <!-- AOP -->
-              <polygon points="220,150 220,210 280,180" fill="none" stroke="#1f4e5f" stroke-width="2.5"/>
-              <text x="232" y="172" fill="#5b6770" font-size="13">&minus;</text>
-              <text x="232" y="198" fill="#5b6770" font-size="13">+</text>
-              <line x1="280" y1="180" x2="320" y2="180" stroke="#1f2933" stroke-width="2"/>
-              <!-- ampli de puissance -->
-              <polygon points="320,150 320,210 370,180" fill="none" stroke="#6b8a94" stroke-width="2.5"/>
-              <text x="345" y="232" fill="#5b6770" font-size="14" text-anchor="middle">ampli</text>
-              <line x1="370" y1="180" x2="400" y2="180" stroke="#1f2933" stroke-width="2"/>
-              <!-- HP -->
-              <rect x="400" y="165" width="13" height="30" fill="#1f4e5f"/>
-              <polygon points="413,158 413,202 440,216 440,144" fill="#1f4e5f"/>
-              <text x="150" y="120" fill="#1f4e5f" font-size="22" font-weight="700" text-anchor="middle">R ~ kΩ · C ~ µF</text>
-            </svg>
-            <figcaption><b style="color:#1f4e5f">ACTIF</b> — minuscule &middot; avant l'ampli, mais 1 ampli/voie</figcaption>
+            <img class="photo" src="assets/enceinte-banc.jpg" alt="Chaîne de mesure sur l'enceinte"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none">déposer<br>assets/enceinte-banc.jpg</div>
+            <figcaption>Chaîne : pré-ampli SX-801 · ampli t.amp E-800 · micro de mesure</figcaption>
           </figure>
         </div>
+        <p class="cle">Le caisson existe et fonctionne ; il reste à concevoir le filtrage du raccord.</p>
         <aside class="notes">
-          — Passif : après l'ampli, composants énormes à 100 Hz (13 mH, 200 µF), pertes.<br>
-          — Actif : avant l'ampli, R/C minuscules, mais un ampli par voie.<br>
-          — C'est ce compromis que je mesure.
+          — Je l'ai conçue et assemblée : caisson, montage des HP, câblage.<br>
+          — Sub 18″ (8 Ω) en façade, deux médiums 4 Ω en série sur les flancs inclinés.<br>
+          — Pavillons d'aigu présents mais hors périmètre (filtrés plus haut).
         </aside>
       </section>
 
-      <!-- ============== 7. PROTOCOLE (deux bancs) ============== -->
+      <!-- ===================== 3. LE RACCORD / PROBLÉMATIQUE ===================== -->
       <section>
-        <h2>Comment je mesurerai</h2>
-        <div class="deux-viz">
-          <figure>
-            <svg viewBox="0 0 480 300" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Banc électrique GBF filtre oscilloscope">
-              <defs><marker id="aE" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5b6770"/></marker></defs>
-              <rect x="20" y="90" width="120" height="80" rx="6" fill="#fff" stroke="#1f4e5f" stroke-width="2"/>
-              <text x="80" y="136" fill="#1f2933" font-size="22" text-anchor="middle">GBF</text>
-              <path d="M140,130 L185,130" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aE)" fill="none"/>
-              <rect x="190" y="90" width="120" height="80" rx="6" fill="#eef3f4" stroke="#1f4e5f" stroke-width="2"/>
-              <text x="250" y="136" fill="#1f4e5f" font-size="20" text-anchor="middle">Filtre</text>
-              <path d="M310,130 L355,130" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aE)" fill="none"/>
-              <rect x="360" y="90" width="100" height="80" rx="6" fill="#fff" stroke="#1f4e5f" stroke-width="2"/>
-              <text x="410" y="128" fill="#1f2933" font-size="18" text-anchor="middle">Oscillo</text>
-              <text x="410" y="150" fill="#1f2933" font-size="18" text-anchor="middle">scope</text>
-              <text x="250" y="215" fill="#1f4e5f" font-size="18" text-anchor="middle" font-weight="600">gain &amp; phase → Bode</text>
-              <text x="250" y="245" fill="#5b6770" font-size="16" text-anchor="middle">résistance 8 Ω, puis vrai HP</text>
-            </svg>
-            <figcaption>Banc électrique (rigueur)</figcaption>
-          </figure>
-          <figure>
-            <svg viewBox="0 0 480 300" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Banc acoustique haut-parleur micro carte son REW">
-              <defs><marker id="aA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5b6770"/></marker></defs>
-              <!-- HP -->
-              <rect x="30" y="115" width="16" height="40" fill="#1f4e5f"/>
-              <polygon points="46,105 46,165 78,182 78,88" fill="#1f4e5f"/>
-              <!-- ondes -->
-              <path d="M92,135 q14,-18 0,-36" fill="none" stroke="#6b8a94" stroke-width="2.5"/>
-              <path d="M104,135 q22,-26 0,-52" fill="none" stroke="#6b8a94" stroke-width="2.5"/>
-              <!-- micro -->
-              <circle cx="150" cy="135" r="12" fill="none" stroke="#1f4e5f" stroke-width="2.5"/>
-              <line x1="150" y1="147" x2="150" y2="175" stroke="#1f4e5f" stroke-width="2.5"/>
-              <text x="150" y="200" fill="#5b6770" font-size="15" text-anchor="middle">micro</text>
-              <path d="M165,135 L210,135" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aA)" fill="none"/>
-              <rect x="215" y="100" width="110" height="70" rx="6" fill="#fff" stroke="#1f4e5f" stroke-width="2"/>
-              <text x="270" y="130" fill="#1f2933" font-size="17" text-anchor="middle">Carte</text>
-              <text x="270" y="152" fill="#1f2933" font-size="17" text-anchor="middle">son</text>
-              <path d="M325,135 L370,135" stroke="#5b6770" stroke-width="2.5" marker-end="url(#aA)" fill="none"/>
-              <rect x="375" y="100" width="90" height="70" rx="6" fill="#1f4e5f"/>
-              <text x="420" y="142" fill="#fff" font-size="20" text-anchor="middle">REW</text>
-              <text x="240" y="240" fill="#1f4e5f" font-size="18" text-anchor="middle" font-weight="600">champ proche</text>
-            </svg>
-            <figcaption>Banc acoustique (réel)</figcaption>
-          </figure>
-        </div>
-        <aside class="notes">
-          — Électrique : GBF + oscillo → Bode réel ; d'abord résistance, puis HP.<br>
-          — Acoustique : micro + carte son + REW, en champ proche (éviter la pièce).
-        </aside>
-      </section>
-
-      <!-- ============== 8. CRITÈRES & PLANNING ============== -->
-      <section>
-        <h2>Trancher objectivement</h2>
+        <div class="kicker">Le problème</div>
+        <h2>Répartir le son : un raccord à 100 Hz</h2>
         <div class="viz">
-          <svg viewBox="0 0 1000 170" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" role="img" aria-label="Frise des étapes du projet">
-            <line x1="100" y1="70" x2="900" y2="70" stroke="#1f4e5f" stroke-width="3"/>
-            <g>
-              <circle cx="120" cy="70" r="20" fill="#1f4e5f"/><text x="120" y="77" fill="#fff" font-size="20" text-anchor="middle" font-weight="700">1</text>
-              <circle cx="315" cy="70" r="20" fill="#1f4e5f"/><text x="315" y="77" fill="#fff" font-size="20" text-anchor="middle" font-weight="700">2</text>
-              <circle cx="510" cy="70" r="20" fill="#1f4e5f"/><text x="510" y="77" fill="#fff" font-size="20" text-anchor="middle" font-weight="700">3</text>
-              <circle cx="705" cy="70" r="20" fill="#1f4e5f"/><text x="705" y="77" fill="#fff" font-size="20" text-anchor="middle" font-weight="700">4</text>
-              <circle cx="900" cy="70" r="20" fill="#1f4e5f"/><text x="900" y="77" fill="#fff" font-size="20" text-anchor="middle" font-weight="700">5</text>
-            </g>
-            <g fill="#1f2933" font-size="17" text-anchor="middle">
-              <text x="120" y="120">Impédance</text><text x="120" y="140" fill="#5b6770" font-size="14">f_s</text>
-              <text x="315" y="120">Dimension-</text><text x="315" y="140">nement</text>
-              <text x="510" y="120">Tests</text><text x="510" y="140">électriques</text>
-              <text x="705" y="120">Tests</text><text x="705" y="140">acoustiques</text>
-              <text x="900" y="120">Comparaison</text>
-            </g>
+          <svg viewBox="0 0 1000 320" font-family="Inter,sans-serif" role="img" aria-label="Axe de fréquences : grave et médium se raccordent à 100 Hz">
+            <rect x="255" y="40" width="70" height="220" fill="#5fd0e0" opacity="0.10"/>
+            <line x1="90" y1="260" x2="950" y2="260" stroke="var(--trait)" stroke-width="2"/>
+            <path d="M90,80 L215,80 C265,80 285,120 290,135 C360,210 430,250 545,256 L950,258"
+                  fill="none" stroke="var(--accent)" stroke-width="5"/>
+            <path d="M90,258 L200,254 C285,248 285,150 290,135 C300,100 360,80 470,77 L950,75"
+                  fill="none" stroke="var(--accent2)" stroke-width="5"/>
+            <line x1="290" y1="40" x2="290" y2="260" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 6"/>
+            <rect x="245" y="12" width="90" height="30" rx="4" fill="var(--accent)"/>
+            <text x="290" y="33" fill="#06222c" font-size="19" font-weight="700" text-anchor="middle" font-family="Space Grotesk">100 Hz</text>
+            <text x="120" y="170" fill="var(--accent)" font-size="22" font-weight="700" font-family="Space Grotesk">GRAVE</text>
+            <text x="120" y="196" fill="var(--ink-soft)" font-size="15">subwoofer 18″</text>
+            <text x="700" y="170" fill="var(--accent2)" font-size="22" font-weight="700" font-family="Space Grotesk">MÉDIUMS</text>
+            <text x="700" y="196" fill="var(--ink-soft)" font-size="15">2 × 4 Ω série</text>
           </svg>
         </div>
+        <div class="encadre">
+          <strong>Problématique.</strong> Filtrage passif ou actif : quelle architecture offre le
+          meilleur compromis <strong>sobriété / efficacité</strong> pour le raccord à 100 Hz ?
+        </div>
+        <p class="legende">Choix de 100 Hz : garder les médiums au-dessus de leur résonance (sinon distorsion).</p>
+        <aside class="notes">
+          — On ne reproduit pas tout le spectre avec un seul HP : on sépare en voies.<br>
+          — La zone de recouvrement (100 Hz) est là où naissent creux et bosses.
+        </aside>
+      </section>
+
+      <!-- ===================== 4. CAHIER DES CHARGES ===================== -->
+      <section>
+        <div class="kicker">Démarche d'ingénieur</div>
+        <h2>Trancher objectivement : un cahier des charges</h2>
+        <table>
+          <tr><th>Critère</th><th>Ce que je mesurerai</th></tr>
+          <tr><td>Précision de f_c</td><td>écart entre coupure visée (100 Hz) et coupure réelle</td></tr>
+          <tr><td>Pente d'atténuation</td><td>dB/octave effectifs</td></tr>
+          <tr><td>Pertes</td><td>puissance dissipée (DCR bobine), rendement</td></tr>
+          <tr><td>Coût &amp; encombrement</td><td>nombre, taille, prix des composants</td></tr>
+          <tr><td>Complexité système</td><td>nb d'amplis, alimentation, montage</td></tr>
+        </table>
         <div class="chips">
-          <div class="chip"><b>Sobriété</b><span>nombre · taille · coût</span></div>
-          <div class="chip"><b>Efficacité</b><span>pertes · pente réelle</span></div>
-          <div class="chip"><b>Optimisation</b><span>écart à la cible</span></div>
+          <div class="chip"><b>Sobriété</b><span>composants · coût</span></div>
+          <div class="chip"><b>Efficacité</b><span>pertes · pente</span></div>
+          <div class="chip"><b>Optimisation</b><span>arbitrage pondéré</span></div>
         </div>
         <aside class="notes">
-          — Étapes : impédance → dimensionnement → électrique → acoustique → comparaison.<br>
-          — Trois critères = les trois mots du thème.<br>
-          — Ouverture : ordre 2, DSP.
+          — Je fixe des critères objectifs et pondérés avant de comparer.<br>
+          — Ils se rangent sous les trois mots du thème national.
         </aside>
       </section>
 
-      <!-- ============== 9. MERCI ============== -->
+      <!-- ===================== 5. TROIS ARCHITECTURES ===================== -->
+      <section>
+        <div class="kicker">Le cœur du TIPE</div>
+        <h2>Trois architectures à comparer</h2>
+        <div class="viz">
+          <svg viewBox="0 0 1000 430" font-family="Inter,sans-serif" role="img" aria-label="Trois architectures de filtrage comparées">
+            <defs>
+              <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--wire)"/></marker>
+            </defs>
+            <!-- Row 1 : passif post-ampli (duel) -->
+            <rect x="60" y="42" width="700" height="74" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <g>
+              <rect x="80" y="58" width="120" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="140" y="85" text-anchor="middle" font-size="17">Ampli</text>
+              <line x1="200" y1="80" x2="250" y2="80" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="250" y="58" width="150" height="44" rx="4" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.8"/><text x="325" y="85" text-anchor="middle" font-size="16" fill="var(--accent)">Filtre LC</text>
+              <line x1="400" y1="80" x2="450" y2="80" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="450" y="58" width="120" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="510" y="85" text-anchor="middle" font-size="17">HP</text>
+            </g>
+            <text x="610" y="74" font-size="15" fill="var(--ink-soft)" font-family="JetBrains Mono">passif</text>
+            <text x="610" y="96" font-size="15" fill="var(--ink-soft)" font-family="JetBrains Mono">post-ampli</text>
+            <text x="790" y="74" font-size="15" fill="var(--accent)" font-family="JetBrains Mono">1.B</text>
+            <text x="790" y="96" font-size="13" fill="var(--ink-soft)" font-family="JetBrains Mono">12 dB/oct</text>
+
+            <!-- Row 2 : passif signal faible -->
+            <g>
+              <rect x="80" y="190" width="120" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="140" y="217" text-anchor="middle" font-size="15">Pré-ampli</text>
+              <line x1="200" y1="212" x2="240" y2="212" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="240" y="190" width="130" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="305" y="217" text-anchor="middle" font-size="15">Filtre RC</text>
+              <line x1="370" y1="212" x2="410" y2="212" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="410" y="190" width="110" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="465" y="217" text-anchor="middle" font-size="16">Ampli</text>
+              <line x1="520" y1="212" x2="560" y2="212" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="560" y="190" width="100" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="610" y="217" text-anchor="middle" font-size="16">HP</text>
+            </g>
+            <text x="700" y="208" font-size="15" fill="var(--ink-soft)" font-family="JetBrains Mono">signal faible</text>
+            <text x="790" y="230" font-size="15" fill="var(--ink-soft)" font-family="JetBrains Mono">2 · 6 dB/oct</text>
+
+            <!-- Row 3 : actif (duel) -->
+            <rect x="60" y="320" width="700" height="74" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <g>
+              <rect x="80" y="336" width="120" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="140" y="363" text-anchor="middle" font-size="15">Pré-ampli</text>
+              <line x1="200" y1="358" x2="240" y2="358" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="240" y="336" width="130" height="44" rx="4" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.8"/><text x="305" y="363" text-anchor="middle" font-size="14" fill="var(--accent)">RC + AOP</text>
+              <line x1="370" y1="358" x2="410" y2="358" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="410" y="336" width="110" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="465" y="363" text-anchor="middle" font-size="16">Ampli</text>
+              <line x1="520" y1="358" x2="560" y2="358" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar)"/>
+              <rect x="560" y="336" width="100" height="44" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="610" y="363" text-anchor="middle" font-size="16">HP</text>
+            </g>
+            <text x="700" y="354" font-size="15" fill="var(--ink-soft)" font-family="JetBrains Mono">actif</text>
+            <text x="700" y="374" font-size="13" fill="var(--ink-soft)" font-family="JetBrains Mono">Sallen-Key</text>
+            <text x="790" y="354" font-size="15" fill="var(--accent)" font-family="JetBrains Mono">3</text>
+            <text x="790" y="374" font-size="13" fill="var(--ink-soft)" font-family="JetBrains Mono">12 dB/oct</text>
+          </svg>
+        </div>
+        <p class="legende">Duel central : <span style="color:var(--accent)">1.B passif vs 3 actif</span> (même ordre) · l'ordre 1 (1.A) et le RC signal faible (2) servent de contre-exemples.</p>
+        <aside class="notes">
+          — Trois familles : passif après l'ampli, passif au niveau ligne, actif à AOP.<br>
+          — Le vrai duel est passif 2ⁿᵈ ordre vs actif, à pente égale.
+        </aside>
+      </section>
+
+      <!-- ===================== 6. CADRE THÉORIQUE ===================== -->
+      <section>
+        <div class="kicker">Modélisation</div>
+        <h2>Filtre Butterworth 2<sup>nd</sup> ordre</h2>
+        <div class="viz">
+          <svg viewBox="0 0 1000 430" font-family="Inter,sans-serif" role="img" aria-label="Diagrammes de Bode gain et phase, 2nd ordre">
+            <!-- GAIN -->
+            <text x="55" y="36" fill="var(--ink-soft)" font-size="15">G (dB)</text>
+            <line x1="120" y1="28" x2="120" y2="185" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <line x1="120" y1="185" x2="920" y2="185" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <g stroke="var(--trait)" stroke-width="1"><line x1="120" y1="50" x2="920" y2="50"/><line x1="120" y1="117" x2="920" y2="117"/></g>
+            <g fill="var(--ink-soft)" font-size="13" text-anchor="end"><text x="112" y="55">0</text><text x="112" y="122">-20</text></g>
+            <!-- LP : plat puis chute -12 dB/oct -->
+            <path d="M120,50 L470,50 Q510,52 525,72 Q580,140 700,180 L800,184" fill="none" stroke="var(--accent)" stroke-width="4.5"/>
+            <!-- HP : montée puis plat -->
+            <path d="M200,184 Q330,150 470,80 Q505,55 525,72 Q560,53 640,50 L920,50" fill="none" stroke="var(--accent2)" stroke-width="4.5"/>
+            <circle cx="525" cy="72" r="5" fill="var(--warn)"/>
+            <text x="538" y="66" fill="var(--warn)" font-size="14">-3 dB</text>
+            <text x="720" y="150" fill="var(--ink-soft)" font-size="14">-12 dB/oct</text>
+            <!-- PHASE -->
+            <text x="48" y="248" fill="var(--ink-soft)" font-size="15">φ (°)</text>
+            <line x1="120" y1="230" x2="120" y2="400" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <line x1="120" y1="315" x2="920" y2="315" stroke="var(--ink-soft)" stroke-width="1.5"/>
+            <g fill="var(--ink-soft)" font-size="12" text-anchor="end"><text x="112" y="240">+180</text><text x="112" y="320">0</text><text x="112" y="398">-180</text></g>
+            <!-- LP phase 0 -> -180 (−90 à fc) -->
+            <path d="M120,315 L400,317 Q500,320 525,355 Q560,392 660,397 L920,399" fill="none" stroke="var(--accent)" stroke-width="4.5"/>
+            <!-- HP phase +180 -> 0 (+90 à fc) -->
+            <path d="M120,233 Q340,236 460,275 Q505,315 525,315 Q620,316 720,316 L920,315" fill="none" stroke="var(--accent2)" stroke-width="4.5"/>
+            <!-- fc commun -->
+            <line x1="525" y1="28" x2="525" y2="400" stroke="var(--accent)" stroke-width="1.3" stroke-dasharray="4 4"/>
+            <text x="525" y="422" fill="var(--accent)" font-size="15" text-anchor="middle" font-weight="700" font-family="Space Grotesk">f_c = 100 Hz</text>
+          </svg>
+        </div>
+        <p class="cle">\( \underline{H}_{PB}=\dfrac{1}{1+\frac{1}{Q}\frac{j\omega}{\omega_c}+(\frac{j\omega}{\omega_c})^2} \) &nbsp;·&nbsp; \( Q=\tfrac{1}{\sqrt2} \) &nbsp;·&nbsp; pente \( \pm 12~\text{dB/oct} \)</p>
+        <aside class="notes">
+          — 2ⁿᵈ ordre : pente double, meilleure séparation.<br>
+          — Q = 1/√2 = réponse maximalement plate (Butterworth). Linkwitz-Riley en perspective.<br>
+          — Attention au raccord : inversion de polarité d'une voie (à étudier).
+        </aside>
+      </section>
+
+      <!-- ===================== 7. PROTOCOLE ===================== -->
+      <section>
+        <div class="kicker">Démarche expérimentale</div>
+        <h2>Protocole de mesure prévu</h2>
+        <div class="deux-viz">
+          <figure>
+            <svg viewBox="0 0 460 250" font-family="Inter,sans-serif" role="img" aria-label="Banc électrique">
+              <defs><marker id="be" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--wire)"/></marker></defs>
+              <rect x="15" y="70" width="110" height="64" rx="5" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="70" y="108" text-anchor="middle" font-size="19">GBF</text>
+              <line x1="125" y1="102" x2="170" y2="102" stroke="var(--wire)" stroke-width="2" marker-end="url(#be)"/>
+              <rect x="172" y="70" width="110" height="64" rx="5" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.6"/><text x="227" y="108" text-anchor="middle" font-size="17" fill="var(--accent)">Filtre</text>
+              <line x1="282" y1="102" x2="327" y2="102" stroke="var(--wire)" stroke-width="2" marker-end="url(#be)"/>
+              <rect x="329" y="70" width="116" height="64" rx="5" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="387" y="98" text-anchor="middle" font-size="15">Oscillo-</text><text x="387" y="118" text-anchor="middle" font-size="15">scope</text>
+              <text x="230" y="178" text-anchor="middle" font-size="16" fill="var(--accent)" font-family="Space Grotesk">gain &amp; phase → Bode</text>
+              <text x="230" y="206" text-anchor="middle" font-size="14" fill="var(--ink-soft)" font-family="JetBrains Mono">charge : résistance 8 Ω, puis HP</text>
+            </svg>
+            <figcaption>Banc électrique — rigueur</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 460 250" font-family="Inter,sans-serif" role="img" aria-label="Banc acoustique">
+              <defs><marker id="ba" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--wire)"/></marker></defs>
+              <rect x="20" y="86" width="14" height="36" fill="var(--accent)"/><polygon points="34,78 34,130 64,144 64,64" fill="var(--accent)"/>
+              <path d="M78,104 q12,-15 0,-30" fill="none" stroke="var(--accent2)" stroke-width="2.5"/><path d="M90,104 q20,-23 0,-46" fill="none" stroke="var(--accent2)" stroke-width="2.5"/>
+              <circle cx="132" cy="104" r="11" fill="none" stroke="var(--wire)" stroke-width="2.5"/><line x1="132" y1="115" x2="132" y2="140" stroke="var(--wire)" stroke-width="2.5"/>
+              <text x="132" y="162" text-anchor="middle" font-size="13" fill="var(--ink-soft)">micro</text>
+              <line x1="148" y1="104" x2="190" y2="104" stroke="var(--wire)" stroke-width="2" marker-end="url(#ba)"/>
+              <rect x="192" y="74" width="96" height="60" rx="5" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/><text x="240" y="100" text-anchor="middle" font-size="15">Carte</text><text x="240" y="120" text-anchor="middle" font-size="15">son</text>
+              <line x1="288" y1="104" x2="330" y2="104" stroke="var(--wire)" stroke-width="2" marker-end="url(#ba)"/>
+              <rect x="332" y="74" width="92" height="60" rx="5" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.6"/><text x="378" y="112" text-anchor="middle" font-size="18" fill="var(--accent)">REW</text>
+              <text x="230" y="190" text-anchor="middle" font-size="15" fill="var(--accent)" font-family="Space Grotesk">somme des deux voies</text>
+              <text x="230" y="214" text-anchor="middle" font-size="14" fill="var(--ink-soft)" font-family="JetBrains Mono">champ proche · à 1 m</text>
+            </svg>
+            <figcaption>Banc acoustique — réel</figcaption>
+          </figure>
+        </div>
+        <p class="cle">D'abord caractériser \(Z(f)\) et \(f_s\) des HP · simuler (LTspice, Python) · incertitudes propagées.</p>
+        <aside class="notes">
+          — Électrique d'abord (propre), puis acoustique (réel).<br>
+          — Résistance puis vrai HP pour isoler l'effet de l'impédance.<br>
+          — Toutes les mesures avec barres d'incertitude.
+        </aside>
+      </section>
+
+      <!-- ===================== 8. PLANNING & PERSPECTIVES ===================== -->
+      <section>
+        <div class="kicker">Feuille de route</div>
+        <h2>Démarche &amp; perspectives</h2>
+        <div class="viz">
+          <svg viewBox="0 0 1000 150" font-family="Inter,sans-serif" role="img" aria-label="Étapes du projet">
+            <line x1="100" y1="55" x2="900" y2="55" stroke="var(--accent)" stroke-width="2.5"/>
+            <g>
+              <circle cx="110" cy="55" r="17" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/><text x="110" y="61" fill="var(--accent)" font-size="16" text-anchor="middle" font-weight="700" font-family="Space Grotesk">1</text>
+              <circle cx="300" cy="55" r="17" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/><text x="300" y="61" fill="var(--accent)" font-size="16" text-anchor="middle" font-weight="700" font-family="Space Grotesk">2</text>
+              <circle cx="500" cy="55" r="17" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/><text x="500" y="61" fill="var(--accent)" font-size="16" text-anchor="middle" font-weight="700" font-family="Space Grotesk">3</text>
+              <circle cx="700" cy="55" r="17" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/><text x="700" y="61" fill="var(--accent)" font-size="16" text-anchor="middle" font-weight="700" font-family="Space Grotesk">4</text>
+              <circle cx="900" cy="55" r="17" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/><text x="900" y="61" fill="var(--accent)" font-size="16" text-anchor="middle" font-weight="700" font-family="Space Grotesk">5</text>
+            </g>
+            <g fill="var(--ink)" font-size="15" text-anchor="middle" font-family="JetBrains Mono">
+              <text x="110" y="100">Caractériser</text><text x="110" y="120" fill="var(--ink-soft)" font-size="13">Z(f), f_s</text>
+              <text x="300" y="100">Dimensionner</text><text x="300" y="120" fill="var(--ink-soft)" font-size="13">+ simuler</text>
+              <text x="500" y="100">Tests élec.</text><text x="500" y="120" fill="var(--ink-soft)" font-size="13">résistance</text>
+              <text x="700" y="100">Tests acous.</text><text x="700" y="120" fill="var(--ink-soft)" font-size="13">vrais HP</text>
+              <text x="900" y="100">Comparer</text><text x="900" y="120" fill="var(--ink-soft)" font-size="13">arbitrer</text>
+            </g>
+          </svg>
+        </div>
+        <div class="encadre">
+          <strong>Perspectives.</strong> Réseau de Zobel (linéariser \(Z\) du HP) · Linkwitz-Riley
+          (somme plate) · ordre 4 (encombrant en passif, trivial en actif) · correction numérique (DSP).
+        </div>
+        <aside class="notes">
+          — Cinq phases, de la caractérisation à l'arbitrage.<br>
+          — Ouvertures crédibles si on veut aller plus loin.
+        </aside>
+      </section>
+
+      <!-- ===================== 9. MERCI ===================== -->
       <section class="titre">
-        <h2>Merci de votre attention</h2>
-        <p class="cle">Vos remarques sur la démarche sont les bienvenues.</p>
+        <div class="kicker">Pré-soutenance · TIPE 2025–2027</div>
+        <h1>Merci de votre <em>attention</em></h1>
+        <div class="sous">Vos remarques sur la démarche sont les bienvenues.</div>
         <aside class="notes">— Ouvert aux questions sur la faisabilité et la rigueur.</aside>
       </section>
 
@@ -360,8 +309,7 @@
       center: false, hash: true,
       transition: 'fade', transitionSpeed: 'fast',
       slideNumber: 'c/t', controls: true, progress: true,
-      pdfSeparateFragments: false,
-      pdfMaxPagesPerSlide: 1,
+      pdfSeparateFragments: false, pdfMaxPagesPerSlide: 1,
       math: {
         mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
         config: 'TeX-AMS_HTML-full',

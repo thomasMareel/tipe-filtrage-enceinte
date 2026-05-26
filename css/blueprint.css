@@ -1,0 +1,136 @@
+/* ============================================================
+   Thème « Blueprint technique » — TIPE filtrage enceinte
+   Fond bleu nuit + grille, accent cyan, titres Space Grotesk,
+   étiquettes JetBrains Mono. Partagé par les deux présentations.
+   ============================================================ */
+
+:root {
+  --bg:        #0e2230;   /* bleu nuit */
+  --bg-card:   #0c1e2b;   /* panneau légèrement plus sombre */
+  --ink:       #e6f1f4;   /* texte clair */
+  --ink-soft:  #8fb2bf;   /* texte secondaire / légendes */
+  --accent:    #5fd0e0;   /* cyan : voie 1 / surlignage */
+  --accent2:   #9ad6a0;   /* vert doux : voie 2 */
+  --warn:      #e0a84e;   /* ambre : alerte / point clé */
+  --wire:      #b8d4dc;   /* fils de schéma */
+  --trait:     #28485a;   /* filets, bordures */
+  --grid:      rgba(95,208,224,.07);
+}
+
+.reveal {
+  font-family: Inter, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 30px;
+  color: var(--ink);
+}
+
+/* Fond bleu nuit + grille millimétrée sur chaque diapo */
+.reveal .slides section {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.reveal .backgrounds { background: var(--bg); }
+
+.reveal .slides { text-align: left; }
+
+/* --- Titres : Space Grotesk --- */
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  color: var(--ink); letter-spacing: -.5px; text-transform: none; font-weight: 600;
+}
+.reveal h1 { font-size: 1.9em; line-height: 1.08; }
+.reveal h2 { font-size: 1.3em; margin-bottom: .5em; padding-bottom: .25em;
+             border-bottom: 1px solid var(--trait); }
+.reveal h2 .accent, .reveal h1 .accent { color: var(--accent); }
+.reveal h3 { font-size: 1.02em; color: var(--accent); }
+
+.reveal p, .reveal li { line-height: 1.45; }
+.reveal strong { color: var(--accent); }
+.reveal em { color: var(--ink-soft); font-style: italic; }
+.reveal ul li::marker { color: var(--accent); }
+.reveal a { color: var(--accent); }
+
+/* --- Eyebrow / kicker en mono --- */
+.reveal .kicker {
+  font-family: "JetBrains Mono", monospace; font-size: .5em; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--ink-soft); margin-bottom: .4em;
+}
+
+/* --- Diapo de titre --- */
+.reveal section.titre { text-align: center; }
+.reveal section.titre h1 { margin: .1em 0 .25em; }
+.reveal section.titre h1 em { color: var(--accent); font-style: italic; }
+.reveal section.titre .sous { color: var(--ink-soft); font-size: .82em; font-style: italic; }
+.reveal section.titre .auteur { font-family: "JetBrains Mono", monospace; font-size: .6em;
+  color: var(--ink); letter-spacing: 1px; margin-top: 1.4em; }
+.reveal section.titre .meta { font-family: "JetBrains Mono", monospace; font-size: .48em;
+  color: var(--ink-soft); letter-spacing: 1.5px; text-transform: uppercase; margin-top: .5em; }
+
+/* --- Phrase-clé centrée --- */
+.reveal .cle { font-size: 1.05em; color: var(--accent); font-weight: 500; text-align: center; }
+.reveal .legende { font-size: .62em; color: var(--ink-soft); text-align: center; margin-top: .3em;
+  font-family: "JetBrains Mono", monospace; letter-spacing: .5px; }
+
+/* --- Encadrés --- */
+.reveal .encadre {
+  border-left: 3px solid var(--accent); background: var(--bg-card);
+  padding: .5em .9em; margin: .5em 0; font-size: .9em;
+}
+.reveal .encadre.warn { border-left-color: var(--warn); }
+.reveal .encadre.warn strong { color: var(--warn); }
+
+/* --- Visuels SVG --- */
+.reveal .viz { display:flex; justify-content:center; align-items:center; }
+.reveal .viz svg { width:100%; height:auto; max-height:500px; }
+.reveal .deux-viz { display:flex; gap:2em; align-items:flex-start; justify-content:center; }
+.reveal .deux-viz > figure { flex:1; margin:0; text-align:center; }
+.reveal .deux-viz svg { width:100%; height:auto; max-height:420px; }
+.reveal figcaption { font-size:.62em; color:var(--ink-soft); margin-top:.3em;
+  font-family:"JetBrains Mono", monospace; letter-spacing:.5px; }
+.reveal svg text { fill: var(--ink); }
+
+/* --- Chips --- */
+.reveal .chips { display:flex; gap:.8em; justify-content:center; margin-top:.5em; flex-wrap:wrap; }
+.reveal .chip { border:1px solid var(--trait); background:var(--bg-card); border-radius:4px;
+  padding:.45em .8em; text-align:center; }
+.reveal .chip b { color:var(--accent); display:block; font-size:.92em;
+  font-family:"Space Grotesk", sans-serif; }
+.reveal .chip span { font-size:.62em; color:var(--ink-soft); font-family:"JetBrains Mono", monospace; }
+
+/* --- Tableaux --- */
+.reveal table { border-collapse: collapse; font-size: .66em; margin: 0 auto;
+  font-family: Inter, sans-serif; }
+.reveal table th, .reveal table td { border: 1px solid var(--trait); padding: .4em .7em; text-align: left; }
+.reveal table th { background: var(--accent); color: #06222c; font-weight: 600;
+  font-family: "Space Grotesk", sans-serif; }
+.reveal table tr:nth-child(even) td { background: rgba(95,208,224,.05); }
+
+/* --- Cadres média (photos à insérer) --- */
+.reveal .photo { width:100%; max-height:360px; object-fit:cover; border:1px solid var(--trait); border-radius:4px; display:block; }
+.reveal .placeholder {
+  border: 1px dashed var(--trait); color: var(--ink-soft); background: var(--bg-card);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  min-height: 240px; font-size:.7em; border-radius:4px;
+  font-family:"JetBrains Mono", monospace; letter-spacing:.5px;
+}
+
+/* --- Colonnes --- */
+.reveal .colonnes { display:flex; gap:1.4em; align-items:flex-start; }
+.reveal .colonnes > * { flex:1; }
+
+/* --- Numéro de diapo / progression --- */
+.reveal .progress { color: var(--accent); height: 3px; }
+.reveal .slide-number { background: transparent; color: var(--ink-soft);
+  font-family:"JetBrains Mono", monospace; }
+
+/* --- Tag (badge mono, ex. pente / ordre) --- */
+.reveal .tag { font-family:"JetBrains Mono", monospace; font-size:.55em; letter-spacing:1px;
+  text-transform:uppercase; background:var(--bg-card); border:1px solid var(--trait);
+  color:var(--accent); padding:.25em .6em; border-radius:3px; }
+
+/* --- Impression / export PDF : on garde le fond bleu nuit (support numérique) --- */
+@media print {
+  .reveal .slides section { background-color: var(--bg) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
