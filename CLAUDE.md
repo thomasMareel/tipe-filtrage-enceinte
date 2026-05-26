@@ -269,5 +269,11 @@ Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
   raccord/problématique, cahier des charges, 3 architectures [duel 1.B vs 3], Bode 2ⁿᵈ ordre
   gain+phase, protocole, planning+perspectives, merci). 6 SVG, 0 débordement. Photos en repli
   élégant tant que assets/enceinte-face.jpg et assets/enceinte-banc.jpg ne sont pas déposées.
-- **RESTE À FAIRE** : refondre presentation-finale.html (10 min) + index.html (accueil) dans
-  le même style Blueprint ; l'étudiant doit déposer les 2 photos dans assets/.
+- **Photos déposées** par l'étudiant : assets/enceinte-face.jpg + assets/enceinte-banc.jpg (intégrées slide 2).
+- **PDF de la pré-soutenance généré** : `pre-soutenance.pdf` (9 pages, centré). Reveal est passé
+  en `center: true` (titre/photos équilibrés, slides denses non rognées).
+  Procédure PDF (Chrome headless ne respecte PAS la taille de page reveal → on capture chaque slide) :
+  1. `python -m http.server 8090` ; 2. pour i in 0..N : `chrome --headless=new --force-device-scale-factor=2
+     --window-size=1280,720 --virtual-time-budget=12000 --screenshot=_pdfbuild/slide_i.png URL#/i` ;
+  3. assembler avec `img2pdf` (Pillow n'a pas le codec JPEG ici). Dossier _pdfbuild/ gitignoré.
+- **RESTE À FAIRE** : refondre presentation-finale.html (10 min) + index.html (accueil) en Blueprint.

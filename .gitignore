@@ -14,6 +14,7 @@ desktop.ini
 # Exports temporaires
 *.tmp
 ~$*
+_pdfbuild/
 
 # Le PDF exporté est un livrable régénérable : on ne le versionne pas par défaut.
 # (décommente la ligne suivante si tu préfères le suivre)
