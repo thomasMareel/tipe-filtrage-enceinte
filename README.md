@@ -27,28 +27,35 @@ l'**électrique** et l'**expérimental** ; l'acoustique sert de confrontation au
 | Fichier | Public | Durée | État |
 |---|---|---|---|
 | `pre-soutenance.html` | Professeurs (annonce du sujet) | ~5 min, 9 vues | rédigé, visuel |
-| `presentation-finale.html` | Jury TIPE | ~10 min, 15 slides + 3 annexes | structuré, en attente des mesures |
+| `presentation-finale.html` | Jury TIPE | ~10 min, 16 slides + annexes | structuré, en attente des mesures |
 
-`index.html` est une page d'accueil qui pointe vers les deux. Les deux présentations
-partagent `css/custom.css` et le dossier `assets/`. Les visuels sont des **schémas SVG
-inline** (nets à l'impression PDF, sans image externe) ; le texte à l'écran est réduit
-au minimum, le détail est dans les notes du présentateur (touche `S`).
+`index.html` est une page d'accueil qui pointe vers les deux. Identité visuelle
+**« Blueprint »** (`css/blueprint.css`) ; variante claire pour l'impression
+(`css/blueprint-light.css`). Les visuels sont des **schémas SVG** (dont les courbes de
+Bode et d'impédance **calculées** via `_gen.py`). Tout fonctionne **hors-ligne** :
+reveal.js, MathJax (SVG) et les polices sont hébergés dans `libs/`. Chaque présentation
+existe aussi en **PDF vectoriel** (sombre) et **PDF clair** (impression).
 
 ## Structure des dossiers
 
 ```
 TIPE/
-├── index.html               Page d'accueil (liens vers les deux présentations)
-├── pre-soutenance.html      Pré-soutenance ~5 min (visuelle)
-├── presentation-finale.html Présentation finale ~10 min + annexes
+├── index.html                 Page d'accueil (liens présentations + PDF + docs)
+├── pre-soutenance.html        Pré-soutenance ~5 min
+├── presentation-finale.html   Présentation finale ~10 min + annexes
+├── *.pdf                      PDF vectoriels (sombre) + *-clair.pdf (impression)
+├── favicon.svg
 ├── css/
-│   └── custom.css           Thème clair sobre + helpers visuels partagés
-├── assets/                  Photos de l'enceinte, schémas, courbes de mesure
-├── README.md                Ce fichier
-├── CLAUDE.md                Mémoire de projet entre sessions (sujet, état, journal)
-├── MCOT.md                  Brouillon de la fiche MCOT (ancrage thème, problématique, biblio)
-├── EXPORT-PDF.md            Procédure d'export PDF
-└── NOTES-TIPE.md            Questions probables du jury + pistes de réponse
+│   ├── blueprint.css          Thème « Blueprint » (sombre)
+│   └── blueprint-light.css    Surcharge palette claire (impression)
+├── libs/                      reveal.js, MathJax (SVG), polices — pour le hors-ligne
+├── assets/                    Photos de l'enceinte, schémas, courbes de mesure
+├── _gen.py                    Génère les courbes calculées (Bode, impédance)
+├── README.md                  Ce fichier
+├── CLAUDE.md                  Mémoire de projet entre sessions
+├── MCOT.md                    Brouillon de la fiche MCOT
+├── EXPORT-PDF.md              Procédure d'export PDF
+└── NOTES-TIPE.md              Questions probables du jury + pistes de réponse
 ```
 
 ## Lancer la présentation
