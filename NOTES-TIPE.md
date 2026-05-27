@@ -1,168 +1,137 @@
 # Notes TIPE — questions probables du jury et pistes de réponse
 
-À relire la veille de l'oral. Le jury (un examinateur physique-chimie, un
-mathématiques, **non spécialistes** du sujet) cherche à vérifier la rigueur de la
-démarche, pas à te piéger sur de l'électroacoustique pointue. Réponds avec des
-grandeurs physiques et des ordres de grandeur, jamais « ça sonne mieux ».
+À relire la veille de l'oral. Sujet : **trois architectures de filtrage** pour le
+raccord à 100 Hz d'une enceinte deux voies (sub 18″ 8 Ω + 2 médiums 4 Ω série).
+Jury non spécialiste : répondre avec des grandeurs physiques et des ordres de
+grandeur, jamais « ça sonne mieux ».
 
-> Les questions marquées **[P]** sont surtout utiles pour la **pré-soutenance**
-> (annonce du sujet) ; les autres pour la **soutenance finale** (avec résultats).
+> [P] = surtout utile pour la **pré-soutenance** (démarche) ; les autres pour la **finale**.
 
----
+## 1. Sujet & problématique
 
-## 1. Sur le sujet et la problématique
+**« En une phrase, qu'optimisez-vous ? »** [P]
+→ Le compromis **sobriété / efficacité** du raccord à 100 Hz : à pente et coupure
+comparables, quelle architecture coûte le moins (composants, encombrement, complexité)
+tout en restant fidèle (coupure réelle proche de 100 Hz, pente effective, pertes faibles).
 
-**« En une phrase, qu'est-ce que vous cherchez à optimiser ? »** **[P]**
-→ La fidélité de la réponse en fréquence au raccord 100 Hz : que la somme des deux
-voies soit la plus plate possible (écart minimal en dB à une cible), avec un raccord
-de phase propre. C'est mon critère objectif de « qualité ».
+**« Pourquoi 100 Hz ? »** [P]
+→ Garder les médiums **au-dessus de leur résonance** (sinon distorsion/excursion) et
+confier le grave au 18″, conçu pour ça.
 
-**« Pourquoi 100 Hz et pas une autre fréquence ? »** **[P]**
-→ Choix dicté par les haut-parleurs : mon médium a une résonance vers f_s ≈ 50 Hz ;
-couper à 100 Hz (le double) le maintient au-dessus de sa zone de distorsion, et confie
-le grave au subwoofer 18″ qui est conçu pour ça.
+## 2. Les trois architectures
 
-**« Pourquoi comparer passif ET actif, est-ce vraiment comparable ? »**
-→ Non, pas tout à fait, et c'est justement l'intérêt : le passif filtre après
-l'ampli (composants de puissance, lourds) ; l'actif filtre avant (petits composants)
-mais impose un ampli par voie. Je compare donc des compromis, pas des équivalents —
-d'où le « à quel coût système » de ma problématique.
+**« Pourquoi trois architectures ? »**
+→ 1) **passif post-ampli** (LC 2ⁿᵈ ordre Butterworth, entre ampli et HP) ;
+2) **passif signal faible** (RC 1er ordre, entre pré-ampli et ampli) ;
+3) **actif Sallen-Key** (2ⁿᵈ ordre, à AOP, avant l'ampli). Le **duel scientifique** est
+**1.B vs 3** (même ordre, 12 dB/oct) ; l'archi 2 (6 dB/oct) est un **contre-exemple**
+qui montre les limites de l'approche naïve.
 
-**« Si les deux sont du 1er ordre, le filtrage n'est-il pas identique ? »** (piège fréquent)
-→ En théorie, oui : même fonction de transfert, même pente (−20 dB/déc), même −3 dB
-à \( f_c \). La différence est dans le **réel** : le passif voit l'impédance variable du
-HP (sa coupure dévie), subit les pertes de la bobine et les tolérances des gros
-composants ; l'actif garde une réponse idéale et ajustable. Donc à modèle identique,
-l'écart se mesure sur la **fidélité réelle** et la **sobriété**, pas sur la théorie.
+**« La comparaison est-elle équitable ? »** (piège)
+→ Honnêtement, l'archi 2 est du **1er ordre** : on ne compare pas sa pente à pied
+d'égalité. Je l'assume — c'est justement pour montrer pourquoi on ne filtre pas en RC
+au niveau ligne. Le cœur est 1.B vs 3.
 
-## 2. Sur la physique des filtres (cœur PTSI)
+**« Si 1.B et 3 sont tous deux du 2ⁿᵈ ordre Butterworth, ne sont-ils pas identiques ? »**
+→ En théorie, oui (même \(\underline H\), même pente, même −3 dB à f_c). La différence
+est **dans le réel** : le passif voit l'impédance variable du HP, subit les pertes de la
+bobine et les tolérances de gros composants ; l'actif garde une réponse idéale et
+**ajustable**. L'écart se mesure sur la fidélité réelle et la sobriété.
 
-**« Écrivez la fonction de transfert d'un passe-bas du 1er ordre. »**
-→ \( \underline{H}(j\omega) = \dfrac{1}{1 + j\,\omega/\omega_c} \), avec
-\( \omega_c = 2\pi f_c \). Module \( |H| = 1/\sqrt{1+(\omega/\omega_c)^2} \),
-gain \(-3\) dB et déphasage \(-45°\) à \( f_c \), pente asymptotique \(-20\) dB/décade.
+## 3. Butterworth 2ⁿᵈ ordre & Sallen-Key
 
-**« Comment fixez-vous la fréquence de coupure ? »**
-→ Passe-haut RC : \( f_c = 1/(2\pi RC) \). Passe-bas RL (bobine série + charge R) :
-\( f_c = R/(2\pi L) \). Je choisis L ou C pour obtenir 100 Hz avec R = 8 Ω.
+**« Fonction de transfert d'un passe-bas 2ⁿᵈ ordre ? »**
+→ \( \underline H_{PB}=\dfrac{1}{1+\frac{1}{Q}\frac{j\omega}{\omega_c}+\left(\frac{j\omega}{\omega_c}\right)^2} \).
+À f_c : \( |H|=Q \) pour ce passe-bas ; **Butterworth** = \( Q=1/\sqrt2 \) (réponse
+maximalement plate), gain −3 dB à f_c, pente asymptotique **−40 dB/décade (−12 dB/oct)**,
+déphasage −90° à f_c (−180° en HF).
 
-**« Donnez les valeurs des composants en passif. »**
-→ Pour R = 8 Ω à 100 Hz : \( L = R/(2\pi f_c) \approx 12{,}7 \) mH et
-\( C = 1/(2\pi f_c R) \approx 199~\mu\text{F} \). Ce sont de grosses valeurs : c'est mon
-argument « sobriété » — le passif est physiquement coûteux à si basse fréquence.
+**« Dimensionnement passif (archi 1.B) ? »**
+→ \( L=\dfrac{R\sqrt2}{2\pi f_c}\approx 18{,}0\) mH, \( C=\dfrac{1}{R\sqrt2\,2\pi f_c}\approx 141\) µF
+(→ 150 µF normalisé, qui décale f_c à ≈ 96 Hz : à assumer). R = 8 Ω.
 
-**« Qu'est-ce qu'une décade, une octave ? »**
-→ Décade = facteur 10 en fréquence (pente −20 dB/décade au 1er ordre) ;
-octave = facteur 2 (soit −6 dB/octave). Même pente, deux unités.
+**« Dimensionnement actif (archi 3, Sallen-Key gain unité) ? »**
+→ Passe-bas (sub) : R₁=R₂=**10 kΩ**, C₁=220 nF, C₂=110 nF (C₁=2C₂ ⇒ Q=1/√2).
+Passe-haut (médiums) : C=100 nF, R'₁=**11 kΩ**, R'₂=**22 kΩ** (R'₂=2R'₁ ⇒ Q=1/√2).
+AOP NE5532, alim ±15 V. *(Attention : composants tous égaux + gain unité donnent Q=0,5,
+pas Butterworth — d'où les ratios C₁=2C₂ et R'₂=2R'₁.)*
 
-## 3. Sur le haut-parleur réel (LE piège classique)
+## 4. Le haut-parleur réel
 
-**« Vous traitez le HP comme une résistance de 8 Ω. Est-ce justifié ? »**
-→ Non, c'est une approximation. Un HP a une inductance de bobine (impédance qui monte
-avec f) et un pic d'impédance à sa résonance f_s. Le « 8 Ω » est une valeur nominale,
-pas l'impédance réelle. C'est pourquoi je teste d'abord sur une **résistance de 8 Ω**
-(cas idéal), puis sur le **vrai HP** : l'écart entre les deux mesure précisément cet effet.
+**« Vous traitez le HP comme 8 Ω. Justifié ? »**
+→ Approximation. Le HP a une inductance L_e (Z monte avec f) et un **pic à la résonance
+f_s**. « 8 Ω » est nominal. D'où la méthode : tester d'abord sur **résistance 8 Ω**, puis
+sur le **vrai HP** ; l'écart mesure cet effet. L'actif, lui, voit l'entrée de l'AOP → insensible.
 
-**« Conséquence sur le filtre passif ? »**
-→ La coupure réelle dépend de l'impédance de charge, qui varie ; donc le f_c effectif
-diffère du f_c théorique calculé sur 8 Ω. L'actif, lui, voit l'entrée de l'AOP
-(impédance élevée et quasi constante) → réponse prévisible, indépendante du HP. Deuxième
-argument fort pour l'actif.
+**« f_s mesurée vs datasheet ? »** (piège)
+→ La datasheet donne f_s en **champ libre** ; mon pic d'impédance est celui du HP **en
+caisse** (clos : F_c > f_s ; bass-reflex : deux pics). L'écart n'est **pas une erreur** :
+c'est la charge acoustique. Pour le vrai f_s champ libre, mesurer hors caisse.
 
-## 4. Sur la mesure
+**« Comment mesurer Z(f) ? »**
+→ Résistance de référence R_ref = 100 Ω en série ; mesurer **V_HP et V_Rref** →
+\( Z=R_{ref}\,V_{HP}/V_{Rref} \) (exact, sans hypothèse de courant constant — utile car
+au pic Z ~ 40–60 Ω). REW sait le faire avec un jig.
 
-**« Comment mesurez-vous un diagramme de Bode ? »** **[P]**
-→ GBF en entrée, balayage en fréquence ; à l'oscilloscope je lis l'amplitude de sortie
-(→ gain en dB) et le décalage temporel entre entrée et sortie (→ déphasage). Point par
-point ou en balayage.
+## 5. Le raccord (sommation des voies)
 
-**« Pourquoi la mesure acoustique est-elle délicate à 100 Hz ? »**
-→ À 100 Hz la longueur d'onde vaut ≈ 3,4 m, comparable aux dimensions de la pièce :
-les modes propres (ondes stationnaires) dominent et faussent la mesure. Le fenêtrage
-quasi-anéchoïque est inopérant si bas. Je mesure donc en **champ proche** (micro à
-quelques cm) pour m'affranchir de la pièce, en assumant que ce n'est pas la réponse au
-point d'écoute.
+**« Que se passe-t-il à la somme des deux voies en 2ⁿᵈ ordre ? »**
+→ Les deux voies sont **à 180°** à f_c. Sans rien faire → **trou** (annulation). Il faut
+**inverser la polarité** d'une voie → la somme fait une **bosse de +3 dB** (signature
+Butterworth). Un **Linkwitz-Riley** (−6 dB à f_c) sommerait **plat** : c'est l'alternative
+standard, gardée en perspective.
 
-**« Et les incertitudes ? »**
-→ Tolérances des composants (R ±5 %, C ±10–20 %, L ±10 %) propagées sur
-\( f_c \) : par exemple pour un RC, \( u(f_c)/f_c = \sqrt{(u(R)/R)^2 + (u(C)/C)^2} \).
-Plus les incertitudes de lecture à l'oscilloscope sur le gain et le déphasage.
+## 6. Mesure & incertitudes
 
-## 5. Sur le filtrage actif (2e année — à maîtriser pour la finale)
+**« Comment mesurez-vous un Bode ? »** [P]
+→ GBF en balayage, oscilloscope : amplitude (→ gain dB) et décalage temporel (→ phase).
 
-**« Comment fonctionne votre filtre actif ? »**
-→ Un amplificateur opérationnel en régime linéaire (hypothèses : courants d'entrée
-nuls, \( V^+ = V^- \)) associé à un réseau RC fixe la fréquence de coupure, en amont
-de l'amplification de puissance. Avantage : composants minuscules et réponse
-indépendante du HP.
+**« Pourquoi l'acoustique BF est délicate ? »**
+→ λ ≈ 3,4 m à 100 Hz : les **modes de pièce** dominent. Mesure en **champ proche** pour
+s'affranchir de la pièce (limite assumée : ce n'est pas la réponse au point d'écoute).
 
-**« Pourquoi une bi-amplification ? »**
-→ Comme le filtrage est fait avant l'ampli, chaque voie filtrée a besoin de son propre
-amplificateur de puissance. C'est le coût système de l'actif : plus d'électronique et
-une alimentation, en échange de la sobriété des composants de filtrage.
+**« Incertitudes ? »**
+→ Tolérances R ±5 %, C ±10–20 %, L ±10 % propagées : \( \frac{u(f_c)}{f_c}=\sqrt{(u(R)/R)^2+(u(C)/C)^2} \)
+(≈ 11 % pour un RC). Barres d'erreur sur tous les Bode.
 
-## 6. Sur le thème national
+## 7. Thème : sobriété / efficacité / optimisation
 
-**« Où sont sobriété, efficacité, optimisation dans votre travail ? »** **[P]**
-→ Sobriété : nombre/taille/coût des composants (le passif est lourd à 100 Hz).
-Efficacité : pertes Joule dans la résistance de la bobine, pente réelle d'atténuation.
-Optimisation : le compromis chiffré entre les deux, jugé sur l'écart à la réponse cible.
+**« Où sont les trois mots ? »** [P]
+→ Sobriété : nombre/taille/coût des composants (passif lourd : bobine 18 mH, condensateur
+≥ 100 V). Efficacité : pertes Joule dans la **DCR** de la bobine, pente réelle. Optimisation :
+arbitrage pondéré sur l'écart à la cible.
 
-## 7. Limites à reconnaître spontanément (ça rassure le jury)
+**« Le coût système, c'est l'actif seul ? »**
+→ Non : les archis **2 et 3** utilisent toutes deux les 2 canaux du E-800 (bi-amplification).
+Le vrai discriminant 1.B vs 3 : gros composants de puissance (DCR, prix, encombrement)
+**contre** petits composants + AOP + alim.
 
-- Je reste au 1er ordre : pente douce (−6 dB/oct), recouvrement large des deux voies.
-- Le HP n'est pas purement résistif ; je le quantifie au lieu de l'ignorer.
-- La mesure acoustique en basses fréquences est limitée par la pièce.
-- Le raccord de phase entre voies (90° au 1er ordre) influe sur la somme acoustique.
-- Les sensibilités des HP diffèrent : il faudra peut-être égaliser les niveaux.
+## 8. Questions « maths » (un examinateur est mathématicien)
 
-## 8. Questions « maths » possibles (un examinateur est mathématicien)
+- Module/argument de \( \underline H \) (algébrique ↔ polaire), gain \( 20\log_{10}|H| \), échelle log.
+- Démontrer le −3 dB : à \( x=\omega/\omega_c=1 \), pour Butterworth \( |H|=1/\sqrt2 \).
+- Facteur de qualité Q : largeur de bande, surtension ; lien avec l'amortissement.
+- Comportement asymptotique d'une fraction rationnelle en \( (j\omega)^2 \) (pente −40 dB/déc).
 
-**« Reliez module et argument de \( \underline{H} \). »**
-→ Forme algébrique \( \underline{H}=a+jb \) ; module \( |\underline{H}|=\sqrt{a^2+b^2} \),
-argument \( \varphi=\arg(\underline{H}) \). Le module donne le gain, l'argument le déphasage.
+## 9. Limites à reconnaître spontanément
 
-**« Pourquoi le gain en décibels et l'échelle log ? »**
-→ \( G_{dB}=20\log_{10}|\underline{H}| \). Le log transforme les produits en sommes :
-une pente d'ordre 1 devient une droite (−20 dB/décade), facile à lire et à additionner.
+- Comparaison non iso-ordre (archi 2 en 1er ordre).
+- HP non résistif (quantifié, pas ignoré) ; f_s en caisse ≠ datasheet.
+- Inversion de polarité au raccord ; somme acoustique dépend de la position des HP.
+- Acoustique BF limitée par la pièce ; incertitudes des composants.
 
-**« Comportement asymptotique du passe-bas ? »**
-→ \( \underline{H}=\dfrac{1}{1+jx} \) avec \( x=\omega/\omega_c \). Quand \( x\to 0 \),
-\( \underline{H}\to 1 \) (0 dB) ; quand \( x\to\infty \), \( |\underline{H}|\sim 1/x \)
-→ \( G_{dB}\sim -20\log_{10}x \) : droite de pente −20 dB/décade.
+## 10. Perspectives (slide ouverture)
 
-**« Démontrez le −3 dB à \( f_c \). »**
-→ À \( \omega=\omega_c \), \( x=1 \), \( |\underline{H}|=1/\sqrt{2} \), donc
-\( G_{dB}=20\log_{10}(1/\sqrt2)=-10\log_{10}2\approx -3{,}01 \) dB. Le déphasage y vaut \( -45° \).
-
-## 9. Sur le déphasage et la somme des deux voies
-
-**« Que vaut la somme des deux voies à \( f_c \) au 1er ordre ? »**
-→ Au 1er ordre, passe-bas et passe-haut sont en quadrature (90° d'écart). À \( f_c \),
-chaque voie est à \( 1/\sqrt2 \) (−3 dB) ; comme elles sont déphasées, la somme
-**vectorielle** des tensions \( \underline{H}_{PB}+\underline{H}_{PH}=1 \) exactement
-(0 dB) : la reconstruction électrique est plate. C'est une force du 1er ordre.
-
-**« Et acoustiquement ? »**
-→ Plus délicat : les deux HP sont séparés dans l'espace et ont leur propre phase ;
-la somme au point de mesure dépend de la position. D'où la prudence sur la mesure
-acoustique et le choix du champ proche.
-
-## 10. Sur les choix expérimentaux
-
-**« Pourquoi REW et une carte son plutôt qu'un sonomètre ? »**
-→ REW (gratuit) pilote un balayage et mesure la réponse en amplitude et en phase via
-la carte son et le micro de mesure ; bien plus riche qu'un simple niveau sonore, et
-permet aussi de mesurer l'impédance des HP (donc \( f_s \)).
-
-**« Comment mesurez-vous l'impédance pour obtenir \( f_s \) ? »**
-→ Méthode de la résistance série connue \( R_{ref} \) : on envoie un signal, on mesure
-la tension aux bornes du HP et celle aux bornes de \( R_{ref} \) ; le rapport donne
-\( |Z(f)| \). Le maximum d'impédance repère \( f_s \).
+- **Réseau de Zobel** : linéarise Z(HP) pour fiabiliser le passif.
+- **Linkwitz-Riley** : somme plate (cible audio pro).
+- **Ordre 4** : encombrant/coûteux en passif (4 gros composants/voie — mais courant en pro),
+  trivial en actif (cascade).
+- **Correction numérique (DSP)** : autre horizon.
 
 ---
 
 ### À faire avant la soutenance finale
-- Remplacer tous les placeholders (photo, schéma, Bode, f_s mesurée).
-- Avoir des courbes mesurées : Bode passif et actif, sur résistance et sur HP.
-- Préparer le tableau comparatif chiffré (sobriété / efficacité / optimisation).
+- Mesurer Z(f) et f_s (REW + jig) ; mesurer Z_s du pré-ampli SX-801.
+- Câbler les filtres ; Bode sur résistance puis HP ; somme acoustique au raccord.
+- Remplacer les placeholders (courbes mesurées) et la ligne « écart à la cible ».
+- Compléter la bibliographie (annexe Sources).

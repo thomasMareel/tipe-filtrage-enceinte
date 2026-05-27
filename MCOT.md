@@ -1,23 +1,19 @@
 # Fiche MCOT (brouillon) — Mise en Cohérence des Objectifs du TIPE
 
-> Document de travail pour préparer la fiche MCOT à saisir sur SCEI.
-> Pré-rempli avec ce qui est validé ; les `[[à compléter]]` dépendent de toi
-> (motivation personnelle, références exactes). **Rien n'est inventé.**
+> Document de travail pour la fiche MCOT (SCEI). Pré-rempli avec le cadrage validé ;
+> les `[[à compléter]]` dépendent de toi (motivation, références exactes). **Rien d'inventé.**
 
-## Titre du TIPE
+## Titre
 
-Filtrage fréquentiel d'une enceinte audio : raccord à 100 Hz, passif ou actif ?
+Filtrage fréquentiel d'une enceinte deux voies : passif ou actif pour le raccord à 100 Hz ?
 
 ## Ancrage au thème « Sobriété, efficacité, optimisation »
 
-Le filtrage de répartition (raccord grave/médium) illustre directement les trois axes :
-- **Sobriété** : à 100 Hz, le filtre passif exige des composants volumineux
-  (bobine ≈ 12,7 mH, condensateur ≈ 199 µF pour 8 Ω) ; l'actif n'utilise que de
-  petits R et C.
-- **Efficacité** : pertes Joule dans la résistance série de la bobine (passif),
-  pente d'atténuation réelle, puissance réellement transmise au haut-parleur.
-- **Optimisation** : choix du meilleur compromis entre sobriété des composants et
-  fidélité de la réponse, sur des critères objectifs mesurés.
+- **Sobriété** : à 100 Hz le filtre passif exige de gros composants (bobine ≈ 18 mH,
+  condensateur ≈ 150 µF / ≥ 100 V) ; l'actif n'utilise que de petits R et C.
+- **Efficacité** : pertes Joule dans la résistance série de la bobine (DCR), pente réelle
+  d'atténuation, rendement.
+- **Optimisation** : choix du meilleur compromis entre sobriété et fidélité, sur critères mesurés.
 
 ## Mots-clés
 
@@ -25,56 +21,57 @@ Le filtrage de répartition (raccord grave/médium) illustre directement les tro
 |---|---|
 | Filtrage fréquentiel | Frequency filtering |
 | Fréquence de coupure | Cutoff frequency |
-| Filtre passif / actif | Passive / active filter |
-| Raccord (répartiteur) | Crossover |
-| Diagramme de Bode | Bode plot |
+| Filtre Butterworth 2ⁿᵈ ordre | 2nd-order Butterworth filter |
+| Filtre actif / Sallen-Key | Active filter / Sallen-Key |
+| Raccord (répartiteur) | Loudspeaker crossover |
 
-## Positionnement thématique (à cocher sur SCEI)
+## Positionnement thématique (SCEI)
 
-- Physique — **électronique / électrocinétique** (régime sinusoïdal, filtres, AOP).
-- (Éventuellement) Physique — **ondes / acoustique** pour la partie mesure.
+- Physique — **électronique / électrocinétique** (régime sinusoïdal, filtres, AOP, facteur Q).
+- (éventuellement) Physique — **acoustique** pour le volet mesure.
 
 ## Motivation
 
-[[à compléter : pourquoi ce sujet te tient à cœur — enceinte construite de tes mains,
-intérêt pour le son, etc. 2–3 phrases personnelles.]]
+[[à compléter : enceinte construite de tes mains, intérêt pour le son / l'électronique — 2-3 phrases]]
 
 ## Problématique
 
-À fréquence de coupure fixée à 100 Hz, le filtrage actif permet-il un meilleur
-compromis entre sobriété des composants et fidélité de la réponse fréquentielle
-que le filtrage passif, et à quel coût système ?
+Filtrage passif ou filtrage actif : quelle architecture offre le meilleur compromis
+sobriété / efficacité pour le raccord à 100 Hz d'une enceinte deux voies subwoofer / médium-aigu ?
 
-Critère objectif de « qualité » : fidélité de la réponse au raccord (plateau le plus
-plat possible autour de 100 Hz + raccord de phase propre), mesurée en dB.
+## Trois architectures comparées
+
+1. **Passif post-amplification** — LC 2ⁿᵈ ordre Butterworth (12 dB/oct), entre ampli et HP.
+2. **Passif signal faible** — RC 1er ordre (6 dB/oct), entre pré-ampli et ampli (contre-exemple).
+3. **Actif Sallen-Key** — 2ⁿᵈ ordre Butterworth (Q = 1/√2), à AOP, avant l'ampli (bi-amplification).
+
+Duel central : 1 (passif) vs 3 (actif), à ordre égal.
 
 ## Objectifs du TIPE
 
-1. Modéliser les filtres passe-bas et passe-haut du 1er ordre à 100 Hz (fonction de
-   transfert, fréquence de coupure, diagrammes de Bode) et dimensionner les composants.
-2. Mesurer expérimentalement les réponses (Bode électrique au GBF/oscilloscope, d'abord
-   sur résistance puis sur le vrai haut-parleur ; confrontation acoustique au micro/REW).
-3. Comparer passif et actif sur des critères objectifs (sobriété, pertes, dépendance à
-   l'impédance, coût système, écart à la réponse cible) et conclure.
+1. Modéliser les filtres (fonction de transfert, Q, diagrammes de Bode) et dimensionner les composants.
+2. Mesurer (Bode électrique au GBF/oscillo, d'abord sur résistance puis sur HP ; somme acoustique au micro/REW).
+3. Comparer les architectures sur des critères objectifs (précision de f_c, pente, pertes, coût,
+   encombrement, sensibilité à Z(HP)) et conclure.
 
-## Étapes et planning
+## Étapes (5 phases)
 
-1. Mesure d'impédance des HP (détermination de f_s).
-2. Dimensionnement des filtres passif (L, C) et actif (RC + AOP).
-3. Tests électriques (Bode) sur résistance équivalente puis sur HP.
-4. Tests acoustiques en champ proche.
-5. Comparaison théorie/expérience avec incertitudes, puis bilan.
+1. Caractérisation : Z(f) et f_s des HP, Z_s du pré-ampli, réponse initiale.
+2. Dimensionnement + simulation (Python, LTspice), d'abord HP = 8 Ω puis Z(f) mesurée.
+3. Tests électriques sur résistance de puissance 8 Ω (f_c, pente, pertes).
+4. Tests acoustiques sur HP réels (REW), somme des deux voies au raccord.
+5. Analyse comparative pondérée + perspectives (Zobel, Linkwitz-Riley, ordre 4, DSP).
+
+## Matériel
+
+Pré-ampli JB Systems SMX SX-801 · ampli t.amp E-800 (2×350 W/8 Ω) · GBF, oscilloscope,
+multimètre (lycée) · carte son + micro de mesure · REW, LTspice, Python.
 
 ## Bibliographie commentée (à compléter)
 
-- [1] [[Cours d'électronique PTSI]] — fondements : impédance complexe, filtres du
-  1er ordre, AOP en régime linéaire. [[réf. exacte]]
-- [2] [[Datasheets des haut-parleurs]] — paramètres (impédance, f_s, sensibilité).
-  [[marque / modèle]]
-- [3] [[Documentation REW (Room EQ Wizard)]] — protocole de mesure de réponse et
-  d'impédance. [[version / URL]]
-- [4] [[Ouvrage ou ressource d'électroacoustique]] — filtres de répartition d'enceintes.
-  [[réf. exacte]]
+- [1] [[Cours d'électronique PTSI]] — impédance complexe, filtres, AOP, facteur Q. [[réf.]]
+- [2] [[Datasheets des HP]] (sub 18″, médiums 4 Ω) — Z, f_s, sensibilité. [[modèles]]
+- [3] [[Documentation REW]] — mesure de réponse et d'impédance. [[version/URL]]
+- [4] [[Électroacoustique]] — filtres de répartition (Butterworth, Linkwitz-Riley). [[réf.]]
 
-> Astuce : la fiche MCOT SCEI limite le texte (≈ 650 mots) ; ce brouillon est plus
-> long, à condenser au moment de la saisie.
+> La fiche MCOT SCEI limite le texte (≈ 650 mots) : condenser à la saisie.
