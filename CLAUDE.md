@@ -277,3 +277,22 @@ Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
      --window-size=1280,720 --virtual-time-budget=12000 --screenshot=_pdfbuild/slide_i.png URL#/i` ;
   3. assembler avec `img2pdf` (Pillow n'a pas le codec JPEG ici). Dossier _pdfbuild/ gitignoré.
 - **RESTE À FAIRE** : refondre presentation-finale.html (10 min) + index.html (accueil) en Blueprint.
+
+## Audit & améliorations (blocs A–D) — 2026-05-27
+
+Suite à un audit critique du site, exécution de quatre blocs :
+- **A (cohérence)** : finale refondue en Blueprint + nouveau brief (16 slides + annexes :
+  impédance Z(f) calculée, Bode calculé, circuits passif/actif valeurs corrigées, slide
+  RACCORD/somme +3 dB & inversion de polarité, tableau 3 archis) ; accueil refondu en
+  Blueprint ; NOTES-TIPE.md et MCOT.md alignés sur le nouveau cadrage.
+- **B (robustesse oral)** : vendoring local de reveal.js + MathJax (SVG, autonome) +
+  polices woff2 → fonctionne **hors-ligne** ; PDF mis en avant sur l'accueil ; fallback polices.
+- **C (PDF)** : PDF **vectoriels** (texte sélectionnable) via decktape (Chrome système,
+  PUPPETEER_EXECUTABLE_PATH) ; **variante claire** imprimable (css/blueprint-light.css,
+  surcharge de palette → SVG recolorés automatiquement). EXPORT-PDF.md mis à jour.
+- **D (finitions)** : favicon, meta description, liens PDF clair sur l'accueil ;
+  suppression custom.css + styles-demo.html ; README à jour. D3 (mutualisation SVG) différé.
+
+Outils : `_gen.py` (courbes Bode/impédance calculées), `_fonts.py` (récupération woff2).
+PDF régénérables : voir EXPORT-PDF.md. Courbes : f_s modèle ≈ 40 Hz, Z(100)≈14 Ω ;
+Sallen-Key Butterworth sub R=10k C1=220/C2=110nF, médiums R'1=11k R'2=22k C=100nF.
