@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Pré-soutenance — Filtrage à 100 Hz d'une enceinte deux voies</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  
+  <link rel="stylesheet" href="libs/fonts/fonts.css">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="libs/reveal/reset.css">
+  <link rel="stylesheet" href="libs/reveal/reveal.css">
   <link rel="stylesheet" href="css/blueprint.css">
 </head>
 <body>
@@ -298,9 +297,9 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script src="libs/reveal/reveal.js"></script>
+  <script src="libs/reveal/plugin/notes/notes.js"></script>
+  <script src="libs/reveal/plugin/math/math.js"></script>
   <script>
     Reveal.initialize({
       width: 1280, height: 720, margin: 0.06,
@@ -310,7 +309,7 @@
       slideNumber: 'c/t', controls: true, progress: true,
       pdfSeparateFragments: false, pdfMaxPagesPerSlide: 1,
       math: {
-        mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+        mathjax: 'libs/mathjax/tex-mml-svg.js',
         config: 'TeX-AMS_HTML-full',
         tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }
       },
