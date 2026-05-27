@@ -3,72 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TIPE — Filtrage fréquentiel d'une enceinte audio</title>
+  <title>TIPE — Filtrage à 100 Hz d'une enceinte deux voies</title>
+  <meta name="description" content="TIPE 2025-2027 — Filtrage passif ou actif : le raccord à 100 Hz d'une enceinte deux voies (réalisation personnelle).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap">
   <style>
-    :root {
-      --fond: #fbfbf9; --texte: #1f2933; --texte-doux: #5b6770;
-      --accent: #1f4e5f; --trait: #d7dbe0;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; min-height: 100vh;
-      font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--fond); color: var(--texte);
-      display: flex; align-items: center; justify-content: center;
-    }
-    main { max-width: 760px; padding: 3rem 1.5rem; }
-    h1 { color: var(--accent); font-size: 2rem; line-height: 1.15; margin: 0 0 .3rem; }
-    .sous { color: var(--texte-doux); font-size: 1.1rem; margin: 0 0 .4rem; }
-    .theme { color: var(--texte-doux); font-size: .85rem; margin: 0 0 2.2rem; }
-    .theme em { font-style: italic; }
-    .cartes { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-    a.carte {
-      flex: 1; min-width: 240px; text-decoration: none; color: inherit;
-      border: 1px solid var(--trait); border-left: 4px solid var(--accent);
-      border-radius: 6px; padding: 1.3rem 1.4rem; background: #fff;
-      transition: box-shadow .15s ease, transform .15s ease;
-    }
-    a.carte:hover { box-shadow: 0 4px 16px rgba(31,78,95,.12); transform: translateY(-2px); }
-    a.carte h2 { color: var(--accent); margin: 0 0 .4rem; font-size: 1.15rem; }
-    a.carte p { margin: 0; color: var(--texte-doux); font-size: .92rem; line-height: 1.4; }
-    a.carte .duree { display: inline-block; margin-top: .7rem; font-size: .8rem;
-      color: var(--accent); border: 1px solid var(--trait); border-radius: 999px; padding: .1rem .6rem; }
-    footer { margin-top: 2.4rem; font-size: .8rem; color: var(--texte-doux); }
+    :root{ --bg:#0e2230; --bg-card:#0c1e2b; --ink:#e6f1f4; --ink-soft:#8fb2bf;
+           --accent:#5fd0e0; --accent2:#9ad6a0; --trait:#28485a; --grid:rgba(95,208,224,.07); }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{ min-height:100vh; color:var(--ink); font-family:Inter,system-ui,sans-serif;
+      background-color:var(--bg);
+      background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+      background-size:32px 32px;
+      display:flex; align-items:center; justify-content:center; padding:3rem 1.4rem; }
+    main{ max-width:880px; width:100%; }
+    .kicker{ font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:2px;
+      text-transform:uppercase; color:var(--ink-soft); margin-bottom:.7rem; }
+    h1{ font-family:'Space Grotesk',sans-serif; font-size:2.1rem; line-height:1.12; letter-spacing:-.5px; margin-bottom:.4rem; }
+    h1 em{ color:var(--accent); font-style:italic; }
+    .sous{ color:var(--ink-soft); font-size:1.05rem; font-style:italic; margin-bottom:.3rem; }
+    .auteur{ font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--ink-soft);
+      letter-spacing:1px; margin-bottom:2.2rem; }
+    .cartes{ display:flex; gap:1.2rem; flex-wrap:wrap; }
+    .carte{ flex:1; min-width:260px; border:1px solid var(--trait); border-top:3px solid var(--accent);
+      border-radius:6px; padding:1.3rem 1.4rem; background:var(--bg-card); }
+    .carte h2{ font-family:'Space Grotesk',sans-serif; color:var(--accent); font-size:1.2rem; margin-bottom:.3rem; }
+    .carte p{ color:var(--ink-soft); font-size:.92rem; line-height:1.45; margin-bottom:1rem; min-height:3.6em; }
+    .liens{ display:flex; gap:.6rem; flex-wrap:wrap; }
+    a.btn{ text-decoration:none; font-size:.86rem; font-family:'JetBrains Mono',monospace;
+      padding:.45rem .8rem; border-radius:4px; border:1px solid var(--trait); color:var(--ink); transition:.15s; }
+    a.btn:hover{ border-color:var(--accent); color:var(--accent); }
+    a.btn.primary{ background:var(--accent); color:#06222c; border-color:var(--accent); font-weight:600; }
+    a.btn.primary:hover{ filter:brightness(1.08); color:#06222c; }
+    .duree{ display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.72rem;
+      color:var(--ink-soft); border:1px solid var(--trait); border-radius:999px; padding:.1rem .6rem; margin-bottom:.7rem; }
+    .docs{ margin-top:2rem; padding-top:1.3rem; border-top:1px solid var(--trait);
+      font-size:.85rem; color:var(--ink-soft); display:flex; gap:1.2rem; flex-wrap:wrap; align-items:center; }
+    .docs a{ color:var(--accent); text-decoration:none; }
+    .docs a:hover{ text-decoration:underline; }
+    footer{ margin-top:1.6rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--ink-soft); }
   </style>
 </head>
 <body>
   <main>
-    <h1>Filtrage fréquentiel d'une enceinte audio</h1>
-    <p class="sous">Le raccord à 100 Hz : filtrage passif ou actif ?</p>
-    <p class="theme">TIPE 2026&ndash;2027 &middot; Thème : <em>Sobriété, efficacité, optimisation</em></p>
-
-    <svg viewBox="0 0 760 90" style="width:100%;max-width:760px;height:auto;margin:0 0 2rem" role="img" aria-label="Motif : raccord des deux voies à 100 Hz" font-family="inherit">
-      <line x1="20" y1="72" x2="740" y2="72" stroke="#d7dbe0" stroke-width="1.5"/>
-      <path d="M20,22 L150,22 C190,22 205,40 215,48 C260,72 330,80 420,82 L740,84" fill="none" stroke="#1f4e5f" stroke-width="3"/>
-      <path d="M20,84 L130,82 C200,80 200,56 215,48 C235,30 300,22 420,21 L740,20" fill="none" stroke="#6b8a94" stroke-width="3"/>
-      <line x1="215" y1="10" x2="215" y2="72" stroke="#1f4e5f" stroke-width="1.5" stroke-dasharray="5 5"/>
-      <text x="215" y="88" fill="#1f4e5f" font-size="13" font-weight="600" text-anchor="middle">100 Hz</text>
-      <text x="70" y="58" fill="#1f4e5f" font-size="12">grave</text>
-      <text x="640" y="44" fill="#6b8a94" font-size="12">médium-aigu</text>
-    </svg>
+    <div class="kicker">TIPE 2025–2027 · Sobriété · Efficacité · Optimisation</div>
+    <h1>Filtrage passif ou actif :<br>le <em>raccord à 100 Hz</em></h1>
+    <p class="sous">Enceinte deux voies — réalisation personnelle</p>
+    <p class="auteur">THOMAS MAREEL · PTSI 2</p>
 
     <div class="cartes">
-      <a class="carte" href="pre-soutenance.html">
+      <div class="carte">
+        <span class="duree">≈ 5 min · 9 vues</span>
         <h2>Pré-soutenance</h2>
         <p>Présentation du sujet et de la démarche prévue, pour les professeurs.</p>
-        <span class="duree">≈ 5 min &middot; 9 vues</span>
-      </a>
-      <a class="carte" href="presentation-finale.html">
+        <div class="liens">
+          <a class="btn primary" href="pre-soutenance.html">Ouvrir la présentation</a>
+          <a class="btn" href="pre-soutenance.pdf">PDF</a>
+        </div>
+      </div>
+      <div class="carte">
+        <span class="duree">≈ 10 min · 16 slides + annexes</span>
         <h2>Présentation finale</h2>
-        <p>Démarche, modélisation et comparaison ; emplacements prêts pour les mesures.</p>
-        <span class="duree">≈ 10 min &middot; 15 slides + 3 annexes</span>
-      </a>
+        <p>Trois architectures comparées (passif 2ⁿᵈ ordre, signal faible, actif Sallen-Key) ; emplacements prêts pour les mesures.</p>
+        <div class="liens">
+          <a class="btn primary" href="presentation-finale.html">Ouvrir la présentation</a>
+          <a class="btn" href="presentation-finale.pdf">PDF</a>
+        </div>
+      </div>
     </div>
 
-    <footer>
-      Navigation dans une présentation : flèches, <strong>S</strong> pour les notes,
-      <strong>Échap</strong> pour la vue d'ensemble.
-    </footer>
+    <div class="docs">
+      <span>Ressources :</span>
+      <a href="https://github.com/thomasMareel/tipe-filtrage-enceinte">Dépôt GitHub</a>
+      <a href="NOTES-TIPE.md">Questions du jury</a>
+      <a href="MCOT.md">Fiche MCOT</a>
+      <a href="EXPORT-PDF.md">Export PDF</a>
+    </div>
+
+    <footer>Navigation dans une présentation : flèches · S (notes) · Échap (vue d'ensemble)</footer>
   </main>
 </body>
 </html>
