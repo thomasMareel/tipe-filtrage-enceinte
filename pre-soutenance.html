@@ -355,213 +355,350 @@
         </aside>
       </section>
 
-      <!-- ===================== 7. PROTOCOLE ===================== -->
+      <!-- ===================== 7. PROTOCOLE — partie 1 ===================== -->
       <section>
-        <div class="kicker">Démarche expérimentale</div>
-        <h2>Protocole de mesure prévu</h2>
+        <div class="kicker">Démarche expérimentale (1/2)</div>
+        <h2>Préparer et calibrer — au laboratoire</h2>
         <div class="viz">
-          <svg viewBox="0 0 1000 360" font-family="Inter,sans-serif" role="img" aria-label="Protocole en trois étapes">
+          <svg viewBox="0 0 1000 440" font-family="Inter,sans-serif" role="img" aria-label="Étapes 1 à 3 : caractériser, dimensionner, banc électrique">
             <defs>
-              <marker id="arP" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-                <path d="M0,0 L9,4.5 L0,9 z" fill="var(--wire)"/>
-              </marker>
+              <marker id="ar7" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
             </defs>
 
-            <!-- ====== Étape 1 : caractériser le HP ====== -->
-            <rect x="30" y="40" width="290" height="290" rx="8" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.5"/>
-            <circle cx="62" cy="72" r="20" fill="var(--accent)"/>
-            <text x="62" y="79" text-anchor="middle" fill="#06222c" font-size="22" font-weight="700" font-family="Space Grotesk">1</text>
-            <text x="92" y="68" fill="var(--accent)" font-size="17" font-family="Space Grotesk" font-weight="700">Caractériser</text>
-            <text x="92" y="86" fill="var(--ink-soft)" font-size="12">le haut-parleur seul</text>
+            <!-- ============ CARTE 1 : CARACTÉRISER ============ -->
+            <rect x="10" y="10" width="305" height="420" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M10,18 L10,76 L315,76 L315,18 Q315,10 307,10 L18,10 Q10,10 10,18 Z" fill="var(--accent)"/>
+            <text x="30" y="40" fill="#06222c" font-size="12" font-family="JetBrains Mono" font-weight="700">ÉTAPE 1 / 5</text>
+            <text x="30" y="62" fill="#06222c" font-size="19" font-family="Space Grotesk" font-weight="700">Caractériser le HP</text>
 
-            <!-- icône : HP + mesure Ω -->
-            <g transform="translate(70,130)">
-              <rect x="0" y="22" width="16" height="22" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
-              <polygon points="16,10 16,56 44,66 44,0" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="54" y1="22" x2="86" y2="22" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="54" y1="44" x2="86" y2="44" stroke="var(--wire)" stroke-width="1.6"/>
-              <circle cx="130" cy="33" r="36" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
-              <text x="130" y="44" text-anchor="middle" font-size="32" fill="var(--accent)" font-family="Space Grotesk" font-weight="700">&#937;</text>
-              <line x1="86" y1="22" x2="98" y2="22" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="98" y1="22" x2="98" y2="14" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="98" y1="14" x2="106" y2="14" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="86" y1="44" x2="98" y2="44" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="98" y1="44" x2="98" y2="52" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="98" y1="52" x2="106" y2="52" stroke="var(--wire)" stroke-width="1.6"/>
+            <!-- visual : HP + impédancemètre -->
+            <g transform="translate(40,100)">
+              <rect x="0" y="20" width="16" height="22" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
+              <polygon points="16,8 16,54 42,64 42,-2" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="52" y1="14" x2="80" y2="14" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="80" y1="14" x2="80" y2="2" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="80" y1="2" x2="98" y2="2" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="52" y1="48" x2="80" y2="48" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="80" y1="48" x2="80" y2="60" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="80" y1="60" x2="98" y2="60" stroke="var(--wire)" stroke-width="1.6"/>
+              <circle cx="140" cy="31" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
+              <text x="140" y="42" text-anchor="middle" font-size="34" fill="var(--accent)" font-family="Space Grotesk" font-weight="700">&#937;</text>
+              <text x="140" y="60" text-anchor="middle" font-size="10" fill="var(--accent)" font-family="JetBrains Mono">20 &#8594; 500 Hz</text>
             </g>
 
-            <text x="175" y="240" text-anchor="middle" fill="var(--ink)" font-size="13" font-family="JetBrains Mono">balayage 20 à 500 Hz</text>
-            <line x1="60" y1="252" x2="290" y2="252" stroke="var(--trait)" stroke-width="1"/>
-            <text x="175" y="272" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ courbe d'impédance</text>
-            <text x="175" y="290" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ fréquence de résonance</text>
-            <text x="175" y="312" text-anchor="middle" fill="var(--ink-soft)" font-size="11" font-style="italic">(le HP n'est pas une résistance)</text>
-
-            <!-- ====== Étape 2 : banc électrique ====== -->
-            <rect x="355" y="40" width="290" height="290" rx="8" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.5"/>
-            <circle cx="387" cy="72" r="20" fill="var(--accent)"/>
-            <text x="387" y="79" text-anchor="middle" fill="#06222c" font-size="22" font-weight="700" font-family="Space Grotesk">2</text>
-            <text x="417" y="68" fill="var(--accent)" font-size="17" font-family="Space Grotesk" font-weight="700">Mesurer en électrique</text>
-            <text x="417" y="86" fill="var(--ink-soft)" font-size="12">sur résistance étalon 8 Ω</text>
-
-            <!-- icône : générateur → filtre → oscilloscope -->
-            <g transform="translate(380,130)">
-              <rect x="0" y="0" width="88" height="60" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
-              <rect x="6" y="6" width="76" height="22" fill="#0a1820"/>
-              <path d="M14,17 q7,-9 14,0 t14,0 t14,0" fill="none" stroke="var(--accent2)" stroke-width="1.6"/>
-              <circle cx="22" cy="44" r="4" fill="none" stroke="var(--wire)" stroke-width="1.4"/>
-              <circle cx="44" cy="44" r="4" fill="none" stroke="var(--wire)" stroke-width="1.4"/>
-              <circle cx="66" cy="44" r="4" fill="none" stroke="var(--wire)" stroke-width="1.4"/>
-              <text x="44" y="76" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="JetBrains Mono">générateur</text>
-              <text x="44" y="89" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">de signaux</text>
-
-              <line x1="94" y1="30" x2="124" y2="30" stroke="var(--wire)" stroke-width="2" marker-end="url(#arP)"/>
-
-              <rect x="130" y="0" width="100" height="60" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
-              <rect x="138" y="6" width="84" height="40" rx="2" fill="#0a1820"/>
-              <line x1="138" y1="26" x2="222" y2="26" stroke="var(--trait)" stroke-width="0.6"/>
-              <path d="M142,32 q6,-16 12,0 q6,-16 12,0 q6,-16 12,0 q6,-16 12,0 q6,-16 12,0" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-              <circle cx="208" cy="52" r="3" fill="var(--wire)"/>
-              <circle cx="216" cy="52" r="3" fill="var(--wire)"/>
-              <text x="180" y="76" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="JetBrains Mono">oscilloscope</text>
+            <!-- mini aperçu Z(f) -->
+            <text x="30" y="207" font-size="11" fill="var(--ink-soft)" font-family="JetBrains Mono">aperçu Z(f) attendu :</text>
+            <g transform="translate(30,212)">
+              <rect x="0" y="0" width="265" height="58" rx="3" fill="#0a1820" stroke="var(--trait)" stroke-width="1"/>
+              <line x1="10" y1="48" x2="255" y2="48" stroke="var(--trait)" stroke-width="0.6"/>
+              <line x1="10" y1="6" x2="10" y2="48" stroke="var(--trait)" stroke-width="0.6"/>
+              <path d="M10,40 L40,40 L65,12 L95,38 L165,44 L255,42" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+              <circle cx="65" cy="12" r="3.5" fill="var(--warn)"/>
+              <text x="76" y="17" fill="var(--warn)" font-size="10" font-family="JetBrains Mono">pic = f_s</text>
+              <text x="240" y="56" fill="var(--ink-soft)" font-size="9" font-family="JetBrains Mono" text-anchor="end">f (Hz)</text>
+              <text x="14" y="13" fill="var(--ink-soft)" font-size="9" font-family="JetBrains Mono">Z (Ω)</text>
             </g>
 
-            <text x="500" y="240" text-anchor="middle" fill="var(--ink)" font-size="13" font-family="JetBrains Mono">comparer entrée / sortie</text>
-            <line x1="385" y1="252" x2="615" y2="252" stroke="var(--trait)" stroke-width="1"/>
-            <text x="500" y="272" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ courbe de gain</text>
-            <text x="500" y="290" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ déphasage et coupure</text>
-            <text x="500" y="312" text-anchor="middle" fill="var(--ink-soft)" font-size="11" font-style="italic">(filtre isolé du HP)</text>
+            <line x1="30" y1="290" x2="295" y2="290" stroke="var(--trait)" stroke-width="1"/>
 
-            <!-- ====== Étape 3 : banc acoustique ====== -->
-            <rect x="680" y="40" width="290" height="290" rx="8" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.5"/>
-            <circle cx="712" cy="72" r="20" fill="var(--accent)"/>
-            <text x="712" y="79" text-anchor="middle" fill="#06222c" font-size="22" font-weight="700" font-family="Space Grotesk">3</text>
-            <text x="742" y="68" fill="var(--accent)" font-size="17" font-family="Space Grotesk" font-weight="700">Mesurer en acoustique</text>
-            <text x="742" y="86" fill="var(--ink-soft)" font-size="12">sur l'enceinte réelle</text>
-
-            <!-- icône : HP → ondes → micro → ordinateur -->
-            <g transform="translate(700,130)">
-              <rect x="0" y="22" width="14" height="22" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.4"/>
-              <polygon points="14,10 14,56 38,64 38,2" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.4"/>
-              <path d="M46,22 q6,11 0,22" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-              <path d="M54,15 q10,18 0,36" fill="none" stroke="var(--accent)" stroke-width="1.8" opacity="0.65"/>
-              <path d="M62,8 q14,25 0,50" fill="none" stroke="var(--accent)" stroke-width="1.8" opacity="0.4"/>
-
-              <rect x="86" y="22" width="14" height="22" rx="7" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
-              <line x1="93" y1="44" x2="93" y2="60" stroke="var(--wire)" stroke-width="1.6"/>
-              <line x1="84" y1="60" x2="102" y2="60" stroke="var(--wire)" stroke-width="1.6"/>
-              <text x="93" y="76" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">micro</text>
-
-              <line x1="106" y1="32" x2="134" y2="32" stroke="var(--wire)" stroke-width="2" marker-end="url(#arP)"/>
-
-              <rect x="140" y="8" width="92" height="56" rx="2" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
-              <rect x="146" y="14" width="80" height="40" rx="1" fill="#0a1820"/>
-              <path d="M152,40 L162,28 L172,36 L184,22 L196,34 L208,26 L222,42" fill="none" stroke="var(--accent2)" stroke-width="1.6"/>
-              <text x="186" y="80" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="JetBrains Mono">logiciel d'acoustique</text>
-              <text x="186" y="93" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">(REW)</text>
+            <text x="30" y="310" font-size="12" font-family="JetBrains Mono" fill="var(--ink-soft)" font-weight="700">&#8594; Ce qu'on apprend :</text>
+            <g font-size="13" font-family="Inter,sans-serif" fill="var(--ink)">
+              <text x="40" y="332">&#8226; la fréquence de résonance</text>
+              <text x="40" y="352">&#8226; l'impédance réelle (≠ 8 Ω partout)</text>
+              <text x="40" y="372">&#8226; jusqu'où le HP est exploitable</text>
             </g>
 
-            <text x="825" y="240" text-anchor="middle" fill="var(--ink)" font-size="13" font-family="JetBrains Mono">micro à 1 m du HP</text>
-            <line x1="710" y1="252" x2="940" y2="252" stroke="var(--trait)" stroke-width="1"/>
-            <text x="825" y="272" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ réponse acoustique</text>
-            <text x="825" y="290" text-anchor="middle" fill="var(--ink-soft)" font-size="12">→ somme des deux voies</text>
-            <text x="825" y="312" text-anchor="middle" fill="var(--ink-soft)" font-size="11" font-style="italic">(confrontation au réel)</text>
+            <rect x="30" y="392" width="265" height="24" rx="3" fill="rgba(184,212,220,.08)"/>
+            <text x="40" y="408" font-size="10.5" fill="var(--ink-soft)" font-family="JetBrains Mono">Outils : générateur · multimètre · R étalon 100 Ω</text>
+
+            <!-- flèche vers carte 2 -->
+            <line x1="320" y1="220" x2="343" y2="220" stroke="var(--accent)" stroke-width="3" marker-end="url(#ar7)"/>
+
+            <!-- ============ CARTE 2 : DIMENSIONNER ============ -->
+            <rect x="347" y="10" width="305" height="420" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M347,18 L347,76 L652,76 L652,18 Q652,10 644,10 L355,10 Q347,10 347,18 Z" fill="var(--accent)"/>
+            <text x="367" y="40" fill="#06222c" font-size="12" font-family="JetBrains Mono" font-weight="700">ÉTAPE 2 / 5</text>
+            <text x="367" y="62" fill="#06222c" font-size="19" font-family="Space Grotesk" font-weight="700">Dimensionner &amp; simuler</text>
+
+            <!-- formule -->
+            <g transform="translate(367,95)">
+              <rect x="0" y="0" width="270" height="46" rx="4" fill="#0a1820" stroke="var(--accent)" stroke-width="1.4"/>
+              <text x="135" y="30" text-anchor="middle" font-size="20" fill="var(--accent)" font-family="Space Grotesk" font-style="italic">f_c = 1 / (2π&#8730;LC)</text>
+              <text x="135" y="42" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">cible 100 Hz · charge 8 Ω</text>
+
+              <!-- composants -->
+              <g transform="translate(0,60)">
+                <text x="40" y="11" fill="var(--ink-soft)" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono">bobine</text>
+                <path d="M22,30 q4,-10 8,0 q4,-10 8,0 q4,-10 8,0 q4,-10 8,0" fill="none" stroke="var(--wire)" stroke-width="2"/>
+                <text x="40" y="50" fill="var(--ink)" font-size="11" text-anchor="middle" font-family="JetBrains Mono" font-weight="700">L ≈ 18 mH</text>
+
+                <text x="135" y="11" fill="var(--ink-soft)" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono">condensateur</text>
+                <line x1="128" y1="22" x2="128" y2="38" stroke="var(--wire)" stroke-width="2.5"/>
+                <line x1="138" y1="22" x2="138" y2="38" stroke="var(--wire)" stroke-width="2.5"/>
+                <text x="135" y="50" fill="var(--ink)" font-size="11" text-anchor="middle" font-family="JetBrains Mono" font-weight="700">C ≈ 150 µF</text>
+
+                <text x="225" y="11" fill="var(--ink-soft)" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono">résistance</text>
+                <polyline points="200,30 205,22 213,38 221,22 229,38 237,22 245,38 250,30" fill="none" stroke="var(--wire)" stroke-width="1.8"/>
+                <text x="225" y="50" fill="var(--ink)" font-size="11" text-anchor="middle" font-family="JetBrains Mono" font-weight="700">R ≈ 10 kΩ</text>
+              </g>
+
+              <!-- ordinateur de simulation -->
+              <g transform="translate(50,125)">
+                <rect x="0" y="0" width="170" height="60" rx="3" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.4"/>
+                <rect x="6" y="6" width="158" height="42" rx="1" fill="#0a1820"/>
+                <line x1="6" y1="38" x2="164" y2="38" stroke="var(--trait)" stroke-width="0.5"/>
+                <path d="M10,32 L60,32 L90,22 L130,12 L160,10" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+                <path d="M10,10 L40,12 L90,22 L130,32 L160,34" fill="none" stroke="var(--accent2)" stroke-width="1.6"/>
+                <text x="85" y="58" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">simulation : Bode théorique</text>
+              </g>
+            </g>
+
+            <line x1="367" y1="290" x2="632" y2="290" stroke="var(--trait)" stroke-width="1"/>
+
+            <text x="367" y="310" font-size="12" font-family="JetBrains Mono" fill="var(--ink-soft)" font-weight="700">&#8594; Ce qu'on prépare :</text>
+            <g font-size="13" font-family="Inter,sans-serif" fill="var(--ink)">
+              <text x="377" y="332">&#8226; les valeurs cibles des composants</text>
+              <text x="377" y="352">&#8226; un Bode théorique par architecture</text>
+              <text x="377" y="372">&#8226; des prédictions à confronter</text>
+            </g>
+
+            <rect x="367" y="392" width="265" height="24" rx="3" fill="rgba(184,212,220,.08)"/>
+            <text x="377" y="408" font-size="10.5" fill="var(--ink-soft)" font-family="JetBrains Mono">Outils : Python (numpy, scipy) · LTspice</text>
+
+            <!-- flèche vers carte 3 -->
+            <line x1="657" y1="220" x2="680" y2="220" stroke="var(--accent)" stroke-width="3" marker-end="url(#ar7)"/>
+
+            <!-- ============ CARTE 3 : BANC ÉLECTRIQUE ============ -->
+            <rect x="684" y="10" width="305" height="420" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M684,18 L684,76 L989,76 L989,18 Q989,10 981,10 L692,10 Q684,10 684,18 Z" fill="var(--accent)"/>
+            <text x="704" y="40" fill="#06222c" font-size="12" font-family="JetBrains Mono" font-weight="700">ÉTAPE 3 / 5</text>
+            <text x="704" y="62" fill="#06222c" font-size="19" font-family="Space Grotesk" font-weight="700">Banc électrique</text>
+
+            <!-- visual : chaîne générateur → filtre → R étalon -->
+            <g transform="translate(694,95)">
+              <rect x="0" y="0" width="60" height="40" rx="3" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.4"/>
+              <rect x="4" y="4" width="52" height="16" fill="#0a1820"/>
+              <path d="M8,12 q5,-7 10,0 t10,0 t10,0 t10,0" fill="none" stroke="var(--accent2)" stroke-width="1.4"/>
+              <circle cx="14" cy="30" r="3" fill="none" stroke="var(--wire)"/>
+              <circle cx="30" cy="30" r="3" fill="none" stroke="var(--wire)"/>
+              <circle cx="46" cy="30" r="3" fill="none" stroke="var(--wire)"/>
+              <text x="30" y="56" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">générateur</text>
+
+              <line x1="60" y1="20" x2="78" y2="20" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar7)"/>
+
+              <rect x="82" y="0" width="68" height="40" rx="3" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.6"/>
+              <path d="M88,20 q3,-8 6,0 q3,-8 6,0" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+              <line x1="112" y1="14" x2="112" y2="26" stroke="var(--accent)" stroke-width="2"/>
+              <line x1="118" y1="14" x2="118" y2="26" stroke="var(--accent)" stroke-width="2"/>
+              <text x="116" y="56" text-anchor="middle" font-size="10" fill="var(--accent)" font-family="JetBrains Mono">filtre testé</text>
+
+              <line x1="150" y1="20" x2="168" y2="20" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar7)"/>
+
+              <rect x="172" y="6" width="58" height="28" rx="3" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.4"/>
+              <polyline points="178,20 182,14 188,26 194,14 200,26 206,14 212,26 218,20 224,20" fill="none" stroke="var(--wire)" stroke-width="1.6"/>
+              <text x="201" y="56" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">R 8 Ω étalon</text>
+
+              <!-- oscilloscope -->
+              <g transform="translate(15,80)">
+                <rect x="0" y="0" width="200" height="68" rx="3" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
+                <rect x="6" y="6" width="188" height="48" rx="2" fill="#0a1820"/>
+                <line x1="6" y1="30" x2="194" y2="30" stroke="var(--trait)" stroke-width="0.5"/>
+                <path d="M10,42 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0 q8,-22 16,0" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+                <path d="M10,20 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0 q8,15 16,0" fill="none" stroke="var(--accent2)" stroke-width="1.5"/>
+                <text x="14" y="65" font-size="9" fill="var(--accent)" font-family="JetBrains Mono">V_entrée</text>
+                <text x="194" y="65" font-size="9" fill="var(--accent2)" font-family="JetBrains Mono" text-anchor="end">V_sortie</text>
+              </g>
+            </g>
+
+            <line x1="704" y1="290" x2="969" y2="290" stroke="var(--trait)" stroke-width="1"/>
+
+            <text x="704" y="310" font-size="12" font-family="JetBrains Mono" fill="var(--ink-soft)" font-weight="700">&#8594; Ce qu'on mesure :</text>
+            <g font-size="13" font-family="Inter,sans-serif" fill="var(--ink)">
+              <text x="714" y="332">&#8226; le gain réel (V_sortie / V_entrée)</text>
+              <text x="714" y="352">&#8226; le déphasage entre les signaux</text>
+              <text x="714" y="372">&#8226; la fréquence de coupure effective</text>
+            </g>
+
+            <rect x="704" y="392" width="265" height="24" rx="3" fill="rgba(184,212,220,.08)"/>
+            <text x="714" y="408" font-size="10.5" fill="var(--ink-soft)" font-family="JetBrains Mono">Outils : générateur · oscilloscope · charge étalon</text>
           </svg>
         </div>
-        <p class="cle">Chaque architecture testée d'abord proprement (sur résistance), puis dans le réel (sur le haut-parleur) — avec incertitudes propagées.</p>
+        <p class="cle">Trois étapes au laboratoire : <strong>comprendre le HP</strong>, <strong>calculer le filtre</strong>, puis <strong>vérifier sur résistance</strong> — avant toute mesure acoustique.</p>
         <aside class="notes">
-          — D'abord l'électrique (signal propre, sans le HP), ensuite l'acoustique (la réalité).<br>
-          — La résistance étalon 8 Ω permet d'isoler le filtre du comportement complexe du HP.<br>
-          — Toutes les mesures sont accompagnées de barres d'incertitude.
+          — Étape 1 : on caractérise le HP seul à l'impédancemètre (jig avec R étalon). Le pic révèle f_s.<br>
+          — Étape 2 : avec Z(f) connu, on calcule les composants et on simule chaque architecture.<br>
+          — Étape 3 : on remplace le HP par une résistance 8 Ω et on vérifie le filtre seul. Si le calcul est juste, ça doit coller.
         </aside>
       </section>
 
-      <!-- ===================== 8. PLANNING & PERSPECTIVES ===================== -->
+      <!-- ===================== 8. PROTOCOLE — partie 2 ===================== -->
       <section>
-        <div class="kicker">Feuille de route</div>
-        <h2>Étapes du projet &amp; perspectives</h2>
+        <div class="kicker">Démarche expérimentale (2/2)</div>
+        <h2>Confronter au réel et arbitrer</h2>
         <div class="viz">
-          <svg viewBox="0 0 1000 270" font-family="Inter,sans-serif" role="img" aria-label="Cinq étapes du projet">
-            <!-- ligne de temps -->
-            <line x1="100" y1="80" x2="900" y2="80" stroke="var(--accent)" stroke-width="2.5"/>
+          <svg viewBox="0 0 1000 440" font-family="Inter,sans-serif" role="img" aria-label="Étapes 4 et 5 : banc acoustique et arbitrage">
+            <defs>
+              <marker id="ar8" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+            </defs>
 
-            <!-- 1 · CARACTÉRISER -->
-            <g>
-              <circle cx="100" cy="80" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2.2"/>
-              <text x="100" y="93" text-anchor="middle" font-size="34" fill="var(--accent)" font-family="Space Grotesk" font-weight="700">&#937;</text>
-              <text x="100" y="156" text-anchor="middle" font-size="13" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">ÉTAPE 1</text>
-              <text x="100" y="180" text-anchor="middle" font-size="14" fill="var(--ink)" font-family="Space Grotesk" font-weight="700">Caractériser</text>
-              <text x="100" y="200" text-anchor="middle" font-size="11" fill="var(--ink-soft)">le haut-parleur</text>
-              <text x="100" y="215" text-anchor="middle" font-size="11" fill="var(--ink-soft)">(impédance, résonance)</text>
-            </g>
+            <!-- ============ CARTE 4 : BANC ACOUSTIQUE ============ -->
+            <rect x="10" y="10" width="475" height="420" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M10,18 L10,76 L485,76 L485,18 Q485,10 477,10 L18,10 Q10,10 10,18 Z" fill="var(--accent)"/>
+            <text x="30" y="40" fill="#06222c" font-size="12" font-family="JetBrains Mono" font-weight="700">ÉTAPE 4 / 5</text>
+            <text x="30" y="62" fill="#06222c" font-size="20" font-family="Space Grotesk" font-weight="700">Banc acoustique &#8212; l'épreuve du réel</text>
 
-            <!-- 2 · DIMENSIONNER -->
-            <g>
-              <circle cx="300" cy="80" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2.2"/>
-              <g transform="translate(300,80)">
-                <rect x="-20" y="-18" width="40" height="36" rx="3" fill="none" stroke="var(--accent)" stroke-width="2"/>
-                <line x1="-14" y1="-10" x2="14" y2="-10" stroke="var(--accent)" stroke-width="1.4"/>
-                <text x="0" y="3" text-anchor="middle" font-size="9" fill="var(--accent)" font-family="JetBrains Mono">L, C, R</text>
-                <text x="0" y="14" text-anchor="middle" font-size="9" fill="var(--accent)" font-family="JetBrains Mono">fc=100</text>
+            <!-- visual : enceinte → ondes → micro → interface → ordinateur -->
+            <g transform="translate(35,100)">
+              <!-- enceinte deux voies -->
+              <rect x="0" y="0" width="80" height="130" rx="4" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.8"/>
+              <circle cx="40" cy="38" r="20" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.8"/>
+              <circle cx="40" cy="38" r="9" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.4"/>
+              <text x="40" y="42" text-anchor="middle" font-size="9" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">SUB</text>
+              <circle cx="22" cy="92" r="14" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="1.4"/>
+              <circle cx="58" cy="92" r="14" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="1.4"/>
+              <text x="22" y="95" text-anchor="middle" font-size="7" fill="var(--accent2)" font-family="JetBrains Mono">MED</text>
+              <text x="58" y="95" text-anchor="middle" font-size="7" fill="var(--accent2)" font-family="JetBrains Mono">MED</text>
+              <text x="40" y="148" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">enceinte</text>
+
+              <!-- ondes -->
+              <path d="M88,32 q14,18 0,36" fill="none" stroke="var(--accent)" stroke-width="2"/>
+              <path d="M103,18 q22,32 0,64" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.65"/>
+              <path d="M118,6 q30,44 0,88" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.4"/>
+
+              <!-- distance 1m -->
+              <line x1="80" y1="166" x2="170" y2="166" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="2 2"/>
+              <text x="125" y="178" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">1 m</text>
+
+              <!-- micro -->
+              <g transform="translate(165,30)">
+                <rect x="0" y="0" width="16" height="28" rx="8" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
+                <line x1="8" y1="28" x2="8" y2="50" stroke="var(--wire)" stroke-width="1.8"/>
+                <rect x="-2" y="50" width="20" height="3" fill="var(--wire)"/>
+                <text x="8" y="68" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">micro de</text>
+                <text x="8" y="80" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">mesure</text>
               </g>
-              <text x="300" y="156" text-anchor="middle" font-size="13" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">ÉTAPE 2</text>
-              <text x="300" y="180" text-anchor="middle" font-size="14" fill="var(--ink)" font-family="Space Grotesk" font-weight="700">Dimensionner</text>
-              <text x="300" y="200" text-anchor="middle" font-size="11" fill="var(--ink-soft)">calculer les composants</text>
-              <text x="300" y="215" text-anchor="middle" font-size="11" fill="var(--ink-soft)">et simuler par ordinateur</text>
+
+              <line x1="187" y1="44" x2="220" y2="44" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar8)"/>
+
+              <!-- interface audio -->
+              <g transform="translate(225,20)">
+                <rect x="0" y="0" width="64" height="44" rx="3" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
+                <circle cx="16" cy="22" r="7" fill="none" stroke="var(--wire)" stroke-width="1.5"/>
+                <circle cx="16" cy="22" r="2.5" fill="var(--wire)"/>
+                <rect x="30" y="14" width="28" height="4" rx="1" fill="var(--accent2)"/>
+                <rect x="30" y="22" width="20" height="4" rx="1" fill="var(--accent2)" opacity="0.55"/>
+                <rect x="30" y="30" width="24" height="4" rx="1" fill="var(--accent2)" opacity="0.75"/>
+                <text x="32" y="60" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">interface audio</text>
+              </g>
+
+              <line x1="293" y1="38" x2="326" y2="38" stroke="var(--wire)" stroke-width="2" marker-end="url(#ar8)"/>
+
+              <!-- ordinateur avec REW -->
+              <g transform="translate(331,0)">
+                <rect x="0" y="0" width="100" height="74" rx="2" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
+                <rect x="6" y="6" width="88" height="56" rx="1" fill="#0a1820"/>
+                <line x1="10" y1="54" x2="90" y2="54" stroke="var(--trait)" stroke-width="0.6"/>
+                <line x1="10" y1="10" x2="10" y2="54" stroke="var(--trait)" stroke-width="0.6"/>
+                <path d="M10,38 L25,38 L40,28 L55,24 L70,32 L90,34" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+                <path d="M10,28 L25,32 L40,28 L55,22 L70,18 L90,18" fill="none" stroke="var(--accent2)" stroke-width="1.6"/>
+                <text x="50" y="86" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">logiciel REW</text>
+              </g>
             </g>
 
-            <!-- 3 · TESTS ÉLECTRIQUES -->
-            <g>
-              <circle cx="500" cy="80" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2.2"/>
-              <g transform="translate(500,80)">
-                <rect x="-22" y="-16" width="44" height="32" rx="2" fill="#0a1820" stroke="var(--accent)" stroke-width="1.8"/>
-                <line x1="-22" y1="0" x2="22" y2="0" stroke="var(--trait)" stroke-width="0.6"/>
-                <path d="M-18,6 q4,-14 8,0 q4,-14 8,0 q4,-14 8,0 q4,-14 8,0" fill="none" stroke="var(--accent2)" stroke-width="1.6"/>
-              </g>
-              <text x="500" y="156" text-anchor="middle" font-size="13" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">ÉTAPE 3</text>
-              <text x="500" y="180" text-anchor="middle" font-size="14" fill="var(--ink)" font-family="Space Grotesk" font-weight="700">Tester (électrique)</text>
-              <text x="500" y="200" text-anchor="middle" font-size="11" fill="var(--ink-soft)">sur résistance étalon</text>
-              <text x="500" y="215" text-anchor="middle" font-size="11" fill="var(--ink-soft)">à l'oscilloscope</text>
+            <line x1="30" y1="290" x2="465" y2="290" stroke="var(--trait)" stroke-width="1"/>
+
+            <text x="30" y="310" font-size="12" font-family="JetBrains Mono" fill="var(--ink-soft)" font-weight="700">&#8594; Ce qu'on observe vraiment :</text>
+            <g font-size="13" font-family="Inter,sans-serif" fill="var(--ink)">
+              <text x="40" y="332">&#8226; la réponse acoustique de chaque voie</text>
+              <text x="40" y="352">&#8226; la somme des deux voies au raccord 100 Hz</text>
+              <text x="40" y="372">&#8226; les écarts avec la théorie (pièce, polarité…)</text>
             </g>
 
-            <!-- 4 · TESTS ACOUSTIQUES -->
-            <g>
-              <circle cx="700" cy="80" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2.2"/>
-              <g transform="translate(700,80)">
-                <rect x="-22" y="-8" width="8" height="16" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
-                <polygon points="-14,-14 -14,14 4,20 4,-20" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
-                <path d="M10,-7 q6,9 0,18" fill="none" stroke="var(--accent2)" stroke-width="1.8"/>
-                <path d="M18,-13 q10,17 0,32" fill="none" stroke="var(--accent2)" stroke-width="1.8" opacity="0.6"/>
+            <rect x="30" y="392" width="435" height="24" rx="3" fill="rgba(184,212,220,.08)"/>
+            <text x="40" y="408" font-size="10.5" fill="var(--ink-soft)" font-family="JetBrains Mono">Outils : micro de mesure · interface audio · logiciel REW</text>
+
+            <!-- flèche vers carte 5 -->
+            <line x1="490" y1="220" x2="513" y2="220" stroke="var(--accent)" stroke-width="3" marker-end="url(#ar8)"/>
+
+            <!-- ============ CARTE 5 : ARBITRER ============ -->
+            <rect x="517" y="10" width="473" height="420" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M517,18 L517,76 L990,76 L990,18 Q990,10 982,10 L525,10 Q517,10 517,18 Z" fill="var(--accent)"/>
+            <text x="537" y="40" fill="#06222c" font-size="12" font-family="JetBrains Mono" font-weight="700">ÉTAPE 5 / 5</text>
+            <text x="537" y="62" fill="#06222c" font-size="20" font-family="Space Grotesk" font-weight="700">Comparer et arbitrer</text>
+
+            <!-- visual : balance pondérée + critères -->
+            <g transform="translate(537,95)">
+              <!-- balance -->
+              <line x1="216" y1="0" x2="216" y2="42" stroke="var(--accent)" stroke-width="3"/>
+              <polygon points="206,42 226,42 216,56" fill="var(--accent)"/>
+              <line x1="56" y1="40" x2="376" y2="40" stroke="var(--accent)" stroke-width="2.5"/>
+              <line x1="56" y1="40" x2="56" y2="60" stroke="var(--accent)" stroke-width="1.8"/>
+              <line x1="216" y1="40" x2="216" y2="60" stroke="var(--accent)" stroke-width="1.8"/>
+              <line x1="376" y1="40" x2="376" y2="60" stroke="var(--accent)" stroke-width="1.8"/>
+
+              <!-- plateau 1 : Passif LC -->
+              <ellipse cx="56" cy="64" rx="42" ry="6" fill="none" stroke="var(--wire)" stroke-width="1.4"/>
+              <rect x="22" y="70" width="68" height="42" rx="3" fill="rgba(184,212,220,.06)" stroke="var(--wire)" stroke-width="1.2"/>
+              <text x="56" y="87" text-anchor="middle" font-size="12" fill="var(--ink)" font-family="JetBrains Mono" font-weight="700">Passif</text>
+              <text x="56" y="102" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">(LC)</text>
+
+              <!-- plateau 2 : Passif RC -->
+              <ellipse cx="216" cy="64" rx="42" ry="6" fill="none" stroke="var(--wire)" stroke-width="1.4"/>
+              <rect x="182" y="70" width="68" height="42" rx="3" fill="rgba(184,212,220,.06)" stroke="var(--wire)" stroke-width="1.2"/>
+              <text x="216" y="87" text-anchor="middle" font-size="12" fill="var(--ink)" font-family="JetBrains Mono" font-weight="700">Passif</text>
+              <text x="216" y="102" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="JetBrains Mono">(RC)</text>
+
+              <!-- plateau 3 : Alimenté -->
+              <ellipse cx="376" cy="64" rx="42" ry="6" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+              <rect x="342" y="70" width="68" height="42" rx="3" fill="rgba(95,208,224,.14)" stroke="var(--accent)" stroke-width="1.4"/>
+              <text x="376" y="87" text-anchor="middle" font-size="12" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">Alimenté</text>
+              <text x="376" y="102" text-anchor="middle" font-size="10" fill="var(--accent)" font-family="JetBrains Mono">(AOP)</text>
+
+              <!-- critères -->
+              <text x="216" y="142" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="JetBrains Mono">critères pondérés (rappel cahier des charges) :</text>
+
+              <g font-family="JetBrains Mono" font-size="10">
+                <rect x="2" y="152" width="78" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="41" y="167" text-anchor="middle" fill="var(--ink-soft)">précision fc</text>
+
+                <rect x="86" y="152" width="58" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="115" y="167" text-anchor="middle" fill="var(--ink-soft)">pente</text>
+
+                <rect x="150" y="152" width="58" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="179" y="167" text-anchor="middle" fill="var(--ink-soft)">pertes</text>
+
+                <rect x="214" y="152" width="58" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="243" y="167" text-anchor="middle" fill="var(--ink-soft)">coût</text>
+
+                <rect x="278" y="152" width="78" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="317" y="167" text-anchor="middle" fill="var(--ink-soft)">encombrement</text>
+
+                <rect x="362" y="152" width="68" height="22" rx="11" fill="none" stroke="var(--ink-soft)" stroke-width="1"/>
+                <text x="396" y="167" text-anchor="middle" fill="var(--ink-soft)">complexité</text>
               </g>
-              <text x="700" y="156" text-anchor="middle" font-size="13" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">ÉTAPE 4</text>
-              <text x="700" y="180" text-anchor="middle" font-size="14" fill="var(--ink)" font-family="Space Grotesk" font-weight="700">Tester (acoustique)</text>
-              <text x="700" y="200" text-anchor="middle" font-size="11" fill="var(--ink-soft)">sur le haut-parleur réel</text>
-              <text x="700" y="215" text-anchor="middle" font-size="11" fill="var(--ink-soft)">au micro de mesure</text>
             </g>
 
-            <!-- 5 · COMPARER -->
-            <g>
-              <circle cx="900" cy="80" r="38" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2.2"/>
-              <g transform="translate(900,80)">
-                <line x1="-22" y1="0" x2="22" y2="0" stroke="var(--accent)" stroke-width="2.2"/>
-                <line x1="0" y1="0" x2="0" y2="-18" stroke="var(--accent)" stroke-width="2.2"/>
-                <circle cx="0" cy="-20" r="3" fill="var(--accent)"/>
-                <path d="M-22,0 L-30,14 L-14,14 Z" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-                <path d="M22,0 L14,14 L30,14 Z" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-              </g>
-              <text x="900" y="156" text-anchor="middle" font-size="13" fill="var(--accent)" font-family="JetBrains Mono" font-weight="700">ÉTAPE 5</text>
-              <text x="900" y="180" text-anchor="middle" font-size="14" fill="var(--ink)" font-family="Space Grotesk" font-weight="700">Comparer</text>
-              <text x="900" y="200" text-anchor="middle" font-size="11" fill="var(--ink-soft)">les trois architectures</text>
-              <text x="900" y="215" text-anchor="middle" font-size="11" fill="var(--ink-soft)">et conclure</text>
+            <line x1="537" y1="290" x2="970" y2="290" stroke="var(--trait)" stroke-width="1"/>
+
+            <text x="537" y="310" font-size="12" font-family="JetBrains Mono" fill="var(--ink-soft)" font-weight="700">&#8594; Ce qu'on en tire :</text>
+            <g font-size="13" font-family="Inter,sans-serif" fill="var(--ink)">
+              <text x="547" y="332">&#8226; un verdict objectif (pas une préférence)</text>
+              <text x="547" y="352">&#8226; les compromis explicites de chaque archi</text>
+              <text x="547" y="372">&#8226; le choix justifié pour cette enceinte précise</text>
             </g>
+
+            <rect x="537" y="392" width="435" height="24" rx="3" fill="rgba(184,212,220,.08)"/>
+            <text x="547" y="408" font-size="10.5" fill="var(--ink-soft)" font-family="JetBrains Mono">Outils : tableau pondéré · propagation d'incertitudes · esprit critique</text>
           </svg>
         </div>
         <div class="encadre">
-          <strong>Perspectives.</strong> Réseau de Zobel (linéariser l'impédance du HP) · alignement Linkwitz-Riley (somme acoustique parfaitement plate) · ordre 4 (encombrant en passif, trivial en alimenté) · correction numérique (DSP).
+          <strong>Perspectives.</strong> Réseau de Zobel (linéariser l'impédance du HP) · alignement Linkwitz-Riley (somme acoustique plate) · ordre 4 (encombrant en passif, trivial en alimenté) · correction numérique (DSP).
         </div>
         <aside class="notes">
-          — Cinq étapes, de la caractérisation du HP à l'arbitrage final entre architectures.<br>
-          — Pas d'abréviation dans les libellés : chaque mot doit parler au jury.<br>
-          — Ouvertures crédibles pour aller plus loin si le temps le permet.
+          — Étape 4 : c'est le moment de vérité. Le calcul prévoit, l'acoustique tranche.<br>
+          — Le micro à 1 m, sur l'axe du HP. La pièce introduit ses propres modes à 100 Hz : à documenter.<br>
+          — Étape 5 : on remplit le tableau des critères pondérés. La conclusion sort des chiffres, pas du goût.<br>
+          — Les perspectives sont là pour montrer qu'on sait où aller plus loin.
         </aside>
       </section>
 
