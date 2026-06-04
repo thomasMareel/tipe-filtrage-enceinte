@@ -677,48 +677,7 @@
         </aside>
       </section>
 
-      <!-- ===================== 9. BIBLIOGRAPHIE ===================== -->
-      <section>
-        <div class="kicker">Bibliographie</div>
-        <h2>Sources</h2>
-        <div class="viz" style="display:flex;flex-direction:column;gap:11px;max-width:940px;margin:0 auto;text-align:left">
-
-          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:10px 18px;border-radius:0 6px 6px 0">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Enseignement</div>
-            <div style="font-size:.92em;color:var(--ink);line-height:1.5;margin-bottom:6px">
-              S. Cavallo, <em>Cours de physique — PTSI (1<sup>re</sup> année)</em> : filtres du 1<sup>er</sup> et 2<sup>nd</sup> ordre, amplificateur opérationnel, impédance complexe.
-            </div>
-            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
-              <em>Physique — PTSI</em>, coll. « Prépas Sciences », Éditions Ellipses.
-            </div>
-          </div>
-
-          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:10px 18px;border-radius:0 6px 6px 0">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Outils de calcul et de mesure</div>
-            <div style="font-size:.92em;color:var(--ink);line-height:1.5;margin-bottom:6px">
-              J. Mulcahy, <em>REW — Room EQ Wizard</em> (mesure acoustique). roomeqwizard.com
-            </div>
-            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
-              <em>Python</em> — calcul et tracé des courbes de Bode et d'impédance. python.org
-            </div>
-          </div>
-
-          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:10px 18px;border-radius:0 6px 6px 0">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Assistance numérique</div>
-            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
-              Anthropic, <em>Claude</em> (assistant IA) — aide à la mise en forme du support et à la clarification de concepts. claude.ai
-            </div>
-          </div>
-
-        </div>
-        <aside class="notes">
-          — Sources et outils à ce stade : cours de Mme Cavallo (PTSI 1re année) et manuel Ellipses ; REW pour la mesure acoustique ; Python pour les courbes calculées ; Claude (IA) pour la mise en forme du support.<br>
-          — Citer l'assistance IA est un choix de transparence : elle a aidé à structurer le support et à clarifier des concepts, pas à produire des résultats expérimentaux.<br>
-          — Pour la version finale : ajouter une référence de fond (filtres de répartition, Linkwitz-Riley, réseau de Zobel) et les datasheets des HP une fois les modèles connus.
-        </aside>
-      </section>
-
-      <!-- ===================== 10. OUVERTURE ===================== -->
+      <!-- ===================== 9. OUVERTURE ===================== -->
       <section>
         <div class="kicker">Ouverture</div>
         <h2>Les limites de notre système — et l'oreille, juge final</h2>
@@ -781,11 +740,37 @@
         </aside>
       </section>
 
-      <!-- ===================== 11. MERCI ===================== -->
-      <section class="titre">
-        <div class="kicker">Pré-soutenance · TIPE 2025–2027</div>
-        <h1>Merci de votre <em>attention</em></h1>
-        <aside class="notes">— Ouvert aux questions sur la faisabilité et la rigueur.</aside>
+      <!-- ===================== 10. MERCI & SOURCES ===================== -->
+      <section>
+        <div class="kicker" style="text-align:center">Pré-soutenance · TIPE 2025–2027</div>
+        <h1 style="text-align:center;margin:.1em 0 .9em">Merci de votre <em>attention</em></h1>
+
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.66em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;text-align:center;margin-bottom:.7em">Sources</div>
+        <div style="display:flex;gap:14px;max-width:1120px;margin:0 auto;text-align:left;align-items:stretch">
+
+          <div style="flex:1;border-top:3px solid var(--accent);background:var(--bg-card);padding:12px 16px;border-radius:0 0 6px 6px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.62em;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Enseignement</div>
+            <div style="font-size:.78em;color:var(--ink);line-height:1.45;margin-bottom:7px">N. Cavallo, <em>Cours de physique — PTSI (1<sup>re</sup> année)</em>.</div>
+            <div style="font-size:.78em;color:var(--ink);line-height:1.45"><em>Physique — PTSI</em>, coll. « Prépas Sciences », Éditions Ellipses.</div>
+          </div>
+
+          <div style="flex:1;border-top:3px solid var(--accent);background:var(--bg-card);padding:12px 16px;border-radius:0 0 6px 6px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.62em;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Calcul &amp; mesure</div>
+            <div style="font-size:.78em;color:var(--ink);line-height:1.45;margin-bottom:7px">J. Mulcahy, <em>REW — Room EQ Wizard</em>. roomeqwizard.com</div>
+            <div style="font-size:.78em;color:var(--ink);line-height:1.45"><em>Python</em> — courbes de Bode et d'impédance. python.org</div>
+          </div>
+
+          <div style="flex:1;border-top:3px solid var(--accent);background:var(--bg-card);padding:12px 16px;border-radius:0 0 6px 6px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.62em;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Assistance numérique</div>
+            <div style="font-size:.78em;color:var(--ink);line-height:1.45">Anthropic, <em>Claude</em> (assistant IA) — mise en forme du support. claude.ai</div>
+          </div>
+
+        </div>
+        <aside class="notes">
+          — Diapo de clôture : remerciement + sources réunies.<br>
+          — Sources et outils : cours de Mme Cavallo (PTSI 1re année) et manuel Ellipses ; REW pour la mesure ; Python pour les courbes ; Claude (IA) pour la mise en forme.<br>
+          — Citer l'assistance IA est un choix de transparence : aide à structurer et clarifier, pas à produire des résultats.
+        </aside>
       </section>
 
     </div>
