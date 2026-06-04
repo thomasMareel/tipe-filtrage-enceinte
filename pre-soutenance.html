@@ -677,7 +677,113 @@
         </aside>
       </section>
 
-      <!-- ===================== 9. MERCI ===================== -->
+      <!-- ===================== 9. BIBLIOGRAPHIE ===================== -->
+      <section>
+        <div class="kicker">Bibliographie</div>
+        <h2>Sources</h2>
+        <div class="viz" style="display:flex;flex-direction:column;gap:16px;max-width:940px;margin:0 auto;text-align:left">
+
+          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:13px 20px;border-radius:0 6px 6px 0">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Enseignement</div>
+            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
+              S. Cavallo, <em>Cours de physique — PTSI</em> : filtres du 1<sup>er</sup> et 2<sup>nd</sup> ordre, amplificateur opérationnel, impédance complexe.
+              <span style="color:var(--warn)">[lycée &amp; année à compléter]</span>
+            </div>
+          </div>
+
+          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:13px 20px;border-radius:0 6px 6px 0">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Documentation technique</div>
+            <div style="font-size:.92em;color:var(--ink);line-height:1.5;margin-bottom:6px">
+              Beyma, <em>Fiche technique — subwoofer 18″</em> (paramètres Thiele-Small). beyma.com
+              <span style="color:var(--warn)">[modèle exact à confirmer]</span>
+            </div>
+            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
+              <em>Fiche technique — haut-parleur médium 4 Ω.</em>
+              <span style="color:var(--warn)">[marque &amp; modèle à compléter]</span>
+            </div>
+          </div>
+
+          <div style="border-left:3px solid var(--accent);background:var(--bg-card);padding:13px 20px;border-radius:0 6px 6px 0">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px">Outils de mesure</div>
+            <div style="font-size:.92em;color:var(--ink);line-height:1.5">
+              J. Mulcahy, <em>REW — Room EQ Wizard</em> (mesure acoustique). roomeqwizard.com
+              <span style="color:var(--warn)">[version &amp; date de consultation à compléter]</span>
+            </div>
+          </div>
+
+        </div>
+        <p class="legende">Bibliographie à enrichir au fil du projet (modèles exacts, et une référence de fond en électroacoustique pour la version finale).</p>
+        <aside class="notes">
+          — Sources réellement consultées à ce stade : cours de Mme Cavallo, fiches constructeurs des HP, documentation de REW.<br>
+          — Les mentions en orange sont des champs à compléter, pas des inventions : je n'ai pas mis de modèle fictif vérifiable.<br>
+          — Pour la version finale : ajouter au moins une référence de fond (filtres de répartition, Linkwitz-Riley, réseau de Zobel).
+        </aside>
+      </section>
+
+      <!-- ===================== 10. OUVERTURE ===================== -->
+      <section>
+        <div class="kicker">Ouverture</div>
+        <h2>Les limites de notre système — et l'oreille, juge final</h2>
+        <div class="viz">
+          <svg viewBox="0 0 1000 330" font-family="Inter,sans-serif" role="img" aria-label="Limites assumées et ouverture psychoacoustique">
+            <defs><marker id="arO" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 z" fill="var(--accent)"/></marker></defs>
+
+            <text x="30" y="30" fill="var(--warn)" font-family="Space Grotesk" font-size="17" font-weight="700">Ce que même nos mesures ne diront pas</text>
+
+            <!-- Limite 1 : mesure acoustique -->
+            <rect x="20" y="48" width="430" height="112" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.3"/>
+            <g transform="translate(52,82)">
+              <rect x="0" y="0" width="15" height="28" rx="7.5" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.6"/>
+              <line x1="7.5" y1="28" x2="7.5" y2="44" stroke="var(--wire)" stroke-width="1.8"/>
+              <rect x="-4" y="44" width="23" height="3" fill="var(--wire)"/>
+              <path d="M-9,8 q-7,6 0,14" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+              <path d="M-17,3 q-12,11 0,24" fill="none" stroke="var(--accent2)" stroke-width="2" opacity="0.55"/>
+            </g>
+            <text x="110" y="80" fill="var(--ink)" font-size="17" font-family="Space Grotesk" font-weight="700">Mesure acoustique</text>
+            <text x="110" y="106" fill="var(--ink-soft)" font-size="13">pièce non anéchoïque · modes à 100 Hz</text>
+            <text x="110" y="128" fill="var(--ink-soft)" font-size="13">le grave reste difficile à mesurer proprement</text>
+
+            <!-- Limite 2 : modèle idéalisé -->
+            <rect x="20" y="172" width="430" height="112" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.3"/>
+            <g transform="translate(44,210)">
+              <rect x="6" y="14" width="13" height="22" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
+              <polygon points="19,4 19,46 42,56 42,-6" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="1.5"/>
+              <ellipse cx="26" cy="25" rx="40" ry="33" fill="none" stroke="var(--wire)" stroke-width="1.1" stroke-dasharray="4 4" opacity="0.7"/>
+            </g>
+            <text x="110" y="204" fill="var(--ink)" font-size="17" font-family="Space Grotesk" font-weight="700">Modèle idéalisé</text>
+            <text x="110" y="230" fill="var(--ink-soft)" font-size="13">HP et AOP supposés parfaits</text>
+            <text x="110" y="252" fill="var(--ink-soft)" font-size="13">le composant réel s'en écarte</text>
+
+            <!-- flèche de transition -->
+            <line x1="462" y1="166" x2="540" y2="166" stroke="var(--accent)" stroke-width="3.5" marker-end="url(#arO)"/>
+
+            <!-- Ouverture : l'oreille -->
+            <rect x="555" y="40" width="425" height="252" rx="8" fill="rgba(95,208,224,.10)" stroke="var(--accent)" stroke-width="1.8"/>
+            <text x="767" y="74" fill="var(--accent)" font-family="JetBrains Mono" font-size="13" text-anchor="middle">L'OUVERTURE SCIENTIFIQUE</text>
+
+            <!-- oreille stylisée -->
+            <g transform="translate(742,92)">
+              <path d="M42,46 C46,18 32,2 16,6 C2,9 -2,26 8,36 C16,44 9,52 19,58" fill="none" stroke="var(--accent)" stroke-width="3.4" stroke-linecap="round"/>
+              <path d="M33,36 C36,22 24,18 18,28 C14,35 20,40 17,47" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M-10,16 q-8,10 0,22" fill="none" stroke="var(--accent2)" stroke-width="2" opacity="0.7"/>
+              <path d="M-20,10 q-13,16 0,34" fill="none" stroke="var(--accent2)" stroke-width="2" opacity="0.4"/>
+            </g>
+
+            <text x="767" y="186" fill="var(--accent)" font-family="Space Grotesk" font-size="23" font-weight="700" text-anchor="middle">L'oreille, juge final</text>
+            <text x="767" y="222" fill="var(--ink)" font-size="14" text-anchor="middle">Une réponse mesurée plate ne garantit pas</text>
+            <text x="767" y="242" fill="var(--ink)" font-size="14" text-anchor="middle">un meilleur ressenti.</text>
+            <text x="767" y="270" fill="var(--ink-soft)" font-size="13" text-anchor="middle" font-family="JetBrains Mono">masquage · seuils d'audition → la psychoacoustique</text>
+          </svg>
+        </div>
+        <p class="cle">Nos critères sont <strong>électriques et acoustiques</strong> ; le dernier mot, lui, est <strong>perceptif</strong>.</p>
+        <aside class="notes">
+          — Deux limites que j'assume d'emblée : la mesure acoustique (pas de chambre anéchoïque, modes de pièce à 100 Hz) et le modèle idéalisé.<br>
+          — Précision pour une question : mesurer Z(f) lève l'hypothèse « HP = résistance » (côté réactif, linéaire), mais PAS la non-linéarité (distorsion, grand signal, Bl(x)) — ça, ça demanderait un banc de distorsion / une analyse Klippel.<br>
+          — Ouverture : même une réponse parfaitement plate à 100 Hz ne garantit pas un meilleur son perçu. L'oreille (masquage, seuils, faible localisation dans le grave) est le juge ultime — la psychoacoustique dépasse nos critères objectifs.
+        </aside>
+      </section>
+
+      <!-- ===================== 11. MERCI ===================== -->
       <section class="titre">
         <div class="kicker">Pré-soutenance · TIPE 2025–2027</div>
         <h1>Merci de votre <em>attention</em></h1>
