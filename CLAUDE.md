@@ -3,296 +3,140 @@
 Ce fichier est la mémoire entre sessions. À relire en début de session et à
 tenir à jour à la fin de chaque session de travail.
 
-> ⚠️ RÉVISION MAJEURE DU SUJET — brief étudiant du 2026-05-25 (FAIT FOI).
-> Remplace le cadrage initial (1er ordre, binaire passif/actif). Les slides et
-> docs créés AVANT cette date reposent sur l'ancien cadrage et **doivent être
-> refondus** pour coller au nouveau brief ci-dessous.
+> ⚠️ PIVOT DE SUJET v2 — décision étudiant du 2026-08-04 (FAIT FOI).
+> L'étudiant jugeait la v1 (« passif ou actif ? ») trop « recette » pour le
+> niveau prépa (« il me faut un filtre → j'ai fait un filtre »). Le sujet est
+> recentré sur l'**optimisation sur charge réelle**. Le plan opérationnel
+> complet est dans **FEUILLE-DE-ROUTE.md** (référence unique pour les phases).
+> La v1 est gelée dans `archive-v1/` (autonome, avec son propre CLAUDE.md et
+> tout l'historique de travail) + tag git `v1-sujet-passif-actif`.
 
-## Sujet
+## Sujet (v2)
 
-- **Auteur** : étudiant en PTSI (fin de 1re année), TIPE 2026–2027 (travail mené en 2e année).
+- **Auteur** : Thomas Mareel, 2e année de prépa (PTSI → 2e année), TIPE session 2027.
 - **Thème national** : Sobriété, efficacité, optimisation.
-- **Enceinte deux voies (DIY)** : 1 subwoofer **8 Ω** (grave) + 2 médium-aigu
-  **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**.
-- Type de caisse (clos / bass-reflex) à documenter.
+- **Enceinte deux voies (DIY)** : 1 subwoofer **8 Ω 18″** + 2 médium-aigu
+  **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**. Pavillons d'aigu
+  hors périmètre. Type de caisse (clos / bass-reflex) à documenter.
 
-## Problématique
+## Problématique (v2)
 
-> « Filtrage passif ou filtrage actif : quelle architecture offre le meilleur
-> compromis sobriété/efficacité pour le raccord à 100 Hz d'une enceinte deux
-> voies subwoofer/médium-aigu ? »
+> « Comment concevoir le filtre de raccord à 100 Hz d'une enceinte deux voies
+> pour qu'il tienne sa cible sur la charge réelle — un haut-parleur dont
+> l'impédance varie du simple au sextuple — au moindre coût en composants,
+> en pertes et en matière ? »
 
-## Trois architectures comparées
+**Récit en 4 actes** : mesurer Z(f) → identifier Thiele-Small (problème
+inverse, moindres carrés) → optimiser le filtre sous contraintes (E12, coût,
+pertes DCR) → valider au banc et au micro contre des critères **gelés avant
+les mesures**. Satellites intégrés : **self optimale** (Wheeler/Brooks, alimente
+le modèle de coût), **croisement énergétique** (conso au repos de l'actif vs
+pertes du passif), **référence active** (immunisée contre Z(f) par construction).
 
-1. **Passif POST-amplification** — filtre **LC 2ⁿᵈ ordre Butterworth** (12 dB/oct)
-   entre ampli et HP. PB sub : L₁=18 mH série + C₁=150 µF //. PH médium : C₂=150 µF
-   série + L₂=18 mH //. (Valeurs cohérentes Butterworth 100 Hz/8 Ω ; voir critique :
-   C théorique ≈ 141 µF, 150 µF = valeur normalisée → léger décalage de fc.)
-2. **Passif RC signal faible (1er ordre, 6 dB/oct)** — entre pré-ampli et ampli.
-   R, C à recalculer selon Zs(pré-ampli, à mesurer) et Zin(ampli, 10 k asym/20 k sym).
-   Architecture « naïve » dont on veut démontrer expérimentalement les limites.
-3. **Actif Sallen-Key 2ⁿᵈ ordre Butterworth (Q=1/√2)** — avant ampli (bi-amplification).
-   AOP : NE5532 (audio, faible bruit) recommandé, ou TL072. Alim symétrique ±15 V.
+Détail des phases, portes de validation, critères et calendrier :
+**FEUILLE-DE-ROUTE.md**. Ne pas dupliquer ici.
 
-## Matériel (brief 2026-05-25)
+## Ce que la v1 lègue à la v2
+
+- **Filtre passif « catalogue »** (point de départ à battre) : LC 2ⁿᵈ ordre
+  Butterworth 100 Hz/8 Ω — PB sub : L₁=18 mH série + C₁=150 µF // ; PH médium :
+  C₂=150 µF série + L₂=18 mH //. (C théorique ≈ 141 µF → 150 µF normalisé.)
+- **Référence active Sallen-Key** (Q=1/√2), avant l'ampli, bi-amplification sur
+  les 2 canaux du E-800. Valeurs corrigées : sub R=10 kΩ, C₁=220 nF/C₂=110 nF ;
+  médiums R'₁=11 kΩ, R'₂=22 kΩ, C=100 nF. AOP NE5532 (ou TL072), alim ±15 V.
+- L'archi « RC signal faible 1er ordre » de la v1 est **abandonnée** (le
+  contre-exemple n'a plus de rôle dans le récit v2).
+- Identité visuelle **Blueprint** (css/blueprint.css + blueprint-light.css),
+  libs vendorées (hors-ligne), procédure PDF, photos de l'enceinte dans assets/.
+
+## Matériel
 
 - Pré-ampli **JB Systems SMX SX-801** (2 sorties identiques) — Zs à mesurer.
 - Ampli **t.amp E-800** : 2×350 W/8 Ω, 2×500 W/4 Ω ; Zin 20 k sym / 10 k asym ;
-  sensibilité 0,775 V / 1,4 V (sélectable).
-- Mesure lycée : GBF, oscillo numérique, multimètre.
-- Mesure perso : micro de mesure + interface audio (modèle à documenter).
-- Logiciels : **REW** (acoustique), **LTspice** (simulation filtres), **Python**
-  (numpy/scipy/matplotlib : Bode théoriques + confrontation).
+  sensibilité 0,775 V / 1,4 V (sélectable). Deux canaux → bi-amp sans achat.
+- Mesure lycée : GBF, oscillo numérique, multimètre. Perso : micro de mesure +
+  carte son de qualité (modèle à documenter).
+- Logiciels : **REW**, **LTspice**, **Python** (numpy/scipy/matplotlib).
+- Budget composants : **≤ 500 €**.
+- Enceinte fabriquée et fonctionnelle ; crossover actif réglable du commerce
+  actuellement en service (= la référence active existe déjà en pratique).
 
-## Déroulé expérimental (5 phases)
+## Données encore à confirmer par l'étudiant
 
-1. **Caractérisation** : T/S du sub (datasheet), Z(f) sub et bloc médiums (GBF +
-   R étalon 100 Ω, 20–500 Hz au 1/3 d'oct), Fs mesurée vs datasheet, Zs pré-ampli,
-   réponse acoustique sans filtre (micro 1 m).
-2. **Dimensionnement + simulation** : les 3 archis, Bode Python + LTspice, d'abord
-   HP=8 Ω pur puis Z(f) mesurée.
-3. **Tests électriques sur résistance de puissance 8 Ω** (amplitude faible) : fc à
-   −3 dB, pente, pertes en bande passante.
-4. **Tests acoustiques sur HP réels** (REW, 20–500 Hz) : fc acoustique vs électrique,
-   sommation des deux voies au raccord.
-5. **Analyse comparative** : tableau (précision fc, pente, pertes, coût, encombrement,
-   complexité, sensibilité à Z(f)) ; coût système de l'actif ; mentions réseau de
-   Zobel (remédiation archi 1) et Linkwitz-Riley (alternative à Butterworth).
+- f_s réelle du sub et des médiums (→ phase 1, mesure d'impédance).
+- Type de caisse (clos/bass-reflex) ; câblage exact des médiums.
+- Sensibilités (dB/W/m) pour l'égalisation des niveaux.
+- Modèle exact de la carte son ; les 2 niveaux d'écoute de référence à geler.
 
-## Priorités pédagogiques (étudiant)
+## Points scientifiques à NE PAS oublier (critique prof 2026-05-25, toujours valides)
 
-1. Rigueur expérimentale : incertitudes calculées + propagées, barres d'erreur, méthode documentée.
-2. Démarche d'ingénieur : cahier des charges, critères pondérés, arbitrage justifié.
-3. Modélisation : Bode gain+phase, facteur Q, complexes, confrontation théorie/expérience.
-
-## Points scientifiques à NE PAS oublier (issus de la critique prof, 2026-05-25)
-
-- **2ⁿᵈ ordre Butterworth ⇒ inversion de polarité d'une voie OBLIGATOIRE** : les deux
-  sorties sont à 180° à fc. Sans inversion → trou profond (annulation) ; avec inversion
-  → bosse +3 dB. La « bosse +3 dB attendue » suppose la polarité inversée.
-- **Comparaison non iso-ordre** : archi 2 = 1er ordre (6 dB/oct) vs archis 1 et 3 =
-  2ⁿᵈ ordre (12 dB/oct). À assumer explicitement (archi 2 = contre-exemple).
-- **Fs en caisse ≠ Fs datasheet (champ libre)** : un HP monté voit sa résonance décalée
-  (Fc sealed > Fs ; bass-reflex = deux pics). Mesurer le pic d'impédance en caisse ≠ erreur.
+- **2ⁿᵈ ordre Butterworth ⇒ inversion de polarité d'une voie OBLIGATOIRE**
+  (sinon trou profond à fc ; avec inversion → bosse +3 dB).
+- **Fs en caisse ≠ Fs datasheet** : Fc(clos) > Fs ; bass-reflex = deux pics.
+  Mesurer le pic en caisse n'est pas une erreur.
 - **Z exacte sans approximation courant constant** : mesurer V_HP ET V_Rref →
-  Z = Rref·(V_HP/V_Rref). À 100 Ω l'hypothèse I≈cst se dégrade au pic (Z~40–60 Ω).
-- **DCR de L₁=18 mH (archi 1)** : pertes Joule + modifie le Q du grave → argument sobriété/efficacité.
-- **Scope** : 3 archis × 4 traitements = énorme pour 10 min. Prioriser pour l'oral.
+  Z = Rref·(V_HP/V_Rref). À 100 Ω, I≈cst se dégrade au pic (Z ~ 40–60 Ω).
+- **DCR de la self** : pertes Joule + modifie l'amortissement du grave — en v2
+  c'est un élément CENTRAL (fonction de coût + étude self, loi r×m ≈ cte à L fixée).
+- **Mesure acoustique à 100 Hz** : modes de pièce (λ ≈ 3,4 m), fenêtrage
+  inopérant en BF → champ proche.
+- **Égalisation des niveaux** entre voies ; **tolérances** R ±5 %, C ±10–20 %,
+  L ±10 % → propagation sur f_c (et argument pour l'énumération E12 en v2).
+- **Scope oral 10 min** : le détail vit en annexes.
 
-## Pièges à ne pas oublier
+## Nombres de contrôle (vérifiés)
 
-- Mesure acoustique à 100 Hz : modes de pièce (λ ≈ 3,4 m), fenêtrage
-  quasi-anéchoïque inopérant en basses fréquences → privilégier le champ proche.
-- Phase au raccord : 1er ordre = 90° d'écart entre voies ; somme à surveiller.
-- Égalisation des niveaux (sensibilités différentes sub/médium).
-- Incertitudes : tolérances R ±5 %, C ±10–20 %, L ±10 % → propagation sur f_c.
-
-## Notions PTSI à mobiliser
-
-Impédance complexe ; fonction de transfert H(jω), module/argument ;
-filtres 1er ordre RC/RL ; f_c = 1/(2πRC) ; diagrammes de Bode (asymptotes,
-−20 dB/décade) ; AOP idéal en régime linéaire ; incertitudes et propagation.
-
-## Deux livrables
-
-1. **Pré-soutenance** (`pre-soutenance.html`) — ~5 min, 8 slides, **démarche seulement,
-   aucun résultat demandé**. À présenter aux professeurs ~2026-06-01 (dans 1 semaine).
-   But : annoncer le sujet et la démarche, comme une validation avant de démarrer.
-2. **Présentation finale** (`presentation-finale.html`) — ~10 min, 14 slides, version
-   complète avec mesures et comparaison. À rédiger après les premières mesures.
-3. `index.html` = page d'accueil qui pointe vers les deux. CSS et assets partagés.
-
-## Matériel et caractéristiques (réponses de l'étudiant, 2026-05-24)
-
-- **Subwoofer** : 8 Ω, **18 pouces**, f_s non encore mesurée.
-- **Médium-aigu** (×2) : 8 Ω, f_s « vers 50 Hz » (à confirmer), câblage à préciser.
-- **Mesure** : carte son de haute qualité (perso), GBF du lycée, micro de mesure
-  (compatible carte son/interface). Logiciel recommandé : **REW (gratuit)**.
-- **Avancement** : enceinte fabriquée et 100 % fonctionnelle ; utilise actuellement un
-  **crossover de fréquence réglable** (= déjà du filtrage actif, à formaliser dans le TIPE).
-  **Aucun filtre fabriqué maison, aucune mesure faite.** Projet en cours, tout à venir.
-- **Composants** : matériel de base du lycée + achats prévus, **budget max 500 €**
-  (à réserver aux composants, pas au logiciel).
-- **Actif** : pas encore étudié (programme de 2e année) — sera approfondi pendant le TIPE.
-  Décision validée : **on garde l'axe passif vs actif**.
+- Butterworth 100 Hz/8 Ω : L = √2·R/(2πf) ≈ 18,0 mH ; C = 1/(√2·R·2πf) ≈ 141 µF.
+- DCR 1 Ω face à 8 Ω → ~11 % de la puissance en chaleur, ≈ −1 dB.
+- Résonance série 18 mH + 150 µF ≈ 97 Hz (méthode de mesure de L au GBF).
+- Sallen-Key : voir valeurs corrigées ci-dessus (fc ≈ 100 Hz, Q = 1/√2).
+- Courbes _gen.py (modèle v1) : f_s modèle ≈ 40 Hz, Z(100 Hz) ≈ 14 Ω.
 
 ## Conventions du projet
 
 - **Tout en français** : interface, commentaires, commits, notes.
-- reveal.js via **CDN** (pas de npm). Servir via `python -m http.server`.
-- Formules en **LaTeX** rendu par MathJax 3 (`\( \)` en ligne, `\[ \]` bloc).
+- reveal.js + MathJax + polices **vendorés dans `libs/`** (hors-ligne, pas de
+  CDN, pas de npm). Servir via `python -m http.server`.
+- Formules en LaTeX via MathJax 3 (`\( \)` en ligne, `\[ \]` bloc).
 - **Pas d'invention de résultats** : tout chiffre non mesuré est un placeholder
-  explicite (commentaire HTML `<!-- TODO -->` ou bloc `.placeholder`).
-- Sobriété visuelle : pas d'emoji, pas de couleurs criardes, beaucoup de blanc.
+  explicite (`<!-- TODO -->` ou bloc `.placeholder`).
+- Sobriété visuelle (pas d'emoji, schémas SVG, identité Blueprint).
 - Notes du présentateur dans `<aside class="notes">`, ~40 s par slide.
+- Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
+  Site : https://thomasmareel.github.io/tipe-filtrage-enceinte/
+  Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH).
 
-## État actuel
+## Procédure PDF (résumé — détail dans EXPORT-PDF.md)
 
-- [x] Étape 1 — analyse critique du sujet (faite).
-- [x] Étape 2 — squelette projet : git, README, CLAUDE.md, index.html
-      (reveal.js CDN + MathJax + thème clair), css/custom.css. Premier commit.
-- [x] Étape 3 — plans validés : finale 14 slides + pré-version 7 slides.
-- [x] Étape 4 — questions de contenu posées et répondues (voir section Matériel).
-- [~] Étape 5 — rédaction : **pré-soutenance rédigée** (8 slides), refonte **visuelle**
-      (schémas SVG inline, texte minimal, notes orales allégées). Version finale = stub.
-      Convention : support PDF → le visuel porte le message, peu de texte à l'écran.
-- [x] Étape 6 — EXPORT-PDF.md, NOTES-TIPE.md créés ; dépôt GitHub poussé + Pages actif.
-      Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
-      Site  : https://thomasmareel.github.io/tipe-filtrage-enceinte/
-      Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH du shell).
+PDF vectoriels via decktape (Chrome système, PUPPETEER_EXECUTABLE_PATH) ;
+variante claire imprimable via css/blueprint-light.css. Repli bitmap :
+captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
+
+## État actuel (2026-08-04)
+
+- [x] v1 complète (pré-soutenance présentée aux profs début juin 2026 ; finale
+      v1 structurée en attente de mesures) — **gelée dans archive-v1/**.
+- [x] Pivot v2 acté : FEUILLE-DE-ROUTE.md créée, MCOT.md réécrit (v2),
+      CLAUDE.md (ce fichier) réécrit, README mis à jour.
+- [ ] Phase 0 à finir : critères + 2 niveaux d'écoute à geler (décision
+      étudiant), liste d'achats phase 1, squelette code `analyse/`.
+- [ ] Les slides à la racine (pre-soutenance.html, presentation-finale.html,
+      index.html) sont encore la **v1** — refonte v2 prévue en phase 5 (ou
+      avant sur demande). Le site Pages reflète donc la v1 pour l'instant.
 
 ## Prochaines étapes
 
-1. Relecture de la pré-soutenance par l'étudiant ; ajuster nom, schémas, f_s.
-2. Insérer les assets (photo enceinte, schéma fonctionnel, Bode théorique).
-3. Étape 6 : EXPORT-PDF.md + NOTES-TIPE.md, puis GitHub + Pages.
-4. Plus tard : rédiger la version finale une fois les premières mesures faites.
+1. Étudiant : valider/amender les critères et les 2 niveaux d'écoute
+   (FEUILLE-DE-ROUTE.md § Critères) → les geler.
+2. Étudiant : acheter R_ref 100 Ω 1 % (+ 10 Ω), pinces, wattmètre de prise ;
+   vérifier résistance de puissance 8 Ω au lycée.
+3. Claude : squelette `analyse/` (Python : lecture mesures → fit T-S →
+   optimisation E12 avec sanity check 8 Ω) dès que demandé.
+4. Phase 1 dès la rentrée : étalonnage de la chaîne sur composants connus,
+   puis Z(f) du sub en caisse. C'est la clé de voûte — rien d'autre avant.
 
-## Données encore à confirmer par l'étudiant
+## Historique
 
-- f_s réelle du médium et du subwoofer (à mesurer à l'impédancemètre / REW).
-- Câblage des deux médiums (série / parallèle / voies séparées).
-- Sensibilités (dB/W/m) pour l'égalisation des niveaux.
-- Référence d'AOP et alimentation symétrique pour le filtre actif (2e année).
-
-## Journal de la boucle autonome (lancée 2026-05-25 01:01, fin visée ~05:01)
-
-Boucle auto-rythmée : à chaque réveil, NOUVELLES idées dans le périmètre
-(pré-soutenance / version finale / docs), implémenter, vérifier, commit+push,
-journaliser. Pas de scope creep, pas d'invention de résultats.
-
-### Backlog d'idées (cocher quand fait, ajouter au fil de l'eau)
-- [x] Mutualiser le CSS des visuels (.viz/.deux-viz/.cle/.chip) dans custom.css.
-- [x] Construire la version finale (15 slides) avec visuels SVG + placeholders data.
-- [x] Bode finale enrichi : gain ET phase.
-- [x] SVG courbe d'impédance d'un HP (pic à f_s) pour la slide « HP ≠ résistance ».
-- [x] SVG architecture bi-amplification (actif) vs mono-ampli (passif).
-- [~] Dimensionnement chiffré (fait passif) + propagation d'incertitude (exemple à détailler).
-- [x] Tableau comparatif final (critères × passif/actif) — version de base.
-- [x] Enrichir NOTES-TIPE.md (plus de Q/R, surtout maths + déphasage + choix mesure).
-- [x] Page d'accueil : petit visuel/motif de raccord.
-- [ ] Vérif qualité : rendu PDF (print-pdf), liens, lisibilité.
-- [x] Slide annexe / glossaire pour le jury non spécialiste.
-- [x] Exemple travaillé de propagation d'incertitude sur f_c (annexe B).
-- [ ] Sélecteur de thème clair/sombre (au cas où la salle est sombre).
-- [x] Illustrer la somme des deux voies (1er ordre) : reconstruction plate (annexe C).
-- [x] Détailler le dimensionnement actif (valeurs R, C concrètes + AOP exemple).
-- [x] README : section sur les deux livrables et la structure SVG.
-
-### Itérations
-- Itération 1 (01:01–) : CSS mutualisé dans custom.css ; pré-soutenance nettoyée
-  (style inline retiré) ; **version finale construite** (15 slides : contexte, enceinte,
-  réponse initiale [placeholder], HP≠résistance [courbe Z avec pic f_s], Bode gain+phase,
-  passif dimensionné, actif + bi-amp, protocole, résultats [placeholders], acoustique,
-  tableau comparatif, limites, conclusion). Vérifié : 15 sections, 13 SVG, 0 débordement.
-- Itération 2 (~01:18) : cadence ramenée au minimum (réveil 60 s, enchaînement).
-  NOTES-TIPE.md enrichi (sections 8 maths détaillée, 9 déphasage/somme des voies,
-  10 choix expérimentaux REW + mesure d'impédance). Motif visuel « raccord 100 Hz »
-  ajouté à la page d'accueil.
-- Itérations 3-4 (~01:15, en continu dans le même tour) : dimensionnement actif
-  concret sur slide 8 (C=100 nF ⇒ R≈16 kΩ, AOP TL072 ±15 V) ; deux slides d'annexe
-  ajoutées à la version finale (glossaire pour jury non spécialiste + propagation
-  d'incertitude sur f_c, ±11 % avec R±5 %/C±10 %).
-  Note : passage en mode multi-itérations par tour (pas d'attente entre itérations).
-- Itérations 5-6 (~01:16, même tour) : README enrichi (tableau des deux livrables +
-  structure SVG) ; annexe C ajoutée à la version finale (somme des voies au 1er ordre
-  H_PB+H_PH=1 → reconstruction plate, avec SVG). Version finale = 18 sections (15 + 3 annexes).
-- Itération 7 (~01:18, même tour) : guide assets/LISEZMOI.md (quels fichiers déposer,
-  où ils apparaissent, comment remplacer un placeholder par <img>). Placeholders de la
-  finale rendus explicites (noms de fichiers attendus). NB : l'outil de preview
-  (screenshot/eval) time out de façon répétée pendant le chargement MathJax — souci
-  d'environnement, vérifier le rendu via rechargement manuel ou export PDF.
-- Itération 8 (~01:22, même tour) : EXPORT-PDF.md complété (note sur les 3 slides
-  d'annexe : secours questions, comment les exclure pour un PDF strict 10 min).
-  Vérification numérique des valeurs clés (toutes exactes) : L≈12,7 mH ; C≈199 µF ;
-  actif R≈15,9 kΩ pour C=100 nF ; u(f_c)/f_c≈11 %.
-- Itération 9 (~01:23) : QA balises (<section> équilibrées 18/18 finale, 9/9 pré-version).
-  Tableau comparatif enrichi (ajout encombrement + réglage fin de f_c, critères de la
-  démarche initiale) ; police table réduite à .66em pour tenir la slide.
-- Itération 10 (~01:25) : correction d'incohérence — l'accueil affichait encore
-  « en construction » pour la finale (désormais bâtie). Libellés alignés sur les
-  compteurs reveal : pré-soutenance 9 vues, finale 15 slides + 3 annexes (accueil + README).
-- Itération 11 (~01:26) : ajout d'une Q/R jury à forte valeur dans NOTES-TIPE.md
-  (« si les deux sont du 1er ordre, le filtrage n'est-il pas identique ? ») — point
-  subtil : théorie identique, l'écart est dans le réel (Z(f), pertes, tolérances).
-- Itération 12 (~01:27) : annexe D « Sources » ajoutée à la finale (gabarit de
-  bibliographie à compléter — le TIPE exige des sources ; rien d'inventé, des TODO).
-  Finale = 19 sections (15 + 4 annexes : glossaire, incertitude, reconstruction, sources).
-- Backlog restant : sélecteur thème clair/sombre (optionnel, différé car le livrable
-  est le PDF clair) ; passe finale de relecture PDF quand des assets réels seront là.
-
-### Bilan final de la boucle (arrêt ~01:28 le 2026-05-25, après itération 12)
-
-Boucle arrêtée volontairement : tout le travail à valeur réelle réalisable **sans
-les données de l'étudiant** est fait. Continuer aurait été du churn. État livré :
-
-- **Pré-soutenance** (`pre-soutenance.html`) : 9 vues, visuelle, prête pour l'oral ~5 min.
-- **Présentation finale** (`presentation-finale.html`) : 15 slides + 4 annexes
-  (glossaire, incertitude, reconstruction des voies, sources), à dominante SVG.
-- **Docs** : README (livrables + structure), EXPORT-PDF (procédure + annexes),
-  NOTES-TIPE (Q/R jury étoffées : maths, déphasage, équivalence des ordres, mesure),
-  assets/LISEZMOI (guide d'insertion des médias).
-- Tout est commité et poussé ; site Pages à jour.
-
-### Ce qui reste à faire par l'étudiant (nécessite ses données)
-1. Renseigner le nom (slides de titre).
-2. Mesurer/confirmer f_s du médium et du sub (REW + jig d'impédance).
-3. Faire les manips et insérer les courbes (cf. assets/LISEZMOI.md) : réponse
-   initiale, Bode passif (résistance + HP), Bode actif, somme acoustique.
-4. Remplir le tableau comparatif (ligne « écart à la cible ») et la conclusion.
-5. Compléter la bibliographie (annexe Sources) avec les références exactes.
-6. Photo de l'enceinte (slide 3).
-7. Relire le rendu PDF une fois les médias insérés (EXPORT-PDF.md).
-
-Pour reprendre une boucle plus tard : relancer /loop avec un prompt similaire.
-
-### Reprise de boucle
-- Itération 13 (~01:30) : boucle relancée par l'étudiant. Création de **MCOT.md**
-  (brouillon de la fiche MCOT SCEI : titre, ancrage au thème, mots-clés FR/EN,
-  positionnement, problématique, objectifs, étapes, bibliographie commentée — avec
-  placeholders [[à compléter]] pour motivation/sources, rien d'inventé). Référencé
-  dans le README. Nouveau doc TIPE requis, hors slides.
-
-## Refonte des supports (nouveau brief) — 2026-05-25
-
-- **Identité visuelle choisie : « Blueprint technique »** (fond bleu nuit + grille,
-  accent cyan, titres Space Grotesk, étiquettes JetBrains Mono). Feuille dédiée
-  **css/blueprint.css** (réutilisable par la finale). Démo des 5 styles : styles-demo.html.
-- **Diapo de titre** : « Thomas Mareel · PTSI 2 », dates **2025-2027**.
-- **Périmètre transducteurs** : raccord 100 Hz = sub 18″ vs **2 HP latéraux** ; pavillons
-  d'aigu **hors périmètre**.
-- **Alignement** : Butterworth partout (récit carré), Linkwitz-Riley en perspective.
-  Rappel : inversion de polarité d'une voie au 2ⁿᵈ ordre (bosse +3 dB sinon trou).
-- **Valeurs Sallen-Key corrigées** (à utiliser dans la finale) : sub R=10 kΩ, C₁=220/C₂=110 nF ;
-  médiums R'₁=11 kΩ, R'₂=22 kΩ, C=100 nF (le doc montages_tipe.html de l'étudiant a fc≈66/93 Hz à corriger).
-- **Pré-soutenance REFAITE** en Blueprint sur le nouveau brief : 9 vues (titre, enceinte+photos,
-  raccord/problématique, cahier des charges, 3 architectures [duel 1.B vs 3], Bode 2ⁿᵈ ordre
-  gain+phase, protocole, planning+perspectives, merci). 6 SVG, 0 débordement. Photos en repli
-  élégant tant que assets/enceinte-face.jpg et assets/enceinte-banc.jpg ne sont pas déposées.
-- **Photos déposées** par l'étudiant : assets/enceinte-face.jpg + assets/enceinte-banc.jpg (intégrées slide 2).
-- **PDF de la pré-soutenance généré** : `pre-soutenance.pdf` (9 pages, centré). Reveal est passé
-  en `center: true` (titre/photos équilibrés, slides denses non rognées).
-  Procédure PDF (Chrome headless ne respecte PAS la taille de page reveal → on capture chaque slide) :
-  1. `python -m http.server 8090` ; 2. pour i in 0..N : `chrome --headless=new --force-device-scale-factor=2
-     --window-size=1280,720 --virtual-time-budget=12000 --screenshot=_pdfbuild/slide_i.png URL#/i` ;
-  3. assembler avec `img2pdf` (Pillow n'a pas le codec JPEG ici). Dossier _pdfbuild/ gitignoré.
-- **RESTE À FAIRE** : refondre presentation-finale.html (10 min) + index.html (accueil) en Blueprint.
-
-## Audit & améliorations (blocs A–D) — 2026-05-27
-
-Suite à un audit critique du site, exécution de quatre blocs :
-- **A (cohérence)** : finale refondue en Blueprint + nouveau brief (16 slides + annexes :
-  impédance Z(f) calculée, Bode calculé, circuits passif/actif valeurs corrigées, slide
-  RACCORD/somme +3 dB & inversion de polarité, tableau 3 archis) ; accueil refondu en
-  Blueprint ; NOTES-TIPE.md et MCOT.md alignés sur le nouveau cadrage.
-- **B (robustesse oral)** : vendoring local de reveal.js + MathJax (SVG, autonome) +
-  polices woff2 → fonctionne **hors-ligne** ; PDF mis en avant sur l'accueil ; fallback polices.
-- **C (PDF)** : PDF **vectoriels** (texte sélectionnable) via decktape (Chrome système,
-  PUPPETEER_EXECUTABLE_PATH) ; **variante claire** imprimable (css/blueprint-light.css,
-  surcharge de palette → SVG recolorés automatiquement). EXPORT-PDF.md mis à jour.
-- **D (finitions)** : favicon, meta description, liens PDF clair sur l'accueil ;
-  suppression custom.css + styles-demo.html ; README à jour. D3 (mutualisation SVG) différé.
-
-Outils : `_gen.py` (courbes Bode/impédance calculées), `_fonts.py` (récupération woff2).
-PDF régénérables : voir EXPORT-PDF.md. Courbes : f_s modèle ≈ 40 Hz, Z(100)≈14 Ω ;
-Sallen-Key Butterworth sub R=10k C1=220/C2=110nF, médiums R'1=11k R'2=22k C=100nF.
+Tout le journal de travail v1 (boucle autonome du 2026-05-25, refonte Blueprint,
+audit A–D du 2026-05-27, itérations pré-soutenance de juin) est conservé dans
+`archive-v1/CLAUDE.md`. Ne pas le recopier ici.

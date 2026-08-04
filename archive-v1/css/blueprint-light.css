@@ -1,0 +1,19 @@
+/* ============================================================
+   Variante CLAIRE (impression papier, économie d'encre).
+   Surcharge uniquement la palette : tous les visuels utilisant
+   var(--…) se recolorent automatiquement. À charger APRÈS blueprint.css.
+   ============================================================ */
+:root{
+  --bg:        #ffffff;
+  --bg-card:   #f2f6f8;
+  --ink:       #15242e;
+  --ink-soft:  #50626d;
+  --accent:    #0e6f88;   /* cyan foncé : contraste sur blanc */
+  --accent2:   #3a8a52;   /* vert foncé */
+  --warn:      #b06a14;
+  --wire:      #38505c;
+  --trait:     #c7d2d8;
+  --grid:      rgba(20,40,55,.06);
+}
+/* th : texte foncé sur accent clair reste lisible ; on force du blanc */
+.reveal table th{ color:#ffffff; }

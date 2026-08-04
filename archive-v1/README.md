@@ -1,34 +1,26 @@
 # TIPE — Filtrage fréquentiel d'une enceinte audio
 
-Présentation reveal.js pour le TIPE session 2027 (2e année de prépa).
+Présentation reveal.js pour le TIPE 2026–2027 (PTSI).
 Thème national : **Sobriété, efficacité, optimisation**.
 
 **Présentation en ligne :** <https://thomasmareel.github.io/tipe-filtrage-enceinte/>
 
-> **Pivot de sujet (2026-08-04) — v2.** Le sujet initial (« passif ou actif ? »)
-> a été recentré sur l'**optimisation du filtre sur la charge réelle Z(f)** :
-> mesure d'impédance → identification Thiele-Small (problème inverse) →
-> optimisation numérique sous contraintes → validation expérimentale.
-> Plan complet : [FEUILLE-DE-ROUTE.md](FEUILLE-DE-ROUTE.md). La v1 est gelée
-> dans [`archive-v1/`](archive-v1/) ; les slides à la racine sont encore la v1
-> en attendant la refonte.
-
-## Objet du projet (v2)
+## Objet du projet
 
 Étude du **raccord fréquentiel à 100 Hz** d'une enceinte fabriquée maison
-(un subwoofer pour le grave, deux haut-parleurs médium-aigu).
+(un subwoofer pour le grave, deux haut-parleurs médium-aigu), au moyen d'un
+filtre **passe-bas** (vers le subwoofer) et d'un filtre **passe-haut** (vers les
+médium-aigu).
 
-**Question directrice :** comment concevoir le filtre de raccord pour qu'il
-tienne sa cible sur la **charge réelle** — un haut-parleur dont l'impédance
-varie fortement avec la fréquence — au moindre coût en composants, en pertes
-et en matière ? Le filtre « catalogue » (formules sur 8 Ω résistif) sert de
-point de départ à battre ; le filtre **actif** (insensible à Z(f) par
-construction) sert de référence.
+**Question directrice :** à fréquence de coupure fixée à 100 Hz, le filtrage
+**actif** permet-il un meilleur compromis entre **sobriété** des composants et
+**fidélité** de la réponse fréquentielle que le filtrage **passif**, et à quel
+coût système ?
 
-L'objectif est ramené à des critères objectifs **gelés avant les mesures** :
-fidélité de la sommation au raccord, pertes, consommation, coût, matière,
-robustesse au niveau d'écoute. Le travail est centré sur l'**électrique** et
-l'**expérimental** ; l'acoustique sert de confrontation au réel.
+L'objectif final est le **meilleur rendu sonore**, ramené à un critère objectif
+et mesurable : la **fidélité de la réponse au raccord** (plateau le plus plat
+possible autour de 100 Hz + raccord de phase propre). Le travail est centré sur
+l'**électrique** et l'**expérimental** ; l'acoustique sert de confrontation au réel.
 
 ## Deux livrables
 
@@ -49,8 +41,8 @@ existe aussi en **PDF vectoriel** (sombre) et **PDF clair** (impression).
 ```
 TIPE/
 ├── index.html                 Page d'accueil (liens présentations + PDF + docs)
-├── pre-soutenance.html        Pré-soutenance ~5 min (v1, présentée en juin 2026)
-├── presentation-finale.html   Présentation finale ~10 min + annexes (v1, à refondre en v2)
+├── pre-soutenance.html        Pré-soutenance ~5 min
+├── presentation-finale.html   Présentation finale ~10 min + annexes
 ├── *.pdf                      PDF vectoriels (sombre) + *-clair.pdf (impression)
 ├── favicon.svg
 ├── css/
@@ -58,22 +50,19 @@ TIPE/
 │   └── blueprint-light.css    Surcharge palette claire (impression)
 ├── libs/                      reveal.js, MathJax (SVG), polices — pour le hors-ligne
 ├── assets/                    Photos de l'enceinte, schémas, courbes de mesure
-├── archive-v1/                Instantané complet du sujet v1 (gelé, autonome)
 ├── _gen.py                    Génère les courbes calculées (Bode, impédance)
 ├── README.md                  Ce fichier
 ├── CLAUDE.md                  Mémoire de projet entre sessions
-├── FEUILLE-DE-ROUTE.md        Plan de travail v2 : phases, critères, calendrier
-├── MCOT.md                    Brouillon de la fiche MCOT (v2)
+├── MCOT.md                    Brouillon de la fiche MCOT
 ├── EXPORT-PDF.md              Procédure d'export PDF
-└── NOTES-TIPE.md              Questions probables du jury + pistes de réponse (v1, à réaligner)
+└── NOTES-TIPE.md              Questions probables du jury + pistes de réponse
 ```
 
 ## Lancer la présentation
 
-reveal.js, MathJax et les polices sont hébergés localement dans `libs/` :
-**aucune installation ni connexion** n'est nécessaire. Il faut juste servir le
-dossier via un petit serveur local (MathJax et le mode print-pdf fonctionnent
-mal en `file://`).
+reveal.js est chargé depuis un CDN : **aucune installation npm** n'est nécessaire.
+Il faut juste servir le dossier via un petit serveur local (le plugin Math et le
+mode print-pdf fonctionnent mal en `file://`).
 
 Avec Python (déjà présent sur la plupart des machines) :
 
