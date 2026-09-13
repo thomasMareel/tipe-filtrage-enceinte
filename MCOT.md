@@ -4,12 +4,53 @@
 > (pivot du 2026-08-04). Les `[[à compléter]]` dépendent de l'étudiant.
 > **Rien d'inventé.** L'ancien brouillon (sujet v1) est dans `archive-v1/MCOT.md`.
 
+> **Budget de mots officiel (Attendus 2026 ; limites 2027 [[à vérifier]]).**
+> Motivation **50** · Ancrage au thème **50** · Bibliographie commentée **650** ·
+> Problématique **50** · Objectifs **100** → **900 mots** au total, hors 5 + 5
+> mots-clés et 2 à 10 références. Ces limites sont **des plafonds de saisie** :
+> au-delà, le texte est coupé. Chaque rubrique ci-dessous porte sa limite en
+> tête, et un commentaire `<!-- ... -->` quand le brouillon la dépasse.
+>
+> **Fenêtre de saisie : mi-janvier → début février 2027** (étape 1 SCEI, dates
+> 2027 [[à vérifier]]), c'est-à-dire pendant la phase 4 — donc **à rédiger dès
+> la phase 3 (nov.–déc. 2026)**. Le MCOT décrit des objectifs et une démarche :
+> ne pas y promettre de résultats.
+
 ## Titre
 
 Optimisation sous contraintes du filtre de raccord d'une enceinte deux voies
 sur sa charge réelle.
 
+## Professeur encadrant (étape 1 SCEI)
+
+> **Champ obligatoire du formulaire, pas une rubrique rédigée** : l'étape 1 du
+> SCEI (mi-janvier → début février 2027) saisit, à côté du titre, la
+> **déclaration du professeur encadrant**. Elle ne consomme aucun des 900 mots
+> du MCOT, mais c'est le seul point du cadre SCEI qui peut coûter la note
+> entière.
+
+[[à compléter : nom du professeur encadrant + accord obtenu le …]]
+
+- Vérifier qu'il dispose bien d'un compte sur **lycees.scei-concours.fr**.
+- **Étape 3 — validation par l'encadrant, ~mi-juin 2027, fenêtre de 8 jours
+  seulement** : la validation atteste d'un travail personnel constaté. En cas de
+  refus ou d'absence de validation, le candidat a un entretien avant son passage
+  en loge — **note zéro possible**. Le lui rappeler dès la saisie de janvier,
+  puis à l'ouverture de la fenêtre.
+- À régler dès la rentrée de septembre 2026 (phase 0 de FEUILLE-DE-ROUTE.md) ;
+  détail du cadre et des dates : REFERENCE-TECHNIQUE.md § 08.3 et § 08.4
+  (dates 2027 [[à vérifier]], données par analogie avec 2025 et 2026).
+
 ## Ancrage au thème « Sobriété, efficacité, optimisation »
+
+> **Limite officielle : 50 mots.**
+
+<!-- À CONDENSER : le brouillon ci-dessous fait ≈ 98 mots, soit près du double
+     du plafond. Il faut passer de trois paragraphes à ~3 phrases. Piste (à
+     trancher par Thomas, pas par Claude) : garder « optimisation » en entier
+     puisque c'est le cœur du sujet, et ramener « sobriété » et « efficacité »
+     à une demi-phrase chacune, les détails (cuivre, coût système, croisement
+     énergétique) étant déjà portés par les Objectifs et la bibliographie. -->
 
 - **Optimisation** (cœur du sujet) : le filtre n'est pas dimensionné par les
   formules catalogues (valables sur 8 Ω résistif) mais par optimisation
@@ -24,6 +65,9 @@ sur sa charge réelle.
 
 ## Mots-clés
 
+> **Limite officielle : 5 mots-clés français + 5 anglais**, par ordre
+> d'importance décroissante. Le brouillon en compte bien 5 paires.
+
 | Français | Anglais |
 |---|---|
 | Filtre de raccord | Loudspeaker crossover |
@@ -34,6 +78,25 @@ sur sa charge réelle.
 
 ## Positionnement thématique (SCEI)
 
+> **Limite officielle : 1 à 3 positionnements** choisis dans la liste fermée des
+> **24 thèmes**, par ordre d'importance décroissante. Le **premier** détermine le
+> binôme d'examinateurs et doit appartenir à un domaine de rattachement de la
+> filière (**Physique ou Sciences industrielles** en PT comme en PSI).
+
+<!-- À RÉALIGNER SUR LES LIBELLÉS OFFICIELS. Dans la liste des 24 thèmes,
+     « Électronique » est classé en SCIENCES INDUSTRIELLES, pas en Physique
+     (avec Traitement du Signal, Génie Électrique, Génie Mécanique, Génie
+     Énergétique, Automatique). Les intitulés du brouillon ci-dessous
+     (« Physique — électronique/électrocinétique », « Physique — acoustique »)
+     n'existent pas tels quels dans la liste SCEI. Correspondances proposées,
+     à trancher par Thomas (détail et descripteurs officiels :
+     REFERENCE-TECHNIQUE.md § 08.3) :
+       1. Électronique (Sciences industrielles)
+       2. Mathématiques Appliquées (Mathématiques)
+       3. Physique Ondulatoire (acoustique) ou Automatique (identification)
+     Ce choix est verrouillé à la saisie de mi-janvier 2027, donc AVANT les
+     mesures acoustiques : le choisir sur le récit prévu, pas sur les résultats. -->
+
 - Physique — **électronique / électrocinétique** (impédance complexe, filtres,
   fonctions de transfert, AOP pour la référence active).
 - Mathématiques appliquées — **ajustement de modèle et optimisation** (moindres
@@ -42,11 +105,17 @@ sur sa charge réelle.
 
 ## Motivation
 
+> **Limite officielle : 50 mots.** (Rubrique saisie à part, avant le MCOT
+> proprement dit, avec l'ancrage au thème.)
+
 [[à compléter : enceinte construite de tes mains ; constat que les formules
 « toutes faites » supposent un haut-parleur idéal qui n'existe pas ; envie de
 faire mieux avec des méthodes d'ingénieur — 2-3 phrases]]
 
 ## Problématique
+
+> **Limite officielle : 50 mots.** Le brouillon ci-dessous en fait ≈ 44 : il
+> passe, mais sans marge — toute reformulation doit être recomptée.
 
 Comment concevoir le filtre de raccord à 100 Hz d'une enceinte deux voies pour
 qu'il tienne sa cible sur la charge réelle — un haut-parleur dont l'impédance
@@ -54,6 +123,17 @@ varie fortement avec la fréquence — au moindre coût en composants, en pertes
 en matière ?
 
 ## Objectifs du TIPE
+
+> **Limite officielle : 100 mots.** Des **objectifs**, pas des résultats.
+
+<!-- À CONDENSER : le brouillon ci-dessous fait ≈ 126 mots, soit ~26 de trop.
+     Les quatre verbes (Mesurer / Identifier / Optimiser / Valider) sont la
+     colonne vertébrale du sujet et doivent rester ; c'est dans les
+     compléments qu'il faut couper. Candidats au retrait (à trancher par
+     Thomas, pas par Claude) : l'énumération des six critères de l'objectif 4,
+     qui coûte à elle seule une quinzaine de mots et que l'exposé détaillera ;
+     « avec incertitudes propagées » (objectif 2), déjà impliqué par
+     « moindres carrés » ; « en caisse » (objectif 1). -->
 
 1. **Mesurer** l'impédance complexe Z(f) du subwoofer (en caisse) et du bloc
    médiums, avec une chaîne de mesure étalonnée sur composants connus et des
@@ -71,6 +151,12 @@ en matière ?
 
 ## Étapes (voir FEUILLE-DE-ROUTE.md)
 
+> **Rubrique de travail, pas une rubrique du MCOT** : le formulaire SCEI ne
+> comporte que Motivation, Ancrage, Positionnements + mots-clés, Bibliographie
+> commentée, Problématique, Objectifs et Liste des références. La chronologie
+> se saisit plus tard, dans le **DOT** (4 à 8 jalons de 50 mots max), à
+> l'étape 2 — fin févr. → début juin 2027.
+
 1. Chaîne de mesure d'impédance étalonnée ; Z(f) des deux voies (sept. 2026).
 2. Identification Thiele-Small, résidus et incertitudes (oct. 2026).
 3. Optimisation numérique sous contraintes + étude de la bobine (nov.–déc. 2026).
@@ -80,13 +166,40 @@ en matière ?
 
 ## Matériel
 
+> **Rubrique de travail** également : pas de champ « matériel » au SCEI. Ces
+> éléments alimentent l'exposé et, le cas échéant, les jalons du DOT.
+
 Enceinte deux voies DIY (sub 18″ 8 Ω + 2 médiums 4 Ω en série) · pré-ampli
 JB Systems SMX SX-801 · ampli t.amp E-800 (2×350 W/8 Ω, deux canaux → référence
 active bi-amplifiée sans achat d'ampli) · GBF, oscilloscope, multimètre (lycée) ·
 carte son + micro de mesure · REW, LTspice, Python (numpy/scipy/matplotlib) ·
 fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
 
+<!-- Environnement Python vérifié le 2026-09-13 sur la machine du projet :
+     Python 3.13.2, numpy 2.4.6, scipy 1.18.1, matplotlib 3.11.0 ; un appel à
+     scipy.optimize.least_squares a été exécuté avec succès. Citer scipy dans
+     le matériel (et en référence [5]) est donc exact : c'est l'outil réellement
+     disponible, pas une intention. Un repli en numpy pur (équations normales ou
+     Gauss-Newton écrit à la main) reste intéressant à montrer au jury comme
+     preuve de compréhension de l'algorithme, jamais comme une contrainte subie. -->
+
 ## Bibliographie commentée (à compléter)
+
+> **Limite officielle : 650 mots** — de loin la rubrique la plus généreuse
+> (72 % du budget total de 900 mots). Liste des références : **2 à 10**,
+> numérotées, avec des « renvois numérotés progressifs » depuis le texte.
+
+<!-- À DÉVELOPPER — c'est LA rubrique à travailler. Le brouillon ci-dessous
+     n'utilise qu'environ 124 mots sur 650 : plus de 500 mots sont laissés sur
+     la table alors que cette rubrique est celle qui montre au jury
+     l'appropriation du contexte scientifique. Ce qui manque : ce n'est pas
+     une liste de titres qui est demandée mais une SYNTHÈSE rédigée du contexte,
+     dans laquelle les références sont appelées par [1], [2]... Chaque
+     référence devrait être commentée par ce qu'elle apporte AU SUJET (ce
+     qu'on lui emprunte, et pourquoi elle ne suffit pas). Les six entrées
+     actuelles sont par ailleurs encore des placeholders [[à consulter]] :
+     les consulter est un préalable, la limite de 2 à 10 références étant
+     satisfaite dès maintenant. -->
 
 - [1] [[Cours de physique PTSI/PT]] — impédance complexe, filtres, fonctions de
   transfert, AOP. [[réf. exacte]]
@@ -102,5 +215,33 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
 - [6] [[Datasheets des HP]] (sub 18″, médiums) — ordres de grandeur pour valider
   l'identification. [[modèles exacts]]
 
-> La fiche MCOT SCEI limite le texte (≈ 650 mots) : condenser à la saisie.
+<!-- ARBITRAGE À TRANCHER PAR THOMAS — recommandation de REFERENCE-TECHNIQUE.md
+     § 08.7, signalée ici sans toucher à la liste. Les références sont limitées
+     à 2 à 10 et doivent être « scientifiquement fiables et suffisamment précises
+     pour être exploitables par les examinateurs » : une documentation de
+     logiciel consomme donc l'un de ces emplacements. La référence [5]
+     (REW + scipy) occupe une place que pourraient prendre des sources
+     scientifiques — Thiele et Small (déjà en [2]), Wheeler (en [3]),
+     Dickason (en [4]), et la norme CEI/IEC sur la mesure des haut-parleurs,
+     absente de la liste. Deux issues possibles, au choix : (a) rendre
+     l'emplacement en rappelant REW et scipy dans le texte de la synthèse
+     (outillage, pas source), (b) garder [5] mais l'assumer en disant ce qu'on
+     lui emprunte précisément (algorithme de moindres carrés non linéaires ;
+     protocole de mesure d'impédance de REW). Ce n'est en aucun cas un problème
+     de disponibilité de l'outil : scipy est installé et fonctionnel (voir la
+     note de la rubrique Matériel). -->
+
+> **Récapitulatif des écarts au format officiel, à traiter par Thomas :**
+> Ancrage ≈ 98 mots pour 50 autorisés (**à condenser**) · Objectifs ≈ 126 pour
+> 100 (**à condenser**) · Bibliographie commentée ≈ 124 sur 650 (**à
+> développer** — c'est la rubrique décisive) · Positionnements à réaligner sur
+> les 24 libellés officiels (« Électronique » est en **Sciences industrielles**,
+> pas en Physique) · Motivation encore vide (50 mots) · Problématique à ≈ 44
+> mots, sans marge. Le « 650 mots » n'est **pas** la limite de la fiche entière
+> mais celle de la seule bibliographie ; le plafond global est de 900 mots.
 > Le MCOT décrit des objectifs et une démarche — ne pas y promettre de résultats.
+> **Hors budget de mots, mais bloquant : le professeur encadrant n'est pas encore
+> désigné** (rubrique ajoutée en tête de ce fichier) — sans sa déclaration à
+> l'étape 1 ni sa validation à l'étape 3, la note peut être zéro.
+> Détail du cadre officiel et des citations littérales : REFERENCE-TECHNIQUE.md
+> § 08.3.

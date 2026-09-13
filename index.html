@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TIPE — Filtrage à 100 Hz d'une enceinte deux voies</title>
-  <meta name="description" content="TIPE 2025-2027 — Filtrage passif ou actif : le raccord à 100 Hz d'une enceinte deux voies (réalisation personnelle).">
+  <meta name="description" content="TIPE session 2027 — Optimisation sous contraintes du filtre de raccord à 100 Hz d'une enceinte deux voies : mesure de l'impédance réelle du haut-parleur, identification des paramètres de Thiele-Small, optimisation du filtre (coût, pertes, valeurs normalisées), validation au banc et au micro.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
   <link rel="stylesheet" href="libs/fonts/fonts.css">
   <style>
     :root{ --bg:#0e2230; --bg-card:#0c1e2b; --ink:#e6f1f4; --ink-soft:#8fb2bf;
-           --accent:#5fd0e0; --accent2:#9ad6a0; --trait:#28485a; --grid:rgba(95,208,224,.07); }
+           --accent:#5fd0e0; --accent2:#9ad6a0; --warn:#e0a84e;
+           --trait:#28485a; --grid:rgba(95,208,224,.07); }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{ min-height:100vh; color:var(--ink); font-family:Inter,system-ui,sans-serif;
       background-color:var(--bg);
@@ -25,6 +26,10 @@
     .sous{ color:var(--ink-soft); font-size:1.05rem; font-style:italic; margin-bottom:.3rem; }
     .auteur{ font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--ink-soft);
       letter-spacing:1px; margin-bottom:2.2rem; }
+    .encadre.warn{ border-left:3px solid var(--warn); background:var(--bg-card);
+      border-radius:0 4px 4px 0; padding:.7rem 1rem; margin-bottom:1.3rem;
+      font-size:.85rem; line-height:1.5; color:var(--ink-soft); }
+    .encadre.warn strong{ color:var(--warn); font-weight:600; }
     .cartes{ display:flex; gap:1.2rem; flex-wrap:wrap; }
     .carte{ flex:1; min-width:260px; border:1px solid var(--trait); border-top:3px solid var(--accent);
       border-radius:6px; padding:1.3rem 1.4rem; background:var(--bg-card); }
@@ -47,14 +52,16 @@
 </head>
 <body>
   <main>
-    <div class="kicker">TIPE 2025–2027 · Sobriété · Efficacité · Optimisation</div>
-    <h1>Filtrage passif ou actif :<br>le <em>raccord à 100 Hz</em></h1>
+    <div class="kicker">TIPE — session 2027 · Sobriété · Efficacité · Optimisation</div>
+    <h1>Optimiser le raccord à 100 Hz<br>sur la <em>charge réelle</em></h1>
     <p class="sous">Enceinte deux voies — réalisation personnelle</p>
-    <p class="auteur">THOMAS MAREEL · PTSI 2</p>
+    <p class="auteur">THOMAS MAREEL · 2e ANNÉE</p>
+
+    <p class="encadre warn"><strong>État des supports.</strong> Les deux présentations ci-dessous, et leurs PDF, sont encore les versions v1 du sujet (« filtrage passif ou actif ») : elles ne reflètent pas la problématique actuelle — l'optimisation du filtre sur l'impédance réelle du haut-parleur. Refonte v2 prévue.</p>
 
     <div class="cartes">
       <div class="carte">
-        <span class="duree">≈ 5 min · 9 vues</span>
+        <span class="duree">≈ 5 min · 10 vues</span>
         <h2>Pré-soutenance</h2>
         <p>Présentation du sujet et de la démarche prévue, pour les professeurs.</p>
         <div class="liens">
@@ -64,9 +71,9 @@
         </div>
       </div>
       <div class="carte">
-        <span class="duree">≈ 10 min · 16 slides + annexes</span>
+        <span class="duree">15 min + 15 min · slides + annexes</span>
         <h2>Présentation finale</h2>
-        <p>Trois architectures comparées (passif 2ⁿᵈ ordre, signal faible, actif Sallen-Key) ; emplacements prêts pour les mesures.</p>
+        <p>Oral SCEI : 15 min d'exposé puis 15 min d'entretien. Version v1 (trois architectures) ; refonte prévue sur le sujet v2 — optimisation sur la charge réelle Z(f).</p>
         <div class="liens">
           <a class="btn primary" href="presentation-finale.html">Ouvrir la présentation</a>
           <a class="btn" href="presentation-finale.pdf">PDF</a>
@@ -78,6 +85,9 @@
     <div class="docs">
       <span>Ressources :</span>
       <a href="https://github.com/thomasMareel/tipe-filtrage-enceinte">Dépôt GitHub</a>
+      <a href="FEUILLE-DE-ROUTE.md">Feuille de route</a>
+      <a href="DECISIONS-PHASE-0.md">Décisions gelées</a>
+      <a href="REFERENCE-TECHNIQUE.md">Référence technique</a>
       <a href="NOTES-TIPE.md">Questions du jury</a>
       <a href="MCOT.md">Fiche MCOT</a>
       <a href="EXPORT-PDF.md">Export PDF</a>
