@@ -191,10 +191,16 @@ class TestInjectionHTML(unittest.TestCase):
                                variante='sombre')
         return self.NOM
 
-    def test_h5_injection_nominale_zero_marqueur_restant(self):
-        """Apres injection : 0 marqueur restant et <svg augmente du nombre de figures."""
-        restants_max = contexte.critere('h_figures',
-                                        'marqueurs_restants_apres_injection')
+    def test_h5_injection_nominale_marqueur_conserve(self):
+        """Apres injection : le SVG est en place ET le marqueur est CONSERVE.
+
+        CE QUE CE TEST PROTEGE. L'injection doit pouvoir etre rejouee : le protocole
+        prevoit de remesurer (deux niveaux d ecoute geles, bobine chaude, reprise
+        apres correction du montage), donc de regenerer les figures et de les
+        reinjecter. Une injection qui consomme son marqueur ne marche qu une fois
+        et condamne a rouvrir le HTML a la main. On verifie donc que le couple
+        <!--FIG:nom--> ... <!--/FIG:nom--> encadre bien la figure apres coup.
+        """
         with contexte.dossier_jetable() as dossier:
             nom = self._preparer(dossier)
             chemin_html = os.path.join(dossier, 'page.html')
@@ -209,8 +215,64 @@ class TestInjectionHTML(unittest.TestCase):
             with open(chemin_html, encoding='utf-8') as fh:
                 html = fh.read()
         self.assertEqual(n, 1)
-        self.assertEqual(html.count('<!--FIG:'), restants_max)
         self.assertEqual(html.count('<svg'), 1)
+        self.assertEqual(html.count('<!--FIG:%s-->' % nom), 1,
+                         "le marqueur ouvrant doit survivre a l injection")
+        self.assertEqual(html.count('<!--/FIG:%s-->' % nom), 1,
+                         'la figure doit etre refermee par son marqueur')
+        self.assertLess(html.index('<svg'), html.index('<!--/FIG:'),
+                        'le SVG doit se trouver ENTRE les deux marqueurs')
+
+    def test_h5bis_injection_idempotente(self):
+        """Injecter deux fois de suite ne duplique rien : c est le cas d usage reel.
+
+        CE QUE CE TEST PROTEGE. Apres chaque campagne de mesures, on relance
+        figures.py puis l injection. Si la seconde passe ajoutait un SVG au lieu de
+        remplacer le premier, la diapositive porterait deux courbes -- l ancienne et
+        la nouvelle -- et c est l ancienne, fausse, qui serait projetee en premier.
+        """
+        with contexte.dossier_jetable() as dossier:
+            nom = self._preparer(dossier)
+            chemin_html = os.path.join(dossier, 'page.html')
+            with open(chemin_html, 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write('<html><body>\n<figure><!--FIG:%s-->'
+                         '<p class="placeholder">a mesurer</p>'
+                         '<!--/FIG:%s--></figure>\n'
+                         '</body></html>\n' % (nom, nom))
+            with contextlib.redirect_stdout(_io.StringIO()):
+                FIG.injecter_figures(chemin_html, dossier, [nom])
+                FIG.injecter_figures(chemin_html, dossier, [nom])
+                FIG.injecter_figures(chemin_html, dossier, [nom])
+            with open(chemin_html, encoding='utf-8') as fh:
+                html = fh.read()
+        self.assertEqual(html.count('<svg'), 1, 'trois injections, un seul SVG')
+        self.assertEqual(html.count('<!--FIG:%s-->' % nom), 1)
+        self.assertEqual(html.count('<!--/FIG:%s-->' % nom), 1)
+        self.assertNotIn('placeholder', html,
+                         "le bloc d attente doit avoir ete remplace")
+
+    def test_h5ter_premiere_injection_marqueur_seul(self):
+        """Marqueur seul : le SVG est insere derriere lui et le fermant est ajoute.
+
+        CE QUE CE TEST PROTEGE. C est la forme employee par les diapositives, ou le
+        bloc d attente est un element VOISIN de la figure et non un bloc encadre.
+        Apres cette premiere passe, le fichier est dans la forme encadree, donc
+        reinjectable -- ce que verifie test_h5bis.
+        """
+        with contexte.dossier_jetable() as dossier:
+            nom = self._preparer(dossier)
+            chemin_html = os.path.join(dossier, 'nu.html')
+            with open(chemin_html, 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write('<html><body><figure><!--FIG:%s--></figure>'
+                         '</body></html>\n' % nom)
+            with contextlib.redirect_stdout(_io.StringIO()):
+                FIG.injecter_figures(chemin_html, dossier, [nom])
+            with open(chemin_html, encoding='utf-8') as fh:
+                html = fh.read()
+        self.assertEqual(html.count('<svg'), 1)
+        self.assertEqual(html.count('<!--FIG:%s-->' % nom), 1)
+        self.assertEqual(html.count('<!--/FIG:%s-->' % nom), 1,
+                         'le marqueur fermant doit avoir ete ajoute')
 
     def test_h6_marqueur_absent_echec_bruyant(self):
         """Marqueur absent -> SystemExit. JAMAIS un "OK injecte" sans rien injecter.

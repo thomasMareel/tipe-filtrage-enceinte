@@ -1118,7 +1118,19 @@ def tout_generer(dossier=None, noms=None, variantes=('sombre',),
 
 
 def injecter_figures(chemin_html, dossier, noms):
-    """Inline chaque SVG a la place de son marqueur <!--FIG:nom--> (§ 09.7).
+    """Inline chaque SVG DERRIERE son marqueur <!--FIG:nom--> (§ 09.7).
+
+    IDEMPOTENTE, ET C'EST LE POINT IMPORTANT. Le marqueur n'est pas consomme : la
+    figure est encadree par <!--FIG:nom--> ... <!--/FIG:nom-->, et une nouvelle
+    injection remplace ce qui se trouve entre les deux. Sans cela on n'injecte
+    qu'une fois : apres la premiere campagne de mesures le marqueur aurait disparu,
+    et il faudrait rouvrir le HTML a la main pour mettre a jour la courbe -- alors
+    que tout le protocole prevoit justement de REMESURER (deux niveaux d'ecoute,
+    bobine chaude, apres correction du montage).
+
+    Le bloc encadre peut donc etre n'importe quoi : le .placeholder ecrit a la main
+    avant la premiere mesure, ou le SVG d'une injection precedente. Les deux sont
+    remplaces de la meme facon.
 
     ECHEC FATAL si un marqueur est absent. C'est le defaut precis de _gen.py a la
     racine du depot : il cherchait des motifs sur un aria-label, n'en trouvait
@@ -1132,28 +1144,36 @@ def injecter_figures(chemin_html, dossier, noms):
     with open(chemin_html, encoding='utf-8') as fh:
         html = fh.read()
     n_avant = html.count('<svg')
+    saut = chr(10)
     for nom in noms:
-        marqueur = '<!--FIG:%s-->' % nom
-        if marqueur not in html:
+        ouvrant = '<!--FIG:%s-->' % nom
+        fermant = '<!--/FIG:%s-->' % nom
+        if ouvrant not in html:
             raise SystemExit('injecter_figures : marqueur %s absent de %s'
-                             % (marqueur, chemin_html))
+                             % (ouvrant, chemin_html))
         chemin_svg = os.path.join(dossier, nom + '.svg')
         if not os.path.exists(chemin_svg):
             raise SystemExit('injecter_figures : %s introuvable' % chemin_svg)
         with open(chemin_svg, encoding='utf-8') as fh:
             svg = fh.read()
-        html = html.replace(marqueur, svg[svg.index('<svg'):])     # on jette l en-tete XML
-    with open(chemin_html, 'w', encoding='utf-8', newline='\n') as fh:
+        svg = svg[svg.index('<svg'):]              # on jette l en-tete XML
+        bloc = ouvrant + saut + svg + saut + fermant
+        if fermant in html:
+            # Re-injection : on remplace tout ce qui separe les deux marqueurs.
+            debut = html.index(ouvrant)
+            fin = html.index(fermant, debut) + len(fermant)
+            html = html[:debut] + bloc + html[fin:]
+        else:
+            html = html.replace(ouvrant, bloc, 1)
+    with open(chemin_html, 'w', encoding='utf-8', newline=saut) as fh:
         fh.write(html)
     n_apres = html.count('<svg')
-    if n_apres - n_avant != len(noms) or '<!--FIG:' in html:
-        raise SystemExit('injecter_figures : controle final en echec (%d -> %d, '
-                         'marqueurs restants : %s)'
-                         % (n_avant, n_apres, '<!--FIG:' in html))
+    manquants = [n for n in noms if ('<!--/FIG:%s-->' % n) not in html]
+    if manquants:
+        raise SystemExit('injecter_figures : controle final en echec, figures non '
+                         'refermees : %s' % ', '.join(manquants))
     print('injecte %d figure(s) ; <svg> : %d -> %d' % (len(noms), n_avant, n_apres))
-    return n_apres - n_avant
-
-
+    return len(noms)
 def demonstration(dossier=None, bavard=True, noms=None, variantes=('sombre',),
                   formats=('svg', 'png')):
     """Chaine complete : genere tout, controle les fichiers, teste l injection.
