@@ -1,0 +1,26 @@
+# Dependances de analyse/ -- TIPE filtrage enceinte (section 09.5)
+#
+# RIEN N'EST A INSTALLER sur le poste de travail : les trois paquets y sont
+# presents et fonctionnels (verifie le 2026-09-13 puis le 2026-09-14, avec
+# scipy.optimize.least_squares execute). Ce fichier sert a (a) repartir d'une
+# machine neuve et (b) DIRE quelles versions ont produit les chiffres du dossier.
+#
+#   python -m pip install --user -r analyse/requirements.txt
+#
+# Si l'analyse doit etre refaite sur une machine du lycee, VERIFIER LA PRESENCE
+# DE SCIPY : c'est le seul cas ou le repli Levenberg-Marquardt maison
+# (ts_fit.moindres_carres_lm) est utilise par necessite et non comme exercice de
+# robustesse. Rien dans la chaine ne fonctionne sans numpy.
+#
+# pytest n'est installe nulle part : la suite de tests utilise unittest, qui est
+# dans la bibliotheque standard. Aucune dependance de test n'est donc listee ici.
+#
+# Versions VERIFIEES sur le poste de Thomas (Windows 11, Python 3.13.2) :
+#   numpy 2.4.6   scipy 1.18.1   matplotlib 3.11.0
+# Les minorants ci-dessous sont volontairement larges -- aucune fonctionnalite
+# recente n'est utilisee -- mais c'est bien avec les versions ci-dessus que les
+# chiffres du dossier ont ete produits (voir resultats/journal.txt).
+
+numpy>=1.24          # tout le calcul vectoriel -- INDISPENSABLE
+scipy>=1.10          # optimize.least_squares (acte 2) et recoupement continu (acte 3)
+matplotlib>=3.7      # figures SVG/PNG, identite Blueprint (figures.py seulement)

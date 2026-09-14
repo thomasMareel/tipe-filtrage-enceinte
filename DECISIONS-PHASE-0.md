@@ -208,8 +208,25 @@ décrit dans tous les supports), alors il faut *amender* les deux lignes de
 la cible de la somme est « Butterworth inversé, +3,01 dB à $f_c$ », dont l'écart
 RMS à plat de 2,29 dB est la **signature attendue**, pas une erreur.
 
-> **DÉCISION : [[à remplir]]** — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
-> — motif si l'option retenue diffère de la recommandation : `[[...]]`
+> **DÉCISION : REPORTÉE APRÈS LA PHASE 1** — date : `13/09/2026` — décidée par : Thomas
+> — motif : la cible sera choisie au vu de la $Z(f)$ réellement mesurée plutôt que sur le
+> modèle typique. Ce report est lui-même une décision datée, et il est recevable devant le
+> jury : on ne fige pas un cahier des charges sur une charge supposée.
+>
+> **Conséquence technique, à respecter dès maintenant.** Le report ne doit pas bloquer la
+> phase 3 : la cible est donc un **paramètre** du code, pas une constante. `analyse/optim.py`
+> expose `cible_nom={'butterworth'|'lr2'|'plate'}` (nom retenu dans le code ; un garde-fou
+> refuse explicitement `cible=` avec le bon nom en message) et la fonction de coût est
+> évaluable sur chacune ; le *sanity check* sur charge $8\ \Omega$ résistive est exécuté pour les deux cibles
+> (retour attendu : 18 mH / 141 µF en Butterworth, 25,5 mH / 99,5 µF en LR2).
+>
+> **Échéance ferme.** La décision doit être prise et datée ici **avant le premier achat de
+> composants** (le choix change la self : 18 mH contre 27 mH, donc la masse de cuivre et le
+> prix) et **avant la rédaction du MCOT** (nov.-déc. 2026), qui décrit la démarche.
+>
+> **À vérifier au passage** : l'incohérence de `FEUILLE-DE-ROUTE.md` (critère « fidélité »
+> et phase 3 écrivent « cible plate ») reste ouverte tant que D2 n'est pas tranchée — les
+> deux occurrences portent désormais un renvoi explicite vers cette décision.
 
 ---
 

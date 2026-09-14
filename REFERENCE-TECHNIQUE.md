@@ -4623,7 +4623,8 @@ analyse/
 │   ├── 2026-10-xx_mediums_serie.csv ; rew/ ; scope/  # + exports REW et captures brutes
 │   └── composants.csv         # valeur nominale, valeur MESUREE, u, DCR mesuree, prix, date
 ├── modele_hp.py               # Z_ts, caisse close, Zobel, grilles de frequences (§ 01)
-├── entrees.py                 # lire_mesure, ecrire_mesure, lire_rew, lire_scope, depouiller
+├── io_mesures.py              # lire_mesure, ecrire_mesure, lire_rew, lire_scope, depouiller
+├── entrees.py                 # alias de compatibilite vers io_mesures (nom du contrat ci-dessus)
 ├── ts_fit.py                  # probleme inverse : init, residus, ajustement, covariance (§ 03)
 ├── filtre.py                  # H_pb, H_ph, cibles, sommation, contraintes, netlist LTspice (§ 04)
 ├── optim.py                   # series E12/E6, fonction de cout, enumeration exhaustive (§ 04.5)

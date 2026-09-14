@@ -19,3 +19,15 @@ _pdfbuild/
 # Le PDF exporté est un livrable régénérable : on ne le versionne pas par défaut.
 # (décommente la ligne suivante si tu préfères le suivre)
 # presentation.pdf
+
+# Sorties regenerables du dossier d'analyse (REFERENCE-TECHNIQUE.md § 09.8).
+# Piege git classique, verifie : avec `analyse/resultats/` (barre oblique finale)
+# git n'entre jamais dans le dossier et les deux negations ci-dessous ne servent
+# a rien -- les deux JSON cites a l'oral seraient perdus. D'ou `analyse/resultats/*`.
+analyse/resultats/*
+!analyse/resultats/parametres_ts.json
+!analyse/resultats/design_optimise.json
+
+# Caches Python de analyse/ et de sa suite de tests
+__pycache__/
+*.pyc
