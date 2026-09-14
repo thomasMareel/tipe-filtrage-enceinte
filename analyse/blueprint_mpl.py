@@ -510,6 +510,55 @@ def geometrie_svg(chemin, dpi=DPI):
     return l_pt, h_pt, l_pt * dpi / 72.0, h_pt * dpi / 72.0
 
 
+_MOTIF_STYLE = re.compile(r'\sstyle="([^"]{20,})"')
+
+
+def _factoriser_styles(svg, prefixe, seuil=3):
+    """Deplace les attributs style repetes dans un bloc <style>. SANS PERTE.
+
+    matplotlib recopie l'attribut style en entier sur chaque element dessine :
+    une courbe de 130 points en errorbar produit pres d'un millier de <use>
+    portant tous la meme chaine d'une centaine de caracteres. La moitie du
+    fichier est alors une repetition.
+
+    On remplace chaque style vu au moins `seuil` fois par une classe, definie une
+    seule fois. Aucun point de donnee n'est retire et aucune couleur n'est
+    changee : c'est une reecriture a rendu identique.
+
+    POURQUOI CA COMPTE ICI. Les SVG sont inlines dans les diapositives, et le PDF
+    exporte doit tenir sous les 5 Mo imposes par le SCEI (REFERENCE-TECHNIQUE.md
+    § 08.2). C'est une contrainte dure du livrable.
+
+    Le prefixe rend les classes propres a la figure : deux SVG inlines dans la
+    meme page HTML ne peuvent pas se voler leurs regles.
+
+    Rend (svg_reecrit, nombre_de_classes_creees).
+    """
+    styles = {}
+    for m in _MOTIF_STYLE.finditer(svg):
+        styles[m.group(1)] = styles.get(m.group(1), 0) + 1
+    repetes = [s for s, n in styles.items() if n >= seuil]
+    if not repetes:
+        return svg, 0
+    # Ordre decroissant de gain : on nomme d'abord ce qui pese le plus.
+    repetes.sort(key=lambda s: -len(s) * styles[s])
+    regles, classes = [], {}
+    for i, style in enumerate(repetes):
+        nom = '%s-s%d' % (prefixe, i)
+        classes[style] = nom
+        regles.append('.%s{%s}' % (nom, style.replace('; ', ';')))
+
+    def _remplacer(m):
+        nom = classes.get(m.group(1))
+        return ' class="%s"' % nom if nom else m.group(0)
+
+    svg = _MOTIF_STYLE.sub(_remplacer, svg)
+    bloc = '<style type="text/css">' + ''.join(regles) + '</style>'
+    # On insere juste apres la balise <svg ...> ouvrante.
+    fin = svg.index('>', svg.index('<svg')) + 1
+    return svg[:fin] + chr(10) + bloc + svg[fin:], len(repetes)
+
+
 def enregistrer_svg(fig, chemin, variante=None):
     """Enregistre la figure en SVG, couleurs remplacees par des variables CSS.
 
@@ -542,6 +591,11 @@ def enregistrer_svg(fig, chemin, variante=None):
             'var(%s, %s)' % (var, hexa), svg)
         compte[var] = n
     svg = _sans_dimensions(svg)                # cf. docstring : points -> conteneur
+    # Factorisation des styles repetes : sans perte, et indispensable pour que le
+    # PDF exporte tienne sous les 5 Mo du SCEI (cf. _factoriser_styles).
+    prefixe = re.sub(r'[^a-z0-9]+', '-',
+                     os.path.splitext(os.path.basename(chemin))[0].lower()).strip('-')
+    svg, _n_classes = _factoriser_styles(svg, prefixe or 'fig')
     with open(chemin, 'w', encoding='utf-8', newline='\n') as fh:
         fh.write(svg)
     nu = _MOTIF_REPLI.sub('', svg)                     # on retire les replis legitimes

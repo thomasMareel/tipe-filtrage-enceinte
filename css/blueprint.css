@@ -32,6 +32,23 @@ html, body {
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 32px 32px;
 }
+/* A L'EXPORT PDF, la grille millimetree disparait. Ce n'est pas un detail de
+   gout : Chrome rasterise ce fond repete page par page, ce qui coutait 1,03 Mio
+   sur les 49 vues -- assez pour faire depasser le plafond de 5 Mo impose par le
+   SCEI au fichier televerse (REFERENCE-TECHNIQUE.md 08.2). Le bleu nuit et
+   l'accent cyan, eux, restent : l'identite tient a eux, pas au quadrillage, que
+   personne ne distingue au videoprojecteur. */
+@media print {
+  html, body { background-image: none !important; }
+}
+/* ... mais decktape pilote Chrome en media ECRAN : la regle ci-dessus ne suffit
+   pas. D'ou l'interrupteur explicite, arme par « ?export » dans l'URL (voir le
+   petit script en bas de chaque presentation et EXPORT-PDF.md). Mesure faite sur
+   les 49 vues : 5,88 Mo avec la grille, 4,80 Mo sans -- c'est ce qui fait passer
+   le fichier sous le plafond de 5 Mo. Elargir la grille n'aide PAS (64 px donne
+   6,32 Mo) : Chrome rasterise le fond page par page, il ne le carrele pas. */
+html.export, html.export body { background-image: none !important; }
+
 .reveal-viewport, .reveal, .reveal .backgrounds { background-color: transparent !important; }
 .reveal .slides section { background-color: transparent; background-image: none; }
 

@@ -112,15 +112,15 @@ Si le compte diffère, la cause est presque toujours l'ajout de fragments
 
    ```
    set PUPPETEER_EXECUTABLE_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
-   npx -y decktape@3 reveal http://localhost:8123/pre-soutenance.html pre-soutenance.pdf -s 1024x768 --chrome-arg=--no-sandbox
-   npx -y decktape@3 reveal http://localhost:8123/presentation-finale.html presentation-finale.pdf -s 1024x768 --chrome-arg=--no-sandbox
+   npx -y decktape@3 reveal "http://localhost:8123/pre-soutenance.html?export" pre-soutenance.pdf -s 1024x768 --chrome-arg=--no-sandbox
+   npx -y decktape@3 reveal "http://localhost:8123/presentation-finale.html?export" presentation-finale.pdf -s 1024x768 --chrome-arg=--no-sandbox
    ```
 
    Le même enchaînement en PowerShell (seule la ligne d'environnement change) :
 
    ```powershell
    $env:PUPPETEER_EXECUTABLE_PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-   npx -y decktape@3 reveal http://localhost:8123/presentation-finale.html presentation-finale.pdf -s 1024x768 --chrome-arg=--no-sandbox
+   npx -y decktape@3 reveal "http://localhost:8123/presentation-finale.html?export" presentation-finale.pdf -s 1024x768 --chrome-arg=--no-sandbox
    ```
 
    `-s 1024x768` **doit** reproduire exactement le `width`/`height` du
@@ -156,7 +156,7 @@ CSS ; tous les schémas SVG, écrits en `var(--...)`, se recolorent seuls.
 2. Exporter la copie, puis la supprimer :
 
    ```
-   npx -y decktape@3 reveal http://localhost:8123/_tmp-finale-clair.html presentation-finale-clair.pdf -s 1024x768 --chrome-arg=--no-sandbox
+   npx -y decktape@3 reveal "http://localhost:8123/_tmp-finale-clair.html?export" presentation-finale-clair.pdf -s 1024x768 --chrome-arg=--no-sandbox
    ```
 
    ```powershell
@@ -319,6 +319,45 @@ environ 66 %.
 
 ---
 
+
+### Le plafond de 5 Mo, et comment on le tient
+
+Le paramètre `?export` de l'URL n'est pas décoratif : il retire le fond
+quadrillé avant la capture. Chrome rastérise ce fond **page par page**, et
+c'est le poste le plus lourd du fichier. Mesures faites le 14/09/2026 sur les
+49 vues de la présentation finale :
+
+| Variante | Taille | Verdict |
+|---|---|---|
+| avec le quadrillage | 5,88 Mo | **dépasse** |
+| `?export` (sans quadrillage) | **4,81 Mo** | passe |
+| quadrillage élargi à 64 px | 6,32 Mo | pire — voir ci-dessous |
+
+Élargir la grille **n'aide pas** : Chrome ne la carrelle pas, il rastérise le
+fond entier, et une image plus contrastée se comprime moins bien. La seule
+solution qui marche est de la retirer. Une règle `@media print` ne suffit pas
+non plus : decktape pilote Chrome en média **écran**. D'où l'interrupteur
+explicite (`?export` → classe `export` sur `<html>` → règle dans
+`css/blueprint.css`).
+
+**La marge est mince : 4,81 Mo pour 5 Mo, soit 4 %.** Toute figure ajoutée peut
+faire repasser au-dessus. Donc : mesurer la taille **à chaque export**, pas
+seulement avant le téléversement. Les deux leviers, dans l'ordre de
+préférence :
+
+1. **Les photos.** Elles étaient en 1280×960 pour un affichage à ~450 px :
+   ramenées à 900 px et qualité 82, elles sont passées de 776 ko à 187 ko, soit
+   0,6 Mo gagnés sur le PDF. Les originaux restent dans `archive-v1/assets/`.
+2. **Le nombre d'objets tracés**, et non le poids des SVG. La factorisation des
+   styles répétés (`blueprint_mpl._factoriser_styles`) a allégé les SVG de 26 %
+   — excellent pour le HTML — sans changer le PDF d'un octet : ce qui compte à
+   l'export, c'est le nombre de marqueurs dessinés. Pour alléger vraiment,
+   réduire la densité de points affichés ou rastériser la couche de données.
+
+Si malgré tout le fichier dépasse, la coupe la moins coûteuse est de sortir les
+vues de listings (16 vues, ~1,1 Mo) dans un PDF séparé — elles doivent de toute
+façon être apportées en double exemplaire papier.
+
 ## 5. Le papier : les listings en double exemplaire
 
 Obligation SCEI, citée littéralement en `REFERENCE-TECHNIQUE.md` § 08.1 : les
@@ -357,7 +396,7 @@ vue avec Chrome en mode headless, puis assembler.
 $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 & $chrome --headless --screenshot=_pdfbuild\vue-01.png --window-size=1024,768 `
           --force-device-scale-factor=1.5 --hide-scrollbars `
-          "http://localhost:8123/presentation-finale.html#/0"
+          "http://localhost:8123/presentation-finale.html?export#/0"
 ```
 
 puis assembler avec `img2pdf`. Le dossier de travail est `_pdfbuild/`
