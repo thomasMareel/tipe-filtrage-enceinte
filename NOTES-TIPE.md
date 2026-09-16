@@ -18,21 +18,29 @@ jamais « ça sonne mieux ».
 
 ## 0. Le récit en dix lignes, et le message central
 
-1. Une enceinte deux voies DIY (sub 18″ 8 Ω, deux médiums 4 Ω en série) doit être coupée
-   en deux bandes autour de **100 Hz** : le grave au 18″, le reste aux médiums, qu'il faut
-   tenir au-dessus de leur résonance.
+1. Une enceinte deux voies DIY doit être coupée en deux bandes autour de **100 Hz** : le
+   grave à un 18″ 8 Ω monté en **caisse bass-reflex à deux évents**, le reste à deux médiums
+   4 Ω en série, qu'il faut tenir au-dessus de leur résonance. Deux pavillons d'ultra-aigu
+   sont **câblés en parallèle des médiums** : hors bande **acoustiquement** (on n'en parle
+   pas au raccord), mais **dans la charge électrique** que voit le passe-haut — d'où la règle
+   de mesure : on relève le bloc médiums **tel qu'il est câblé**.
 2. Les formules de filtrage du cours et des catalogues supposent une charge **résistive de
    8 Ω**. Pour le Butterworth du 2ᵉ ordre : $L=\sqrt2R/\omega_0=18{,}0$ mH et
    $C=1/(\sqrt2R\omega_0)=140{,}7$ µF, soit 18 mH / 150 µF en valeurs normalisées.
 3. Or **le haut-parleur n'est pas une résistance de 8 Ω** : c'est un système
-   électromécanique dont l'impédance possède un pic de résonance et une remontée
-   inductive. Sur la bande du raccord, son module varie d'un facteur de l'ordre de 20 et
-   sa phase de plus de 100° (§ 01.8, modèle typique — **à mesurer**).
+   électromécanique dont l'impédance possède une remontée inductive et, **la caisse étant
+   bass-reflex, deux pics encadrant un creux à l'accord des évents** (§ 01.10). Sur la bande
+   du raccord, son module varie d'un facteur de l'ordre de 20 et sa phase de plus de 100°
+   (§ 01.8, modèle typique — **à mesurer**). Aggravation propre au bass-reflex : sur un jeu
+   de paramètres plausible pour un 18″ de sonorisation (modèle, **pas une mesure**), le
+   **second pic tombe vers 86 Hz**, c'est-à-dire en plein dans la zone de raccord.
 4. **Acte 1 — mesurer.** Relever $Z(f)$, module et phase, avec une chaîne étalonnée
    d'abord sur une résistance et un condensateur connus, et des incertitudes chiffrées.
-5. **Acte 2 — identifier.** Remonter de la courbe aux cinq paramètres du modèle de
-   Thiele-Small par **moindres carrés pondérés** : c'est un **problème inverse**, validé
-   par le $\chi^2$ réduit, la structure des résidus et trois estimateurs d'incertitude.
+5. **Acte 2 — identifier.** Remonter de la courbe aux paramètres du modèle de Thiele-Small
+   par **moindres carrés pondérés** — **cinq** en caisse close, **sept à huit** en
+   bass-reflex (les cinq précédents plus l'accord $f_b$, le rapport de compliances $\alpha$
+   et une perte de caisse $Q_l$) : c'est un **problème inverse**, validé par le $\chi^2$
+   réduit, la structure des résidus et trois estimateurs d'incertitude.
 6. **Acte 3 — optimiser.** Concevoir le filtre par **optimisation sous contraintes** sur
    cette charge-là : valeurs normalisées E12, budget, pertes Joule dans la résistance de
    la self, impédance minimale admissible par l'amplificateur, protection des médiums.
@@ -91,7 +99,67 @@ est une valeur *nominale* de catalogue, pas une mesure. → § 01.2, § 01.3
 Cinq paramètres, et chacun se **lit sur la courbe** : $R_e$ = plancher basse fréquence,
 $f_s$ = position du pic, $R_{es}$ = hauteur du pic au-dessus de $R_e$, $Q_{ms}$ = finesse
 du pic, $L_e$ = remontée en haut de bande. C'est ce qui fournit l'initialisation de
-l'ajustement. → § 03.1
+l'ajustement. **Attention : cette écriture-là suppose une caisse close.** Mon sub est en
+bass-reflex ; il faut donc y ajouter la branche de caisse (question suivante). → § 03.1
+
+**« Votre caisse est à évents : que devient cette formule ? »**
+→ Un évent ajoute un **second degré de liberté** : la masse d'air de l'évent résonne avec la
+compliance de la caisse. Dans l'impédance mécanique, le terme de raideur $1/(j\omega C_{ms})$
+devient $1/(j\omega C_{ms})+S_d^2\underline Z_{ac}$, où $\underline Z_{ac}$ est la compliance
+de caisse **en parallèle** avec la masse et les pertes de l'évent. Ramenée aux bornes, cette
+branche supplémentaire fait passer le modèle de 5 à **7 ou 8 paramètres** ($f_b$, $\alpha$,
+$Q_l$) — et le contrôle qui prouve qu'on n'a pas changé de physique est la limite **« évent
+inerte »** : masse d'air infinie ($f_b\to0$) redonne **exactement** la caisse close de même
+volume. → § 01.10
+
+**« Pourquoi une caisse bass-reflex donne-t-elle deux pics d'impédance ? »**
+→ Parce que le système a **deux degrés de liberté couplés** : la membrane et la colonne d'air
+des évents. À l'accord $f_b$, les deux oscillent en opposition et la membrane est **quasi
+immobile** — c'est l'**évent** qui rayonne ; la vitesse de la membrane s'effondre, donc la
+force contre-électromotrice $Bl\,v$ aussi, donc $|Z|$ **retombe près de $R_e$** : c'est le
+**creux**. De part et d'autre, les deux modes du système couplé donnent **deux pics**
+$f_L<f_b<f_H$. Ce n'est pas une constatation empirique : le modèle démontre
+$f_Lf_H=f_sf_b$ et $f_L^2+f_H^2=f_s^2(1+\alpha)+f_b^2$, d'où $f_L<f_b<f_H$ toujours. Sur un
+jeu de paramètres plausible (**modèle, pas mesure** : $f_s=40$ Hz, $f_b=35$ Hz, $Q_l=7$, et
+$\alpha=3$, c'est-à-dire $V_{as}=330$ L pour $V_b=110$ L) : pics à 16,3 Hz (54 Ω) et
+**85,9 Hz (64 Ω)**, creux à 34,2 Hz (6,1 Ω), $|Z|(100\ \text{Hz})=22{,}4$ Ω.
+**Si le jury demande ce qui met le pic haut si près du raccord, la réponse est $\alpha$, pas
+$f_b$** : à $f_b$ fixé, $\alpha$ de 0,5 à 6 promène $f_H$ de 55 à 111 Hz ; à $\alpha$ fixé,
+descendre $f_b$ **abaisse les deux pics ensemble**. Une caisse *petite devant $V_{as}$* — le
+cas ordinaire en sono — remonte $f_H$ vers 100 Hz.
+[[réponse à compléter après la phase 1 : $f_L$, $f_b$, $f_H$ mesurés]] → § 01.10
+
+**« Que se passe-t-il sous la fréquence d'accord ? »**
+→ **La membrane n'est plus chargée.** Au-dessus de $f_b$, l'air de la caisse fait ressort et
+limite le débattement ; en dessous, l'évent devient un court-circuit acoustique, la charge
+arrière disparaît et l'**excursion croît très vite** alors que le rayonnement, lui, s'effondre
+(les deux sources finissent en opposition de phase). Conséquence pratique, et c'est une
+**consigne de sécurité écrite avant les mesures** : les balayages au **niveau fort** partent
+de $f_{\text{start}}\ge 2f_b$, $f_b$ étant relevé en phase 1 par le double pic d'impédance ;
+en dessous, on ne balaie qu'au **niveau faible**, ou derrière un passe-haut de protection en
+amont de l'ampli. → § 01.10, § 07.8
+
+**« Pourquoi ne parlez-vous pas des pavillons d'ultra-aigu ? »**
+→ Il faut distinguer deux plans, et c'est exactement la nuance que la question cherche.
+**Acoustiquement**, ils sont hors bande : ils ne rayonnent rien autour de 100 Hz et ne
+participent pas au raccord étudié — donc hors périmètre. **Électriquement, non** : ils sont
+**câblés en parallèle des médiums**, ils font donc partie de la charge que voit le filtre
+passe-haut. La conséquence est la même dans les deux cas de figure — qu'il y ait ou non un
+condensateur de protection en série avec eux : je mesure le **bloc médiums tel qu'il est
+câblé, pavillons connectés**, puisque c'est ce dipôle-là, et pas un médium isolé, que le
+filtre charge. Ce que le condensateur change, c'est seulement l'**ampleur** de leur
+contribution : s'il existe (quelques µF), la branche aigu présente vers 100 Hz plusieurs
+centaines d'ohms — mais **pas au point d'être négligeable** : deux pavillons en parallèle,
+avec 3,3 à 10 µF chacun, font tout de même perdre 0,9 à 2,6 dB sur $|Z|$ du bloc au voisinage
+de sa résonance. S'il n'y en a pas, la branche est un parallèle direct : $|Z|$ du bloc chute
+de 87 % **et** les pavillons reçoivent du 100 Hz à pleine puissance.
+**La parade est le niveau, jamais le débranchement** : la mesure d'impédance se fait à
+100–200 mV, sans risque dans les deux cas de câblage ; ce sont les seuls **balayages
+acoustiques forts** qui se limitent en niveau et en durée. Débrancher les pavillons
+reviendrait à mesurer une charge qui n'existe pas dans le montage — c'est-à-dire à défaire
+exactement ce que je viens d'expliquer.
+[[à vérifier sur l'enceinte : présence et valeur d'un condensateur en série avec les
+pavillons]]
 
 **« "Du simple au sextuple", d'où sort ce chiffre ? »**
 → Le rapport pic/plancher vaut $|Z|_{max}/R_e=1+Q_{ms}/Q_{es}$ ; ce n'est donc pas un
@@ -106,9 +174,10 @@ donc « varie fortement avec la fréquence », et le rapport sera chiffré aprè
 **« Votre $f_s$ mesurée ne correspond pas à la datasheet. »** *(piège classique)*
 → C'est attendu, et ce n'est pas une erreur. La datasheet donne $f_s$ en champ libre ; je
 mesure le haut-parleur **en caisse**. En caisse close, le ressort d'air s'ajoute à la
-suspension et monte la résonance : $f_c=f_s\sqrt{1+V_{as}/V_b}$. En bass-reflex, il y a
-**deux pics** et un creux à l'accord de l'évent. Le paramètre utile à mon filtre est celui
-**en caisse**, puisque c'est cette impédance-là que le filtre voit. → § 01.9, § 01.10
+suspension et monte la résonance : $f_c=f_s\sqrt{1+V_{as}/V_b}$. **Ma caisse est en
+bass-reflex, à deux évents** : je n'attends donc pas un pic déplacé mais **deux pics** et un
+creux à l'accord des évents. Le paramètre utile à mon filtre est celui **en caisse**,
+puisque c'est cette impédance-là que le filtre voit. → § 01.9, § 01.10
 
 **« Que ne peut pas donner votre mesure d'impédance ? »**
 → $Z(f)$ ne détermine que cinq nombres. $Bl$, $M_{ms}$, $C_{ms}$, $R_{ms}$ et donc $V_{as}$
@@ -189,9 +258,29 @@ plus bas ; l'initialisation lue sur la courbe évite le piège dès le premier e
 → C'est la vraie question, parce qu'**un modèle inadapté ne plante pas : il converge et
 rend des nombres plausibles**. Sur une charge à deux pics ajustée par le modèle à un pic,
 l'ajustement sort $R_e$, $f_s$ et $Q_{ms}$ d'allure crédible — seuls le $\chi^2$ réduit et
-la **structure des résidus** le trahissent. J'utilise le test des séquences de
-Wald-Wolfowitz sur les signes des résidus : $z=+0{,}4$ pour le bon modèle,
-$z=-5{,}6$ pour une bobine à pertes ajustée avec $L_e$ constante. → § 03.7
+la **structure des résidus** le trahissent. **C'est très exactement le piège que ma caisse
+bass-reflex me tend** : ajuster ses deux pics avec le modèle clos à cinq paramètres donne
+$z=-5{,}4$ au test des séquences. J'utilise donc le test des séquences de Wald-Wolfowitz sur
+les signes des résidus : $z=+0{,}4$ pour le bon modèle, $z=-5{,}4$ pour un bass-reflex ajusté
+par le modèle clos, $z=-5{,}6$ pour une bobine à pertes ajustée avec $L_e$ constante.
+→ § 03.7
+
+**« Comment savez-vous que votre modèle a le bon nombre de paramètres ? »**
+→ Je ne le décide pas, je le **constate**, et en trois temps. **Un** : un aiguillage
+automatique, avant tout ajustement, compte les **maxima locaux** de $|Z|$ lissé entre 10 et
+100 Hz — un seul maximum donne le modèle clos à 5 paramètres, deux ou plus donnent le modèle
+bass-reflex ; sur mes données synthétiques il en compte 1 pour la caisse close et 3 pour le
+bass-reflex (dont un parasite : le critère est « $\ge2$ », pas « exactement 2 »). **Deux** :
+si je mets trop de paramètres, cela se voit aux **incertitudes** — un paramètre non identifié
+ressort avec une barre d'erreur énorme et une forte corrélation avec un autre. **Trois**, et
+c'est le plus convaincant : **$f_b$ se recoupe par trois voies indépendantes** — la
+**géométrie** (formule de Helmholtz avec les sections et longueurs des deux évents et le
+volume de la caisse, § 4 check-list), le **creux d'impédance** lu directement sur la courbe,
+et la valeur **ajustée** par les moindres carrés. Trois routes qui ne partagent aucune
+hypothèse : si elles se recoupent, le modèle a la bonne taille ; sinon, c'est un résultat à
+expliquer, pas un paramètre à ajouter. C'est là une **prédiction falsifiable**, faite avant
+la mesure. [[réponse à compléter après la phase 1 : les trois estimations de $f_b$ et leur
+écart]] → § 01.10, § 03.7
 
 **« Votre modèle vaut-il encore à 1 kHz ? »**
 → Non, et le symptôme n'est pas une grande incertitude, c'est un **biais**. La bobine réelle
@@ -244,15 +333,34 @@ pas une vérité. → § 04.7, § 09.6
 à la charge**, pas au filtre. Remplacer $R$ par $Z(f)$ fait donc varier $Q$ avec la
 fréquence, et sur un modèle typique la cellule surtend de **+8 à +11 dB** vers 75 Hz.
 Résultat contre-intuitif : la fréquence de raccord bouge peu, c'est la **forme** de la
-réponse qui se déforme. → § 04.1, § 04.2, § 01.8
+réponse qui se déforme. **Et la caisse bass-reflex aggrave le cas** : son **second pic
+d'impédance tombe vers 86 Hz** sur le modèle, donc **dans la zone de raccord elle-même** —
+l'hypothèse « 8 Ω résistifs » y est encore plus fausse qu'en caisse close. Sur la charge
+bass-reflex modélisée (modèle, **pas une mesure**), le filtre catalogue surtend de
+**+12,6 dB**, contre +12,2 dB sur une **seconde charge modélisée, en caisse close** — un jeu
+de paramètres distinct, *pas* le même haut-parleur supposé clos — et **0 dB** sur 8 Ω
+résistifs. La « surtension » est ici le maximum de $|H|$ du passe-bas sur 10–1000 Hz rapporté
+à la perte d'insertion de 1,02 dB obtenue sur 8 Ω résistifs : sans cette définition, le
+nombre n'est vérifiable par personne. → § 04.1, § 04.2, § 01.8, § 01.10
 
 **« Un résultat qui vous a surpris ? »**
 → Oui : sur la charge typique, la contrainte « impédance vue par l'amplificateur
 $\ge4\ \Omega$ » **disqualifie le filtre catalogue avant même la comparaison de fidélité**
-(minimum à 3,51 Ω). Et ce n'est pas un cas pathologique isolé : **162 des 576** couples
-$(L_1,C_1)$ de la grille violent cette contrainte même sur 8 Ω résistif. Le design optimisé,
-lui, remonte ce minimum à 11,3 Ω. C'est une contrainte de sécurité matérielle, gratuite à
-calculer, et que la v1 ignorait. → § 04.8
+(minimum à **3,29 Ω**, chaîne régénérée le 16/09/2026 sur la charge bass-reflex, avec la DCR
+des selfs de Brooks). Et ce n'est pas un cas pathologique isolé : **162 des 576** couples
+$(L_1,C_1)$ de la grille violent cette contrainte même sur 8 Ω résistif (recompté le
+16/09/2026 : 162/576 exactement). Le design optimisé, lui, remonte ce minimum à **5,27 Ω**.
+**Précision de méthode, à donner avant qu'on la demande** : le montage de référence gelé pour
+cette contrainte est la lecture **voie par voie** (bi-amplification). Dans l'autre lecture —
+les deux cellules en parallèle sur un seul ampli — le catalogue tombe à 1,77 Ω, **mais le
+design optimisé y descend aussi sous le seuil, à 3,48 Ω**. Je ne peux donc pas me servir du
+montage parallèle contre le catalogue et l'oublier pour mon propre design : dans ce
+montage-là, aucun des deux ne passe, et c'est une **limite ouverte** du design candidat. C'est une contrainte de sécurité matérielle, gratuite à
+calculer, et que la v1 ignorait. **Le constat ne dépend pas du jeu de paramètres** : recalculé
+sur une seconde charge modélisée, plausible pour un 18″ de sonorisation, le même filtre
+catalogue descend à **2,66 Ω en bass-reflex** et 2,49 Ω en supposant la caisse close, alors
+qu'il reste à 8,52 Ω sur 8 Ω résistifs. Deux modèles indépendants, même verdict — mais ce sont
+des **modèles**, et la mesure de la phase 1 tranchera. → § 04.8
 
 **« Pourquoi ne pas simplement linéariser l'impédance avec un réseau de Zobel ? »**
 → Parce que le Zobel corrige la **partie inductive**, pas le pic motionnel — or c'est le pic
@@ -390,6 +498,19 @@ proches, avec les distances, les retards et la polarité ; à 100 Hz, ±10 cm d'
 position ne coûtent que 0,04 dB. Limite assumée : ce n'est pas la réponse au point d'écoute.
 → § 07.3, § 07.4
 
+**« Votre caisse a deux évents : le champ proche devant la membrane suffit-il ? »**
+→ **Non, et c'est une conséquence directe du bass-reflex.** L'évent est une **seconde source**,
+qui rayonne précisément là où la membrane ne bouge plus. Il faut donc mesurer aussi son champ
+proche (micro au centre de l'embouchure) et le **sommer en complexe**, pondéré par le rapport
+des surfaces :
+$$p_{\text{tot}}=p_D+\sqrt{\frac{S_P}{S_D}}\,p_P,$$
+avec $S_P$ la surface **totale des deux évents**. La somme exige la même référence temporelle
+pour les deux mesures (boucle de retour), sans quoi les phases ne sont pas comparables. Deux
+précautions : au niveau fort la capsule est dans le **jet d'air** de l'embouchure (bonnette
+obligatoire, capsule légèrement décalée), et la mesure du bas du spectre est de toute façon
+bornée par la consigne $f_{\text{start}}\ge2f_b$. En caisse close il n'y aurait rien à
+corriger — c'est une manip en plus que ma caisse impose. → § 07.3
+
 **« Que se passe-t-il à la somme des deux voies ? »**
 → Au 2ᵉ ordre, les deux voies sont à **180° l'une de l'autre** à la fréquence de raccord.
 Sans rien faire, elles s'annulent : **trou profond**. Il faut donc **inverser la polarité
@@ -451,8 +572,9 @@ stéréo complet) et le point de croisement énergétique.
 **« Quelles sont les limites de votre travail ? »** *(à annoncer spontanément, avant qu'on
 ne les demande)*
 → Quatre, et je les cite dans cet ordre :
-(i) le modèle est **petit signal** et à un degré de liberté — il ignore $Bl(x)$, la dérive
-thermique et les modes de membrane ;
+(i) le modèle est **petit signal** et à deux degrés de liberté seulement — membrane et
+colonne d'air des évents — il ignore $Bl(x)$, la dérive thermique, les modes de membrane et
+les résonances propres des tubes d'évent ;
 (ii) la mesure acoustique est en **champ proche**, ce n'est donc pas la réponse au point
 d'écoute ;
 (iii) l'optimisation porte sur une charge **identifiée à un instant, à un niveau et à une
@@ -566,17 +688,20 @@ construction**, ce n'est donc pas un concurrent à armes égales, c'est un étal
 
 **« Et si vos mesures ne marchent pas ? »**
 → Chaque phase a une **porte de validation** et un repli écrits d'avance : si la carte son
-pose problème, je reviens au GBF et à l'oscilloscope point par point ; si l'ajustement à
-cinq paramètres échoue au $\chi^2$, je passe au modèle de bobine à pertes à six paramètres,
-déjà codé ; si le filtre catalogue viole la contrainte d'impédance, le solveur le signale
-avant l'achat. Un échec documenté et diagnostiqué vaut mieux qu'un résultat non vérifié.
+pose problème, je reviens au GBF et à l'oscilloscope point par point ; si l'ajustement
+bass-reflex à sept ou huit paramètres échoue au $\chi^2$, je dispose de deux replis **déjà
+codés** — un modèle **phénoménologique à deux résonances**, qui décrit les deux pics sans
+prétendre nommer $f_b$ ni $Q_l$ (c'est suffisant pour l'acte 3, qui ne voit que $Z(f)$), et un
+modèle de bobine à pertes si c'est le haut du spectre qui résiste ; si le filtre catalogue
+viole la contrainte d'impédance, le solveur le signale avant l'achat. Un échec documenté et
+diagnostiqué vaut mieux qu'un résultat non vérifié.
 → § 02.8, § 03.7, § 04.7
 
 ---
 
 ## 4. Check-list « savoir refaire au tableau »
 
-Six gestes à savoir écrire de mémoire, avec leur nombre de contrôle.
+Huit gestes à savoir écrire de mémoire, avec leur nombre de contrôle.
 
 **1. Dimensionnement Butterworth 100 Hz sur 8 Ω.**
 Cellule LC chargée en parallèle par $R$ : $\omega_0=1/\sqrt{LC}$ et $Q=R\sqrt{C/L}$.
@@ -630,7 +755,41 @@ réemploi. → § 04.9, § 08.6, § 09.5
 
 **7. Écrire $Z(j\omega)$ et nommer ses cinq paramètres** — voir § 2.1 ci-dessus. Savoir dire
 d'où vient la branche motionnelle (mécanique série $\to$ électrique parallèle par $Bl$) et
-pourquoi $|Z|\ge R_e$ partout (la branche ajoutée est passive). → § 01.3
+pourquoi $|Z|\ge R_e$ partout (la branche ajoutée est passive). Et **enchaîner sur le
+bass-reflex** : ce modèle-là suppose la caisse close, ma caisse ne l'est pas. → § 01.3
+
+**8. Accord d'un résonateur de Helmholtz à $N$ évents, et pourquoi il y a deux pics.**
+*La caisse est en bass-reflex, à **deux** évents : c'est le geste qui manquait à la v1.*
+
+*(a) La formule.* Un évent est une **masse d'air** (la colonne du tube) sur un **ressort**
+(l'air de la caisse). Pour $N$ évents identiques de section $S_v$ et de longueur $L_v$, montés
+en parallèle sur le même volume $V_b$, les masses acoustiques se composent **en parallèle**
+(la masse totale est divisée par $N$) :
+$$M_{ap}=\frac{\rho_0\,L_{\text{eff}}}{N\,S_v},\qquad
+C_{ab}=\frac{V_b}{\rho_0c^2},\qquad
+f_b=\frac{1}{2\pi\sqrt{M_{ap}C_{ab}}}
+=\frac{c}{2\pi}\sqrt{\frac{N\,S_v}{V_b\,L_{\text{eff}}}}.$$
+$L_{\text{eff}}=L_v+\delta$ est la longueur **corrigée des effets de bout** : le tube entraîne
+un peu d'air au-delà de ses extrémités. Correction classique $\delta\approx0{,}85a$ par
+extrémité bridée (débouchant dans le baffle) et $\approx0{,}61a$ par extrémité libre, soit
+$\delta\approx1{,}46a$ pour un évent classique ($a$ = rayon). *(Contrôle dimensionnel :
+$c\sqrt{\text{m}^2/(\text{m}^3\cdot\text{m})}=\text{s}^{-1}$. Deux réflexes : **doubler le
+nombre d'évents à section donnée monte $f_b$ de $\sqrt2$**, et **allonger l'évent baisse
+$f_b$** — c'est ainsi qu'on accorde une caisse.)* Les dimensions des deux évents et le volume
+interne sont **[[à mesurer]]** : c'est ce qui rend la prédiction de $f_b$ **falsifiable**
+avant même de brancher le banc d'impédance.
+
+*(b) Pourquoi deux pics.* Deux oscillateurs couplés $\Rightarrow$ deux modes. À l'accord, la
+membrane est **quasi immobile** (c'est l'évent qui rayonne), donc $Bl\,v\to0$, donc la branche
+motionnelle s'efface et **$|Z|$ retombe près de $R_e$** : c'est le **creux**, situé en
+$f\approx f_b$. Il est encadré par deux pics $f_L<f_b<f_H$, et le modèle donne deux identités
+à savoir citer :
+$$f_L\,f_H=f_s\,f_b,\qquad f_L^2+f_H^2=f_s^2(1+\alpha)+f_b^2,$$
+avec $\alpha=V_{as}/V_b$. La première est le **contrôle de cohérence** le plus rapide sur une
+courbe mesurée : le produit des deux pics doit valoir le produit $f_sf_b$. *(Piège à éviter :
+le creux ne descend pas jusqu'à $R_e$ — les pertes de caisse $Q_l$ le relèvent ; et un pic
+mesuré plus bas que la théorie n'est pas une erreur de mesure, ce sont ces mêmes pertes.)*
+→ § 01.10
 
 ---
 
@@ -680,6 +839,18 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
 7. **Professeur encadrant** : sa déclaration à l'étape 1 et sa validation à l'étape 3 sont
    obligatoires ; sans elles, la note peut être nulle. [[action datée, rentrée septembre]]
    → § 08.3
+8. ~~**Type de caisse du sub**~~ — **résolu le 2026-09-16** (constat de l'étudiant, décision
+   D8) : la caisse est **bass-reflex, à deux évents**. Ce n'était pas une inconnue de
+   modélisation mais le **choix du modèle direct** : le modèle à 7-8 paramètres était déjà
+   écrit et testé **parce que** le type de caisse n'était pas établi — ce n'est donc pas une
+   reprise, c'est une hypothèse qui se lève. Purger de tout support la formulation « clos ou
+   bass-reflex, à documenter ». **Reste ouvert** : dimensions des deux évents et volume
+   interne [[à mesurer]], nécessaires au recoupement géométrique de $f_b$.
+9. **Condensateur en série avec les pavillons d'ultra-aigu** : présence et valeur
+   [[à vérifier sur l'enceinte]]. Cela ne change **ni** le protocole (on mesure le bloc
+   médiums tel qu'il est câblé) **ni** le modèle du filtre, seulement l'ampleur de la
+   contribution de la branche aigu à la charge du passe-haut — et le risque matériel pendant
+   les balayages forts s'il n'y en a pas. → § 2.1
 
 ---
 
@@ -689,6 +860,12 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
       sommation — **datés et signés avant la première mesure comparative**.
 - [ ] Franchir les portes de validation dans l'ordre : étalonnage sur résistance et
       condensateur connus → $Z(f)$ en caisse → identification → sanity check 8 Ω → mesures.
+- [ ] **Relever la géométrie du bass-reflex avant la phase 1** : diamètre et longueur des
+      **deux** évents, volume interne de la caisse — pour prédire $f_b$ par Helmholtz
+      **avant** de le lire sur le creux d'impédance. Une prédiction publiée avant la mesure
+      vaut beaucoup plus qu'un accord constaté après.
+- [ ] **Vérifier le câblage du bloc aigu** (condensateur en série avec les pavillons ?) et
+      photographier le bornier ; consigner la réponse, ne pas la supposer.
 - [ ] Remplacer chaque `[[réponse à compléter]]` de ce document par le chiffre mesuré, ou
       l'assumer à voix haute comme non mesuré.
 - [ ] Tenir le **cahier de laboratoire daté** dès la première mesure : c'est la matière du

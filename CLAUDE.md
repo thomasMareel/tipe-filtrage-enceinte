@@ -16,8 +16,29 @@ tenir à jour à la fin de chaque session de travail.
 - **Auteur** : Thomas Mareel, 2e année de prépa (PTSI → 2e année), TIPE session 2027.
 - **Thème national** : Sobriété, efficacité, optimisation.
 - **Enceinte deux voies (DIY)** : 1 subwoofer **8 Ω 18″** + 2 médium-aigu
-  **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**. Pavillons d'aigu
-  hors périmètre. Type de caisse (clos / bass-reflex) à documenter.
+  **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**.
+- **Caisse du sub : BASS-REFLEX, à DEUX ÉVENTS** — constaté par l'étudiant le
+  **16/09/2026**. Ce n'est plus une inconnue : la décision D8 de
+  `DECISIONS-PHASE-0.md` est **répondue**. Restent à relever : dimensions des
+  deux évents (diamètre, longueur) et volume interne $V_b$ `[[à mesurer]]`,
+  fréquence d'accord $f_b$ `[[à mesurer]]` (lue au creux d'impédance en phase 1).
+- **Composition réelle de l'enceinte** : le sub 18″, les 2 médiums en série, et
+  **2 haut-parleurs d'ultra-aigu (pavillons) câblés EN PARALLÈLE des médiums**.
+  Distinguer les deux plans : les pavillons sont **hors périmètre ACOUSTIQUE**
+  (hors bande du raccord à 100 Hz, ils ne seront pas étudiés en rayonnement)
+  mais ils sont **DANS la charge ÉLECTRIQUE** que voit le filtre passe-haut,
+  puisqu'ils sont en parallèle des médiums. « Pavillons hors périmètre » sans
+  cette distinction est faux.
+- **Condensateur en série avec les pavillons** (protection classique du 1ᵉʳ
+  ordre) : `[[à vérifier auprès de l'étudiant]]` — ne rien supposer. S'il
+  existe (valeur typique 3 à 10 µF), la branche aigu présente vers 100 Hz une
+  impédance de plusieurs centaines d'ohms et son effet sur la charge du
+  passe-haut y est négligeable. S'il n'y en a pas, la branche aigu est en
+  parallèle direct : elle **abaisse** l'impédance du bloc médiums **et** les
+  pavillons reçoivent du 100 Hz à pleine puissance — risque matériel pendant
+  les balayages. **La conséquence pratique est la même dans les deux cas** : on
+  mesure le bloc médiums **tel qu'il est câblé, pavillons connectés**, puisque
+  c'est cela que le filtre voit.
 
 ## Problématique (v2)
 
@@ -55,6 +76,13 @@ Détail des phases, portes de validation, critères et calendrier :
 - **MCOT.md** — brouillon de la fiche MCOT v2 (limites de mots officielles).
 - **NOTES-TIPE.md** — questions probables du jury et réponses préparées
   (réécrit en v2 le 13 sept. 2026 ; renvoie à REFERENCE-TECHNIQUE.md par « § NN.n »).
+- **DECISIONS-PHASE-0.md** — le **registre daté** des décisions à geler (D1 à D10) :
+  énoncé, options, conséquence de chaque option, date du gel. C'est lui qui
+  empêche de changer un critère après avoir vu les courbes.
+- **PARCOURS.md** — la liste **ordonnée** des actions de Thomas, de A à Z : ce
+  qu'il fait, dans quel ordre, avec quoi. C'est le document de terrain.
+- **analyse/LISEZMOI.md** — la chaîne de calcul (lecture des mesures →
+  ajustement → optimisation → figures), ses garde-fous et sa commande gelée.
 - **EXPORT-PDF.md** — procédure d'export PDF.
 
 ## Ce que la v1 lègue à la v2
@@ -76,7 +104,27 @@ Détail des phases, portes de validation, critères et calendrier :
 - Ampli **t.amp E-800** : 2×350 W/8 Ω, 2×500 W/4 Ω ; Zin 20 k sym / 10 k asym ;
   sensibilité 0,775 V / 1,4 V (sélectable). Deux canaux → bi-amp sans achat.
 - Mesure lycée : GBF, oscillo numérique, multimètre. Perso : micro de mesure +
-  carte son de qualité (modèle à documenter).
+  interface **Focusrite Scarlett Solo 3ᵉ génération** (confirmée le 16 sept. 2026).
+  Caractéristiques du manuel officiel (p. 18) et **ce qu'elles imposent** :
+  - Sortie **ligne** : 4,61 V max mais **430 Ω d'impédance de sortie** → étrangle le
+    courant (0,85 mW dans 8 Ω avec R_ref = 10 Ω). **Ne pas l'utiliser pour le jig.**
+  - Sortie **casque** : 1,73 V max, **< 1 Ω** → 67 mW dans 8 Ω, soit 78 fois plus.
+    **C'est elle qui attaque le jig d'impédance.** Réserve : 91 mA demandés à une
+    sortie prévue pour ≥ 32 Ω, elle peut écrêter → vérifier la linéarité en mesurant
+    la même impédance à deux niveaux (−6 et −18 dBFS), les courbes doivent se superposer.
+  - Entrée **micro** (XLR) : **3 kΩ**, 2,18 V max. Elle **charge** ce qu'elle mesure :
+    −3,2 % aux bornes de 100 Ω, **−0,33 % aux bornes de 10 Ω**.
+  - Entrée **ligne** (jack) : 60 kΩ, 9,75 V max — elle ne charge rien.
+  - **Câblage retenu** : entrée micro aux bornes de **R_ref = 10 Ω**, entrée ligne aux
+    bornes du haut-parleur. (Aux bornes du HP au pic de 63 Ω, l'entrée micro coûterait
+    −2,1 %.) La **R_ref de 100 Ω reste pour la chaîne GBF + oscillo**, dont l'entrée à
+    1 MΩ ne charge pas.
+  - **Alimentation fantôme 48 V impérativement coupée** avant chaque branchement :
+    active, elle injecte 48 V à travers ses résistances de polarisation dans le montage.
+  - Réponse garantie **20 Hz – 20 kHz ±0,1 dB** ; **sous 20 Hz : non spécifiée** par le
+    constructeur, alors que le premier pic d'impédance du bass-reflex peut y tomber
+    → à caractériser en mesurant une résistance connue jusqu'à 10 Hz (manip A5 du livret).
+  Protocole complet et schémas : `protocole/PROTOCOLE-EXPERIENCES.html`.
 - Logiciels : **REW**, **LTspice**, **Python** (numpy/scipy/matplotlib).
   **Environnement local vérifié le 13 sept. 2026** : Python **3.13.2**,
   numpy **2.4.6**, scipy **1.18.1**, matplotlib **3.11.0** — `scipy` est
@@ -97,9 +145,21 @@ Détail des phases, portes de validation, critères et calendrier :
 - **TIPE individuel ou en groupe** (le SCEI admet jusqu'à 3 candidats, avec une
   part personnelle identifiable pour chacun) : à déclarer dès l'étape 1.
 - f_s réelle du sub et des médiums (→ phase 1, mesure d'impédance).
-- Type de caisse (clos/bass-reflex) ; câblage exact des médiums.
+- Câblage exact des médiums (série confirmée ?).
+- ~~Condensateur en série avec les pavillons ?~~ **CONFIRMÉ PRÉSENT** (Thomas,
+  16 sept. 2026). Sa **valeur** reste `[[à mesurer]]` : pour 3,3 à 10 µF, la branche
+  aiguë présente 160 à 480 Ω vers 100 Hz et déplace $|Z|$ du bloc médiums de **6 à
+  16 %** (calculé) — modeste mais pas négligeable, et visible sur un ajustement.
+  Conséquence inchangée : on mesure le bloc **tel qu'il est câblé**, l'effet est
+  alors inclus sans avoir à le modéliser. Côté sécurité, le pavillon voit ~482 Ω
+  contre ~34 Ω pour les médiums à 100 Hz : aucun risque pendant les balayages.
+- **Dimensions des deux évents** (diamètre et longueur de chacun) et **volume
+  interne de la caisse** $V_b$ `[[à mesurer]]` — ils permettent une prédiction
+  falsifiable de $f_b$, à confronter au creux d'impédance mesuré.
+- **Fréquence d'accord $f_b$** `[[à mesurer]]` (creux entre les deux pics de
+  $|Z|$, phase 1) — elle commande la borne basse de sécurité au niveau fort.
 - Sensibilités (dB/W/m) pour l'égalisation des niveaux.
-- Modèle exact de la carte son ; les 2 niveaux d'écoute de référence à geler.
+- Les 2 niveaux d'écoute de référence à geler (le modèle de carte son est confirmé : voir § Matériel).
 
 ## Points scientifiques à NE PAS oublier (critique prof 2026-05-25, toujours valides)
 
@@ -107,10 +167,62 @@ Détail des phases, portes de validation, critères et calendrier :
   (sinon trou profond à fc ; avec inversion → bosse +3 dB).
 - **Fs en caisse ≠ Fs datasheet** : Fc(clos) > Fs ; bass-reflex = deux pics.
   Mesurer le pic en caisse n'est pas une erreur.
+- **La charge est bass-reflex (constat du 16/09/2026) : deux pics et un creux.**
+  $|Z|$ présente deux maxima $f_L < f_b < f_H$ séparés par un **creux à
+  $f \approx f_b$**, où $|Z|$ retombe près de $R_e$. **Le second pic $f_H$ tombe
+  près de la zone de raccord** : à 100 Hz, l'hypothèse « 8 Ω résistifs » est
+  **encore plus fausse** qu'en caisse close, et l'argument central du TIPE en
+  sort renforcé, pas affaibli. Ordres de grandeur **modélisés** (paramètres
+  plausibles pour un 18″ de sono — Re 5,4 Ω, fs 40 Hz, Qms 6,1, fb 35 Hz, Ql 7,
+  α 3, ce qui suppose $V_{as} = 330$ L et $V_b = 110$ L — **aucune mesure sur
+  l'enceinte**) : pics à **16,3 Hz (54 Ω)** et **85,9 Hz (64 Ω)**, creux à
+  **34,2 Hz (6,1 Ω)**, $|Z|(100\ \mathrm{Hz}) = 22{,}4$ Ω à $-57{,}6°$. C'est
+  **α, donc le volume de caisse, et non l'accord $f_b$** qui met le pic haut près
+  du raccord : à $f_b$ fixé, α de 0,5 à 6 promène $f_H$ de 55 à 111 Hz, tandis
+  qu'à α fixé descendre $f_b$ **abaisse les deux pics ensemble**
+  (REFERENCE-TECHNIQUE.md § 01.10 — l'énoncé inverse, qui a circulé, est faux).
+  Filtre catalogue 18 mH / 150 µF (DCR 1 Ω) **modélisé** sur ces charges : sur
+  8 Ω résistif, réponse plate et $\min|Z_{in}| = 8{,}52$ Ω ; sur une **seconde
+  charge modélisée, en caisse close** (jeu distinct : $f_s = 55$ Hz,
+  $Q_{ms} = 6{,}1$ — ce n'est *pas* le même haut-parleur supposé clos), bosse de
+  +12,2 dB et $\min|Z_{in}| = 2{,}49$ Ω ; sur la charge bass-reflex, bosse de
+  +12,6 dB et $\min|Z_{in}| = 2{,}66$ Ω — sous le minimum de 4 Ω du t.amp E-800
+  dans les deux cas de charge réelle.
+  *Définition de la « bosse », sans laquelle le nombre est invérifiable* :
+  maximum de $|H|$ du passe-bas sur 10–1000 Hz, **rapporté à la perte
+  d'insertion de 1,02 dB** obtenue sur 8 Ω résistifs ($20\log_{10}(8/9)$).
+  *Deux familles de chiffres coexistent, et c'est normal* : ceux-ci viennent d'un
+  jeu de paramètres posé à la main avec DCR 1 Ω ; les diapositives
+  ($\min|Z_{in}|$ = 3,29 Ω pour le catalogue, 5,27 Ω pour l'optimisé) viennent de
+  la **chaîne complète** sur le CSV synthétique, avec les selfs de Brooks
+  (r = 1,64 Ω). Deux ordres de grandeur indépendants, **pas** deux mesures du
+  même nombre : ils ne se comparent pas terme à terme.
+- **Un modèle à 5 paramètres ajusté sur des données bass-reflex converge EN
+  SILENCE** sur des paramètres faux : aucun message d'erreur, seulement un
+  résidu un peu moins bon — et toute la phase 3 serait alors optimisée sur une
+  charge qui n'existe pas. Le modèle à **7-8 paramètres** était déjà écrit et
+  testé *précisément parce que* le type de caisse n'était pas connu : ce n'est
+  pas une reprise, c'est une hypothèse qui se lève. Garde-fou en place :
+  `analyse/io_mesures.py::diagnostiquer_caisse()` détecte les deux pics et
+  refuse un modèle à 5 paramètres avec un avertissement explicite ;
+  `analyse/modele_hp.py` expose `Z_bassreflex`, `Z_bassreflex8` et
+  `Z_bassreflex_semi`.
+- **Sécurité bass-reflex : interdiction de balayer sous $f_b$ au niveau fort.**
+  Sous l'accord, la membrane n'est plus chargée par les évents et l'excursion
+  devient maximale — **risque mécanique** pour le 18″. Au niveau fort, borne
+  basse du balayage $\ge 2f_b$ ; la descente sous $f_b$, nécessaire pour voir le
+  premier pic, se fait **au niveau faible uniquement**, avec contrôle visuel du
+  débattement avant chaque balayage.
 - **Z exacte sans approximation courant constant** : mesurer V_HP ET V_Rref →
   Z = Rref·(V_HP/V_Rref). L'hypothèse I≈cst se dégrade au pic : |Z|_max = R_e(1+Q_ms/Q_es)
   vaut **60 à 200 Ω pour un 18″** de catalogue (le « 40–60 Ω » hérité de la v1 est l'ordre
   de grandeur du **bloc médiums**) → voir REFERENCE-TECHNIQUE.md § 02.4.
+  **Incise obligatoire depuis le constat de caisse** : cette formule vaut **en
+  champ libre et en caisse close**. En bass-reflex la résonance se **dédouble**
+  et elle ne décrit **aucun** des deux pics — sur le modèle ci-dessus elle
+  prédirait 105 Ω là où le calcul donne 54 et 64 Ω (−49 % et −40 %). On la garde
+  comme **majorant** pour dimensionner R_ref (l'erreur va dans le sens
+  conservatif au banc), jamais comme prédiction de la hauteur d'un pic.
 - **DCR de la self** : pertes Joule + modifie l'amortissement du grave — en v2
   c'est un élément CENTRAL (fonction de coût + étude self, loi r×m ≈ cte à L fixée).
 - **Mesure acoustique à 100 Hz** : modes de pièce (λ ≈ 3,4 m), fenêtrage
@@ -176,10 +288,12 @@ Détail des phases, portes de validation, critères et calendrier :
   à montrer les portes de validation, pas à ajouter des planches). Les annexes
   sont hors chronomètre : elles servent pendant les 15 min d'entretien.
 - **Livrable SCEI = un PDF en 4/3 paysage de 5 Mo maximum**, téléversé et projeté
-  depuis l'ordinateur du jury (ni HTML, ni notes, ni objets en salle). Le gabarit
-  actuel est **16:9 (1280×720) : à repasser en 4/3 (1024×768) lors de la refonte
-  v2** — et à figer aussi pour les figures matplotlib produites en phases 2-4,
-  sinon elles seront toutes à refaire (détail : REFERENCE-TECHNIQUE.md § 08.2).
+  depuis l'ordinateur du jury (ni HTML, ni notes, ni objets en salle). **Fait
+  depuis la refonte v2** : les deux decks sont au gabarit **4/3 (1024×768)** —
+  `Reveal.initialize({width: 1024, height: 768})` dans `presentation-finale.html`
+  et `pre-soutenance.html` — et les figures matplotlib de `analyse/figures.py`
+  sont produites au même format (détail : REFERENCE-TECHNIQUE.md § 08.2). Rien
+  n'est donc à refaire de ce côté ; ce qui reste à régénérer, ce sont les **PDF**.
 - Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
   Site : https://thomasmareel.github.io/tipe-filtrage-enceinte/
   Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH).
@@ -190,7 +304,18 @@ PDF vectoriels via decktape (Chrome système, PUPPETEER_EXECUTABLE_PATH) ;
 variante claire imprimable via css/blueprint-light.css. Repli bitmap :
 captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 
-## État actuel (2026-09-13)
+## État actuel (2026-09-16)
+
+- [x] **Constat du 16/09/2026 (étudiant) : la caisse du sub est BASS-REFLEX à
+      DEUX ÉVENTS**, et 2 pavillons d'ultra-aigu sont câblés en parallèle des
+      médiums. D8 de `DECISIONS-PHASE-0.md` est **répondue**. Répercuté ici
+      (§ Sujet, § Données à confirmer, § Points scientifiques), dans
+      `FEUILLE-DE-ROUTE.md` (phases 1, 2 et 4) et dans `DECISIONS-PHASE-0.md`
+      (D3 et D8). **Rien d'autre ne change** : problématique, récit en 4 actes,
+      critères, chaîne de mesure, optimisation E12 et portes de validation sont
+      inchangés — le modèle à 7-8 paramètres était déjà écrit et testé pour ce
+      cas. Reste à propager dans `REFERENCE-TECHNIQUE.md`, `MCOT.md`,
+      `NOTES-TIPE.md` et les supports (non traité dans cette session).
 
 - [x] v1 complète (pré-soutenance présentée aux profs début juin 2026 ; finale
       v1 structurée en attente de mesures) — **gelée dans archive-v1/**.
@@ -203,19 +328,28 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       f_c et la fenêtre de saisie du MCOT dans les autres documents.
 - [x] Documents v2 réalignés sur ce cadre (13 sept. 2026) : CLAUDE.md,
       FEUILLE-DE-ROUTE.md, MCOT.md, README.md, index.html.
+- [x] **Dossier `analyse/` écrit et éprouvé** : chaîne complète lecture des
+      mesures → ajustement Thiele-Small (5 ou 8 paramètres, aiguillage `auto`) →
+      optimisation E12 → figures ; **19 313 lignes de Python dont 4 253 de
+      tests**, **171 tests au vert** (`python -m unittest discover -s
+      analyse/tests`, 16 sept. 2026) et `python analyse/tout_refaire.py` en
+      8 étapes, exit 0.
 - [ ] Phase 0 à finir : critères + 2 niveaux d'écoute à geler (décision
-      étudiant), liste d'achats phase 1, squelette code `analyse/`,
+      étudiant), liste d'achats phase 1,
       **désignation du professeur encadrant** (obligatoire pour la saisie SCEI
       de mi-janvier 2027 — voir REFERENCE-TECHNIQUE.md § 08.3).
 - [x] **NOTES-TIPE.md réécrit en v2** (13 sept. 2026) : questions du jury sur le
       problème inverse, l'optimisation E12 et les incertitudes ; la v1 portait
       encore les trois architectures (dont le RC 1er ordre abandonné) et le
       « ≈ 11 % pour un RC ». Les placeholders y restent à combler après mesures.
-- [ ] Les slides à la racine (pre-soutenance.html, presentation-finale.html)
-      sont encore la **v1** — refonte v2 prévue en phase 5 (ou avant sur
-      demande), avec passage du gabarit 16:9 au 4/3. Le site Pages reflète donc
-      la v1 pour l'instant. `presentation-finale.html` affiche encore
-      « ± 11 % sur f_c » (l. 1073 et 1173) : à corriger à la refonte.
+- [x] **Refonte v2 des deux decks faite** (`pre-soutenance.html`,
+      `presentation-finale.html`) : récit en 4 actes, gabarit SCEI **4/3
+      (1024×768)**, figures injectées par marqueurs `<!--FIG:nom-->` (7 couples
+      dans la présentation finale, 2 dans la pré-soutenance). Le « ± 11 % sur
+      f_c » n'y figure plus qu'en **annexe A3, comme contre-exemple explicitement
+      réfuté**. Le site Pages reflète donc la v2.
+- [ ] **Seuls les PDF exportés** restent à régénérer après ces corrections
+      (procédure : EXPORT-PDF.md ; plafond SCEI 5 Mo, dernier export 4,81 Mo).
 
 ## Prochaines étapes
 
@@ -232,12 +366,14 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
    un compte sur lycees.scei-concours.fr (échéance : rentrée).
 3. Étudiant : acheter R_ref 100 Ω 1 % (+ 10 Ω), pinces, wattmètre de prise ;
    vérifier résistance de puissance 8 Ω au lycée.
-4. Claude : squelette `analyse/` (Python : lecture mesures → fit T-S →
-   optimisation E12 avec sanity check 8 Ω) dès que demandé — figer d'emblée le
-   format de figure 4/3. **Environnement prêt** : scipy 1.18.1 installé et
-   vérifié (voir § Matériel) — rien à installer, rien à contourner.
-5. Claude (sur demande) : refonte des slides en v2, gabarit 4/3 — c'est le seul
-   livrable encore en v1 avec les PDF exportés.
+4. Étudiant, **avant la première mesure** : relever au pied à coulisse les cotes
+   des **deux évents** et le **volume net** de la caisse `[[à mesurer]]`, et
+   ouvrir le bornier pour savoir s'il y a un **condensateur en série avec les
+   pavillons** `[[à vérifier]]`. Le premier relevé rend la prédiction de $f_b$
+   *falsifiable* — elle doit être écrite et datée **avant** la mesure de Z(f) ;
+   le second décide de ce qu'on s'attend à lire sur le bloc médiums.
+5. Claude (sur demande) : régénérer les **PDF** des deux decks après ces
+   corrections — c'est le seul livrable qui traîne encore derrière ses sources.
 6. Phase 1 dès la rentrée : étalonnage de la chaîne sur composants connus,
    puis Z(f) du sub en caisse. C'est la clé de voûte — rien d'autre avant.
 

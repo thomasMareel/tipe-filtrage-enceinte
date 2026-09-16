@@ -12,15 +12,45 @@
 > cités à l'oral, les figures, les netlists LTspice et un journal daté portant les
 > versions, les graines et les empreintes SHA-256 des fichiers d'entrée.
 
-> ### ⚠ Statut des données au 2026-09-14
+> ### ⚠ Statut des données au 2026-09-16
 >
 > **Aucune mesure de l'enceinte n'existe.** La chaîne tourne aujourd'hui sur
-> `mesures/exemple_synthetique_sub.csv`, engendré par un modèle de Thiele-Small
-> et **étiqueté SYNTHÉTIQUE dans son en-tête**. Cette étiquette est recopiée dans
+> `mesures/exemple_synthetique_sub.csv`, engendré depuis le 2026-09-16 par un
+> modèle **bass-reflex à deux évents** (8 paramètres) et **étiqueté SYNTHÉTIQUE
+> dans son en-tête**. Cette étiquette est recopiée dans
 > chaque résultat produit, jusque dans les JSON et sur les figures. Ce que la
 > chaîne prouve aujourd'hui, c'est que **le code est juste** ; elle ne dit
 > strictement **rien** du haut-parleur réel. Le jour de la phase 1, il suffit de
 > déposer les vrais CSV dans `mesures/` : rien d'autre ne change.
+
+> ### Ce qui a changé le 2026-09-16 — et ce qui n'a pas changé
+>
+> L'étudiant a constaté que le sub est en **caisse bass-reflex, avec deux
+> évents**. Jusque-là, tous les documents disaient « type de caisse à
+> documenter » et la chaîne s'exerçait sur un exemple en caisse **close**.
+>
+> **Ce qui n'a pas changé** : la problématique, le récit en quatre actes, les
+> critères, la chaîne de mesure, l'optimisation E12, les portes de validation.
+> Le modèle à 7–8 paramètres et le garde-fou de caisse étaient écrits et testés
+> **précisément parce que** le type de caisse n'était pas connu : ce n'est pas
+> une reprise, c'est une hypothèse qui se lève.
+>
+> **Ce qui a changé** : le fichier d'exemple est engendré en bass-reflex, donc
+> la commande gelée exerce enfin le garde-fou et le modèle à 8 paramètres ; le
+> budget d'incertitude de type B porte sur **huit** paramètres au lieu de cinq ;
+> la netlist LTspice décrit la **branche évent** au lieu d'une caisse close qui
+> lui ressemblerait ; et trois fonctions nouvelles sont arrivées — prédiction de
+> f_b par la **géométrie** (Helmholtz), **sommation en champ proche** (Keele),
+> et la **charge composite du passe-haut** (les pavillons d'ultra-aigu, hors
+> bande acoustique mais bel et bien en parallèle des médiums).
+>
+> **Et l'argument du TIPE s'en trouve renforcé** : en bass-reflex, le **second
+> pic d'impédance tombe en pleine zone de raccord** — 85,9 Hz et 64 Ω sur le
+> modèle illustratif, d'où \|Z\|(100 Hz) = 22,4 Ω au lieu des 8 Ω supposés par
+> le calcul de catalogue. L'hypothèse « 8 Ω résistifs » y est donc encore plus
+> fausse qu'en caisse close ; sur cette charge, le filtre catalogue est
+> **disqualifié** avant toute comparaison de fidélité (min\|Z_in\| = 3,29 Ω,
+> sous le minimum de 4 Ω du t.amp E-800).
 
 ---
 
@@ -84,8 +114,8 @@ pas seulement l'API, et renvoie aux sections de `REFERENCE-TECHNIQUE.md`.
 
 | Module | Acte | À quoi il sert |
 |---|---|---|
-| `modele_hp.py` | 1 | Modèle électroacoustique du haut-parleur : `Z_ts` (5 paramètres, caisse close), `Z_bassreflex` (7–8 paramètres, deux pics), grilles de fréquences, Zobel, diagnostic du **nombre de pics**. Porte aussi les jeux de valeurs **typiques** `SUB_TYP` / `MED_TYP`, chacun avec son avertissement « ordre de grandeur, pas une mesure ». |
-| `io_mesures.py` | 1 | Entrées/sorties : lecture et écriture du CSV de mesure (en-tête `# clé: valeur`), dépouillement $Z = R_{ref}V_d/V_R$, lecture des exports **REW** et des CSV **d'oscilloscope**, détection synchrone, validation d'une série, lecture de `criteres_geles.json`. *(Renommé : la spécification § 09.2 l'appelle `entrees.py`, et `analyse/entrees.py` est un alias qui redirige ici — voir ci-dessous.)* |
+| `modele_hp.py` | 1 | Modèle électroacoustique du haut-parleur : `Z_ts` (5 paramètres, caisse close), `Z_bassreflex` (7–8 paramètres, deux pics), `Z_charge_passe_haut` (**charge composite** : médiums en série *et* pavillons en parallèle), grilles de fréquences, Zobel, diagnostic du **nombre de pics**. Depuis le 2026-09-16, la section 4 sort de l'impédance et traite la **caisse bass-reflex** : `frequence_accord_helmholtz` (f_b prédite par la géométrie, N évents, correction de bout explicite) et `somme_champ_proche_bassreflex` (méthode de **Keele**, pondération en racine des aires). Porte aussi les jeux de valeurs **typiques** `SUB_TYP` / `SUB_TYP_BR` / `MED_TYP`, chacun avec son avertissement « ordre de grandeur, pas une mesure ». |
+| `io_mesures.py` | 1 | Entrées/sorties : lecture et écriture du CSV de mesure (en-tête `# clé: valeur`), dépouillement $Z = R_{ref}V_d/V_R$, lecture des exports **REW** et des CSV **d'oscilloscope**, détection synchrone, validation d'une série, lecture de `criteres_geles.json`, et génération du jeu d'exemple **SYNTHÉTIQUE** (bass-reflex à deux évents depuis le 2026-09-16). *(Renommé : la spécification § 09.2 l'appelle `entrees.py`, et `analyse/entrees.py` est un alias qui redirige ici — voir ci-dessous.)* |
 | `ts_fit.py` | 2 | **Problème inverse** : initialisation lue sur la courbe, résidus pondérés, ajustement (SciPy ou repli Levenberg-Marquardt maison), covariance complète, Monte-Carlo, jackknife, diagnostics de résidus, aiguillage automatique clos / bass-reflex et **refus** d'ajuster 5 paramètres sur une courbe à deux pics. |
 | `filtre.py` | 3 | Réseaux $H_{PB}$, $H_{PH}$ **sur charge complexe**, cibles (`butterworth`, `lr2`, `plate`), sommation avec polarité et retard, repères à $-3$ dB (convention en paramètre), fréquence de **croisement**, écart RMS en dB, contraintes physiques (tension, courant, $\min|Z_{in}|$), export de **netlist LTspice**. |
 | `optim.py` | 3 | Séries E12/E6, fonction de coût $J$ vectorisée par blocs, **énumération exhaustive** des 331 776 combinaisons, recoupement continu, analyse du **plateau**, Monte-Carlo des tolérances, et les **portes de validation 8 Ω** pour les deux cibles. |
@@ -117,10 +147,10 @@ implémentations d'un même lecteur de CSV divergeraient tôt ou tard.
 
 | Chemin | Rôle |
 |---|---|
-| `criteres_geles.json` | **Les décisions gelées sont un fichier, pas une intention.** Cibles, poids de $J$, bande, niveaux d'écoute, définition de $f_c$. Tant qu'une valeur porte la marque `[[a geler]]`, le code **refuse** de s'en servir pour un chiffre d'oral. Au 2026-09-14, **42 décisions sont encore ouvertes** — voir `DECISIONS-PHASE-0.md`. Le fichier porte aussi, depuis le 2026-09-14, la section **`tests_non_regression`** : les huit critères chiffrés du § 09.6 y sont recopiés et **lus par les tests** (`tests/contexte.py`), au lieu de ne vivre que dans leurs docstrings — sans quoi une relecture ne peut confronter un test qu'à lui-même. Le **`journal_des_modifications`** date et motive tout amendement. |
+| `criteres_geles.json` | **Les décisions gelées sont un fichier, pas une intention.** Cibles, poids de $J$, bande, niveaux d'écoute, définition de $f_c$. Tant qu'une valeur porte la marque `[[a geler]]`, le code **refuse** de s'en servir pour un chiffre d'oral. Au 2026-09-14, **42 décisions sont encore ouvertes** — voir `DECISIONS-PHASE-0.md`. Le fichier porte aussi, depuis le 2026-09-14, la section **`tests_non_regression`** : les critères chiffrés du § 09.6 y sont recopiés et **lus par les tests** (`tests/contexte.py`), au lieu de ne vivre que dans leurs docstrings — sans quoi une relecture ne peut confronter un test qu'à lui-même. Le **`journal_des_modifications`** date et motive tout amendement. |
 | `mesures/` | **Données brutes, lecture seule, versionnées.** Rien dans la chaîne ne les réécrit. Voir `mesures/LISEZMOI.md`. |
 | `resultats/` | **Sorties régénérables**, ignorées par git — *sauf* `parametres_ts.json` et `design_optimise.json`, qui sont les chiffres cités à l'oral et portent donc leur provenance. C'est **le seul** dossier de sortie : `figures.py` lancé seul y écrit comme `tout_refaire.py`. Il y avait auparavant un second dossier `analyse/figures/`, que la règle `.gitignore` du § 09.8 ne couvrait pas — un `git add analyse` y aurait versionné des figures **périmées**, indiscernables des figures à jour une fois dans le dépôt, puis citées à l'oral. |
-| `tests/` | **Les huit** familles de tests de non-régression du § 09.6, la famille (h) *figures* comprise. Voir `tests/LISEZMOI.md`. |
+| `tests/` | Les **neuf** familles de tests de non-régression : les huit du § 09.6 (la famille (h) *figures* comprise) et la famille **(i) bass-reflex**, ajoutée le 2026-09-16. Voir `tests/LISEZMOI.md`. |
 | `requirements.txt` | numpy, scipy, matplotlib — et les versions qui ont produit les chiffres. |
 
 ---
@@ -132,11 +162,18 @@ python -m unittest discover -s analyse/tests -v
 ```
 
 **Depuis la racine du dépôt**, sans `-t .`, et sans créer de `__init__.py` dans
-`tests/` (unittest refuserait le dossier de départ). État au 2026-09-14 :
-**148 tests, tous au vert, en une trentaine de secondes** — dont la famille (h)
+`tests/` (unittest refuserait le dossier de départ). État au 2026-09-16 :
+**171 tests, tous au vert, en une cinquantaine de secondes** — dont la famille (h)
 *figures*, qui n'était jusqu'ici jouée qu'à l'étape 8 de `tout_refaire.py`, donc
 **sautée par `--sans-figures`** et jamais exécutée par la commande gelée. Ce n'était
 pas un test de non-régression, c'était un contrôle d'exécution ; il l'est maintenant.
+
+Les **21 derniers** sont la famille **(i) `test_bassreflex.py`**, ajoutée le
+2026-09-16. Elle tient la voie bass-reflex **de bout en bout** : la voie existait
+dans le code, elle n'était éprouvée qu'à moitié — l'ajustement à 8 paramètres y
+partait des valeurs *vraies*, ce qui ne prouve rien du chemin réel. Elle part
+maintenant de la **courbe**, par `init_depuis_courbe` puis par
+`identifier(modele='auto')`, exactement comme le fera la phase 1.
 
 Chaque test porte un **critère chiffré** gelé en même temps que la fonction de
 coût. Les principaux, tous vérifiés par la dernière exécution :
@@ -152,9 +189,12 @@ coût. Les principaux, tous vérifiés par la dernière exécution :
 | $u(f_0)/f_0$, borne au pire cas | **7,07 %** | 7,07 % |
 | $u(f_0)/f_0$, même lot ($\rho = +1$) | 10,00 % | 10,00 % |
 | Énumération E12 | $24^4 = 331\,776$ combinaisons, sans doublon | identique |
-| Ajustement sur l'exemple synthétique | $\chi^2$ réduit dans $[0{,}5\,;2]$ | 0,860, 9 critères sur 9 au vert |
+| Ajustement sur l'exemple synthétique | $\chi^2$ réduit dans $[0{,}5\,;2]$ | 0,974 (modèle `bassreflex8`) |
+| Bass-reflex, 8 paramètres retrouvés | $< 5\,\%$ et $< 4\sigma$ chacun | max 2,3 % sur le CSV d'exemple (chaîne complète) |
+| $f_b$ : géométrie (Helmholtz) contre ajustement | écart $< 5\,\%$ | 35,01 Hz contre 35,04 Hz — *cotes d'évent résolues à l'envers sur ce jeu de test : vérification de code, pas résultat* |
+| Garde-fou : 5 paramètres sur deux pics | `UserWarning`, puis `CaisseIncompatible` en mode strict | conforme |
 | SVG produits (sombre **et** claire) | 0 couleur `#rrggbb` hors repli `var(--x, #hex)` | 0 |
-| Injection HTML | 0 marqueur `<!--FIG:` restant, et échec **bruyant** si un marqueur manque | conforme |
+| Injection HTML | chaque marqueur `<!--FIG:nom-->` encadre son SVG (injection **idempotente**), et échec **bruyant** si un marqueur manque | conforme |
 
 **Les seuils ci-dessus sont lus dans `criteres_geles.json`**, section
 `tests_non_regression`, et non écrits en dur dans les tests. Un critère qui ne vit
@@ -199,7 +239,7 @@ aucun chiffre n'est plus garanti et il ne faut pas produire de JSON.
 **Chaque étape vérifie l'existence de sa sortie amont** et échoue en nommant
 l'étape fautive, plutôt que de recalculer en silence ce qui manque.
 
-### Deux choses que l'étape 6 dit, et qu'il faut savoir lire
+### Trois choses que l'étape 6 dit, et qu'il faut savoir lire
 
 **(a) Les selfs ne sont pas parfaites, et ce n'est pas un détail.** L'énumération
 tournait, jusqu'au 2026-09-14, sans modèle de DCR : elle cherchait donc l'optimum
@@ -219,12 +259,33 @@ clé `hors_domaine` du JSON et jusqu'à `stderr`. Le diagnostic existait déjà,
 enterré trente lignes plus haut : or le seul chiffre affiché au terminal est celui
 qui sera recopié, cité et retenu.
 
-**Ce que la chaîne ne fait pas encore** : injecter les figures dans les
-présentations. Aucun des trois HTML du dépôt ne porte de marqueur
-`<!--FIG:nom-->` — ils sont encore ceux de la v1, la refonte est prévue en phase
-5. Le mécanisme d'injection est néanmoins **éprouvé à chaque exécution** sur un
-HTML temporaire : c'est le défaut précis de `_gen.py` (annoncer « OK injecté »
-sans rien injecter) que ce contrôle interdit.
+**(c) Les pavillons d'ultra-aigu sont dans la charge, même s'ils ne rayonnent
+rien à 100 Hz.** Ils sont câblés **en parallèle** du bloc médium : hors périmètre
+*acoustique*, dans le périmètre *électrique*. Le $Z_m$ de l'étape 6 les ignore
+encore — il le faut bien, on ne sait pas s'il y a un condensateur en série avec
+eux — mais **taire l'enjeu serait pire que le chiffrer**, alors le journal le
+chiffre : sur les ordres de grandeur étiquetés, \|Z\| du bloc à 100 Hz passe de
+29,3 Ω à 23,7 Ω (−19 %) **avec** un condensateur de 6,8 µF, et à 3,7 Ω (−87 %)
+**sans** — sous le minimum de 4 Ω du t.amp E-800. `[[à vérifier]]` reste ouvert ;
+la conséquence de manip, elle, ne dépend pas de la réponse : on mesure le bloc
+médium **pavillons connectés**, puisque c'est cela que le filtre voit.
+
+**L'injection de figures est en service** (vérifié le 2026-09-16 ; le paragraphe
+qui l'annonçait « pas encore faite » datait d'avant la refonte v2 des deux decks).
+`presentation-finale.html` porte **7 couples** de marqueurs `<!--FIG:nom-->` /
+`<!--/FIG:nom-->` — `fig-z-sub-mesure`, `fig-fit-ts-sub`,
+`fig-catalogue-8ohm-vs-z`, `fig-somme-catalogue-vs-optimise`,
+`fig-plateau-optimum`, `fig-self-cout-dcr`, `fig-croisement-energie` — et
+`pre-soutenance.html` en porte **2** (`fig-z-sub-mesure`,
+`fig-catalogue-8ohm-vs-z`). Les deux decks sont au gabarit SCEI 4/3
+(`Reveal.initialize({width: 1024, height: 768})`).
+
+**Mise en garde, déjà écrite dans l'en-tête de `pre-soutenance.html` :**
+l'injection **réécrit le HTML en place**. On travaille donc sur une copie, ou on
+vérifie que le dépôt est propre avant de lancer l'étape. Le mécanisme reste par
+ailleurs **éprouvé à chaque exécution** sur un HTML temporaire : c'est le défaut
+précis de `_gen.py` (annoncer « OK injecté » sans rien injecter) que ce contrôle
+interdit.
 
 ---
 
@@ -292,7 +353,9 @@ et elle se trompe **sans le dire**.
 | **Synthétique** (engendré par un modèle) | `mesures/exemple_synthetique_sub.csv` et tout ce qui en descend : `parametres_ts.json`, `design_optimise.json`, les figures | En-tête du CSV, clé `statut_donnees` recopiée dans chaque JSON, mention portée sur les figures, bandeau en tête du journal |
 | **Ordre de grandeur étiqueté** (datasheet publique) | `modele_hp.SUB_TYP` (B&C 18PS76), `MED_TYP` (FaitalPRO 8FE200-4) | Clé `avertissement` dans le dictionnaire, contrôlée par un test |
 | **Placeholder assumé** (modèle à choisir) | prix du cuivre, modèle de DCR, poids de $J$ | Décisions D5 et D6 encore `[[a geler]]` ; tant qu'elles le sont, $w_{euro} = w_W = 0$ et **aucun euro n'entre dans le classement** |
-| **Calculé, donc vrai** | portes 8 Ω, $u(f_0)/f_0$, 331 776 combinaisons | Ce sont des théorèmes ou de l'arithmétique, pas des mesures |
+| **Constat, ni mesure ni choix** | le sub est en **bass-reflex à deux évents** (2026-09-16) ; les pavillons d'ultra-aigu sont **en parallèle des médiums** | Décision **D8** de `DECISIONS-PHASE-0.md` : un constat se fait à l'œil, il ne se choisit pas. Ses **nombres** (α, f_b, Q_l, volume, cotes des évents) restent `[[à mesurer]]` |
+| **Question ouverte, pas hypothèse** | y a-t-il un condensateur en série avec les pavillons ? | `[[à vérifier]]` dans `Z_charge_passe_haut` ; `effet_branche_aigu` chiffre les **deux** cas au lieu d'en supposer un |
+| **Calculé, donc vrai** | portes 8 Ω, $u(f_0)/f_0$, 331 776 combinaisons, $f_b$ de Helmholtz | Ce sont des théorèmes ou de l'arithmétique, pas des mesures. $f_b$ géométrique est un **modèle** : il est fait pour être **contredit** par l'ajustement, pas pour le remplacer |
 
 Tant que D5 n'est pas gelée, la chaîne optimise sur un critère **purement
 acoustique**, sans modèle de prix ni de DCR. C'est le réglage le plus
@@ -355,7 +418,26 @@ régénération, SHA-256 du journal).
 
 ## 9. Ce qui reste à écrire
 
-- **Ce qui vient d'être écrit** (2026-09-14, après relecture) et qui manquait :
+- **Ce qui vient d'être écrit** (2026-09-16, après le constat « bass-reflex à deux
+  évents ») : `modele_hp.frequence_accord_helmholtz` (f_b prédite par la géométrie),
+  `modele_hp.somme_champ_proche_bassreflex` (méthode de Keele, N évents),
+  `modele_hp.Z_charge_passe_haut` et `effet_branche_aigu` (les pavillons dans la
+  charge du passe-haut), la famille de tests **(e) `test_bassreflex.py`**, et
+  l'exemple synthétique passé en bass-reflex. Trois corrections que ce passage a
+  fait apparaître, toutes réelles et aucune cosmétique : le budget d'incertitude de
+  type B s'arrêtait au modèle à 5 paramètres (la chaîne tombait sur
+  `iteration over a 0-d array` à l'étape 7) ; la netlist LTspice décrivait une caisse
+  **close** en prétendant décrire la charge identifiée ; et l'auto-test de
+  `figures.py` exigeait « 0 marqueur restant » après une injection **idempotente**
+  qui, par construction, conserve ses marqueurs — un contrôle qui ne pouvait donc
+  jamais passer.
+- **Ce qui reste à faire quand les vrais nombres seront là** : la géométrie de la
+  caisse (volume et cotes des deux évents) relevée au mètre-ruban, pour que la
+  prédiction de f_b par Helmholtz cesse d'être illustrative ; la réponse au
+  `[[à vérifier]]` sur le condensateur des pavillons ; et le relevé en **champ
+  proche** de la membrane *et* de chaque évent, seule entrée de la sommation de
+  Keele. Le code les attend, aucun n'existe.
+- **Ce qui avait été écrit le 2026-09-14** (après relecture) et qui manquait :
   `energie.py` et sa figure `fig-croisement-energie` ; la famille de tests (h)
   *figures* ; la section `tests_non_regression` de `criteres_geles.json` ; les alias
   de module `entrees.py` et `injecter_figures.py`. Le couplage **DCR → énumération**,

@@ -954,6 +954,27 @@ def _rlc_motionnel(p):
     return Re, Le, Res, Res / (ws * Qms), Qms / (ws * Res)
 
 
+def _rlc_event(p, Les):
+    """(Rp, Lceb, Cpeb) de la branche EVENT d'un bass-reflex, ou None (§ 01.10).
+
+    Le dict du sub porte f_b, Q_l et alpha des que l'acte 2 a retenu un modele a
+    deux pics. Sans cette branche, la netlist LTspice decrirait une caisse CLOSE
+    en pretendant decrire la charge identifiee : la contre-verification
+    comparerait alors deux circuits differents et "prouverait" un desaccord qui
+    n'existe pas -- ou pire, masquerait un vrai.
+
+    Cote electrique, la compliance de caisse et la masse d'air de l'event forment
+    une branche SERIE R_p + L_ceb + C_peb qui SHUNTE la branche motionnelle :
+    L_ceb = L_ces/alpha, C_peb = 1/(w_b^2 L_ceb), R_p = w_b L_ceb / Q_l.
+    """
+    if 'fb' not in p or 'Ql' not in p:
+        return None
+    alpha = float(p.get('alpha', 1.0))
+    wb = 2.0 * np.pi * float(p['fb'])
+    Lceb = float(Les) / alpha
+    return wb * Lceb / float(p['Ql']), Lceb, 1.0 / (wb ** 2 * Lceb)
+
+
 def exporter_netlist(design, Z_rlc, chemin, voies='les_deux', ac='oct 48 10 10k',
                      titre=None, commentaire=None):
     """Ecrit la netlist LTspice du filtre charge par le modele T-S (§ 04.10).
@@ -967,7 +988,11 @@ def exporter_netlist(design, Z_rlc, chemin, voies='les_deux', ac='oct 48 10 10k'
              SERIE explicites -- elles font partie du circuit, pas d'un reglage.
     Z_rlc  : dict T-S du sub, ou couple (dict_sub, dict_med). Cles : Re, Le, Res et
              (fs, Qms) ou (Les, Ces). La branche motionnelle est un RLC PARALLELE
-             accorde sur fs.
+             accorde sur fs. Si le dict porte EN PLUS fb, Ql (et alpha), la charge
+             est ecrite en BASS-REFLEX : la branche event R_p + L_ceb + C_peb est
+             ajoutee en shunt de la branche motionnelle (§ 01.10). C'est ce qui
+             permet a la netlist de decrire la charge REELLEMENT identifiee a
+             l'acte 2, et non une caisse close qui lui ressemblerait.
     voies  : 'les_deux' (defaut), 'pb' ou 'ph'. Les deux voies sont ecrites comme deux
              circuits galvaniquement separes avec chacun sa source AC 1 : une seule
              simulation .ac donne V(hp_pb) et V(hp_ph).
@@ -993,12 +1018,24 @@ def exporter_netlist(design, Z_rlc, chemin, voies='les_deux', ac='oct 48 10 10k'
         Re, Le, Res, Les, Ces = _rlc_motionnel(p)
         fs_ctrl = 1.0 / (2.0 * np.pi * np.sqrt(Les * Ces))
         Qms_ctrl = Res * np.sqrt(Ces / Les)
-        return ["Re%s %s e%s %s" % (index, noeud_in, index, _spice(Re)),
-                "Le%s e%s n%s %s" % (index, index, index, _spice(Le)),
-                "Res%s n%s 0 %s" % (index, index, _spice(Res)),
-                "Les%s n%s 0 %s" % (index, index, _spice(Les)),
-                "Ces%s n%s 0 %s   ; controle : fs = %.3f Hz, Qms = %.4f"
-                % (index, index, _spice(Ces), fs_ctrl, Qms_ctrl)]
+        lignes_bloc = [
+            "Re%s %s e%s %s" % (index, noeud_in, index, _spice(Re)),
+            "Le%s e%s n%s %s" % (index, index, index, _spice(Le)),
+            "Res%s n%s 0 %s" % (index, index, _spice(Res)),
+            "Les%s n%s 0 %s" % (index, index, _spice(Les)),
+            "Ces%s n%s 0 %s   ; controle : fs = %.3f Hz, Qms = %.4f"
+            % (index, index, _spice(Ces), fs_ctrl, Qms_ctrl)]
+        event = _rlc_event(p, Les)
+        if event is not None:
+            Rp, Lceb, Cpeb = event
+            lignes_bloc += [
+                "* branche EVENT (bass-reflex) : shunte la branche motionnelle",
+                "Rp%s n%s b%s %s" % (index, index, index, _spice(Rp)),
+                "Lceb%s b%s c%s %s" % (index, index, index, _spice(Lceb)),
+                "Cpeb%s c%s 0 %s   ; accord fb = %.3f Hz, Ql = %.3f, alpha = %.3f"
+                % (index, index, _spice(Cpeb), float(p['fb']), float(p['Ql']),
+                   float(p.get('alpha', 1.0)))]
+        return lignes_bloc
 
     if voies in ('les_deux', 'pb'):
         lignes += ["", "* --- Voie grave : L1 (+ DCR r1) serie, C1 parallele ---",

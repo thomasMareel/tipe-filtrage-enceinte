@@ -1103,19 +1103,32 @@ def budget_systematique(theta, u_A, modele='clos', u_rel_R_ref=0.01,
     thermique de la bobine sur R_e (le cuivre gagne 0,393 %/K, soit 2 % pour 5 K),
     obtenue en relevant R_e au multimetre AVANT et APRES le balayage.
 
-    Ne s'applique qu'au modele a 5 parametres ('clos'), seul contrat de
-    incertitudes.NOMS_TS. Retourne (budget, texte) ; (None, message) sinon.
+    S'applique a TOUT modele dont les parametres figurent dans la table de
+    sensibilite incertitudes.SENSIBILITE_RREF -- 'clos', 'semi', les trois
+    bass-reflex et le repli 'deux_pics' depuis le 2026-09-16. La regle y est la
+    meme pour tous : un NIVEAU (ohm, henry, ohm.s^n) herite de u(R_ref), une
+    POSITION (f_s, f_b), une FORME (Q_ms, Q_l, n) et un rapport de volumes
+    (alpha) en sont immunises. Le contraire serait une incertitude inventee.
+    Retourne (budget, texte) ; (None, message) si un parametre manque a la table
+    -- on ne devine PAS une sensibilite par defaut.
     """
     nom, _, noms = _resoudre_modele(modele)
-    if nom != 'clos':
-        return None, ("budget systematique non ecrit pour le modele '%s' : la table de "
-                      "sensibilite a R_ref de incertitudes.py porte sur les cinq "
-                      "parametres T-S. Les parametres de NIVEAU (ohms) heritent de "
-                      "u(R_ref), les POSITIONS et les FORMES en sont immunisees." % nom)
+    absents = [c for c in noms if c not in INC.SENSIBILITE_RREF]
+    if absents:
+        return None, ("budget systematique non ecrit pour le modele '%s' : les "
+                      "parametres %s ne figurent pas dans la table de sensibilite a "
+                      "R_ref de incertitudes.py. Les parametres de NIVEAU (ohms) "
+                      "heritent de u(R_ref), les POSITIONS et les FORMES en sont "
+                      "immunisees -- il faut le dire parametre par parametre, pas le "
+                      "supposer." % (nom, ', '.join(absents)))
+    # noms=noms, et non le defaut NOMS_TS : sur un modele a 8 parametres, le
+    # budget doit porter sur LES HUIT. Laisser le defaut rendrait un tableau a
+    # cinq lignes qu'on croirait complet.
     budget = INC.budget_parametres_ts(dict(zip(noms, np.asarray(theta, float))),
                                       dict(zip(noms, np.asarray(u_A, float))),
                                       u_rel_R_ref=u_rel_R_ref,
-                                      u_B_relatives_sup=u_B_relatives_sup)
+                                      u_B_relatives_sup=u_B_relatives_sup,
+                                      noms=noms)
     return budget, INC.tableau_budget_ts(budget)
 
 
@@ -2323,7 +2336,11 @@ def _autotest(rapide=False):
         if not os.path.isfile(chemin_csv):
             chemin_csv = IO.generer_exemple_synthetique()
         res_csv = identifier_fichier(chemin_csv, bavard=False, rapide=True, n_retrait=0)
-        vrai_csv = IO.SUB_TYPIQUE
+        # Le fichier d'exemple est engendre en BASS-REFLEX depuis le 2026-09-16
+        # (constat de l'etudiant) : le jeu de reference est donc SUB_TYPIQUE_BR.
+        # Les indices 0, 3 et 4 restent R_e, f_s et Q_ms dans les deux modeles,
+        # la comparaison ci-dessous vaut donc pour l'un comme pour l'autre.
+        vrai_csv = IO.SUB_TYPIQUE_BR
         print('  %s : modele %s, s2 = %.2f, R_e = %.3f ohm (fichier : %.3f), '
               'f_s = %.2f Hz (fichier : %.2f), Q_ms = %.2f (fichier : %.2f)'
               % (os.path.basename(chemin_csv), res_csv['modele'], res_csv['chi2_reduit'],

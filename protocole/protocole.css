@@ -1,0 +1,764 @@
+/* ==========================================================================
+   protocole.css — feuille de style du LIVRET DE MANIPULATIONS
+   TIPE « filtrage d'enceinte » — Thomas Mareel — session 2027
+
+   Cible : DOCUMENT A4 PORTRAIT IMPRIME, souvent en NOIR ET BLANC, manipule
+   au laboratoire avec les mains occupees. Donc : fond blanc, texte noir,
+   traits francs, cases a cocher imprimees, lignes de tableau assez hautes
+   pour ecrire au crayon.
+
+   Aucune dependance externe : polices systeme uniquement, aucune image,
+   aucun @import, aucun CDN. Les schemas sont des SVG inline.
+
+   CONVENTIONS DE BALISAGE attendues des fragments <section class="manip"> :
+
+     <section class="manip">
+       <h2><span class="num">Manip 3</span> Titre de la manipulation</h2>
+
+       <div class="objectif">   ... une phrase ...            </div>
+       <div class="materiel">   ... materiel + duree estimee ...</div>
+
+       <h3>Schema de cablage</h3>
+       <figure class="schema">
+         <svg viewBox="0 0 900 500"> ... </svg>
+         <figcaption>Legende du schema.</figcaption>
+       </figure>
+
+       <h3>Reglages</h3>
+       <table class="reglages"> ... </table>
+
+       <h3>Protocole</h3>
+       <ol class="gestes"><li>Geste imperatif.</li> ... </ol>
+
+       <h3>Releve</h3>
+       <table class="releve"> ... </table>
+
+       <div class="critere"> ... verifiable sur place ... </div>
+       <div class="piege">   ... </div>
+       <div class="securite">... </div>
+       <div class="suite">   ... ce qu'on en fait ensuite ... </div>
+     </section>
+
+   Les encadres acceptent plusieurs alias de classe (voir chaque bloc) pour
+   rester tolerants aux variantes de redaction.
+
+   NUMEROTATION DES MANIPS : elle n'est PAS injectee par le CSS (pour ne pas
+   numeroter la page de garde ni la page de securite). Elle s'ecrit dans le
+   titre, de preference dans <span class="num">.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Page imprimee
+   -------------------------------------------------------------------------- */
+
+@page {
+  size: A4 portrait;
+  margin: 18mm 16mm;
+
+  /* Pieds de page : honores par les moteurs de media pagine (WeasyPrint,
+     Prince, Paged.js). Chrome ne gere pas encore les boites de marge : dans
+     ce cas, cocher « En-tetes et pieds de page » dans la boite d'impression,
+     ou passer par Paged.js. Le repli <div class="pied"> ci-dessous reste
+     lisible dans tous les cas. */
+  @bottom-left {
+    content: "TIPE — filtrage d'enceinte — T. Mareel";
+    font-family: "Segoe UI", "Helvetica Neue", Arial, "DejaVu Sans", sans-serif;
+    font-size: 8pt;
+    color: #000;
+  }
+  @bottom-right {
+    content: "page " counter(page);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, "DejaVu Sans", sans-serif;
+    font-size: 8pt;
+    color: #000;
+  }
+}
+
+@page :first {
+  @bottom-left  { content: ""; }
+  @bottom-right { content: ""; }
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Fondations
+   -------------------------------------------------------------------------- */
+
+:root {
+  --trait-fin:    0.6pt;
+  --trait:        1.1pt;
+  --trait-epais:  2.2pt;
+  --gris-trame:   #e9e9e9;
+  --gris-clair:   #f4f4f4;
+  --gris-filet:   #8a8a8a;
+
+  --police-texte: "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans",
+                  "DejaVu Sans", sans-serif;
+  --police-mono:  "Consolas", "DejaVu Sans Mono", "Liberation Mono",
+                  "Courier New", monospace;
+}
+
+html {
+  background: #fff;
+}
+
+body {
+  background: #fff;
+  color: #000;
+  font-family: var(--police-texte);
+  font-size: 10.5pt;
+  line-height: 1.38;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Apercu a l'ecran : on simule la feuille A4 pour que la mise en page
+   verifiee a l'ecran soit celle qui sortira de l'imprimante. */
+@media screen {
+  body {
+    max-width: 178mm;           /* 210 mm - 2 x 16 mm de marge */
+    margin: 0 auto;
+    padding: 12mm 0 24mm;
+  }
+  section.manip {
+    border-top: var(--trait-fin) dashed var(--gris-filet);
+    padding-top: 10mm;
+    margin-top: 10mm;
+  }
+  section.manip:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+p { margin: 0 0 0.55em; orphans: 3; widows: 3; }
+
+strong, b { font-weight: 700; }
+em, i     { font-style: italic; }
+
+code, kbd, samp, .mono, .val, .valeur, .ref {
+  font-family: var(--police-mono);
+  font-size: 0.94em;
+  letter-spacing: -0.01em;
+}
+
+.unite  { font-family: var(--police-mono); white-space: nowrap; }
+.ordre  { font-style: italic; }        /* « ordre de grandeur attendu » */
+
+abbr { text-decoration: none; border-bottom: 0.5pt dotted #000; }
+
+a         { color: #000; text-decoration: underline; }
+a[href]::after { content: ""; }        /* pas d'URL developpee a l'impression */
+
+hr {
+  border: 0;
+  border-top: var(--trait) solid #000;
+  margin: 6mm 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. La section « manipulation » : une par page
+   -------------------------------------------------------------------------- */
+
+section.manip {
+  break-before: page;
+  page-break-before: always;    /* repli pour les moteurs anciens */
+  break-inside: auto;
+  display: block;
+}
+
+section.manip:first-of-type {
+  break-before: auto;
+  page-break-before: auto;
+}
+
+/* Un fragment peut demander explicitement de NE PAS ouvrir une page. */
+section.manip.suite-de-page {
+  break-before: auto;
+  page-break-before: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Titres
+   -------------------------------------------------------------------------- */
+
+section.manip > h2,
+h2.titre-manip {
+  font-size: 16pt;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 4mm;
+  padding: 0 0 2mm;
+  border-bottom: var(--trait-epais) solid #000;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+h2 .num,
+.titre-manip .num {
+  display: inline-block;
+  font-family: var(--police-mono);
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: var(--trait) solid #000;
+  padding: 0.5mm 2mm;
+  margin-right: 2.5mm;
+  vertical-align: 0.16em;
+  white-space: nowrap;
+}
+
+h2 .sous-titre,
+.titre-manip .sous-titre {
+  display: block;
+  font-size: 0.62em;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 1.5mm;
+}
+
+section.manip > h3,
+h3.etape {
+  font-size: 11.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 5.5mm 0 2mm;
+  padding-bottom: 1mm;
+  border-bottom: var(--trait-fin) solid #000;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+section.manip > h4,
+h4 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  margin: 3.5mm 0 1.5mm;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Encadres
+   -------------------------------------------------------------------------- */
+
+/* Socle commun a tous les encadres. */
+.objectif, .encadre-objectif,
+.materiel, .encadre-materiel, .materiel-duree,
+.critere,  .encadre-critere,  .reussite,
+.piege,    .encadre-piege,    .attention,
+.securite, .encadre-securite, .danger,
+.suite,    .encadre-suite,    .ensuite,
+.note,     .encadre {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 3.5mm 0;
+  padding: 2.8mm 3.2mm;
+  border: var(--trait) solid #000;
+}
+
+.objectif > :last-child, .encadre-objectif > :last-child,
+.materiel > :last-child, .encadre-materiel > :last-child,
+.critere  > :last-child, .encadre-critere  > :last-child,
+.piege    > :last-child, .encadre-piege    > :last-child,
+.securite > :last-child, .encadre-securite > :last-child,
+.suite    > :last-child, .encadre-suite    > :last-child,
+.note     > :last-child, .encadre > :last-child { margin-bottom: 0; }
+
+/* Etiquette automatique en tete d'encadre. */
+.objectif::before, .encadre-objectif::before,
+.materiel::before, .encadre-materiel::before, .materiel-duree::before,
+.critere::before,  .encadre-critere::before,  .reussite::before,
+.piege::before,    .encadre-piege::before,    .attention::before,
+.securite::before, .encadre-securite::before, .danger::before,
+.suite::before,    .encadre-suite::before,    .ensuite::before {
+  display: block;
+  font-family: var(--police-mono);
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5mm;
+}
+
+/* Un encadre peut refuser l'etiquette automatique : class="sans-etiquette" */
+.sans-etiquette::before { content: none !important; display: none !important; }
+
+/* --- Objectif : filet gras a gauche ------------------------------------- */
+.objectif, .encadre-objectif {
+  border-left: var(--trait-epais) solid #000;
+}
+.objectif::before, .encadre-objectif::before { content: "Objectif"; }
+.objectif p, .encadre-objectif p { font-size: 11pt; }
+
+/* --- Materiel et duree : trame legere ----------------------------------- */
+.materiel, .encadre-materiel, .materiel-duree {
+  background: var(--gris-clair);
+}
+.materiel::before, .encadre-materiel::before, .materiel-duree::before {
+  content: "Ce qu'il te faut";
+}
+.materiel ul, .encadre-materiel ul, .materiel-duree ul {
+  margin: 0; padding-left: 5mm;
+}
+.duree, .materiel .duree {
+  font-family: var(--police-mono);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.duree::after { content: "  (estimation)"; font-weight: 400; font-family: var(--police-texte); font-style: italic; font-size: 0.85em; }
+.duree.brute::after { content: ""; }
+
+/* --- Critere de reussite : double filet, tres visible -------------------- */
+.critere, .encadre-critere, .reussite {
+  border: var(--trait) solid #000;
+  box-shadow: 0 0 0 1.2pt #fff, 0 0 0 2.4pt #000;   /* double filet imprimable */
+  margin: 5mm 1.2pt;
+}
+.critere::before, .encadre-critere::before, .reussite::before {
+  content: "Critere de reussite — verifiable sur place";
+}
+
+/* --- Piege --------------------------------------------------------------- */
+.piege, .encadre-piege, .attention {
+  border-left: var(--trait-epais) solid #000;
+  border-style: dashed;
+  border-left-style: solid;
+}
+.piege::before, .encadre-piege::before, .attention::before { content: "Piege"; }
+
+/* --- Securite : bordure epaisse + bandeau hachure ------------------------ */
+.securite, .encadre-securite, .danger {
+  border: var(--trait-epais) solid #000;
+  padding: 0;
+}
+.securite::before, .encadre-securite::before, .danger::before {
+  content: "Securite";
+  margin: 0;
+  padding: 1.6mm 3.2mm;
+  color: #fff;
+  background: #000;
+  background-image: repeating-linear-gradient(
+      45deg, #000 0 3mm, #3a3a3a 3mm 6mm);
+  font-size: 9.5pt;
+  letter-spacing: 0.14em;
+}
+.securite > *, .encadre-securite > *, .danger > * {
+  margin-left: 3.2mm;
+  margin-right: 3.2mm;
+}
+.securite > :first-of-type, .encadre-securite > :first-of-type,
+.danger > :first-of-type { margin-top: 2.6mm; }
+.securite > :last-child, .encadre-securite > :last-child,
+.danger > :last-child { margin-bottom: 2.6mm; }
+
+/* --- Ce qu'on en fait ensuite ------------------------------------------- */
+.suite, .encadre-suite, .ensuite {
+  border-style: dotted;
+  border-width: var(--trait);
+}
+.suite::before, .encadre-suite::before, .ensuite::before {
+  content: "Ce qu'on en fait ensuite";
+}
+
+/* --- Note neutre --------------------------------------------------------- */
+.note::before, .encadre::before { content: none; }
+.note { border-style: dotted; }
+
+/* --- Valeur non mesuree : placeholder explicite (convention du depot) ---- */
+.placeholder, .a-mesurer {
+  font-family: var(--police-mono);
+  border-bottom: 0.8pt dashed #000;
+  padding: 0 0.5mm;
+}
+.placeholder::before, .a-mesurer::before { content: "[[ "; }
+.placeholder::after,  .a-mesurer::after  { content: " ]]"; }
+
+
+/* --------------------------------------------------------------------------
+   6. Listes de gestes, avec cases a cocher imprimees
+   -------------------------------------------------------------------------- */
+
+section.manip ul { margin: 0 0 3mm; padding-left: 5.5mm; }
+section.manip ul li { margin-bottom: 1.2mm; }
+
+section.manip ol { margin: 0 0 3mm; padding-left: 6.5mm; }
+section.manip ol li { margin-bottom: 1.6mm; }
+
+/* Gestes numerotes + case a cocher. Alias acceptes :
+   ol.gestes, ol.protocole, ol.checklist, .protocole > ol, .gestes > ol   */
+ol.gestes, ol.protocole, ol.checklist,
+.protocole > ol, .gestes > ol {
+  counter-reset: geste;
+  list-style: none;
+  margin: 0 0 4mm;
+  padding-left: 0;
+}
+
+ol.gestes > li, ol.protocole > li, ol.checklist > li,
+.protocole > ol > li, .gestes > ol > li {
+  position: relative;
+  padding-left: 15mm;
+  min-height: 6.2mm;
+  margin-bottom: 2.2mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* la case a cocher */
+ol.gestes > li::before, ol.protocole > li::before, ol.checklist > li::before,
+.protocole > ol > li::before, .gestes > ol > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.22em;
+  width: 4.2mm;
+  height: 4.2mm;
+  border: var(--trait) solid #000;
+  background: #fff;
+}
+
+/* le numero du geste */
+ol.gestes > li::after, ol.protocole > li::after, ol.checklist > li::after,
+.protocole > ol > li::after, .gestes > ol > li::after {
+  counter-increment: geste;
+  content: counter(geste) ".";
+  position: absolute;
+  left: 6.5mm;
+  top: 0;
+  width: 7mm;
+  font-family: var(--police-mono);
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Liste a cocher NON numerotee : ul.cocher */
+ul.cocher, ul.checklist {
+  list-style: none;
+  margin: 0 0 4mm;
+  padding-left: 0;
+}
+ul.cocher > li, ul.checklist > li {
+  position: relative;
+  padding-left: 7.5mm;
+  min-height: 6mm;
+  margin-bottom: 2.4mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+ul.cocher > li::before, ul.checklist > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.22em;
+  width: 4.2mm;
+  height: 4.2mm;
+  border: var(--trait) solid #000;
+  background: #fff;
+}
+
+/* Case a cocher isolee, au fil du texte : <span class="case"></span> */
+.case {
+  display: inline-block;
+  width: 4.2mm;
+  height: 4.2mm;
+  border: var(--trait) solid #000;
+  background: #fff;
+  vertical-align: -0.6mm;
+  margin-right: 1.5mm;
+}
+.case.large { width: 6mm; height: 6mm; }
+
+/* Ligne a remplir au crayon au fil du texte : <span class="ligne"></span> */
+.ligne {
+  display: inline-block;
+  min-width: 30mm;
+  border-bottom: 0.8pt solid #000;
+  vertical-align: -0.6mm;
+}
+.ligne.courte { min-width: 16mm; }
+.ligne.longue { min-width: 70mm; }
+
+
+/* --------------------------------------------------------------------------
+   7. Schemas SVG
+   -------------------------------------------------------------------------- */
+
+figure.schema, .bloc-schema, figure {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 4mm 0 5mm;
+  padding: 3mm;
+  border: var(--trait-fin) solid #000;
+  text-align: center;
+}
+
+figure.schema svg, .bloc-schema svg, section.manip svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+
+  /* Defauts herites par les descendants qui ne portent pas leur propre
+     attribut : tout est noir, rien n'est rempli. Lisible en N&B. */
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: #000;
+  font-family: var(--police-texte);
+}
+
+section.manip svg text {
+  fill: #000;
+  stroke: none;
+  font-size: 12px;
+  font-family: var(--police-texte);
+}
+section.manip svg text.mono,
+section.manip svg .etiquette-mono {
+  font-family: var(--police-mono);
+}
+
+figcaption, .legende-schema {
+  margin-top: 2.5mm;
+  padding-top: 1.5mm;
+  border-top: var(--trait-fin) solid #000;
+  font-size: 9pt;
+  line-height: 1.35;
+  text-align: left;
+}
+figcaption::before, .legende-schema::before {
+  content: "Legende. ";
+  font-weight: 700;
+  font-family: var(--police-mono);
+  font-size: 0.92em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+figcaption.sans-etiquette::before { content: none; }
+
+
+/* --------------------------------------------------------------------------
+   8. Tableaux
+   -------------------------------------------------------------------------- */
+
+section.manip table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 3mm 0 4mm;
+  font-size: 9.5pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+section.manip caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 700;
+  font-size: 9.5pt;
+  padding-bottom: 1.5mm;
+  break-after: avoid;
+}
+
+section.manip th, section.manip td {
+  border: var(--trait-fin) solid #000;
+  padding: 1.4mm 2mm;
+  text-align: left;
+  vertical-align: top;
+}
+
+section.manip thead th {
+  background: var(--gris-trame);
+  border-bottom: var(--trait) solid #000;
+  font-weight: 700;
+  font-size: 9pt;
+  line-height: 1.25;
+}
+
+section.manip thead { display: table-header-group; }   /* repete si coupure */
+section.manip tr { break-inside: avoid; page-break-inside: avoid; }
+
+/* colonne de valeurs numeriques */
+section.manip td.num, section.manip th.num,
+section.manip td.valeur, section.manip th.valeur {
+  font-family: var(--police-mono);
+  text-align: right;
+  white-space: nowrap;
+}
+section.manip td.centre, section.manip th.centre { text-align: center; }
+
+/* --- TABLEAU DE RELEVE : lignes hautes, a remplir au crayon -------------- */
+table.releve, table.tableau-releve, table.mesures {
+  font-size: 9.5pt;
+}
+table.releve th, table.tableau-releve th, table.mesures th {
+  font-size: 8.8pt;
+}
+table.releve td, table.tableau-releve td, table.mesures td {
+  height: 8.5mm;                 /* >= 8 mm : place pour ecrire */
+  font-family: var(--police-mono);
+  text-align: right;
+}
+table.releve td.texte, table.tableau-releve td.texte, table.mesures td.texte {
+  font-family: var(--police-texte);
+  text-align: left;
+}
+/* unite et nombre de chiffres significatifs, sous l'intitule de colonne */
+table th .unite, table th small, .sous-entete {
+  display: block;
+  font-family: var(--police-mono);
+  font-weight: 400;
+  font-size: 0.85em;
+}
+/* alternance de trames legeres pour ne pas sauter de ligne au crayon */
+table.releve tbody tr:nth-child(even) td,
+table.tableau-releve tbody tr:nth-child(even) td,
+table.mesures tbody tr:nth-child(even) td {
+  background: #f7f7f7;
+}
+
+/* --- TABLEAU « FICHE DE SEANCE » ---------------------------------------- */
+table.fiche-seance,
+table.fiche {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0;
+  font-size: 10pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+table.fiche-seance th, table.fiche th {
+  width: 38mm;
+  background: var(--gris-trame);
+  border: var(--trait-fin) solid #000;
+  padding: 2mm;
+  font-weight: 700;
+  font-size: 9pt;
+  text-align: left;
+  vertical-align: middle;
+}
+table.fiche-seance td, table.fiche td {
+  border: var(--trait-fin) solid #000;
+  padding: 2mm;
+  height: 9mm;                  /* champ a remplir a la main */
+  font-family: var(--police-mono);
+}
+table.fiche-seance tr.signature td, table.fiche tr.signature td { height: 18mm; }
+table.fiche-seance {
+  border: var(--trait) solid #000;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. Page de garde et sommaire
+   -------------------------------------------------------------------------- */
+
+section.manip.garde {
+  break-before: auto;
+  page-break-before: auto;
+}
+
+.garde .bandeau {
+  border-top: var(--trait-epais) solid #000;
+  border-bottom: var(--trait-epais) solid #000;
+  padding: 7mm 0 6mm;
+  margin-bottom: 7mm;
+  text-align: center;
+}
+.garde .bandeau h1 {
+  font-size: 26pt;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 3mm;
+}
+.garde .bandeau .sujet {
+  font-size: 11.5pt;
+  font-style: italic;
+  line-height: 1.35;
+  margin: 0 auto;
+  max-width: 140mm;
+}
+.garde .bandeau .surtitre {
+  font-family: var(--police-mono);
+  font-size: 9pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 3mm;
+}
+
+.garde table.identite { margin: 0 0 6mm; }
+.garde table.identite th { width: 42mm; }
+
+.sommaire { margin: 3mm 0 5mm; }
+.sommaire th, .sommaire td { vertical-align: middle; }
+.sommaire td.code {
+  font-family: var(--police-mono);
+  font-weight: 700;
+  white-space: nowrap;
+  width: 16mm;
+  text-align: center;
+}
+.sommaire td.page,
+.sommaire td.fait {
+  width: 22mm;
+  height: 8mm;
+  font-family: var(--police-mono);
+  text-align: center;
+}
+.sommaire tr.groupe td {
+  background: var(--gris-trame);
+  font-weight: 700;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   10. Pied de page de repli (visible partout, y compris sous Chrome)
+   -------------------------------------------------------------------------- */
+
+.pied {
+  margin-top: 6mm;
+  padding-top: 1.8mm;
+  border-top: var(--trait-fin) solid #000;
+  font-size: 8pt;
+  font-family: var(--police-mono);
+  display: flex;
+  justify-content: space-between;
+  gap: 4mm;
+}
+
+/* --------------------------------------------------------------------------
+   11. Utilitaires
+   -------------------------------------------------------------------------- */
+
+.ne-pas-couper   { break-inside: avoid; page-break-inside: avoid; }
+.nouvelle-page   { break-before: page;  page-break-before: always; }
+.rester-ensemble { break-after: avoid;  page-break-after: avoid; }
+.centre          { text-align: center; }
+.petit           { font-size: 9pt; }
+.majuscules      { text-transform: uppercase; letter-spacing: 0.08em; }
+.interdit        { font-weight: 700; text-transform: uppercase; }
+.deux-colonnes   { columns: 2; column-gap: 8mm; }
+.deux-colonnes > * { break-inside: avoid; }
+
+@media print {
+  .ecran-seulement { display: none !important; }
+}
+@media screen {
+  .impression-seulement { display: none !important; }
+}

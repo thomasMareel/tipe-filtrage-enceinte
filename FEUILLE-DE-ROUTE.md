@@ -163,12 +163,46 @@ Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pa
   (courbe plate attendue), un condensateur connu (\|Z\| = 1/ωC, phase −90°).
   → incertitudes de la chaîne chiffrées.
 - Puis : Z(f) du sub **en caisse** sur **10 Hz – 1 kHz** et du bloc médiums sur
-  **10 Hz – 2 kHz** (resserré autour du pic dans les deux cas). La bande ne
-  s'arrête pas à 500 Hz : au-dessus du pic motionnel, $|Z|$ remonte en $\omega
-  L_e$, et **c'est cette remontée qui identifie $L_e$**. Sans elle, le fit de la
-  phase 2 n'a aucune prise sur ce paramètre — or $L_e$ commande le Zobel et la
-  charge vue par le passe-haut. Rappel v1 : F_c en caisse > F_s datasheet, c'est
-  normal, ce n'est pas une erreur.
+  **10 Hz – 2 kHz** (grille resserrée autour des accidents dans les deux cas).
+  La bande ne s'arrête pas à 500 Hz : au-dessus du pic motionnel, $|Z|$ remonte
+  en $\omega L_e$, et **c'est cette remontée qui identifie $L_e$**. Sans elle, le
+  fit de la phase 2 n'a aucune prise sur ce paramètre — or $L_e$ commande le
+  Zobel et la charge vue par le passe-haut. Rappel v1 : F_c en caisse > F_s
+  datasheet, c'est normal, ce n'est pas une erreur.
+- **La caisse du sub est bass-reflex à deux évents (constat du 16/09/2026,
+  D8 de `DECISIONS-PHASE-0.md`) : la grille de fréquences doit résoudre DEUX
+  PICS ET LE CREUX intermédiaire.** Une grille calée sur un pic unique passerait
+  à côté de la structure même de la charge, et le fit de la phase 2 s'en
+  trouverait faux sans le dire. Concrètement (consigne détaillée :
+  `REFERENCE-TECHNIQUE.md` § 02.6) : 1/12 d'octave sur toute la plage
+  $10$ Hz – $1$ kHz, puis une **grille fine sur les DEUX PICS seulement**,
+  $\delta f \le f_{pic}/(10\,Q_{pic})$ — de l'ordre de $0{,}2$ Hz autour de
+  $f_L$ et de $1$ Hz autour de $f_H$ — repérés d'abord par un balayage grossier.
+  **Le creux, lui, ne se densifie pas** : il est *plat* ($|Z|$ ne remonte de 1 %
+  qu'au-delà d'une bande de 5,2 Hz, soit 0,22 octave), donc sous 1 % de bruit
+  son argmin est indiscernable et densifier n'y gagnerait que du temps de banc
+  perdu. **$f_b$ ne se lit pas sur l'argmin de $|Z|$** (biais $-2{,}3$ % sur le
+  modèle) : on le lit au **passage par zéro de la phase** entre les deux pics,
+  dont la pente est raide, ou — mieux — on le prend de l'**ajustement** de la
+  phase 2.
+- **Descendre sous 20 Hz pour voir le premier pic — AU NIVEAU FAIBLE
+  UNIQUEMENT.** Le premier pic $f_L$ tombe sous l'accord ; il faut donc explorer
+  cette zone, mais sous $f_b$ la membrane n'est plus chargée par les évents et
+  l'excursion devient maximale : **risque mécanique** pour le 18″. Règle :
+  balayage sous $f_b$ **seulement au niveau faible gelé (D3)**, avec contrôle
+  visuel du débattement ; **au niveau fort, borne basse $\ge 2f_b$**, sans
+  exception. Un balayage fort descendu sous l'accord peut détruire le
+  haut-parleur — c'est le seul geste de la phase 1 qui soit irréversible.
+- **Mesurer le bloc médiums TEL QU'IL EST CÂBLÉ, pavillons d'ultra-aigu
+  connectés.** Les 2 pavillons sont en **parallèle** des médiums : hors périmètre
+  acoustique (hors bande à 100 Hz), mais **dans la charge électrique** que voit
+  le passe-haut. Débrancher les pavillons « parce qu'on n'en parle pas »
+  mesurerait une charge qui n'existe pas dans le montage. Consigner au passage
+  s'il y a ou non un **condensateur en série** avec eux `[[à vérifier]]` : s'il
+  existe (3 à 10 µF typiques), la branche aigu pèse plusieurs centaines d'ohms
+  vers 100 Hz et n'influe quasiment pas ; sinon elle abaisse $|Z|$ du bloc et
+  les pavillons reçoivent du 100 Hz à pleine puissance pendant les balayages
+  (prudence sur le niveau). Dans les deux cas la mesure à faire est la même.
 - **Balayage acoustique en champ proche de chaque haut-parleur** (micro à
   quelques centimètres du centre du cône, voie par voie, HP nu sans filtre) :
   il donne les **sensibilités relatives** $G_{sub}(f)$ et $G_{méd}(f)$.
@@ -181,10 +215,19 @@ Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pa
   protocole complet (niveaux gelés, distance, calibrage) reste en phase 4.
 
 **Livrables** : courbes Z(f) module+phase avec barres d'erreur ; f_s en caisse ;
-**le rapport $\max|Z|/\min|Z|$ sur la bande utile** `[[à mesurer]]` — c'est le
-chiffre qui remplacera « varie fortement avec la fréquence » dans la
+**la fréquence d'accord $f_b$ lue au creux d'impédance** entre les deux pics
+`[[à mesurer]]`, avec les deux fréquences de pic $f_L$ et $f_H$ — $f_b$ commande
+à la fois le modèle à ajuster en phase 2 et la borne basse de sécurité au niveau
+fort ; **le rapport $\max|Z|/\min|Z|$ sur la bande utile** `[[à mesurer]]` —
+c'est le chiffre qui remplacera « varie fortement avec la fréquence » dans la
 problématique, et il ne sera écrit nulle part avant d'être mesuré ;
-$G_{sub}(f)$ et $G_{méd}(f)$ en champ proche (sensibilités relatives).
+$G_{sub}(f)$ et $G_{méd}(f)$ en champ proche (sensibilités relatives) ;
+$Z(f)$ du **bloc médiums câblé complet** (médiums + pavillons en parallèle).
+**Prédiction falsifiable à poser AVANT de dépouiller** : à partir des dimensions
+des deux évents et du volume interne `[[à mesurer]]`, calculer le $f_b$ attendu
+et l'écrire daté au cahier, **puis** le confronter au creux mesuré. Un écart
+s'explique (correction d'extrémité, volume occupé par l'aimant et les renforts,
+pertes) ; c'est de la démarche scientifique, pas un échec.
 **Porte de validation** : la résistance étalon est retrouvée à ±3 % et le
 condensateur suit 1/ωC sur deux décades. Sinon on diagnostique avant d'avancer.
 **Repli** : si la carte son pose problème (couplage, impédance de sortie),
@@ -194,14 +237,40 @@ puissance 8 Ω si absente au lycée, wattmètre de prise (~20 €).
 
 ### Phase 2 — Problème inverse : identification Thiele-Small (oct. 2026)
 
-- Modèle : Z(jω) = R_e + jωL_e + branche motionnelle (RLC parallèle équivalent).
+- **Modèle à ajuster : le modèle BASS-REFLEX à 7-8 paramètres**
+  (`analyse/modele_hp.py` : `Z_bassreflex`, `Z_bassreflex8`, variante
+  `Z_bassreflex_semi` si la semi-inductance est nécessaire en haut de bande).
+  La caisse est bass-reflex à deux évents (constat du 16/09/2026) : ce n'est plus
+  une option. Paramètres : $R_e$, $L_e$ (ou $K$, $n$), $R_{es}$, $f_s$, $Q_{ms}$,
+  $f_b$, $Q_l$, $\alpha$. Commencer avec **une seule perte globale** et n'en
+  ajouter une seconde que si le résidu structuré dépasse le seuil de
+  REFERENCE-TECHNIQUE.md § 01.10.
+- **Le modèle à 5 paramètres (caisse close, $Z = R_e + j\omega L_e +$ une
+  branche motionnelle) n'est plus le modèle du projet : il devient un
+  contre-exemple pédagogique.** Ajusté sur des données bass-reflex, il
+  **converge en silence** sur des paramètres faux — pas d'erreur, juste un
+  résidu un peu moins bon — et la phase 3 optimiserait alors sur une charge qui
+  n'existe pas. Montrer ce fit raté à côté du bon est une excellente planche
+  d'oral : c'est la démonstration que « ça a convergé » ne veut pas dire « c'est
+  juste ». Garde-fou automatique :
+  `analyse/io_mesures.py::diagnostiquer_caisse()` compte les pics et refuse le
+  modèle à 5 paramètres avec un avertissement explicite.
 - Ajustement moindres carrés (scipy) sur module ET phase ; analyse des résidus ;
   incertitudes des paramètres (covariance, Monte-Carlo sur les barres d'erreur).
 - Confrontation aux ordres de grandeur datasheet ; explication du décalage en caisse.
+- **Contrôle « évent inerte »** : faire tendre l'impédance de la branche d'évent
+  vers l'infini doit redonner exactement la caisse close de même volume — c'est
+  le test qui prouve que le modèle à 7-8 paramètres englobe bien celui à 5.
 
-**Livrables** : paramètres identifiés ± incertitudes ; courbe mesure vs modèle.
-**Porte de validation** : résidu relatif faible sur 20–300 Hz ET paramètres
-stables quand on retire aléatoirement des points de mesure.
+**Livrables** : paramètres identifiés ± incertitudes, **dont $f_b$ ajusté** ;
+courbe mesure vs modèle ; le fit à 5 paramètres tracé **en contre-exemple**, avec
+son résidu.
+**Porte de validation** : résidu relatif faible sur 20–300 Hz, paramètres
+stables quand on retire aléatoirement des points de mesure, **ET cohérence entre
+le $f_b$ ajusté par le modèle et le $f_b$ lu directement au creux d'impédance en
+phase 1** (deux chemins indépendants vers la même grandeur : s'ils divergent, le
+fit est suspect, on diagnostique avant d'avancer). Écart toléré à fixer avec les
+incertitudes de la phase 1 `[[à geler]]`.
 **Repli** : si le fit bute en haut de bande (courants de Foucault), restreindre
 la bande utile au raccord ou mentionner le modèle de semi-inductance en perspective.
 
@@ -274,8 +343,31 @@ est retenue). S'il n'y retombe pas, il y a un bug — ne rien acheter avant ce t
   3. acoustique REW en champ proche (20–500 Hz), voie par voie — **filtre
      inséré** cette fois : les sensibilités $G_{sub}$, $G_{méd}$ des HP nus ont
      déjà été relevées en phase 1, puisque la phase 3 en avait besoin ;
-  4. somme des deux voies au raccord — **avec inversion de polarité d'une voie**
+  4. **sommation champ proche du sub bass-reflex (méthode de Keele) — ÉTAPE
+     NOUVELLE, issue du constat du 16/09/2026.** En caisse close, un seul
+     relevé au centre du cône suffit. **En bass-reflex, non** : sous l'accord
+     c'est l'évent qui rayonne l'essentiel, et la membrane peut être en
+     opposition. Il faut donc **trois relevés en champ proche — la membrane et
+     CHACUN des deux évents** — puis les sommer **en pression complexe avec une
+     pondération par la racine des aires** : chaque contribution est multipliée
+     par $\sqrt{S_i/S_{membrane}}$ avant addition (la pression de champ proche
+     rapportée à un rayonnement équivalent est proportionnelle à $\sqrt{S}$).
+     Avec deux évents identiques d'aire $S_p$ chacun, le terme évent pèse
+     $\sqrt{2S_p/S_d}$. **Temps de manip à prévoir : ~45 min par configuration**
+     (3 positions de micro × 3 répétitions, repositionnement soigné et consigné,
+     à refaire pour chaque filtre comparé) — c'est le poste le plus coûteux en
+     temps de la phase 4, à inscrire au planning et non à découvrir le jour même.
+     Mesurer les aires $S_d$ (membrane, diamètre effectif) et $S_p$ (évent) au
+     mètre ruban, et les consigner : elles entrent dans le calcul.
+  5. somme des deux voies au raccord — **avec inversion de polarité d'une voie**
      (2ⁿᵈ ordre : sans inversion → trou, avec → bosse +3 dB).
+- **Borne basse de sécurité au niveau fort : `Start` $\ge 2f_b$, sans
+  exception.** Le $f_b$ à utiliser est celui **mesuré en phase 1** (creux
+  d'impédance), pas une valeur de catalogue. Sous l'accord, la membrane n'est
+  plus chargée par les évents, l'excursion devient maximale et le 18″ peut être
+  détruit mécaniquement. Toute descente sous $f_b$ se fait **au niveau faible
+  uniquement**, avec contrôle visuel du débattement avant le balayage. Cette
+  borne s'applique aussi aux balayages « bobine chaude » du test de robustesse.
 - Robustesse : refaire la mesure du raccord aux 2 niveaux gelés (dérive thermique).
 - Énergie : consommation au repos actif vs pertes passif → point de croisement.
 

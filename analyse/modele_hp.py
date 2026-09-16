@@ -51,7 +51,13 @@ import numpy as np
 
 # Air a 20 C, 1013 hPa -- ne sert qu'aux conversions de caisse (V_as), jamais a Z(f).
 RHO0 = 1.204     # masse volumique de l'air [kg/m3]
-C_SON = 343.0    # celerite du son [m/s]
+C_SON = 343.0    # celerite du son [m/s] -- SEULE definition de c du module.
+# Correction de bout d'un event (REFERENCE-TECHNIQUE.md § 01.10 bis fait foi) :
+# L_eff = L + k a avec a = d/2. Bout LIBRE 0,6133 a (Levine & Schwinger 1948),
+# bout BRIDE 0,8216 a (Rayleigh) a 0,8488 a = 8/(3 pi) (piston bafle).
+K_BOUT_DEFAUT = 1.463   # une extremite bridee (dehors) + une libre (dedans)
+K_BOUT_MIN = 1.227      # deux extremites libres   (2 x 0,6133)
+K_BOUT_MAX = 1.698      # deux extremites bridees  (2 x 0,8488)
 
 # Rapport de compliances V_as/V_b utilise par defaut par Z_bassreflex quand on
 # n'ajuste que 7 parametres. Voir la docstring de Z_bassreflex : ce n'est PAS un
@@ -398,6 +404,116 @@ def Z_serie_2hp(f, theta_a, theta_b):
     return Z_ts(f, *theta_a) + Z_ts(f, *theta_b)
 
 
+def Z_charge_passe_haut(f, theta_medium, n_medium=2, R_aigu=None, C_aigu=None,
+                        n_aigu=2, C_commun=None):
+    """Charge COMPOSITE reellement vue par le passe-haut (§ 01.12, constat du 2026-09-16).
+
+    L'enceinte ne porte pas deux voies mais trois familles de transducteurs : le
+    18 pouces, les DEUX mediums cables en serie, et DEUX pavillons d'ultra-aigu
+    cables EN PARALLELE du bloc medium. Les pavillons sont hors perimetre
+    ACOUSTIQUE -- ils ne rayonnent rien a 100 Hz -- mais ils ne sont PAS hors
+    perimetre ELECTRIQUE : etant en parallele, ils font partie de la charge que
+    le passe-haut doit entrainer. Confondre les deux plans, c'est optimiser un
+    filtre sur une charge qui n'existe pas.
+
+        Z = (n_medium HP en SERIE)  //  (branche aigu)
+
+        branche aigu = [ n_aigu x (R_aigu + 1/(jw C_aigu)) en parallele ]
+                       + 1/(jw C_commun)
+
+    LES DEUX CABLAGES POSSIBLES, ET POURQUOI ON NE TRANCHE PAS ICI. La presence
+    d'un condensateur de protection en serie avec les pavillons est un CONSTAT A
+    FAIRE, pas une hypothese a poser : [[a verifier aupres de l'etudiant]]. Le
+    verdict ne se devine pas, il se calcule -- et il depend de |Z| DU BLOC
+    MEDIUM a 100 Hz, ce que l'on oublie en repetant "un condensateur, c'est un
+    circuit ouvert en bas". Sur les ordres de grandeur etiquetes MED_TYP (deux
+    8 pouces en serie, pic a 80 Hz), a 100 Hz, deux pavillons de 8 ohm :
+      * AVEC condensateur (protection du premier ordre, 3 a 10 uF) : la branche
+        vaut 4 - j117 ohm pour 6,8 uF, soit |Z| = 117 ohm -- grand, mais pas
+        devant les 29 ohm du bloc medium au voisinage de SA resonance. Resultat :
+        |Z| du bloc passe de 29,3 a 23,7 ohm, soit -19 %. Ce n'est PAS
+        negligeable, contrairement a l'intuition courante ; ce n'est pas non plus
+        redhibitoire, et cela s'ajuste comme le reste ;
+      * SANS condensateur : la branche est un simple 4 ohm en parallele direct.
+        |Z| du bloc tombe de 29,3 a 3,7 ohm (-87 %), c'est-a-dire SOUS le minimum
+        de 4 ohm du t.amp E-800 une fois le filtre autour -- et les pavillons
+        recoivent du 100 Hz a pleine puissance, ce qui est un risque MATERIEL
+        pendant les balayages, pas seulement une erreur de modele.
+    Passer C_aigu=None modelise le second cas ; c'est le seul reglage qui demande
+    une decision, et il est explicite dans la signature. Le chiffrage complet est
+    rendu par effet_branche_aigu().
+
+    LA CONSEQUENCE PRATIQUE EST LA MEME DANS LES DEUX CAS : on mesure le bloc
+    medium TEL QU'IL EST CABLE, pavillons connectes, puisque c'est cela que le
+    filtre voit. Cette fonction ne sert donc pas a remplacer la mesure mais a
+    CHIFFRER l'enjeu avant de la faire (voir effet_branche_aigu).
+
+    R_aigu : un moteur a compression est modelise ici par une simple resistance.
+    C'est une approximation ASSUMEE et valable dans la seule bande qui nous
+    interesse : sa propre resonance vit vers 500-1500 Hz, donc a 100 Hz, deux a
+    quatre octaves dessous, |Z| y est proche de R_e (l'inductance de sa bobine,
+    quelques dizaines de uH, vaut moins de 0,05 ohm a 100 Hz). Hors bande de
+    raccord, ce modele ne vaut rien -- et il n'a pas a valoir.
+
+    theta_medium : vecteur a 5 parametres d'UN medium (Z_ts), ou une sequence de
+    vecteurs si les HP ne sont pas apparies (ils sont alors sommes tels quels et
+    n_medium est ignore). R_aigu=None retire la branche aigu : on retrouve
+    exactement n_medium x Z_ts, c'est-a-dire l'ancienne modelisation.
+    """
+    f = np.asarray(f, float)
+    if np.any(f <= 0):
+        raise ValueError('Z_charge_passe_haut : f doit etre > 0')
+    theta = np.asarray(theta_medium, float)
+    if theta.ndim == 1:
+        Z_med = int(n_medium) * Z_ts(f, *theta)          # HP identiques, en serie
+    else:
+        Z_med = sum(Z_ts(f, *t) for t in theta)          # HP quelconques, en serie
+    if R_aigu is None:
+        return Z_med
+
+    w = 2 * np.pi * f
+    Z_un = np.full(f.shape, complex(float(R_aigu)))
+    if C_aigu is not None:
+        Z_un = Z_un + 1.0 / (1j * w * float(C_aigu))
+    n_aigu = max(int(n_aigu), 1)
+    Z_aigu = Z_un / n_aigu                               # n branches identiques //
+    if C_commun is not None:
+        Z_aigu = Z_aigu + 1.0 / (1j * w * float(C_commun))
+    return 1.0 / (1.0 / Z_med + 1.0 / Z_aigu)
+
+
+def effet_branche_aigu(theta_medium, f_ref=100.0, n_medium=2, R_aigu=8.0,
+                       C_aigu=6.8e-6, n_aigu=2):
+    """Chiffre, a f_ref, ce que la branche aigu change a |Z| du bloc medium.
+
+    Rend un dict : |Z| du bloc SEUL, |Z| avec les pavillons ET leur condensateur,
+    |Z| avec les pavillons SANS condensateur, et les deux ecarts relatifs. C'est
+    le nombre qui dit a l'etudiant si la question du condensateur est CRITIQUE ou
+    SECONDAIRE -- et il vaut mieux le calculer avant la seance que le decouvrir
+    dessus. Aucune mesure n'entre ici : c'est un modele sur des ordres de
+    grandeur etiquetes.
+    """
+    f = np.array([float(f_ref)])
+    z_seul = float(np.abs(Z_charge_passe_haut(f, theta_medium, n_medium,
+                                              R_aigu=None))[0])
+    z_avec = float(np.abs(Z_charge_passe_haut(f, theta_medium, n_medium, R_aigu,
+                                              C_aigu, n_aigu))[0])
+    z_sans = float(np.abs(Z_charge_passe_haut(f, theta_medium, n_medium, R_aigu,
+                                              None, n_aigu))[0])
+    z_branche = float(np.abs(
+        float(R_aigu) + (0.0 if C_aigu is None
+                         else 1.0 / (2j * np.pi * float(f_ref) * float(C_aigu)))
+    )) / max(int(n_aigu), 1)
+    return dict(f_Hz=float(f_ref), module_bloc_seul=z_seul,
+                module_avec_condensateur=z_avec, module_sans_condensateur=z_sans,
+                ecart_avec_pct=100.0 * (z_avec / z_seul - 1.0),
+                ecart_sans_pct=100.0 * (z_sans / z_seul - 1.0),
+                module_branche_aigu=z_branche,
+                rapport_branche_sur_bloc=z_branche / z_seul,
+                Z_condensateur_ohm=(None if C_aigu is None
+                                    else 1.0 / (2 * np.pi * float(f_ref) * C_aigu)))
+
+
 def Z_depuis_jeu(f, jeu):
     """Z(f) a partir d'un dictionnaire de parametres (SUB_TYP, MED_TYP, ...).
 
@@ -478,7 +594,206 @@ def compensation_rlc(Re, Res, fs, Qms):
 
 
 # =====================================================================
-# 4. GRILLES DE FREQUENCES (§ 02.6)
+# 4. CAISSE BASS-REFLEX : GEOMETRIE DES EVENTS ET CHAMP PROCHE
+# =====================================================================
+# Cette section est la seule du module qui parle d'ACOUSTIQUE et non
+# d'impedance electrique. Elle existe parce que le constat du 2026-09-16 --
+# le sub est en bass-reflex, avec DEUX events -- ouvre une PREDICTION
+# FALSIFIABLE : la geometrie de la caisse donne f_b par le resonateur de
+# Helmholtz, l'ajustement de Z(f) donne f_b par le probleme inverse, et rien
+# n'oblige les deux a tomber ensemble. Confronter deux chemins independants
+# vers le meme nombre vaut mieux que mesurer deux fois par le meme chemin :
+# c'est ce qui distingue une verification d'une repetition.
+
+def frequence_accord_helmholtz(volume_caisse_L, n_events, diametre_event_mm,
+                               longueur_event_mm, k_correction=K_BOUT_DEFAUT, c=C_SON,
+                               detail=False):
+    """f_b PREDITE par la geometrie : resonateur de Helmholtz a N events (§ 01.10).
+
+    PHYSIQUE. La caisse close est un RESSORT d'air (raideur de compression du
+    volume V) et la colonne d'air des events une MASSE (elle est poussee en bloc,
+    sans etre comprimee, tant que la longueur d'onde est tres grande devant les
+    dimensions). Ressort + masse = oscillateur, et sa frequence propre est
+
+        f_b = (c / 2 pi) racine( S_tot / (V L_eff) )
+
+    avec S_tot = N pi d^2/4 l'aire TOTALE des events et L_eff leur longueur
+    EFFECTIVE. La demonstration tient en deux lignes : la masse acoustique d'un
+    conduit est M_a = rho0 L_eff / S_tot, la compliance du volume est
+    C_a = V/(rho0 c^2), et f_b = 1/(2 pi racine(M_a C_a)) donne l'expression
+    ci-dessus -- rho0 disparait, ce qui explique qu'une caisse ne se desaccorde
+    pas en changeant d'altitude autant qu'on le croit.
+
+    N events IDENTIQUES : leurs masses acoustiques sont en PARALLELE (le meme
+    ecart de pression les traverse), donc la masse totale est divisee par N.
+    C'est pour cela que N entre au numerateur via S_tot et non ailleurs :
+    doubler le nombre d'events monte f_b d'un facteur racine(2), pas de 2.
+
+    CORRECTION DE BOUT, ET LA CONVENTION RETENUE. Un tube court "entraine" de
+    l'air au-dela de ses deux extremites : la masse en mouvement est plus grande
+    que rho0 L/S, donc L_eff > L. On ecrit
+
+        L_eff = L + k a        avec a = d/2 le RAYON de l'event
+
+    et le coefficient k est la SOMME des deux corrections d'extremite, chacune
+    valant k_a a selon ce que cette extremite-la voit :
+      * extremite LIBRE (unflanged), tube debouchant dans un volume : 0,6133 a
+        (Levine & Schwinger 1948, limite basse frequence exacte) ;
+      * extremite BRIDEE (flanged), affleurant un grand plan : 0,8216 a
+        (Rayleigh), ou 0,8488 a = 8/(3 pi) dans l'approximation du piston bafle.
+    CONVENTION PAR DEFAUT ICI, et elle fait foi dans tout le projet
+    (REFERENCE-TECHNIQUE.md § 01.10 bis) : k = 1,463, c'est-a-dire une extremite
+    BRIDEE dehors (l'event affleure le baffle) et une extremite LIBRE dedans (il
+    debouche dans le volume). C'est la configuration ordinaire d'un event de
+    caisse, et 1,463 est aussi la constante de la formule de longueur d'event de
+    toute la litterature haut-parleur (Small 1973 ; Dickason), ce qui rend nos
+    chiffres comparables aux siens.
+
+    CE QUE CETTE INCERTITUDE DE CONVENTION COUTE, ET POURQUOI ON LA DIT. Les
+    extremites reelles ne sont ni parfaitement bridees ni parfaitement libres :
+    un event peut deboucher pres d'une paroi ou de son voisin, ce qui le bride
+    en pratique. On transporte donc l'encadrement COMPLET k dans [1,227 ; 1,698]
+    (deux bouts libres -> deux bouts brides), soit quelques pour cent sur f_b :
+    la prediction geometrique n'est PAS a la virgule pres, et l'annoncer comme
+    telle serait malhonnete. detail=True rend cet encadrement en meme temps que
+    la valeur : c'est ce couple, et non un nombre seul, qui se compare au f_b
+    ajuste sur Z(f).
+
+    LIMITES A CONNAITRE AVANT DE CRIER AU DESACCORD (toutes vont dans le meme
+    sens : f_b reel plus BAS que predit) : le volume occupe par le haut-parleur,
+    par les events eux-memes et par l'eventuel absorbant reduit V utile ; deux
+    events voisins se "voient" et leur correction de bout mutuelle augmente
+    L_eff ; l'absorbant rend la compression partiellement isotherme. Un ecart de
+    5 a 10 % entre geometrie et ajustement est donc ATTENDU et ne disqualifie ni
+    l'un ni l'autre. Un ecart de 30 % denonce une erreur de mesure ou de saisie.
+
+    Arguments : volume de la caisse en LITRES, nombre d'events, diametre et
+    longueur d'UN event en MILLIMETRES (unites du metre-ruban, pas du SI --
+    c'est la fonction qui convertit, pas l'etudiant a 23 h). Rend f_b en Hz, ou
+    un dict si detail=True.
+    """
+    V = float(volume_caisse_L) * 1e-3                    # litres -> m3
+    d = float(diametre_event_mm) * 1e-3                  # mm -> m
+    L = float(longueur_event_mm) * 1e-3
+    N = int(n_events)
+    if V <= 0 or d <= 0 or L < 0 or N < 1:
+        raise ValueError('frequence_accord_helmholtz : volume, diametre et nombre '
+                         "d'events doivent etre > 0 et la longueur >= 0")
+    S_un = np.pi * d**2 / 4.0
+    S_tot = N * S_un
+    L_eff = L + float(k_correction) * d / 2.0
+    fb = float(c) / (2 * np.pi) * np.sqrt(S_tot / (V * L_eff))
+    if not detail:
+        return float(fb)
+
+    def _fb(k):
+        return float(c) / (2 * np.pi) * np.sqrt(S_tot / (V * (L + k * d / 2.0)))
+
+    encadrement = sorted((_fb(K_BOUT_MIN), _fb(K_BOUT_MAX)))
+    return dict(fb_Hz=float(fb), S_event_m2=float(S_un), S_totale_m2=float(S_tot),
+                L_effective_m=float(L_eff), L_physique_m=float(L),
+                correction_de_bout_m=float(k_correction) * d / 2.0,
+                k_correction=float(k_correction), n_events=N,
+                volume_m3=float(V),
+                fb_encadrement_Hz=(float(encadrement[0]), float(encadrement[1])),
+                convention=('L_eff = L + k a, a = d/2 ; k = 0,6133 par extremite '
+                            'LIBRE, 0,8216 a 0,8488 par extremite BRIDEE ; defaut '
+                            'k = 1,463 = une bridee (dehors) + une libre (dedans), '
+                            'convention du projet ; encadrement transporte '
+                            '[1,227 ; 1,698] = deux libres a deux bridees'),
+                avertissement=('PREDICTION geometrique, pas une mesure. V utile, '
+                               'interaction entre events voisins et absorbant '
+                               'abaissent f_b : 5 a 10 % d ecart avec le f_b '
+                               'ajuste sur Z(f) est attendu.'))
+
+
+def somme_champ_proche_bassreflex(p_membrane, p_events, Sd_m2, S_event_m2,
+                                  n_events=1):
+    """Pression totale d'un bass-reflex reconstituee en CHAMP PROCHE (Keele, 1974).
+
+    POURQUOI ON NE PEUT PAS MESURER AUTREMENT A 100 Hz (§ 02.10). A 100 Hz la
+    longueur d'onde vaut 3,4 m : dans une piece ordinaire les modes propres
+    imposent des ecarts de plus de 10 dB selon l'endroit du micro, et le
+    fenetrage temporel -- le remede habituel -- est inoperant, puisqu'isoler le
+    direct demanderait une fenetre plus courte qu'une periode. Le champ proche
+    contourne l'obstacle : a quelques millimetres de la membrane, le direct
+    ecrase le reverbere de 30 a 40 dB, et la mesure redevient celle du
+    haut-parleur et non celle de la piece.
+
+    MAIS un bass-reflex a DEUX sources : la membrane et le(s) event(s). En
+    dessous de f_b elles sont en OPPOSITION de phase (c'est meme la definition de
+    l'accord : l'event prend le relais et la membrane se bloque), donc mesurer la
+    seule membrane rend une courbe qui n'existe nulle part. Il faut sommer -- et
+    surtout, sommer avec la BONNE ponderation.
+
+    LA PONDERATION, ET SA DEMONSTRATION (c'est le coeur de la methode). En champ
+    proche, sur l'axe d'un piston de rayon a, la pression vaut
+    p_pp = 2 rho0 c u sin(k a / 2) ~ rho0 omega u a a basse frequence, alors que
+    le champ lointain ne depend que du DEBIT U = S u :
+    p_loin = rho0 omega U / (2 pi r). En eliminant u entre les deux :
+
+        U  proportionnel a  p_pp x a          (a = rayon de la source)
+
+    donc le debit total est proportionnel a (p_D a_D + somme_i p_i a_i) et la
+    reponse du systeme se reconstruit, ramenee a l'echelle de la membrane, par
+
+        p_total = p_membrane + somme_i racine(S_i / S_d) x p_i
+
+    puisque a_i/a_D = racine(S_i/S_d). LA PONDERATION EST DONC EN RACINE DES
+    AIRES, c'est-a-dire en RAYONS -- pas en aires. C'est l'erreur classique : un
+    event de 100 mm devant une membrane de S_d = 0,1190 m2 (diametre equivalent
+    389 mm -- le S_d employe par l'auto-test) pese 0,2569 et non 0,0660, soit
+    11,8 dB d'ecart sur sa contribution. Le calcul ci-dessus, fait une fois, evite
+    de la commettre a 23 h la veille du depot.
+
+    DEUX POINTS DE MANIP QUI RENDENT LA SOMME FAUSSE S'ILS SONT RATES :
+      * il faut sommer des COMPLEXES (module ET phase), avec la MEME reference de
+        temps pour toutes les acquisitions -- typiquement la meme boucle de
+        mesure sans toucher au routage. Sommer des modules donne une courbe
+        toujours trop haute autour de f_b, precisement la ou tout se joue ;
+      * meme micro, meme gain, meme distance a la source, et le micro au CENTRE
+        de la membrane / dans le plan de la bouche de l'event.
+
+    ARGUMENTS. p_membrane : pression complexe relevee au centre de la membrane
+    (tableau, une valeur par frequence). p_events : soit UN tableau (un seul
+    event releve ; on suppose alors les N events identiques et en phase, d'ou le
+    facteur n_events), soit une sequence de N tableaux (chaque event releve, ce
+    qui est preferable -- deux events ne debitent pas forcement pareil). Sd_m2 :
+    aire EFFECTIVE de la membrane (celle de la datasheet, S_d ; pas pi d^2/4 sur
+    le diametre exterieur du saladier). S_event_m2 : aire geometrique d'un event,
+    ou une sequence si les events different.
+
+    Rend la pression complexe totale, a l'echelle du champ proche de la membrane.
+    Ce n'est PAS un niveau absolu : c'est une reponse en frequence relative, la
+    seule chose dont l'acte 4 ait besoin pour juger une somme a +-1 dB.
+    """
+    p_D = np.asarray(p_membrane, dtype=complex)
+    Sd = float(Sd_m2)
+    if Sd <= 0:
+        raise ValueError('somme_champ_proche_bassreflex : S_d doit etre > 0')
+
+    liste_p = ([np.asarray(p, dtype=complex) for p in p_events]
+               if isinstance(p_events, (list, tuple))
+               else [np.asarray(p_events, dtype=complex)] * max(int(n_events), 1))
+    aires = (list(S_event_m2) if isinstance(S_event_m2, (list, tuple, np.ndarray))
+             else [float(S_event_m2)] * len(liste_p))
+    if len(aires) != len(liste_p):
+        raise ValueError('somme_champ_proche_bassreflex : %d event(s) mais %d aire(s)'
+                         % (len(liste_p), len(aires)))
+
+    total = p_D.astype(complex).copy()
+    for p_i, S_i in zip(liste_p, aires):
+        if float(S_i) <= 0:
+            raise ValueError('somme_champ_proche_bassreflex : aire d event <= 0')
+        if p_i.shape != p_D.shape:
+            raise ValueError('somme_champ_proche_bassreflex : les tableaux de '
+                             'pression doivent avoir la meme taille que la membrane')
+        total = total + np.sqrt(float(S_i) / Sd) * p_i
+    return total
+
+
+# =====================================================================
+# 5. GRILLES DE FREQUENCES (§ 02.6)
 # =====================================================================
 
 def _grille_geometrique(f1, f2, n_par_octave):
@@ -531,7 +846,7 @@ def _unifier(f, tol_relative=1e-9):
 
 
 # =====================================================================
-# 5. LECTURE D'UNE COURBE |Z| : pic, creux, diagnostic de caisse
+# 6. LECTURE D'UNE COURBE |Z| : pic, creux, diagnostic de caisse
 # =====================================================================
 
 def _module(Z):
@@ -681,7 +996,7 @@ def diagnostic_caisse(f, Z, lissage=3, bande=(10.0, 100.0), bavard=True):
 
 
 # =====================================================================
-# 6. JEUX DE PARAMETRES TYPIQUES -- ORDRES DE GRANDEUR, PAS DES MESURES
+# 7. JEUX DE PARAMETRES TYPIQUES -- ORDRES DE GRANDEUR, PAS DES MESURES
 # =====================================================================
 
 _AVERT = ("ORDRE DE GRANDEUR TYPIQUE -- AUCUNE MESURE DE L'ENCEINTE DE THOMAS. "
@@ -715,9 +1030,14 @@ _fc, _Qmc, _Qec, _ = caisse_close(SUB_TYP['fs'], SUB_TYP['Qms'],
 SUB_TYP_CLOS = dict(SUB_TYP, nom='18 pouces en caisse close alpha = 1 (V_b = V_as)',
                     fs=_fc, Qms=_Qmc, Qes_datasheet=_Qec)
 
-# Le meme 18 pouces en BASS-REFLEX : alpha, f_b et Q_l sont ici de PURES
-# illustrations (§ 01.10 : V_b = 250 L -> alpha ~ 0,88 ; accord f_b = 35 Hz ;
-# pertes de caisse Q_l = 7, valeur realiste qui abaisse nettement les deux pics).
+# Le meme 18 pouces en BASS-REFLEX, variante ACCORD BAS / GROSSE CAISSE : alpha,
+# f_b et Q_l sont ici de PURES illustrations (§ 01.10). alpha = V_as/V_b, et on
+# ecrit les DEUX volumes pour que l'incoherence ne puisse pas se reformer :
+# V_as = 207 L (datasheet B&C 18PS76, § 01.13) et V_b = 230 L -> alpha = 0,9 ;
+# accord f_b = 35 Hz ; pertes de caisse Q_l = 7, valeur realiste qui abaisse
+# nettement les deux pics. C'est le cas de COMPARAISON (le pic haut reste a
+# 60 Hz, loin du raccord) ; le cas du projet est io_mesures.SUB_TYPIQUE_BR,
+# caisse PETITE devant V_as (alpha = 3), ou le pic haut remonte vers 86 Hz.
 SUB_TYP_BR = dict(SUB_TYP, modele='bassreflex',
                   nom='18 pouces en bass-reflex (illustration, § 01.10)',
                   alpha=0.9, fb=35.0, Ql=7.0)
@@ -766,7 +1086,7 @@ JEU_MECANIQUE_01_5 = {
 
 
 # =====================================================================
-# 7. AUTO-VERIFICATION (python analyse/modele_hp.py)
+# 8. AUTO-VERIFICATION (python analyse/modele_hp.py)
 # =====================================================================
 
 def _titre(t):
@@ -859,6 +1179,35 @@ def _autotest():
           % (np.round(e['f_pics'], 1), np.ptp(e['f_pics']) if e['f_pics'].size > 1 else 0))
     ok.append(('deux pics si les mediums sont desapparies', e['f_pics'].size == 2))
 
+    # ---- 3 bis. charge COMPOSITE du passe-haut : pavillons en parallele -------
+    _titre('3 bis. Les pavillons sont hors bande ACOUSTIQUE, pas hors charge ELECTRIQUE')
+    th_med = [MED_UNITAIRE_TYP[c] for c in ('Re', 'Le', 'Res', 'fs', 'Qms')]
+    print('  [[a verifier aupres de l etudiant]] : y a-t-il un condensateur en serie')
+    print('  avec les pavillons ? Le calcul ci-dessous chiffre ce que la reponse change.')
+    print('  %-12s %12s %12s %12s' % ('condensateur', '|Z| branche', '|Z| bloc', 'ecart'))
+    for etiquette, C in (('aucun', None), ('3,3 uF', 3.3e-6), ('6,8 uF', 6.8e-6),
+                         ('10 uF', 10e-6)):
+        ea = effet_branche_aigu(th_med, f_ref=100.0, R_aigu=8.0, C_aigu=C, n_aigu=2)
+        z = ea['module_sans_condensateur'] if C is None else ea['module_avec_condensateur']
+        ecart = ea['ecart_sans_pct'] if C is None else ea['ecart_avec_pct']
+        print('  %-12s %9.1f ohm %9.2f ohm %+11.1f %%'
+              % (etiquette, ea['module_branche_aigu'], z, ecart))
+    ea0 = effet_branche_aigu(th_med, f_ref=100.0, R_aigu=8.0, C_aigu=6.8e-6, n_aigu=2)
+    print('  bloc medium SEUL a 100 Hz : %.2f ohm' % ea0['module_bloc_seul'])
+    print('  lecture : SANS condensateur la charge tombe a %.1f ohm -- sous le minimum'
+          % ea0['module_sans_condensateur'])
+    print('  de 4 ohm du t.amp E-800 -- et les pavillons prennent du 100 Hz a pleine')
+    print('  puissance. AVEC 6,8 uF l effet reste de %+.0f %% : notable, pas anodin.'
+          % ea0['ecart_avec_pct'])
+    ok.append(('branche aigu SANS condensateur : chute de plus de 50 % de |Z|',
+               ea0['ecart_sans_pct'] < -50.0))
+    ok.append(('branche aigu AVEC condensateur : effet non nul mais modere',
+               -40.0 < ea0['ecart_avec_pct'] < -1.0))
+    ok.append(('R_aigu=None redonne exactement le bloc seul',
+               abs(ea0['module_bloc_seul']
+                   / abs(complex(Z_serie_2hp(np.array([100.0]), th_med, th_med)[0]))
+                   - 1.0) < 1e-12))
+
     # ---- 4. bass-reflex : deux pics, un creux, et les deux identites ----------
     _titre('4. Bass-reflex : deux pics et un creux (§ 01.10)')
     b = SUB_TYP_BR
@@ -895,6 +1244,47 @@ def _autotest():
     print('  controle "event inerte" (fb -> 0) = caisse close de meme volume : '
           'ecart max %.1e ohm' % ecart)
     ok.append(('event inerte -> caisse close', ecart < 1e-6))
+
+    # ---- 4 bis. geometrie des events : la prediction falsifiable de f_b -------
+    _titre('4 bis. f_b predite par la geometrie (Helmholtz, 2 events) -- § 01.10')
+    print('  Geometrie ILLUSTRATIVE (la vraie est [[a mesurer]]) : V = 110 L,')
+    print('  2 events de 100 mm de diametre et 274 mm de long. Ces cotes ont ete')
+    print('  RESOLUES A L ENVERS pour donner f_b = 35 Hz : la concordance avec')
+    print('  SUB_TYPIQUE_BR ci-dessous est une verification de CODE, pas un resultat.')
+    g = frequence_accord_helmholtz(110.0, 2, 100.0, 274.0, detail=True)
+    print('  S_tot = %.4f m2 ; L_eff = L + k a = %.0f + %.0f = %.0f mm (k = %.2f)'
+          % (g['S_totale_m2'], 1e3 * g['L_physique_m'],
+             1e3 * g['correction_de_bout_m'], 1e3 * g['L_effective_m'],
+             g['k_correction']))
+    print('  f_b = %.2f Hz ; encadrement k = 1,227 a 1,698 : %.2f - %.2f Hz'
+          % (g['fb_Hz'], g['fb_encadrement_Hz'][0], g['fb_encadrement_Hz'][1]))
+    un = frequence_accord_helmholtz(110.0, 1, 100.0, 274.0)
+    print('  un SEUL event de meme geometrie : %.2f Hz -- le rapport vaut racine(2) '
+          '= %.4f' % (un, g['fb_Hz'] / un))
+    ok.append(('doubler le nombre d events monte f_b de racine(2)',
+               abs(g['fb_Hz'] / un / np.sqrt(2.0) - 1.0) < 1e-12))
+    ok.append(('f_b geometrique coherent avec l accord illustratif de SUB_TYP_BR',
+               abs(g['fb_Hz'] / SUB_TYP_BR['fb'] - 1.0) < 0.05))
+
+    # ---- 4 ter. sommation en champ proche (Keele) ------------------------------
+    _titre('4 ter. Champ proche : membrane + events, ponderes par les RAYONS (§ 02.10)')
+    Sd, Sev = 0.1190, np.pi * 0.100**2 / 4.0
+    poids = np.sqrt(Sev / Sd)
+    print('  S_d = %.4f m2 (datasheet), S_event = %.5f m2 -> poids racine(S/S_d) = %.4f'
+          % (Sd, Sev, poids))
+    print('  l erreur classique serait de ponderer par les AIRES : %.4f, soit %.1f dB'
+          ' de moins' % (Sev / Sd, 20 * np.log10(poids / (Sev / Sd))))
+    # controle : deux sources en opposition exacte s'annulent au poids pres
+    p_m = np.array([1.0 + 0j, 1.0 + 0j])
+    p_e = np.array([-1.0 + 0j, -1.0 + 0j]) / poids / 2.0
+    tot = somme_champ_proche_bassreflex(p_m, p_e, Sd, Sev, n_events=2)
+    print('  controle : 2 events en opposition exacte, ponderes -> somme = %s'
+          % np.round(np.abs(tot), 12))
+    ok.append(('sommation de Keele : annulation exacte en opposition',
+               float(np.max(np.abs(tot))) < 1e-12))
+    tot1 = somme_champ_proche_bassreflex(p_m, np.zeros_like(p_m), Sd, Sev, n_events=2)
+    ok.append(('events muets -> la somme redonne la membrane',
+               float(np.max(np.abs(tot1 - p_m))) < 1e-15))
 
     # ---- 5. diagnostic clos / bass-reflex -------------------------------------
     _titre('5. Diagnostic de caisse AVANT ajustement (§ 03.7, § 03.4 test D)')

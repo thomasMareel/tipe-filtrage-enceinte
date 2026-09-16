@@ -51,9 +51,9 @@ même l'intérêt du format, à condition d'écrire pourquoi dans le champ `moti
 | D5 | Bande et pondérations de la fonction de coût | Le design optimisé lui-même | Phase 3 | `[[ouvert]]` |
 | D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | `[[ouvert]]` |
 | D7 | Gabarit 4/3 des figures et des slides | Toutes les figures des phases 2 à 4 | 1ʳᵉ figure | `[[ouvert]]` |
-| D8 | Type de caisse du sub (**constat**) | Le modèle à ajuster en phase 2, la sécurité au niveau fort | Phase 1 | `[[ouvert]]` |
+| D8 | Type de caisse du sub (**constat**) | Le modèle à ajuster en phase 2, la sécurité au niveau fort, la sommation acoustique | Phase 1 | **RÉPONDUE le 16/09/2026 — bass-reflex, deux évents** |
 | D9 | Filière et positionnements thématiques | Le binôme d'examinateurs | Étape 1 SCEI | `[[ouvert]]` |
-| D10 | Professeur encadrant | **La note elle-même** | Rentrée sept. 2026 | `[[ouvert]]` |
+| D10 | Professeur encadrant | **La note elle-même** | Rentrée sept. 2026 | **M. Chevalier, 16/09/2026** |
 
 ---
 
@@ -287,10 +287,17 @@ lectures extrapolées à $t = 0$ ; l'écart fait partie du résultat.
   un « 100 V » est presque toujours du continu ; la tenue en alternatif
   permanent est typiquement 60 à 65 V eff). **Les « 100 V » de la v1 sont
   insuffisants.**
-- **Bass-reflex** (voir D8) : au niveau fort, **aucun contenu sous l'accord** —
-  `Start` REW $\ge 2f_B$. Sous $f_B$ la membrane n'est plus chargée et le
-  débattement explose ; un 18″ est typiquement accordé vers 30–40 Hz.
-  Vérification visuelle du débattement avant chaque balayage fort.
+- **Borne basse de balayage — la caisse EST bass-reflex** (D8, constat du
+  16/09/2026, deux évents) : au niveau fort, **aucun contenu sous l'accord** —
+  `Start` REW $\ge 2f_b$, **sans exception**, avec le $f_b$ **mesuré** au creux
+  d'impédance en phase 1 et non un chiffre de catalogue (un 18″ est typiquement
+  accordé vers 30–40 Hz, mais ce n'est pas une mesure). Sous $f_b$ la membrane
+  n'est plus chargée par les évents et l'excursion devient maximale : c'est le
+  seul geste du projet qui puisse **détruire mécaniquement** le haut-parleur.
+  Corollaire : l'exploration sous $f_b$, **nécessaire** en phase 1 pour relever
+  le premier pic d'impédance, se fait **au niveau faible uniquement**.
+  Vérification visuelle du débattement avant chaque balayage fort, et avant
+  chaque balayage descendant sous $f_b$ quel que soit le niveau.
 - **Oreilles** : bouchons obligatoires **y compris au niveau faible** (112 dB
   SPL en champ proche dès 0,5 W), personne dans l'axe pendant les balayages
   forts, pas de tête à moins de 1 m du 18″.
@@ -444,7 +451,33 @@ J(\mathbf{x}) = w_s\,\mathrm{RMS}_{dB}(S, S^c) + w_v\,\big[\mathrm{RMS}_{dB}(H_{
 $$
 
 Il faut geler : la **bande** d'évaluation, la **grille**, l'**hypothèse
-implicite de pondération**, et les **cinq pondérations**.
+implicite de pondération**, les **cinq pondérations** — et, depuis la relecture
+du 16/09/2026, le **montage de référence de la contrainte d'amplificateur**.
+
+### Option E — le montage de référence pour la contrainte $\min\lvert Z_{in}\rvert \ge 4\ \Omega$
+
+`analyse/optim.py` sait lire cette contrainte de **trois** façons, et le choix
+n'était pas gelé (`montage=` dans le code, marqué `[[à trancher en phase 3]]`) :
+
+| Lecture | Ce qu'elle regarde | Catalogue | Design candidat |
+|---|---|---|---|
+| `grave` **(retenue par défaut)** | la cellule passe-bas seule, en bi-amplification | **3,29 Ω** | **5,27 Ω** |
+| `voie` | le plus petit des deux minimums de voie | 3,29 Ω | 5,27 Ω |
+| `parallele` | les **deux cellules sur un seul ampli** — le cas d'un filtre passif ordinaire | **1,77 Ω** | **3,48 Ω** |
+
+**Pourquoi il fallait le geler.** Tant que le montage n'était pas fixé, rien
+n'empêchait d'enfoncer le filtre catalogue avec le chiffre parallèle (1,77 Ω) et
+de déclarer le design candidat conforme avec le chiffre voie par voie (5,27 Ω).
+C'est exactement la **comparaison à deux étalons** que ce projet s'interdit : la
+même règle doit s'appliquer aux deux designs, ou la conclusion ne vaut rien.
+
+**Décision proposée** : geler le montage **voie par voie** (bi-amplification),
+parce que c'est le montage dans lequel la référence active est évaluée et parce
+que le E-800 a deux canaux. **Et dire, dans le même souffle** : dans le montage
+parallèle — qui est le montage physique d'un filtre passif sur un seul ampli —
+**aucun des deux designs ne satisfait la contrainte** (1,77 et 3,48 Ω). Ce n'est
+pas un détail à taire, c'est une **limite ouverte du design candidat**, et elle
+se dit à l'oral. `[[à geler : Thomas tranche, et la date est consignée ici]]`
 
 ### Option A — la bande
 
@@ -675,9 +708,15 @@ la matière première du DOT et le seul document papier réellement admis.
 
 ---
 
-## D8 — Type de caisse du sub : **un constat, pas un choix**
+## D8 — Type de caisse du sub : **un constat, pas un choix** — **RÉPONDUE le 16/09/2026**
 
-### Énoncé
+> **CONSTAT — 16/09/2026, par Thomas : la caisse du sub est BASS-REFLEX, avec
+> DEUX ÉVENTS.** Le point est tranché ; la phase 2 peut être dimensionnée. Ce
+> qui suit reste écrit parce que c'est le raisonnement qui rendait ce constat
+> bloquant, et parce que la colonne « Bass-reflex » du tableau ci-dessous est
+> désormais **la situation réelle du projet**, pas une hypothèse parmi deux.
+
+### Énoncé (tel qu'il était posé avant le constat)
 
 **Ce n'est pas une décision de conception : c'est une observation à faire.**
 Ouvrir, regarder si l'enceinte a un **évent**, et l'écrire. Trente secondes.
@@ -690,7 +729,7 @@ Tant que ce n'est pas fait, la phase 2 ne peut pas démarrer.
 | Allure de $\lvert Z\rvert$ | **un** pic | **deux** pics $f_L < f_b < f_H$, et un **creux à $f \approx f_b$** où $\lvert Z\rvert$ retombe près de $R_e$ |
 | Paramètres libres du fit (phase 2) | **5** | **8** (9 si l'on sépare les pertes de caisse) |
 | Ce que voit le filtre sur 40–250 Hz | un pic | le **second** pic $f_H$, plus le creux : la charge est **encore moins « 8 Ω »** qu'en clos |
-| Sécurité au niveau fort | seuil usuel | **aucun contenu sous l'accord** : `Start` REW $\ge 2f_B$, sous $f_B$ la membrane n'est plus chargée et le débattement explose |
+| Sécurité au niveau fort | seuil usuel | **aucun contenu sous l'accord** : `Start` REW $\ge 2f_b$, sous $f_b$ la membrane n'est plus chargée et le débattement explose |
 
 **Le danger précis, et c'est pour cela que le constat passe avant tout le
 reste** : un modèle à 5 paramètres ajusté sur des données bass-reflex
@@ -715,13 +754,74 @@ ce seuil.
 
 | Point | Réponse |
 |---|---|
-| Le sub a-t-il un évent ? | `[[oui / non]]` |
-| Si oui : nombre, diamètre, longueur de l'évent | `[[à mesurer]]` |
+| Le sub a-t-il un évent ? | **OUI — bass-reflex** (constaté le 16/09/2026) |
+| Si oui : nombre d'évents | **DEUX** (constaté le 16/09/2026) |
+| Diamètre et longueur de chaque évent | `[[à mesurer]]` |
 | Volume interne estimé $V_b$ | `[[à mesurer]]` |
+| Fréquence d'accord $f_b$ | `[[à mesurer]]` — lue au **creux** de $\lvert Z\rvert$ entre les deux pics (phase 1) |
+| Aires à relever pour la sommation de Keele : $S_d$ (membrane) et $S_p$ (un évent) | `[[à mesurer — mètre ruban]]` |
 | Câblage exact des deux médiums (série confirmée ?) | `[[à vérifier]]` |
+| **2 pavillons d'ultra-aigu en parallèle des médiums** | **CONSTATÉ le 16/09/2026** — hors périmètre *acoustique*, mais **dans la charge électrique** du passe-haut |
+| Condensateur en série avec les pavillons ? Si oui, valeur | `[[à vérifier auprès de Thomas]]` — ne pas supposer |
 | Écart entre le centre du 18″ et celui du bloc médiums (pour $\tau$, D5) | `[[à mesurer — mètre ruban]]` |
 | Modèle du micro de mesure et de la carte son ; SPL max du micro | `[[à documenter]]` |
 | Sensibilités des deux voies (dB/W/m) | `[[à mesurer en phase 1]]` |
+
+### Ce que le constat déclenche (quatre conséquences, toutes actées)
+
+1. **Modèle de la phase 2 : 7-8 paramètres, pas 5.** Le modèle bass-reflex
+   (`analyse/modele_hp.py` : `Z_bassreflex`, `Z_bassreflex8`,
+   `Z_bassreflex_semi`) devient le modèle du projet ; le modèle à 5 paramètres
+   n'est plus qu'un **contre-exemple pédagogique** — ajusté sur des données
+   bass-reflex il converge en silence sur des paramètres faux, ce qui est une
+   excellente planche d'oral. Le garde-fou
+   `analyse/io_mesures.py::diagnostiquer_caisse()` détecte les deux pics et le
+   refuse avec un avertissement explicite. **Ce code existait déjà** : il avait
+   été écrit précisément parce que le type de caisse n'était pas connu. Ce n'est
+   pas une reprise, c'est une hypothèse qui se lève.
+2. **Grille de mesure de la phase 1** : elle doit résoudre **deux pics ET le
+   creux** intermédiaire — 1/24 d'octave au minimum sur 10–200 Hz, resserré à
+   1/48 autour de chaque accident. Descendre **sous 20 Hz** pour voir le premier
+   pic, mais **au niveau faible uniquement** (voir point 3).
+3. **Sécurité** : au **niveau fort**, borne basse de balayage **$\ge 2f_b$**,
+   $f_b$ étant celui **mesuré**, pas un chiffre de catalogue. Sous l'accord, la
+   membrane n'est plus chargée par les évents, l'excursion devient maximale et le
+   18″ peut être détruit mécaniquement. Contrôle visuel du débattement avant
+   chaque balayage fort. C'est le seul geste irréversible du projet.
+4. **Sommation acoustique en champ proche (phase 4)** : trois relevés — la
+   membrane **et chacun des deux évents** — sommés en pression complexe avec
+   pondération par $\sqrt{S_i/S_d}$ (méthode de Keele). Un relevé unique au
+   centre du cône, valable en caisse close, **sous-estimerait le grave** ici.
+   Compter ~45 min de manip par configuration, à inscrire au planning.
+
+**Ordres de grandeur modélisés, à étiqueter comme tels** (calcul du 16/09/2026
+avec le code du dépôt, sur un jeu de paramètres *plausible* pour un 18″ de sono —
+$R_e$ 5,4 Ω, $f_s$ 40 Hz, $Q_{ms}$ 6,1, $f_b$ 35 Hz, $Q_l$ 7, et $\alpha$ 3,
+c'est-à-dire $V_{as} = 330$ L pour $V_b = 110$ L —
+**aucune mesure sur l'enceinte de Thomas**) : pics à **16,3 Hz (54 Ω)** et
+**85,9 Hz (64 Ω)**, creux à **34,2 Hz (6,1 Ω)**,
+$\lvert Z\rvert(100\ \mathrm{Hz}) = 22{,}4$ Ω à $-57{,}6°$.
+**Le second pic tombe en pleine zone de raccord** : à 100 Hz l'hypothèse
+« 8 Ω résistifs » est **encore plus fausse** qu'en caisse close, et l'argument
+central du TIPE en sort **renforcé**. *Ce qui met le pic haut là, c'est $\alpha$
+— donc le volume de caisse — et non l'accord $f_b$* : à $f_b$ fixé, $\alpha$ de
+0,5 à 6 promène $f_H$ de 55 à 111 Hz, tandis qu'à $\alpha$ fixé descendre $f_b$
+abaisse les deux pics ensemble. C'est donc **$\alpha$ qu'il faut mesurer** pour
+savoir si ce paragraphe décrit l'enceinte de Thomas `[[à mesurer]]`.
+Filtre catalogue 18 mH / 150 µF (DCR 1 Ω) **modélisé** : sur 8 Ω résistif,
+réponse plate et $\min\lvert Z_{in}\rvert = 8{,}52$ Ω ; sur une **seconde charge
+modélisée, en caisse close** (jeu de paramètres distinct — *pas* le même
+haut-parleur supposé clos), bosse de $+12{,}2$ dB et $2{,}49$ Ω ; sur la charge
+bass-reflex, bosse de $+12{,}6$ dB et $2{,}66$ Ω — **sous le minimum de 4 Ω du
+t.amp E-800** dans les deux cas de charge réelle, ce qui disqualifie le filtre
+catalogue avant même la comparaison de fidélité. *La « bosse » est ici le maximum
+de $\lvert H\rvert$ du passe-bas sur 10–1000 Hz rapporté à la perte d'insertion
+de 1,02 dB obtenue sur 8 Ω résistifs* — sans cette définition, le nombre serait
+invérifiable.
+
+**Ce que le constat ne change PAS** : la problématique, le récit en quatre
+actes, les critères, la chaîne de mesure, l'optimisation E12, les portes de
+validation. Aucune autre décision du registre n'est rouverte.
 
 ### Sur « du simple au sextuple »
 
@@ -734,7 +834,27 @@ $\lvert Z\rvert_{max}/R_e = 1 + Q_{ms}/Q_{es}$, ce qui donne 21,6 à 23,2 sur le
 **19,9** sur 40–250 Hz (§ 01.8). Tant que la phase 1 n'a pas mesuré, écrire
 partout « **varie fortement avec la fréquence** », sans chiffre.
 
-> **CONSTAT : [[à remplir]]** — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
+**Mise à jour du 16/09/2026 — ces deux chiffres sont ceux de la CAISSE CLOSE.**
+La formule $\lvert Z\rvert_{max} = R_e(1+Q_{ms}/Q_{es})$ vaut en champ libre et
+en caisse close ; **en bass-reflex la résonance se dédouble** et elle ne décrit
+aucun des deux pics — sur le modèle ci-dessus elle prédirait 105 Ω là où le
+calcul donne 54 et 64 Ω. De même, le rapport max/min de 19,9 est celui du § 01.8
+(caisse close) ; sur la charge bass-reflex modélisée il tombe à **11,6** sur
+40–250 Hz — et encore ce nombre dépend-il de la borne haute choisie, puisque son
+minimum tombe au bord de bande. On garde la borne « 60 à 200 Ω » comme
+**majorant** pour dimensionner $R_{ref}$ (l'erreur est conservative au banc), et
+on continue d'écrire « varie fortement avec la fréquence » dans les documents.
+
+> **CONSTAT : la caisse du sub est BASS-REFLEX, à DEUX ÉVENTS.**
+> — date : `16/09/2026` — constaté et communiqué par : **Thomas Mareel**
+> — conséquences actées : modèle à **7-8 paramètres** en phase 2 (le 5
+> paramètres devient un contre-exemple) ; grille de phase 1 résolvant **deux
+> pics et le creux** ; **borne basse $\ge 2f_b$ au niveau fort**, descente sous
+> $f_b$ au niveau faible seulement ; **sommation champ proche membrane + deux
+> évents pondérée par les aires (Keele)** en phase 4.
+> — reste `[[à mesurer]]` : diamètre et longueur des évents, volume interne
+> $V_b$, $f_b$ (creux d'impédance) ; reste `[[à vérifier]]` : condensateur
+> éventuel en série avec les pavillons d'ultra-aigu.
 
 ---
 
@@ -797,9 +917,23 @@ soit **200 à 400** mots.
 
 ---
 
-## D10 — Professeur encadrant
+## D10 — Professeur encadrant — **RÉPONDUE le 16/09/2026**
 
-### Énoncé
+> **DÉCISION : M. Chevalier**, accord obtenu — date : `16/09/2026` — rapportée
+> par Thomas.
+>
+> **Ce qui reste à faire, et qui n'est pas acquis pour autant :**
+>
+> 1. Vérifier qu'il dispose d'un compte sur `lycees.scei-concours.fr`
+>    `[[à vérifier]]`. Sans ce compte, il ne peut pas valider à l'étape 3.
+> 2. Relever son **prénom (ou initiale) et sa discipline**, tels qu'ils devront
+>    être saisis au formulaire de mi-janvier `[[à compléter]]`.
+> 3. **L'avertir dès maintenant** de la fenêtre de validation de **8 jours** à la
+>    mi-juin 2027 : c'est le moment où un encadrant en vacances, en jury ou
+>    simplement non prévenu coûte la note. Le lui rappeler à la saisie de janvier,
+>    puis à l'ouverture de la fenêtre.
+
+### Énoncé (tel qu'il était posé avant la désignation)
 
 Désigner un enseignant encadrant, obtenir son **accord explicite**, et vérifier
 qu'il dispose d'un compte sur `lycees.scei-concours.fr`.
@@ -821,7 +955,7 @@ v2 du dépôt** hors `archive-v1/`. Échéance fixée par la feuille de route :
 
 | # | Action | État |
 |---|---|---|
-| 1 | Identifier un enseignant encadrant et obtenir son **accord explicite** | `[[à faire]]` |
+| 1 | Identifier un enseignant encadrant et obtenir son **accord explicite** | **FAIT — M. Chevalier, 16/09/2026** |
 | 2 | Vérifier qu'il dispose d'un compte sur `lycees.scei-concours.fr` | `[[à faire]]` |
 | 3 | Noter son nom pour la saisie de l'étape 1 (mi-janvier 2027) | `[[à faire]]` |
 | 4 | Lui rappeler la fenêtre de validation de l'étape 3 (~mi-juin 2027, 8 jours) | `[[à faire]]` |
@@ -865,11 +999,17 @@ source est une **interprétation prudente**, pas une exigence.
       fil demandé (le 25 €/kg n'est **pas** une source).
 - [ ] **D7** — Gabarit 1024 × 768 acté ; `figsize`/`dpi` matplotlib figés dans le
       squelette `analyse/` **avant** la première figure.
-- [ ] **D8** — Type de caisse **constaté** (évent : oui/non) ; le modèle de la
-      phase 2 est dimensionné en conséquence (5 ou 8 paramètres).
+- [x] **D8** — Type de caisse **constaté le 16/09/2026 : bass-reflex, deux
+      évents**. Le modèle de la phase 2 est dimensionné en conséquence :
+      **7-8 paramètres**. Restent attachés à ce constat, et à faire avant la
+      phase 2 : dimensions des évents et $V_b$ `[[à mesurer]]`, $f_b$ lu au
+      creux `[[à mesurer]]`, condensateur éventuel des pavillons
+      `[[à vérifier]]`, borne basse $\ge 2f_b$ au niveau fort inscrite au
+      protocole, sommation de Keele (membrane + deux évents) inscrite au
+      planning de la phase 4.
 - [ ] **D9** — Filière déclarée ; positionnements et titre arrêtés sur le récit
       prévu.
-- [ ] **D10** — Encadrant désigné, accord explicite obtenu, compte
+- [x] **D10** — Encadrant désigné (**M. Chevalier**, 16/09/2026), accord explicite obtenu ; reste à vérifier son compte
       `lycees.scei-concours.fr` vérifié.
 - [ ] Porte de la **phase 1** connue et acceptée : la résistance étalon est
       retrouvée à ±3 % et le condensateur suit $1/\omega C$ sur deux décades,

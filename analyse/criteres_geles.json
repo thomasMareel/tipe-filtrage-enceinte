@@ -72,7 +72,7 @@
     "n_parametres_fit": "[[a geler]]"
   },
   "tests_non_regression": {
-    "_lisez_moi": "Les huit familles de tests du § 09.6, avec leur critere chiffre. GELES en meme temps que la fonction de cout et lus par analyse/tests/contexte.py : les assertions tirent leurs seuils d ICI, pas de litteraux ecrits dans les tests. C est ce qui rend verifiable l affirmation << les criteres ont ete geles avant les mesures >> : sans ce fichier, une relecture ne peut confronter un test qu a lui-meme. Toute modification doit etre inscrite dans journal_des_modifications ci-dessous, datee et motivee -- et dite a l oral.",
+    "_lisez_moi": "Les familles de tests du § 09.6, avec leur critere chiffre. GELES en meme temps que la fonction de cout et lus par analyse/tests/contexte.py : les assertions tirent leurs seuils d ICI, pas de litteraux ecrits dans les tests. C est ce qui rend verifiable l affirmation << les criteres ont ete geles avant les mesures >> : sans ce fichier, une relecture ne peut confronter un test qu a lui-meme. Toute modification doit etre inscrite dans journal_des_modifications ci-dessous, datee et motivee -- et dite a l oral.",
     "date_gel": "2026-09-14",
     "commit_gel": "[[a renseigner au commit qui fige cette section]]",
     "reference": "REFERENCE-TECHNIQUE.md § 09.6",
@@ -158,6 +158,74 @@
       "_quoi": "Aucune couleur #rrggbb residuelle dans les SVG produits (hors repli var(--x, #hex)) ; injection HTML sans marqueur restant.",
       "hexadecimaux_residuels_max": 0,
       "marqueurs_restants_apres_injection": 0
+    },
+    "i_bassreflex": {
+      "_quoi": "(i) VOIE BASS-REFLEX, ajoutee le 2026-09-16 apres le constat de l etudiant (le sub est en bass-reflex a DEUX events). Quatre choses : le modele a 8 parametres retrouve une Z(f) bass-reflex synthetique ; le garde-fou refuse le modele a 5 parametres sur la meme courbe ; f_b predit par la geometrie (Helmholtz) et f_b ajuste sur Z(f) sont deux chemins independants vers le meme nombre ; la sommation de Keele en champ proche est ponderee par les RAYONS (racine des aires) et non par les aires.",
+      "ajustement_8_parametres": {
+        "_aide": "Z(f) engendree par Z_bassreflex8 puis bruitee a 2 % et 1 deg, reidentifiee depuis une initialisation LUE SUR LA COURBE.",
+        "ecart_parametre_max_pct": 5.0,
+        "ecart_sigma_max": 4.0,
+        "chi2_reduit_min": 0.5,
+        "chi2_reduit_max": 2.0,
+        "modeles_acceptes": [
+          "bassreflex8",
+          "bassreflex"
+        ],
+        "motif_du_5_pct": "Huit parametres au lieu de cinq sur une courbe bruitee a 2 % : la tolerance du test (a) (3 %) serait tenue en pratique mais au ras de la fluctuation. 5 % est la meme exigence rapportee au nombre de parametres ; le critere qui fait foi reste celui en ecarts-types."
+      },
+      "garde_fou": {
+        "_aide": "Sur la meme courbe, le modele a 5 parametres doit etre REFUSE : UserWarning en mode normal, CaisseIncompatible en mode strict.",
+        "n_pics_min": 2,
+        "n_parametres_conseilles_min": 7
+      },
+      "helmholtz": {
+        "_aide": "Prediction FALSIFIABLE de f_b par la geometrie : V = 110 L, 2 events de 100 mm de diametre et 274 mm de long, convention de bout k = 1,463 (une extremite bridee dehors, une libre dedans). Geometrie ILLUSTRATIVE et RESOLUE A L ENVERS pour accorder a 35 Hz : sur ce jeu de test la concordance geometrie / ajustement est une verification de CODE, pas un resultat. La vraie geometrie est [[a mesurer]]. V = 110 L est aussi le volume qui donne alpha = 3 avec V_as = 330 L (io_mesures.SUB_TYPIQUE_BR).",
+        "volume_L": 110.0,
+        "n_events": 2,
+        "diametre_event_mm": 100.0,
+        "longueur_event_mm": 274.0,
+        "fb_Hz": 35.01,
+        "fb_delta_Hz": 0.05,
+        "rapport_deux_events_sur_un": 1.4142135623730951,
+        "rapport_delta": 1e-12,
+        "ecart_max_geometrie_vs_ajustement_pct": 5.0
+      },
+      "champ_proche_keele": {
+        "_aide": "Sommation champ proche membrane + N events. La ponderation est racine(S_event/S_d), c est-a-dire le RAPPORT DES RAYONS : ponderer par les aires est l erreur classique et coute 11,8 dB sur la contribution d un event de 100 mm devant une membrane de S_d = 0,119 m2.",
+        "Sd_m2": 0.119,
+        "diametre_event_mm": 100.0,
+        "poids_attendu": 0.25690435119641536,
+        "poids_delta": 1e-09,
+        "annulation_max": 1e-12
+      },
+      "charge_passe_haut": {
+        "_aide": "Les pavillons d ultra-aigu sont hors bande ACOUSTIQUE mais DANS la charge ELECTRIQUE du passe-haut. Effet sur |Z| du bloc medium a 100 Hz, sur les ordres de grandeur etiquetes MED_TYP et deux pavillons de 8 ohm. La presence du condensateur de protection est [[a verifier]].",
+        "f_Hz": 100.0,
+        "R_aigu_ohm": 8.0,
+        "n_aigu": 2,
+        "C_aigu_F": 6.8e-06,
+        "chute_min_sans_condensateur_pct": 50.0,
+        "effet_min_avec_condensateur_pct": 1.0,
+        "effet_max_avec_condensateur_pct": 40.0,
+        "Zin_minimal_ampli_ohm": 4.0
+      },
+      "budget_systematique": {
+        "_aide": "Une erreur d echelle sur R_ref multiplie toutes les |Z| : les NIVEAUX (R_e, L_e, R_es) en heritent, les POSITIONS (f_s, f_b), les FORMES (Q_ms, Q_l) et le rapport de volumes alpha en sont immunises. Vrai aussi en bass-reflex, parce que toute la branche event est proportionnelle a R_es -- ce que le test verifie par l identite d echelle, pas par decret.",
+        "herites": [
+          "Re",
+          "Le",
+          "Res"
+        ],
+        "immunises": [
+          "fs",
+          "Qms",
+          "alpha",
+          "fb",
+          "Ql"
+        ],
+        "identite_echelle_max_ohm": 1e-09,
+        "n_lignes_budget": 8
+      }
     }
   },
   "journal_des_modifications": [
@@ -172,6 +240,12 @@
       "objet": "Amendement du critere (a3) : 20/20 tirages sous 3 % -> au plus 4 tirages sur 20 au-dessus de 3 %, le seuil de 3 % etant TENU.",
       "motif": "Mesure sur la graine gelee : mediane 0,87 %, maximum 3,13 %, DEUX tirages sur vingt au-dessus de 3 %. Ce n est pas un bug mais de la statistique -- 20 tirages x 5 parametres = 100 estimations bruitees a 2 % et 1 deg, la queue de distribution est attendue. La version precedente du test elargissait le SEUIL a 4 %, ce qui revenait a deplacer la reference apres avoir vu le resultat -- exactement le glissement que le projet se defend de faire ailleurs. L amendement borne desormais le NOMBRE de tirages au-dessus de 3 % au lieu d elargir le seuil : il dit la meme statistique sans reecrire la reference. La borne (4, soit le double de la mesure) est motivee dans tests_non_regression.a_ajustement.amendement_2026_09_14.motif_du_nombre_4.",
       "consequence": "Le seuil de 3 % est retabli et tenu ; le critere qui fait foi reste le troisieme, en ecarts-types (aucun parametre au-dela de 4 sigma). REFERENCE-TECHNIQUE.md § 09.6 est a amender dans le meme sens (hors perimetre de analyse/)."
+    },
+    {
+      "date": "2026-09-16",
+      "objet": "Ajout de la famille de tests (i) i_bassreflex.",
+      "motif": "L etudiant a constate que le sub est en caisse BASS-REFLEX avec DEUX events. Le code portait deja le modele a 7-8 parametres et le garde-fou -- ils avaient ete ecrits PRECISEMENT parce que le type de caisse n etait pas connu -- mais la suite de tests ne couvrait la voie bass-reflex que partiellement : l ajustement y etait initialise sur les valeurs VRAIES, ce qui ne prouve rien du chemin reel (initialisation lue sur la courbe, puis identifier(auto)). Trois fonctions nouvelles s ajoutent avec leur critere : la prediction de f_b par la geometrie (Helmholtz), la sommation en champ proche (Keele) et la charge composite du passe-haut (pavillons en parallele des mediums). AUCUN critere existant n est touche : c est un AJOUT, pas un amendement.",
+      "consequence": "Le fichier d exemple mesures/exemple_synthetique_sub.csv est desormais engendre en bass-reflex a deux events (il etait en caisse close), et la chaine complete s exerce donc sur le cas que la phase 1 rencontrera."
     }
   ]
 }

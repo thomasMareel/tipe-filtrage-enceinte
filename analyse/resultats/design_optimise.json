@@ -2,20 +2,20 @@
   "_lisez_moi": "Design optimise par enumeration exhaustive E12 sur la charge IDENTIFIEE. Regenerable par : python analyse/tout_refaire.py",
   "statut_donnees": "SYNTHETIQUES -- aucune mesure de l enceinte du projet",
   "provenance": {
-    "date": "2026-09-14T19:56:53",
+    "date": "2026-09-16T14:44:50",
     "python": "3.13.2",
     "numpy": "2.4.6",
     "scipy": "1.18.1",
     "moteur_disponible": "scipy",
     "graine": 20260914,
-    "commit_git": "d0aedbb9525e6a23d0f092b616032dde49942823",
+    "commit_git": "78ff097782b80259cae5e496c8f6fafbcc4e8b5b",
     "module": "analyse/ts_fit.py"
   },
   "entrees": {
     "parametres_ts_json": "parametres_ts.json",
-    "sha256_parametres_ts": "28ba9ec29d8bc7ee7d539ee5b1175cf4776fe079bdc233781235a3396cd8b730",
+    "sha256_parametres_ts": "0dac5bae97607f26fff39c3d31c3e76f1e36cfca83f03f9bae8ac6ed2e23e2ce",
     "criteres_geles_json": "criteres_geles.json",
-    "sha256_criteres": "16a1a8b85eb75eb862739d41a5bef2aa00af4fad1daa80b92e7360dc34b10b5b",
+    "sha256_criteres": "67a295e74ac4ab8367bf280a9f18c97609eb5b013dbab78fbf6a05af696be93b",
     "decisions_non_gelees": [
       "meta.date_gel",
       "meta.commit_gel",
@@ -132,39 +132,39 @@
     ]
   },
   "design_optimise": {
-    "hors_domaine": true,
-    "_statut": "DESIGN CANDIDAT -- HORS DOMAINE : C1 est sur la BORNE BASSE de la grille (10 uF) : l'optimum est contre la butee, donc hors domaine. Soit la grille est trop etroite, soit une contrainte manque -- pour C1 c'est la contrainte d'ORDRE 2 (10 uF, c'est l'absence de condensateur : la cellule grave degenere en premier ordre et le 18 pouces rayonne encore a -23 dB a 1 kHz, defaut invisible pour une bande de cout arretee a 250 Hz).",
-    "L1_H": 0.022000000000000002,
-    "C1_F": 1e-05,
+    "hors_domaine": false,
+    "_statut": "DESIGN CANDIDAT -- optimum interieur a la grille",
+    "L1_H": 0.018000000000000002,
+    "C1_F": 2.7000000000000002e-05,
     "C2_F": 0.00012,
     "L2_H": 0.01,
-    "lisible": "22 mH / 10 uF | 120 uF / 10 mH",
-    "J": 11.745475828413326,
+    "lisible": "18 mH / 27 uF | 120 uF / 10 mH",
+    "J": 12.609454708197573,
     "modele_de_self": "selfs de Brooks, fil 1,4 mm (D6 non gelee)",
-    "r1_ohm": 1.8462733772242492,
+    "r1_ohm": 1.6368387652753655,
     "r2_ohm": 1.150382850636159,
     "n_combinaisons": 331776,
-    "duree_s": 2.161545991897583,
+    "duree_s": 3.4513676166534424,
     "termes": {
-      "J": 11.745475828413326,
-      "somme_dB": 2.932921795729617,
-      "voies_dB": 7.686495449327358,
-      "phase_deg": 22.521171667126993,
+      "J": 12.609454708197571,
+      "somme_dB": 3.7449375623304015,
+      "voies_dB": 8.216375227207829,
+      "phase_deg": 12.962838373186834,
       "prix_EUR": 0.0,
       "pertes_W": 0.0,
       "penalite": 0.0,
       "zin_min": 5.26820296104464,
-      "voie_grave_dB": 3.2530485026313567,
+      "voie_grave_dB": 3.782928280511827,
       "voie_medium_dB": 4.433446946696002,
       "P_grave": 0.0,
       "P_medium": 0.0,
-      "zin_min_grave": 8.24032568672936,
+      "zin_min_grave": 7.083172126137169,
       "zin_min_medium": 5.26820296104464,
-      "V_C1_crete": 132.33886177715743,
+      "V_C1_crete": 140.26324417733838,
       "V_C2_crete": 170.15896860256703,
-      "I_C1_crete": 0.7521863313847252,
+      "I_C1_crete": 2.485633172830462,
       "I_C2_crete": 14.204681992859296,
-      "r1": 1.8462733772242492,
+      "r1": 1.6368387652753655,
       "r2": 1.150382850636159,
       "f": [
         40.0,
@@ -248,42 +248,42 @@
     "retenue": "selfs de Brooks, fil 1,4 mm (D6 non gelee)",
     "selfs_ideales": {
       "design": "22 mH / 10 uF | 82 uF / 15 mH",
-      "J_avec_selfs_ideales": 14.850294297873853,
-      "J_reevalue_avec_sa_vraie_dcr": 12.09809360424886
+      "J_avec_selfs_ideales": 14.482300658460144,
+      "J_reevalue_avec_sa_vraie_dcr": 13.364567347006377
     },
     "selfs_brooks": {
-      "design": "22 mH / 10 uF | 120 uF / 10 mH",
-      "J": 11.745475828413326
+      "design": "18 mH / 27 uF | 120 uF / 10 mH",
+      "J": 12.609454708197573
     }
   },
   "comparaison_cibles": {
     "butterworth": {
-      "design": "22 mH / 10 uF | 120 uF / 10 mH",
-      "L1_H": 0.022000000000000002,
-      "C1_F": 1e-05,
+      "design": "18 mH / 27 uF | 120 uF / 10 mH",
+      "L1_H": 0.018000000000000002,
+      "C1_F": 2.7000000000000002e-05,
       "C2_F": 0.00012,
       "L2_H": 0.01,
-      "J": 11.745475828413326,
-      "pole_Hz": 376.443447899971,
+      "J": 12.609454708197573,
+      "pole_Hz": 250.5672461585584,
       "retenue_pour_le_recit": true
     },
     "lr2": {
-      "design": "27 mH / 10 uF | 68 uF / 18 mH",
+      "design": "27 mH / 10 uF | 68 uF / 15 mH",
       "L1_H": 0.027000000000000003,
       "C1_F": 1e-05,
       "C2_F": 6.8e-05,
-      "L2_H": 0.018000000000000002,
-      "J": 14.938281759852913,
+      "L2_H": 0.015,
+      "J": 13.924532029330285,
       "pole_Hz": 343.9446559123063,
       "retenue_pour_le_recit": false
     },
     "plate": {
-      "design": "27 mH / 10 uF | 68 uF / 18 mH",
+      "design": "27 mH / 10 uF | 68 uF / 15 mH",
       "L1_H": 0.027000000000000003,
       "C1_F": 1e-05,
       "C2_F": 6.8e-05,
-      "L2_H": 0.018000000000000002,
-      "J": 14.938281759852915,
+      "L2_H": 0.015,
+      "J": 13.924532029330285,
       "pole_Hz": 343.9446559123063,
       "retenue_pour_le_recit": false
     }
@@ -294,25 +294,25 @@
     "C1_F": 0.00015,
     "C2_F": 0.00015,
     "L2_H": 0.018,
-    "J": 16.122101202466805,
+    "J": 14.94396644739819,
     "termes": {
-      "J": 16.122101202466805,
-      "somme_dB": 4.814679031347636,
-      "voies_dB": 9.970403691998666,
-      "phase_deg": 26.74036958241005,
+      "J": 14.94396644739819,
+      "somme_dB": 4.603235663928315,
+      "voies_dB": 9.603851119847134,
+      "phase_deg": 14.737593272454808,
       "prix_EUR": 0.0,
       "pertes_W": 0.0,
       "penalite": 0.0,
-      "zin_min": 3.1232604213980366,
-      "voie_grave_dB": 4.6240057392533505,
+      "zin_min": 3.288285526058228,
+      "voie_grave_dB": 4.257453167101818,
       "voie_medium_dB": 5.346397952745316,
       "P_grave": 0.0,
       "P_medium": 0.0,
-      "zin_min_grave": 3.1232604213980366,
+      "zin_min_grave": 3.288285526058228,
       "zin_min_medium": 3.530679599951679,
-      "V_C1_crete": 217.01897941613055,
+      "V_C1_crete": 228.59311840802252,
       "V_C2_crete": 256.3380938280888,
-      "I_C1_crete": 15.515121852133626,
+      "I_C1_crete": 19.4589195749448,
       "I_C2_crete": 21.19511148406188,
       "r1": 1.6368387652753655,
       "r2": 1.6368387652753655,
@@ -394,103 +394,101 @@
     }
   },
   "optimum_interieur": {
-    "ok": false,
-    "avertissements": [
-      "C1 est sur la BORNE BASSE de la grille (10 uF) : l'optimum est contre la butee, donc hors domaine. Soit la grille est trop etroite, soit une contrainte manque -- pour C1 c'est la contrainte d'ORDRE 2 (10 uF, c'est l'absence de condensateur : la cellule grave degenere en premier ordre et le 18 pouces rayonne encore a -23 dB a 1 kHz, defaut invisible pour une bande de cout arretee a 250 Hz)."
-    ]
+    "ok": true,
+    "avertissements": []
   },
   "plateau": {
-    "n_dans_plateau": 6,
+    "n_dans_plateau": 30,
     "seuil_pct": 1.0,
-    "ecart_2e_pct": 0.34415863542511804,
-    "verdict": "l'optimum est PLAT : 6 designs de la grille sont a moins de 1.0 % de J (le 2e meilleur n'est qu'a 0.34 %). Il faut donc parler d'une FAMILLE de designs equivalents et choisir dans cette famille sur la disponibilite, le prix ou la DCR mesuree -- pas sur la troisieme decimale de J.",
+    "ecart_2e_pct": 0.054293015765383146,
+    "verdict": "l'optimum est PLAT : 30 designs de la grille sont a moins de 1.0 % de J (le 2e meilleur n'est qu'a 0.05 %). Il faut donc parler d'une FAMILLE de designs equivalents et choisir dans cette famille sur la disponibilite, le prix ou la DCR mesuree -- pas sur la troisieme decimale de J.",
     "classement": [
       {
         "rang": 1,
-        "L1": 0.022000000000000002,
-        "C1": 1e-05,
+        "L1": 0.018000000000000002,
+        "C1": 2.7000000000000002e-05,
         "C2": 0.00012,
         "L2": 0.01,
-        "J": 11.745475828413326
+        "J": 12.609454708197573
       },
       {
         "rang": 2,
-        "L1": 0.022000000000000002,
-        "C1": 1e-05,
+        "L1": 0.018000000000000002,
+        "C1": 2.2000000000000003e-05,
         "C2": 0.00012,
-        "L2": 0.012,
-        "J": 11.78589889774858
+        "L2": 0.01,
+        "J": 12.616300761430224
       },
       {
         "rang": 3,
-        "L1": 0.022000000000000002,
-        "C1": 1e-05,
-        "C2": 0.0001,
-        "L2": 0.012,
-        "J": 11.789710794220628
+        "L1": 0.018000000000000002,
+        "C1": 3.3e-05,
+        "C2": 0.00012,
+        "L2": 0.01,
+        "J": 12.620842603839998
       },
       {
         "rang": 4,
         "L1": 0.022000000000000002,
-        "C1": 1.2e-05,
+        "C1": 1e-05,
         "C2": 0.00012,
         "L2": 0.01,
-        "J": 11.809723464828547
+        "J": 12.621163345880607
       },
       {
         "rang": 5,
         "L1": 0.022000000000000002,
         "C1": 1.2e-05,
         "C2": 0.00012,
-        "L2": 0.012,
-        "J": 11.823294872656014
+        "L2": 0.01,
+        "J": 12.62426640489781
       }
     ]
   },
   "contraintes": {
     "optimise": {
       "V_C_crete": {
-        "C1": 132.34808262401035,
+        "C1": 140.2769496952654,
         "C2": 170.19604507898592
       },
       "I_L_crete": {
-        "L1": 9.081312814625765,
+        "L1": 10.563531676860688,
         "L2": 19.18869962509242
       },
       "Zin_min": 5.2687094036204645,
       "ok": true,
-      "Zin_min_grave": 8.240344679566316,
+      "Zin_min_grave": 7.084103122386627,
       "Zin_min_medium": 5.2687094036204645,
-      "Zin_min_parallele": 4.328092195870097
+      "Zin_min_parallele": 3.4809893734867834
     },
     "catalogue": {
       "V_C_crete": {
-        "C1": 216.9853976890835,
+        "C1": 228.42541244716966,
         "C2": 256.22273617904835
       },
       "I_L_crete": {
-        "L1": 23.9560210261669,
+        "L1": 22.76509133361705,
         "L2": 23.696342047295808
       },
-      "Zin_min": 3.1237720009403653,
+      "Zin_min": 3.2871885571999986,
       "ok": false,
-      "Zin_min_grave": 3.1237720009403653,
+      "Zin_min_grave": 3.2871885571999986,
       "Zin_min_medium": 3.530843471999444,
-      "Zin_min_parallele": 2.2318671974010744
+      "Zin_min_parallele": 1.76670180043258
     }
   },
   "energie": {
     "_lisez_moi": "Satellite SOBRIETE (§ 06). w_W = 0 : ces watts n entrent PAS dans J, mais ils existent physiquement. La fraction est evaluee SPECTRALEMENT sur Z(f), pas lue sur 8 ohm resistifs.",
     "pertes_joule_W": {
-      "optimise": 1.826027607493304,
-      "catalogue": 4.257437332918241
+      "optimise": 1.9467058769339096,
+      "catalogue": 3.338605480605926
     },
     "fraction_de_P_ref": {
-      "optimise": 0.1826027607493304,
-      "catalogue": 0.4257437332918241
+      "optimise": 0.19467058769339096,
+      "catalogue": 0.3338605480605926
     },
-    "fraction_catalogue_8ohm": 0.18750986352815746,
-    "P_etoile_croisement_W": 2.190547384708513,
+    "fraction_catalogue_8ohm": 0.16985225187884465,
+    "P_etoile_croisement_W": 2.05475313317493,
     "hypotheses": "ORDRES DE GRANDEUR ETIQUETES -- AUCUNE MESURE. P_0, eta et le profil d usage sont les trois grandeurs qui tranchent (§ 06.8) et elles seront relevees au wattmetre en phase 4."
   },
   "netlists": {

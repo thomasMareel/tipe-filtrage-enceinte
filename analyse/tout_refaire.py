@@ -464,6 +464,25 @@ def etape_6_optimisation(jrn, criteres, fit, rapide):
         % res_fit['modele'])
     jrn('charge medium : %s' % MH.MED_TYP['nom'])
     jrn('                %s' % MH.MED_TYP['avertissement'])
+    # LES PAVILLONS SONT DANS LA CHARGE, MEME S'ILS NE RAYONNENT PAS A 100 Hz.
+    # Constat du 2026-09-16 : deux pavillons d'ultra-aigu sont cables EN PARALLELE
+    # du bloc medium. Hors perimetre ACOUSTIQUE (rien a 100 Hz), DANS le perimetre
+    # ELECTRIQUE (c'est ce que le passe-haut entraine). Le Zm ci-dessus les ignore
+    # encore -- il le faut bien, on ne sait pas s'il y a un condensateur en serie
+    # avec eux -- mais taire l'enjeu serait pire que le chiffrer : on le chiffre.
+    th_med = [MH.MED_UNITAIRE_TYP[c] for c in ('Re', 'Le', 'Res', 'fs', 'Qms')]
+    ea = MH.effet_branche_aigu(th_med, f_ref=100.0, R_aigu=8.0, C_aigu=6.8e-6,
+                               n_aigu=2)
+    jrn('                pavillons d ultra-aigu EN PARALLELE : hors bande acoustique,')
+    jrn('                mais DANS la charge electrique. Effet sur |Z| a 100 Hz')
+    jrn('                (modele, 2 pavillons de 8 ohm) : bloc seul %.2f ohm ;'
+        % ea['module_bloc_seul'])
+    jrn('                avec condensateur 6,8 uF %.2f ohm (%+.0f %%) ; SANS '
+        'condensateur' % (ea['module_avec_condensateur'], ea['ecart_avec_pct']))
+    jrn('                %.2f ohm (%+.0f %%), sous le minimum de 4 ohm du E-800.'
+        % (ea['module_sans_condensateur'], ea['ecart_sans_pct']))
+    jrn('                [[a verifier]] : y a-t-il ce condensateur ? La mesure de')
+    jrn('                phase 1 se fait pavillons CONNECTES dans les deux cas.')
     jrn('bande du critere : %.4g-%.4g Hz, %d points ; cible = %s (D2 non gelee)'
         % (f[0], f[-1], f.size, cible_nom))
     jrn('rapport max/min de |Z| du grave sur la bande : %.2f'
@@ -1000,7 +1019,9 @@ def etape_8_figures(jrn, fit, optimum, sans_figures):
     jrn('')
     if porteuses:
         jrn('HTML porteurs de marqueurs <!--FIG:...--> : %s' % ', '.join(porteuses))
-        jrn('  -> injection a activer ici quand la refonte v2 des diapositives sera faite.')
+        jrn('  -> refonte v2 FAITE (gabarit 4/3) et figures deja injectees dans ces')
+        jrn('     decks. On ne reinjecte PAS ici : l injection reecrit le HTML en place,')
+        jrn('     donc elle se lance a la main, sur un depot propre ou sur une copie.')
     else:
         jrn('aucun HTML du depot ne porte de marqueur <!--FIG:nom--> : injection dans')
         jrn('les presentations REPORTEE en phase 5 (refonte v2 des diapositives).')

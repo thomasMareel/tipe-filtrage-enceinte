@@ -16,10 +16,11 @@
 
 | Fichier | Statut |
 |---|---|
-| `exemple_synthetique_sub.csv` | **SYNTHÉTIQUE** — engendré par un modèle, aucune mesure. Sert à éprouver la chaîne avant la première séance. |
+| `exemple_synthetique_sub.csv` | **SYNTHÉTIQUE** — engendré par un modèle **bass-reflex à deux évents**, aucune mesure. Sert à éprouver la chaîne avant la première séance. |
 | `AAAA-MM-JJ_etalonnage_{R8,C100uF,C10uF,L18mH}.csv` | *[[à mesurer — phase 1]]* porte de validation sur composants connus (§ 02.8) |
 | `AAAA-MM-JJ_sub_caisse_Rref{100,10}.csv` | *[[à mesurer — phase 1]]* le relevé clé, et son recoupement avec l'autre étalon (§ 02.4) |
-| `AAAA-MM-JJ_mediums_serie.csv` | *[[à mesurer — phase 1]]* les deux médiums **tels qu'ils sont câblés**, jusqu'à 2 kHz |
+| `AAAA-MM-JJ_mediums_serie.csv` | *[[à mesurer — phase 1]]* les deux médiums **tels qu'ils sont câblés — pavillons d'ultra-aigu connectés**, jusqu'à 2 kHz |
+| `AAAA-MM-JJ_sub_events_champ_proche.csv` | *[[à mesurer — phase 4]]* pression en champ proche : membrane **et** chacun des deux évents (§ 3.2) |
 | `rew/`, `scope/` | *[[à créer]]* exports REW (`.txt`/`.zma`) et acquisitions brutes d'oscilloscope, sous le **même nom** que le CSV dépouillé correspondant |
 | `composants.csv` | *[[à créer — avant la phase 3]]* valeur nominale, valeur **mesurée**, incertitude, DCR mesurée, prix, date. Un condensateur ±20 % acheté à 150 µF en fait 163 : le design optimal se recalcule sur les valeurs mesurées. |
 
@@ -128,8 +129,64 @@ pics détectés**, fichier synthétique.
 
 Ajuster un modèle à 5 paramètres sur une courbe à deux pics **converge** et
 donne des valeurs **fausses, sans message d'erreur** : c'est exactement le genre
-de piège que le jury cherche. Le type de caisse du sub est la décision **D8**
-de `DECISIONS-PHASE-0.md` : un **constat** à faire en phase 1, pas un choix.
+de piège que le jury cherche.
+
+> **Le constat est fait (2026-09-16).** Le sub est en **bass-reflex, avec deux
+> évents** — l'étudiant l'a relevé sur l'enceinte. La décision **D8** de
+> `DECISIONS-PHASE-0.md` portait sur ce *constat* : il est répondu, le code
+> l'attendait. Ce que la mesure de phase 1 apportera n'est plus le *type* de
+> caisse mais ses trois **nombres** — α, f_b et Q_l — encore *[[à mesurer]]*.
+> Le diagnostic reste donc branché : il doit maintenant **confirmer** deux pics,
+> et signaler si, contre toute attente, il n'en voyait qu'un (évent obstrué,
+> bande de balayage trop étroite, ou fuite qui noie le creux).
+
+### 3.2 Ce que le bass-reflex ajoute au protocole
+
+Trois choses, toutes à préparer **avant** la séance :
+
+1. **Descendre assez bas.** Le pic inférieur d'un bass-reflex tombe bien sous
+   f_b : sur le modèle illustratif il est à **16 Hz**. Une série qui commence à
+   20 Hz le manque, et l'ajustement à 8 paramètres n'a plus de quoi séparer α de
+   f_b. Consigne : **balayer depuis 10 Hz**, et densifier de f_b/3 à 3 f_b.
+2. **Mesurer la géométrie de la caisse** : volume intérieur, nombre d'évents
+   (2), diamètre et longueur de chacun. Elle donne une **prédiction indépendante
+   et falsifiable** de f_b par le résonateur de Helmholtz
+   (`modele_hp.frequence_accord_helmholtz`), à confronter au f_b *ajusté* sur
+   Z(f). Deux chemins vers le même nombre valent mieux que deux fois le même :
+   un écart de 5 à 10 % est **attendu** (volume utile, interaction entre évents
+   voisins, absorbant) ; un écart de 30 % dénonce une erreur.
+3. **En acoustique, la membrane ne suffit plus.** Un bass-reflex a deux sources
+   et, sous f_b, elles sont en **opposition de phase**. Le champ proche se
+   relève donc sur la membrane **et sur chaque évent**, en module *et en phase*,
+   et se recombine par la méthode de **Keele**
+   (`modele_hp.somme_champ_proche_bassreflex`) :
+
+   $$p_{\text{total}} = p_D + \sum_i \sqrt{S_i/S_d}\; p_i$$
+
+   La pondération est en **racine des aires**, c'est-à-dire en **rayons** — pas
+   en aires. Sur un évent de 100 mm devant une membrane de $S_d = 0{,}119$ m²,
+   l'erreur coûterait **11,8 dB** sur la contribution de l'évent.
+
+### 3.3 Le bloc médium se mesure **pavillons connectés**
+
+L'enceinte porte deux pavillons d'ultra-aigu **en parallèle des médiums**. Ils
+sont hors périmètre **acoustique** — ils ne rayonnent rien à 100 Hz — mais ils
+sont **dans la charge électrique** que voit le passe-haut. La question ouverte
+est : *y a-t-il un condensateur en série avec eux ?* **[[à vérifier]]**.
+
+| Câblage | \|Z\| du bloc à 100 Hz (modèle, `MED_TYP` + 2 × 8 Ω) | Conséquence |
+|---|---|---|
+| pavillons + condensateur 6,8 µF | 23,7 Ω au lieu de 29,3 Ω | **−19 %** : notable, pas anodin |
+| pavillons sans condensateur | 3,7 Ω | **−87 %**, sous le minimum de 4 Ω du E-800 ; et les pavillons prennent du 100 Hz à pleine puissance |
+
+*(chiffres produits par `modele_hp.effet_branche_aigu` — un **modèle** sur des
+ordres de grandeur étiquetés, pas une mesure)*
+
+**La conséquence pratique est la même dans les deux cas** : on relève le bloc
+médium **tel qu'il est câblé**, pavillons connectés, puisque c'est cela que le
+filtre voit. La réponse au *[[à vérifier]]* ne change pas le protocole ; elle
+change ce qu'on aura le droit d'en dire — et, dans le second cas, elle impose de
+**limiter le niveau** des balayages sous 500 Hz.
 
 ---
 
@@ -181,16 +238,44 @@ l'offset au passage.
 ## 5. Le fichier `exemple_synthetique_sub.csv`
 
 **DONNÉES SYNTHÉTIQUES — aucune mesure de l'enceinte du projet.** Il est
-engendré par `python analyse/io_mesures.py --exemple` à partir du modèle de
-Thiele-Small à 5 paramètres de `modele_hp`, avec des paramètres **typiques de
-datasheet** (§ 01.13) : Rₑ = 5,4 Ω, Lₑ = 1,9 mH, R_es = 100 Ω, f_s = 55 Hz,
-Q_ms = 6,1. Bruit gaussien de 1,4 % par voie, **graine fixée** (un tirage non
-reproductible n'est pas un résultat).
+engendré par `python analyse/io_mesures.py --exemple` à partir du modèle
+**bass-reflex à 8 paramètres** de `modele_hp` (`Z_bassreflex8`), avec des
+paramètres **typiques de datasheet** (§ 01.13) : Rₑ = 5,4 Ω, Lₑ = 1,9 mH,
+R_es = 100 Ω, f_s = **40 Hz** (résonance en **champ libre** : la caisse est dans
+le modèle), Q_ms = 6,1, α = 3, f_b = 35 Hz, Q_l = 7. Bruit gaussien de 1,4 % par
+voie, **graine fixée** (un tirage non reproductible n'est pas un résultat).
+
+**Il était en caisse close jusqu'au 2026-09-16**, faute de savoir. Le constat de
+l'étudiant l'a fait passer en bass-reflex à deux évents — sans quoi la commande
+gelée `python analyse/tout_refaire.py` n'exercerait **jamais** le garde-fou de
+caisse ni le modèle à 8 paramètres, c'est-à-dire la pièce la plus utile du code.
+
+La courbe qui en sort porte **deux pics** (16,3 Hz / 54 Ω et 85,9 Hz / 64 Ω)
+encadrant un **creux** à 34,2 Hz / 6,1 Ω, et \|Z\|(100 Hz) = 22,4 Ω. **Le second
+pic tombe en pleine zone de raccord** : c'est ce qui rend l'hypothèse « 8 Ω
+résistifs » du filtre catalogue encore plus fausse qu'en caisse close — et c'est
+l'argument central du TIPE, renforcé et non affaibli par ce constat.
+
+L'en-tête porte en plus, depuis la même date, la **géométrie de la caisse**
+(`geometrie_caisse`, *ILLUSTRATIVE [[à mesurer]]* : 110 L, 2 évents de 100 mm ×
+274 mm) et le **f_b prédit** par Helmholtz (`fb_predit_Helmholtz_Hz` = 35,01 Hz,
+convention de bout $k=1{,}463$). Les deux y sont pour être **confrontés** au f_b
+ajusté sur Z(f) — la prédiction falsifiable du § 3.2, pas une décoration. Le
+volume 110 L est celui qui donne $lpha=3$ avec $V_{as}=330$ L, c'est-à-dire
+exactement le jeu qui engendre la courbe : les deux constantes ne peuvent plus
+se contredire.
+
+**À dire sans détour** : ces cotes d'évent ont été **résolues à l'envers** pour
+donner $f_b=35$ Hz. Sur ce fichier de test, la concordance entre le $f_b$
+géométrique et le $f_b$ ajusté est donc une **vérification de code**, pas un
+résultat — le test falsifiable n'aura lieu que sur les cotes **mesurées** de la
+vraie caisse.
 
 Il sert à éprouver toute la chaîne — lecture, validation, ajustement,
 optimisation, figures — **avant** la première séance de banc. Aucun chiffre
 qui en sort n'est citable comme résultat, et `valider_mesure` le rappelle par
-un avertissement à chaque lecture.
+**deux** avertissements à chaque lecture : « fichier déclaré SYNTHÉTIQUE » et
+« 2 pics détectés […] la caisse se comporte en BASS-REFLEX ».
 
 ---
 
@@ -208,3 +293,12 @@ un avertissement à chaque lecture.
    (Le contrôle v1 « \|Z\| → R_e à 10 Hz » est **faux** : la branche
    motionnelle n'est pas éteinte une octave et demie sous la résonance.)
 7. Exporter les acquisitions brutes dans `scope/` **avant** de débrancher.
+8. **Bass-reflex (depuis le 2026-09-16)** : balayer **depuis 10 Hz** — le pic
+   inférieur est bien sous f_b — et relever **au mètre-ruban** le volume
+   intérieur de la caisse et les cotes des **deux** évents (diamètre, longueur).
+   Sans ces quatre nombres, la prédiction de f_b par Helmholtz n'existe pas, et
+   l'ajustement à 8 paramètres n'a plus rien à contredire.
+9. **Bloc médium** : le relever **pavillons connectés**, et noter s'il y a un
+   **condensateur en série** avec eux — valeur lue sur le corps, et *mesurée*
+   si l'accès le permet. Si ce condensateur n'existe pas, **limiter le niveau**
+   du balayage sous 500 Hz : les pavillons y prendraient toute la puissance.

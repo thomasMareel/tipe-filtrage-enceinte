@@ -26,6 +26,7 @@ python -m unittest discover -s analyse/tests -p "test_optimiseur.py" -v
 | `contexte.py` | *(pas un test)* amorce de `sys.path`, jeux synthétiques partagés, dossier jetable | — |
 | `test_entrees.py` | le fichier de mesure — la seule chose qui coûte une séance de banc | aller-retour CSV < 1·10⁻⁸ relatif ; colonnes dérivées recalculables ; fichier hors format refusé ; self pure +90,00°, condensateur pur −90,00° ; `lstsq` à ±0,5 % sur fenêtre non entière |
 | `test_ajustement.py` | le problème inverse, et le garde-fou de type de caisse | chaque paramètre < 3 % et < 3 σ ; χ² réduit dans [0,5 ; 2] ; SciPy ≡ repli à < 5·10⁻³ sur θ **et** sur σ ; 20 tirages : médiane < 2 %, **au plus 4 au-dessus de 3 %** (amendement daté, voir plus bas) et < 4 σ ; bass-reflex → `UserWarning` + `CaisseIncompatible` en mode strict |
+| `test_bassreflex.py` | **(i, 2026-09-16)** la voie bass-reflex de bout en bout : ajustement, garde-fou, f_b géométrique, champ proche, charge du passe-haut | 8 paramètres retrouvés à < 5 % **et** < 4 σ depuis une initialisation **lue sur la courbe** ; `identifier(modele='auto')` choisit seul `bassreflex8` ; 5 paramètres imposés → `CaisseIncompatible` ; f_b = 35,01 Hz par Helmholtz (V = 110 L, 2 évents 100 × 274 mm, $k=1{,}463$ — cotes résolues à l'envers, donc vérification de code) et racine(2) entre 1 et 2 évents ; pondération de Keele = 0,25690 = racine(S/S_d) ; branche aigu sans condensateur → −87 % sur \|Z\|, sous les 4 Ω du E-800 |
 | `test_filtre.py` | les repères fréquentiels et la définition unique de f_c | pôle 96,8586 Hz ; Q = 0,7303 ; −3 dB mi-puissance 99,93 / 93,88 Hz ; seuil littéral 99,82 / 93,99 Hz ; f₃PB·f₃PH = f₀² à 10⁻⁹ |
 | `test_optimiseur.py` | la porte de validation, en deux étages | continu : 18,006326 mH / 140,674424 µF et 25,464791 mH / 99,471839 µF à < 10⁻⁶ ; E12 : 18,0 mH / 150 µF (J = 0,9471) et 27,0 mH / 100 µF (Q = 0,4869) |
 | `test_series_e12.py` | l'exhaustivité de l'énumération | 331 776 = 24⁴ combinaisons, 576 couples/voie, grille strictement croissante, optimum hors bord, vectorisé ≡ boucle à < 10⁻⁹ |
@@ -50,16 +51,18 @@ python -m unittest discover -s analyse/tests -p "test_optimiseur.py" -v
 
 ## D'où viennent les seuils
 
-**Pas des tests eux-mêmes.** Depuis le 2026-09-14, les huit critères chiffrés du
+**Pas des tests eux-mêmes.** Depuis le 2026-09-14, les critères chiffrés du
 § 09.6 sont recopiés dans `analyse/criteres_geles.json`, section
-`tests_non_regression`, et `contexte.critere(famille, clé)` les y lit. Un critère qui
+`tests_non_regression` (neuf familles depuis le 2026-09-16), et `contexte.critere(famille, clé)` les y lit. Un critère qui
 ne vit que dans le test qu'il gouverne se confronte à **lui-même** : rien n'empêche
 alors de le retoucher après avoir vu un résultat, et l'affirmation « les critères ont
 été gelés avant les mesures » cesse d'être vérifiable. `contexte.critere` **lève** si
 une clé manque : on ne devine pas un critère, on le lit ou on échoue.
 
 Tout amendement est daté et motivé dans le `journal_des_modifications` du même
-fichier. Il y en a **un**, et il mérite d'être su parce qu'il est exactement le
+fichier. Il y en a **deux**. Le premier est un **ajout** (2026-09-16, famille (i)
+bass-reflex : aucun critère existant n'est touché) ; le second est un
+**amendement**, et il mérite d'être su parce qu'il est exactement le
 piège que le projet se défend de tendre :
 
 > **(a3), 2026-09-14.** La référence annonce « 20/20 tirages sous 3 % ». La mesure sur
@@ -78,4 +81,10 @@ piège que le projet se défend de tendre :
 - **`tout_refaire.py`** : code de retour 0/1 et arrêt au premier échec.
 - Les tests (e), (f) et (h′) du § 09.6 — étalonnage sur charge connue, recoupement
   des deux R_ref, accord avec l'outil Thiele-Small de REW — **attendent des
-  mesures réelles**. Ils ne peuvent pas être écrits avant la phase 1.
+  mesures réelles**. Ils ne peuvent pas être écrits avant la phase 1. *(La famille
+  ajoutée le 2026-09-16 porte la lettre **(i)** et non (e), justement pour ne pas
+  occuper la place réservée à l'étalonnage sur charge connue.)*
+- Du bass-reflex, ce qui **suppose des mesures** : la géométrie réelle de la caisse
+  (la prédiction de Helmholtz tourne aujourd'hui sur une géométrie *illustrative*),
+  le relevé en champ proche de la membrane et des deux évents, et la réponse au
+  `[[à vérifier]]` sur le condensateur des pavillons.

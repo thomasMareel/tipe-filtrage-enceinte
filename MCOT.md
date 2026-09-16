@@ -29,7 +29,9 @@ sur sa charge réelle.
 > du MCOT, mais c'est le seul point du cadre SCEI qui peut coûter la note
 > entière.
 
-[[à compléter : nom du professeur encadrant + accord obtenu le …]]
+**M. Chevalier** — accord obtenu (confirmé par Thomas le 16 septembre 2026).
+
+`[[à compléter : prénom ou initiale, et discipline, tels qu'ils doivent être saisis]]`
 
 - Vérifier qu'il dispose bien d'un compte sur **lycees.scei-concours.fr**.
 - **Étape 3 — validation par l'encadrant, ~mi-juin 2027, fenêtre de 8 jours
@@ -169,7 +171,11 @@ en matière ?
 > **Rubrique de travail** également : pas de champ « matériel » au SCEI. Ces
 > éléments alimentent l'exposé et, le cas échéant, les jalons du DOT.
 
-Enceinte deux voies DIY (sub 18″ 8 Ω + 2 médiums 4 Ω en série) · pré-ampli
+Enceinte deux voies DIY : sub 18″ 8 Ω **en caisse bass-reflex à deux évents**
++ 2 médiums 4 Ω câblés en série (= 8 Ω), **avec 2 pavillons d'ultra-aigu en
+parallèle des médiums** — hors bande **acoustiquement** au raccord de 100 Hz,
+mais **dans la charge électrique** que voit le passe-haut, donc mesurés avec le
+bloc médiums tel qu'il est câblé · pré-ampli
 JB Systems SMX SX-801 · ampli t.amp E-800 (2×350 W/8 Ω, deux canaux → référence
 active bi-amplifiée sans achat d'ampli) · GBF, oscilloscope, multimètre (lycée) ·
 carte son + micro de mesure · REW, LTspice, Python (numpy/scipy/matplotlib) ·
@@ -182,6 +188,35 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
      disponible, pas une intention. Un repli en numpy pur (équations normales ou
      Gauss-Newton écrit à la main) reste intéressant à montrer au jury comme
      preuve de compréhension de l'algorithme, jamais comme une contrainte subie. -->
+
+<!-- COMPOSITION DE L'ENCEINTE — information de l'étudiant du 2026-09-16, qui
+     fait foi (décision D8 de DECISIONS-PHASE-0.md, désormais répondue). Le sub
+     est en BASS-REFLEX À DEUX ÉVENTS ; l'enceinte porte en outre 2 pavillons
+     d'ultra-aigu CÂBLÉS EN PARALLÈLE DES MÉDIUMS. La rubrique Matériel
+     ci-dessus est corrigée en conséquence : elle n'a pas de limite de mots.
+     Ce que cela change ailleurs dans la fiche, et qu'il faut ARBITRER, pas
+     ajouter d'office (rubriques déjà au-dessus de leur plafond) :
+       - OBJECTIFS (≈ 126 mots pour 100 autorisés — DÉJÀ TROP LONG, NE PAS
+         ALLONGER). L'objectif 1 dit « l'impédance complexe Z(f) du subwoofer
+         (en caisse) » : c'est exact et suffisant, le mot « bass-reflex » n'y
+         est pas indispensable. L'objectif 2 dit « les paramètres du modèle de
+         Thiele-Small » sans en donner le nombre : c'est heureux, puisque le
+         compte passe de 5 (caisse close) à 7-8 (bass-reflex : accord f_b,
+         rapport de compliances alpha, pertes Q_l). Si Thomas veut nommer le
+         bass-reflex dans les Objectifs, il doit RENDRE les mots ailleurs —
+         candidats déjà identifiés plus haut : l'énumération des six critères
+         de l'objectif 4, et « avec incertitudes propagées » à l'objectif 2.
+       - ANCRAGE (≈ 98 mots pour 50 — DÉJÀ TROP LONG, NE PAS ALLONGER).
+       - PROBLÉMATIQUE (≈ 44 mots pour 50, sans marge) : elle parle d'« un
+         haut-parleur dont l'impédance varie fortement avec la fréquence »,
+         formulation qui reste vraie et même RENFORCÉE par le bass-reflex (deux
+         pics au lieu d'un, le second tombant près de la zone de raccord).
+         Ne rien y changer : le gain d'exactitude serait nul et le coût en mots
+         réel.
+       - BIBLIOGRAPHIE (≈ 124 mots sur 650 — il reste de la place) : c'est LA
+         rubrique où le bass-reflex se dit sans arbitrage, via Thiele 1971,
+         « Loudspeakers in Vented Boxes », qui traite précisément des caisses à
+         évent. Note ajoutée à la référence [2] ci-dessous. -->
 
 ## Bibliographie commentée (à compléter)
 
@@ -205,7 +240,11 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
   transfert, AOP. [[réf. exacte]]
 - [2] Thiele, A. N., « Loudspeakers in Vented Boxes », *JAES*, 1971 ; Small, R. H.,
   « Direct-Radiator Loudspeaker System Analysis », *JAES*, 1972 — le modèle
-  électroacoustique dont les paramètres sont identifiés en phase 2. [[à consulter]]
+  électroacoustique dont les paramètres sont identifiés en phase 2. Le titre de
+  Thiele n'est pas un hasard de bibliographie : le sub étudié est en **caisse
+  bass-reflex à deux évents**, c'est-à-dire exactement le *vented box* de 1971 —
+  d'où deux pics d'impédance au lieu d'un, et un modèle à identifier à 7-8
+  paramètres. [[à consulter]]
 - [3] Wheeler, H. A., « Simple Inductance Formulas for Radio Coils », *Proc. IRE*,
   1928 — formules géométrie ↔ inductance pour l'étude de la bobine. [[à consulter]]
 - [4] Dickason, V., *The Loudspeaker Design Cookbook* — filtres de répartition,
@@ -240,6 +279,14 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
 > mots, sans marge. Le « 650 mots » n'est **pas** la limite de la fiche entière
 > mais celle de la seule bibliographie ; le plafond global est de 900 mots.
 > Le MCOT décrit des objectifs et une démarche — ne pas y promettre de résultats.
+> **Mise à jour du 2026-09-16 (composition de l'enceinte)** : sub en **bass-reflex
+> à deux évents**, plus **2 pavillons d'ultra-aigu en parallèle des médiums**.
+> Seules les rubriques **sans limite de mots** ont été corrigées (Matériel, et une
+> précision à la référence [2], la bibliographie ayant plus de 500 mots de marge).
+> **Aucune rubrique plafonnée n'a été allongée** : Ancrage et Objectifs sont déjà
+> au-dessus de leur limite, la Problématique est sans marge — ce qu'il faudrait
+> éventuellement y dire, et ce qu'il faudrait rendre en échange, est consigné en
+> commentaire avant la bibliographie, **à arbitrer par Thomas**.
 > **Hors budget de mots, mais bloquant : le professeur encadrant n'est pas encore
 > désigné** (rubrique ajoutée en tête de ce fichier) — sans sa déclaration à
 > l'étape 1 ni sa validation à l'étape 3, la note peut être zéro.

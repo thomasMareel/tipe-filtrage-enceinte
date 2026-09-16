@@ -867,7 +867,8 @@ SCHEMA_CRITERES = {
     'D6_self': ('r_max_ohm', 'modele_dcr_prix'),
     'D7_figures': ('format', 'largeur_px', 'hauteur_px'),
     'D8_type_caisse': ('type', 'date_du_constat', 'n_parametres_fit'),
-    # Les huit familles de tests du § 09.6. Le § 09.6 impose qu'elles soient
+    # Les familles de tests du § 09.6 (huit a l'origine, neuf depuis le
+    # 2026-09-16 : voir i_bassreflex). Le § 09.6 impose qu'elles soient
     # RECOPIEES ici : sans cela les criteres chiffres ne vivent que dans les
     # docstrings des tests, et une relecture ne peut confronter un test qu'a
     # lui-meme (correction de relecture du 2026-09-14). Elles ne portent PAS de
@@ -875,7 +876,7 @@ SCHEMA_CRITERES = {
     'tests_non_regression': ('a_ajustement', 'b1_optimiseur_continu',
                              'b2_optimiseur_e12', 'b3_degenerescence',
                              'c_incertitudes', 'd_series_e12', 'g_entrees',
-                             'h_figures'),
+                             'h_figures', 'i_bassreflex'),
 }
 
 
@@ -988,14 +989,15 @@ def gabarit_criteres_geles():
             'date_du_constat': m,
             'n_parametres_fit': m,
         },
-        # Les huit familles de tests du § 09.6. CE NE SONT PAS DES DECISIONS DE
+        # Les familles de tests du § 09.6 (neuf depuis le 2026-09-16). CE NE SONT
+        # PAS DES DECISIONS DE
         # THOMAS : ce sont les criteres chiffres de la specification, a RECOPIER
         # depuis le § 09.6. Le gabarit ne peut pas les inventer -- il en pose la
         # structure et le dit. Le fichier reellement en service, lui, les porte
         # (correction de relecture du 2026-09-14).
         'tests_non_regression': {
             '_lisez_moi': (
-                'Criteres chiffres des huit familles de tests (§ 09.6), RECOPIES '
+                'Criteres chiffres des familles de tests (§ 09.6), RECOPIES '
                 'depuis REFERENCE-TECHNIQUE.md et lus par analyse/tests/contexte.py. '
                 'Un critere qui ne vit que dans le test qu il gouverne se confronte '
                 'a lui-meme : rien n empeche alors de le retoucher apres avoir vu un '
@@ -1012,6 +1014,10 @@ def gabarit_criteres_geles():
             'd_series_e12': {'_aide': '(d) exhaustivite E12', 'criteres': r},
             'g_entrees': {'_aide': '(g) CSV et depouillement', 'criteres': r},
             'h_figures': {'_aide': '(h) SVG et injection', 'criteres': r},
+            'i_bassreflex': {'_aide': '(i) voie bass-reflex : ajustement a 8 '
+                                      'parametres, garde-fou, f_b geometrique, '
+                                      'champ proche, charge du passe-haut',
+                             'criteres': r},
         },
         'journal_des_modifications': [],
     }
@@ -1140,10 +1146,51 @@ def _grille_locale(f1, f2, n_par_octave=12, densifier=None):
     return f
 
 
-#: parametres TYPIQUES d'un 18 pouces 8 ohm de sono en caisse close.
+#: parametres TYPIQUES d'un 18 pouces 8 ohm de sono en caisse CLOSE (5 parametres).
 #: ATTENTION : ordres de grandeur lus sur des datasheets publiques
-#: (§ 01.13), PAS une mesure du haut-parleur du projet.
+#: (§ 01.13), PAS une mesure du haut-parleur du projet. Ce jeu ne decrit plus le
+#: fichier d'exemple (passe en bass-reflex le 2026-09-16, voir SUB_TYPIQUE_BR) :
+#: il ne sert plus qu'a fabriquer une |Z| plausible pour l'auto-test du
+#: depouillement synchrone, ou seul l'ordre de grandeur compte.
 SUB_TYPIQUE = dict(Re=5.4, Le=1.9e-3, Res=100.0, fs=55.0, Qms=6.1)
+
+#: LE MEME 18 pouces, en caisse BASS-REFLEX A DEUX EVENTS -- c'est la
+#: configuration REELLE de l'enceinte du projet (constat de l'etudiant du
+#: 2026-09-16, decision D8). f_s redevient la resonance en CHAMP LIBRE (la caisse
+#: est dans le modele, via alpha), f_b est l'accord des events et Q_l le facteur
+#: de pertes de la caisse. Les valeurs restent des ORDRES DE GRANDEUR : seul le
+#: TYPE de caisse est un fait ; alpha, f_b et Q_l sont [[a mesurer]].
+#:
+#: Ce que ce jeu produit, et pourquoi il change l'argument du TIPE : deux pics
+#: (16,3 Hz / 54 ohm et 85,9 Hz / 64 ohm), un creux a 34,2 Hz / 6,1 ohm, et
+#: |Z|(100 Hz) = 22,4 ohm. LE SECOND PIC TOMBE EN PLEINE ZONE DE RACCORD :
+#: l'hypothese "8 ohm resistifs" du filtre catalogue y est encore plus fausse
+#: qu'en caisse close.
+#:
+#: alpha = V_as / V_b, et les DEUX volumes sont ecrits en clair pour qu'aucune
+#: incoherence ne puisse se reformer entre ce jeu et CAISSE_TYPIQUE_BR :
+#: V_as = 330 L (haut de la fourchette 207-331 L relevee sur datasheets, § 01.13)
+#: et V_b = 110 L -> alpha = 3,0, c'est-a-dire une caisse PETITE devant V_as,
+#: ce qui est le cas courant en sono et ce qui remonte le pic haut vers 86 Hz.
+#: Avec le couple oppose (grosse caisse, alpha ~ 0,9 : modele_hp.SUB_TYP_BR) le
+#: pic haut retombe a 60 Hz, loin du raccord -- l'argument "en pleine zone de
+#: raccord" est donc porte par alpha, et il faut le dire ainsi.
+SUB_TYPIQUE_BR = dict(Re=5.4, Le=1.9e-3, Res=100.0, fs=40.0, Qms=6.1,
+                      alpha=3.0, fb=35.0, Ql=7.0)
+
+#: Geometrie ILLUSTRATIVE de la caisse, COHERENTE avec SUB_TYPIQUE_BR : le meme
+#: V_b = 110 L que celui qui donne alpha = 3, et des cotes d'event RESOLUES A
+#: L'ENVERS pour donner f_b = 35,0 Hz par le resonateur de Helmholtz a deux
+#: events (modele_hp.frequence_accord_helmholtz, convention k = 1,463).
+#: Consequence a dire et a ne pas maquiller : sur CE jeu de test, la concordance
+#: entre le f_b geometrique et le f_b ajuste est une VERIFICATION DE CODE, pas
+#: un resultat -- le vrai test aura lieu sur les cotes mesurees. [[a mesurer]] :
+#: le volume net reel et les cotes reelles des deux events. La geometrie est
+#: recopiee dans l'en-tete du fichier d'exemple pour que la PREDICTION
+#: geometrique de f_b et le f_b AJUSTE sur Z(f) puissent etre confrontes -- deux
+#: chemins independants vers le meme nombre.
+CAISSE_TYPIQUE_BR = dict(volume_L=110.0, n_events=2, diametre_event_mm=100.0,
+                         longueur_event_mm=274.0)
 
 
 def generer_exemple_synthetique(chemin=None, parametres=None, R_ref=100.0,
@@ -1155,9 +1202,18 @@ def generer_exemple_synthetique(chemin=None, parametres=None, R_ref=100.0,
     validation, ajustement, figures) avant la premiere seance de banc. Son
     en-tete dit en toutes lettres qu'il est SYNTHETIQUE.
 
+    CAISSE BASS-REFLEX DEPUIS LE 2026-09-16. L'exemple etait engendre en caisse
+    CLOSE (5 parametres, un seul pic) tant que le type de caisse n'etait pas
+    connu. L'etudiant a constate que le sub est en BASS-REFLEX A DEUX EVENTS :
+    l'exemple l'est donc aussi, sans quoi la chaine serait eprouvee sur un cas
+    que la phase 1 ne rencontrera jamais -- et le garde-fou de caisse, qui est la
+    piece la plus utile du code, ne serait jamais exerce par la commande gelee.
+    Passer un dict a 5 cles dans `parametres` redonne l'ancien comportement.
+
     Simulation, deliberement simple et entierement tracable :
-      * Z(f) par le modele de Thiele-Small a 5 parametres, parametres TYPIQUES
-        (SUB_TYPIQUE) -- ordres de grandeur de datasheets, pas une mesure ;
+      * Z(f) par le modele BASS-REFLEX a 8 parametres (SUB_TYPIQUE_BR) si le jeu
+        porte 'fb', sinon par le Thiele-Small a 5 parametres -- ordres de
+        grandeur de datasheets, pas une mesure ;
       * protocole du § 02.5 : tension aux bornes du dipole maintenue a
         niveau_Vd a chaque point, d ou V_Rref = R_ref*V_dipole/|Z| ;
       * dt = phi/(360 f), donc phase positive pour une charge inductive ;
@@ -1166,20 +1222,39 @@ def generer_exemple_synthetique(chemin=None, parametres=None, R_ref=100.0,
         reproductible n est pas un resultat) ;
       * les colonnes derivees sont recalculees depuis les lectures BRUITEES :
         le fichier est donc coherent avec lui-meme au sens du test (g).
+
+    LA GRILLE SUIT LA PHYSIQUE, PAS L'INVERSE. En bass-reflex il y a DEUX pics et
+    un creux a placer, et ils sont ecartes : la zone densifiee au 1/24 d'octave
+    couvre donc f_b/3 a 3 f_b (soit ici 12 a 105 Hz) au lieu de f_s/2 a 2 f_s.
+    C'est la meme consigne de mesure qu'au § 02.6 -- resserrer la grille la ou
+    elle informe -- appliquee au bon endroit.
     """
     chemin = CHEMIN_EXEMPLE if chemin is None else chemin
-    p = dict(SUB_TYPIQUE if parametres is None else parametres)
+    p = dict(SUB_TYPIQUE_BR if parametres is None else parametres)
     rng = np.random.default_rng(graine)
+    bass_reflex = 'fb' in p
+    zone = ((p['fb']/3.0, 3.0*p['fb'], 24) if bass_reflex
+            else (p['fs']/2, 2*p['fs'], 24))
 
-    try:                                     # la reference, des qu elle existe
-        from modele_hp import Z_ts, grille_log
-        source_modele = 'modele_hp.Z_ts'
-        f = grille_log(10.0, 1000.0, 12, densifier=(p['fs']/2, 2*p['fs'], 24))
-    except Exception:                        # repli autonome, meme formule
-        Z_ts, source_modele = _z_ts_local, 'io_mesures._z_ts_local (repli)'
-        f = _grille_locale(10.0, 1000.0, 12, densifier=(p['fs']/2, 2*p['fs'], 24))
+    if bass_reflex:
+        # Pas de repli local pour le bass-reflex : le modele a huit parametres
+        # vit dans modele_hp, et le DUPLIQUER ici creerait deux formules qui
+        # divergeraient un jour en silence. Si modele_hp manque, on le dit.
+        from modele_hp import Z_bassreflex8, grille_log
+        source_modele = 'modele_hp.Z_bassreflex8'
+        f = grille_log(10.0, 1000.0, 12, densifier=zone)
+        modele_Z = Z_bassreflex8
+    else:
+        try:                                 # la reference, des qu elle existe
+            from modele_hp import Z_ts, grille_log
+            source_modele = 'modele_hp.Z_ts'
+            f = grille_log(10.0, 1000.0, 12, densifier=zone)
+        except Exception:                    # repli autonome, meme formule
+            Z_ts, source_modele = _z_ts_local, 'io_mesures._z_ts_local (repli)'
+            f = _grille_locale(10.0, 1000.0, 12, densifier=zone)
+        modele_Z = Z_ts
 
-    Z = Z_ts(f, **p)
+    Z = modele_Z(f, **p)
     module_vrai, phase_vraie = np.abs(Z), np.degrees(np.angle(Z))
 
     v_d = niveau_Vd*(1 + eps*rng.standard_normal(len(f)))
@@ -1199,8 +1274,9 @@ def generer_exemple_synthetique(chemin=None, parametres=None, R_ref=100.0,
     meta = {
         'version_format': VERSION_FORMAT,
         'date': '2026-09-13T00:00',
-        'dipole': 'SYNTHETIQUE -- 18 pouces 8 ohm en caisse close, parametres '
-                  'TYPIQUES de datasheet (§ 01.13), PAS le HP du projet',
+        'dipole': ('SYNTHETIQUE -- 18 pouces 8 ohm en caisse %s, parametres '
+                   'TYPIQUES de datasheet (§ 01.13), PAS le HP du projet'
+                   % ('BASS-REFLEX a 2 events' if bass_reflex else 'close')),
         'montage': 'C (GBF flottant, noeud milieu a la masse) -- simule',
         'R_ref_nominale_ohm': '%.6g' % R_ref,
         'R_ref_mesuree_ohm': '%.6g' % R_ref,
@@ -1215,19 +1291,44 @@ def generer_exemple_synthetique(chemin=None, parametres=None, R_ref=100.0,
         'statut_donnees': 'SYNTHETIQUES -- aucune mesure de l enceinte du projet',
         'parametres_du_modele': 'Re=%.6g ohm, Le=%.6g H, Res=%.6g ohm, fs=%.6g Hz, '
                                 'Qms=%.6g' % (p['Re'], p['Le'], p['Res'],
-                                              p['fs'], p['Qms']),
+                                              p['fs'], p['Qms'])
+                                + ('' if not bass_reflex else
+                                   ', alpha=%.6g, fb=%.6g Hz, Ql=%.6g'
+                                   % (p['alpha'], p['fb'], p['Ql'])),
         'bruit_simule': 'gaussien %.3g %% par voie sur les tensions, %.3g deg '
                         '(absolus) sur la phase' % (100*eps, u_phase),
         'graine': '%d' % graine,
     }
+    if bass_reflex:
+        g = CAISSE_TYPIQUE_BR
+        meta['type_caisse'] = 'bass-reflex, 2 events (constat de l etudiant, 2026-09-16)'
+        meta['geometrie_caisse'] = (
+            'ILLUSTRATIVE [[a mesurer]] : V = %.6g L, %d events de %.6g mm de '
+            'diametre et %.6g mm de long'
+            % (g['volume_L'], g['n_events'], g['diametre_event_mm'],
+               g['longueur_event_mm']))
+        try:                        # prediction geometrique, a confronter au fit
+            from modele_hp import frequence_accord_helmholtz
+            meta['fb_predit_Helmholtz_Hz'] = '%.6g' % frequence_accord_helmholtz(
+                g['volume_L'], g['n_events'], g['diametre_event_mm'],
+                g['longueur_event_mm'])
+        except Exception:
+            pass
     d = depouiller(d, meta, R_ref_ohm=R_ref, eps_relatif=eps,
                    u_phase_deg=u_phase, montage='C')
     commentaires = [
         'DONNEES SYNTHETIQUES -- aucune mesure de l enceinte du projet.',
-        'Engendrees par un modele de Thiele-Small a 5 parametres pour eprouver',
+        'Engendrees par un modele %s pour eprouver'
+        % ('BASS-REFLEX a 8 parametres (2 events)' if bass_reflex
+           else 'de Thiele-Small a 5 parametres'),
         'la chaine d analyse avant la premiere seance de banc. Ne jamais citer',
         'un chiffre issu de ce fichier comme un resultat de mesure.',
     ]
+    if bass_reflex:
+        commentaires += [
+            'Le TYPE de caisse est un fait (constat de l etudiant du 2026-09-16) ;',
+            'alpha, f_b et Q_l restent des ordres de grandeur [[a mesurer]].',
+        ]
     return ecrire_mesure(chemin, d, meta, commentaires=commentaires)
 
 
@@ -1264,11 +1365,24 @@ def _auto_test():
     e = depouiller(d, meta)
     rel_mod = float(np.max(np.abs(e['module_Z_ohm']/d['module_Z_ohm'] - 1)))
     abs_mod = float(np.max(np.abs(e['module_Z_ohm'] - d['module_Z_ohm'])))
-    rel_phi = float(np.max(np.abs(e['phase_deg']/d['phase_deg'] - 1)))
+    # La phase d'un bass-reflex PASSE PAR ZERO trois fois (aux deux pics et au
+    # creux) : un ecart RELATIF point par point y diverge sans qu'aucun chiffre
+    # ne soit faux. On rapporte donc l'ecart a la PLEINE ECHELLE de la phase,
+    # qui est la normalisation qui a un sens pour une grandeur signee.
+    rel_phi = (float(np.max(np.abs(e['phase_deg'] - d['phase_deg'])))
+               / max(float(np.max(np.abs(d['phase_deg']))), 1e-300))
     print('(2) colonnes derivees recalculees depuis le brut : %.1e en relatif '
-          'sur |Z| (%.1e ohm au pic), %.1e sur la phase'
+          'sur |Z| (%.1e ohm au pic), %.1e sur la phase (pleine echelle)'
           % (rel_mod, abs_mod, rel_phi))
-    ok &= rel_mod < 1e-8 and rel_phi < 1e-8
+    # BORNE DU FORMAT, PAS SEUIL AJUSTE. |Z| = R_ref V_d/V_R : trois nombres
+    # ecrits a 9 chiffres significatifs (FORMAT_NOMBRE), donc chacun connu a une
+    # demi-unite du dernier rang -- jusqu'a 5e-9 EN RELATIF quand la mantisse
+    # avoisine 1,0, ce qui est le pire cas et non le cas moyen. Les trois
+    # contributions s'ajoutent : 1,5e-8 au pire. Le seuil est donc 2e-8, et il
+    # decrit le FORMAT D'ECRITURE, pas la qualite du depouillement. (Il valait
+    # 1e-8 tant que l'exemple etait en caisse close : la serie d'alors n'allait
+    # pas chercher ce pire cas -- c'etait de la chance, pas une performance.)
+    ok &= rel_mod < 2e-8 and rel_phi < 2e-8
 
     # (3) validation du fichier sain
     erreurs, avertissements = valider_mesure(d, meta)
@@ -1357,8 +1471,20 @@ def _auto_test():
           % (diag['n_pics'], ', '.join('%.1f' % x for x in diag['f_pics']),
              diag['modele']))
     ok &= diag['n_pics'] == 2 and diag['modele'] == 'bassreflex_8_parametres'
-    diag_clos = diagnostiquer_caisse(d['f_Hz'], d['module_Z_ohm'])
+    # Le fichier d'exemple est engendre en BASS-REFLEX A DEUX EVENTS depuis le
+    # 2026-09-16 (constat de l'etudiant) : la meme fonction doit donc y compter
+    # deux pics. Tant qu'il etait en caisse close, ce controle verifiait qu'on ne
+    # criait pas au bass-reflex sans raison ; il verifie maintenant qu'on le
+    # detecte sur le cas que la phase 1 rencontrera. Le contre-exemple "une seule
+    # resonance -> 5 parametres" est tenu juste en dessous, sur une courbe
+    # fabriquee pour cela, afin que les deux verdicts restent testes.
+    diag_exemple = diagnostiquer_caisse(d['f_Hz'], d['module_Z_ohm'])
     print('    (meme fonction sur le fichier d exemple : %d pic -> %s)'
+          % (diag_exemple['n_pics'], diag_exemple['modele']))
+    ok &= diag_exemple['modele'] == 'bassreflex_8_parametres'
+    z_clos = np.abs(_z_ts_local(f, 5.4, 1.9e-3, 100., 55., 6.1))
+    diag_clos = diagnostiquer_caisse(f, z_clos)
+    print('    (contre-exemple, une seule resonance : %d pic -> %s)'
           % (diag_clos['n_pics'], diag_clos['modele']))
     ok &= diag_clos['modele'] == 'clos_5_parametres'
 

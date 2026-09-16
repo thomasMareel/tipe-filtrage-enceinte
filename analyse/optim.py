@@ -635,7 +635,11 @@ def cout(p1, p2, f, Zs, Zm=None,
           le § 04.6), 'voie' (le plus petit des deux minimums de voie) ou
           'parallele' (les deux cellules sur un seul ampli : le cas physique reel, et
           toujours le plus bas ; il couple les deux voies, donc il coute un calcul par
-          bloc). [[a trancher en phase 3 : quelle lecture entre dans la penalite dure]]
+          bloc). [[a trancher : DECISIONS-PHASE-0.md D5, option E -- montage de
+          reference propose = 'grave' (voie par voie), avec obligation de DIRE qu'en
+          'parallele' AUCUN des deux designs ne passe (1,77 et 3,48 ohm). Le piege
+          qu'on evite ainsi : enfoncer le catalogue avec la lecture parallele et
+          declarer le design candidat conforme avec la lecture voie par voie.]]
           ATTENTION AU MAILLAGE : min|Z_in| est ici cherche sur la grille de COUT (64
           points sur 40-250 Hz), qui est grossiere. Le catalogue sur la charge
           synthetique y donne 3,52 ohm, contre 3,507 ohm sur la grille fine 20-500 Hz

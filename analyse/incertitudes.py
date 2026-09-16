@@ -78,8 +78,23 @@ NOMS_TS = ("Re", "Le", "Res", "fs", "Qms")
 #: demonstration_biais_Rref() et exactement par l'identite d'echelle du modele :
 #: (1+d) * Z_ts(f ; Re, Le, Res, fs, Qms) == Z_ts(f ; (1+d)Re, (1+d)Le, (1+d)Res, fs, Qms).
 #: Un << niveau >> herite de l'erreur, une << position >> et une << forme >> n'y voient rien.
+#: Les cinq premieres lignes sont le modele a 5 parametres (caisse close) ; les
+#: suivantes etendent la MEME regle aux modeles a 6, 7 et 8 parametres, ajoutees le
+#: 2026-09-16 quand le sub s'est revele etre en BASS-REFLEX. Ce n'est pas une
+#: rustine : l'identite d'echelle se verifie exactement sur Z_bassreflex8 aussi,
+#: parce que TOUTE la branche event est proportionnelle a R_es (L_ceb = L_ces/alpha,
+#: C_peb = 1/(w_b^2 L_ceb), R_p = w_b L_ceb/Q_l), donc multiplier R_e, L_e et R_es
+#: par (1+d) multiplie Z par (1+d) a alpha, f_b et Q_l inchanges. Un NIVEAU (ohm,
+#: henry, ohm.s^n) herite de l'erreur d'echelle ; une POSITION (f_s, f_b), une FORME
+#: (Q_ms, Q_l, n) et un RAPPORT DE VOLUMES (alpha) en sont immunises. Sans ces
+#: lignes, alpha, f_b et Q_l heriteraient de u(R_ref) par le defaut a 1,0 de
+#: SENSIBILITE_RREF.get -- une incertitude inventee de toutes pieces.
 SENSIBILITE_RREF = OrderedDict(
-    [("Re", 1.0), ("Le", 1.0), ("Res", 1.0), ("fs", 0.0), ("Qms", 0.0)]
+    [("Re", 1.0), ("Le", 1.0), ("Res", 1.0), ("fs", 0.0), ("Qms", 0.0),
+     ("K", 1.0), ("n", 0.0),                       # modele semi-inductif
+     ("alpha", 0.0), ("fb", 0.0), ("Ql", 0.0),     # caisse bass-reflex
+     ("R1", 1.0), ("f1", 0.0), ("Q1", 0.0),        # repli phenomenologique
+     ("R2", 1.0), ("f2", 0.0), ("Q2", 0.0)]
 )
 
 #: Objet rendu par les DEUX fonctions de propagation (meme interface, meme retour).
@@ -930,9 +945,13 @@ def tableau_budget_ts(budget, titre="Budget d'incertitude des parametres T-S"):
     lignes.append(
         "u_A : ajustement (covariance) -- u_B : chaine de mesure (R_ref, derive thermique)."
     )
+    # La liste se lit DANS le budget rendu, et non dans NOMS_TS : depuis le
+    # 2026-09-16 le modele retenu peut en compter huit, et afficher "fs, Qms"
+    # sous un tableau qui en declare cinq immunises serait un mensonge par
+    # etourderie -- exactement le genre qu'un jury releve.
     lignes.append(
         "Immunises : %s -- une position et une forme ne suivent pas une erreur d'echelle."
-        % ", ".join(parametres_immunises())
+        % (", ".join(n for n, b in budget.items() if b["immunise"]) or "aucun")
     )
     return "\n".join(lignes)
 

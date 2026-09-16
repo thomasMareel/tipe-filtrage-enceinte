@@ -1197,7 +1197,16 @@ def demonstration(dossier=None, bavard=True, noms=None, variantes=('sombre',),
     n = injecter_figures(fichier, dossier, noms)
     with open(fichier, encoding='utf-8') as fh:
         html = fh.read()
-    ok = (n == len(noms) and '<!--FIG:' not in html and html.count('<svg') == len(noms))
+    # CE QU'IL FAUT VERIFIER, ET CE QU'IL NE FAUT PAS. Ce controle exigeait
+    # "0 marqueur restant" -- il ne pouvait donc JAMAIS passer, puisque
+    # injecter_figures est IDEMPOTENTE par construction : elle CONSERVE le
+    # marqueur ouvrant et encadre le SVG par <!--FIG:nom--> ... <!--/FIG:nom-->,
+    # precisement pour qu'une remesure puisse reinjecter sans rouvrir le HTML a
+    # la main. Le critere juste est donc : chaque marqueur ouvrant a recu son
+    # marqueur fermant, et il y a exactement un <svg> par figure.
+    encadres = all(('<!--FIG:%s-->' % m) in html and ('<!--/FIG:%s-->' % m) in html
+                   for m in noms)
+    ok = (n == len(noms) and encadres and html.count('<svg') == len(noms))
     if bavard:
         print("test d'injection sur %s : %s" % (fichier, 'OK' if ok else 'ECHEC'))
     os.remove(fichier)
@@ -1214,8 +1223,10 @@ def verifier(dossier=None, bavard=True):
 
     Les trois criteres chiffres du tableau du § 09.6 :
       - 0 couleur hexadecimale figee dans les SVG (hors repli var(--x, #hex)) ;
-      - apres injection, 0 marqueur restant et autant de <svg> ajoutes que de
-        figures demandees ;
+      - apres injection, chaque marqueur <!--FIG:nom--> encadre son SVG avec son
+        marqueur fermant <!--/FIG:nom--> (l'injection est IDEMPOTENTE : le
+        marqueur n'est pas consomme), et autant de <svg> ajoutes que de figures
+        demandees ;
     auxquels s'ajoute le controle elementaire "le fichier existe et n'est pas
     vide", sans lequel une figure vide passerait les deux autres.
     """
@@ -1224,8 +1235,10 @@ def verifier(dossier=None, bavard=True):
     lignes = []
     for v in verdicts:
         if v['nom'] == 'injection':
-            lignes.append(dict(nom='injection HTML', calc='0 marqueur restant',
-                               attendu='0 marqueur restant', ok=v['ok']))
+            lignes.append(dict(nom='injection HTML',
+                               calc='chaque marqueur encadre son SVG',
+                               attendu='ouvrant + <svg> + fermant, 1 par figure',
+                               ok=v['ok']))
             continue
         octets = v['octets']
         lignes.append(dict(nom=v['nom'], ok=v['ok'],
