@@ -109,19 +109,40 @@ Détail des phases, portes de validation, critères et calendrier :
 - Mesure lycée : GBF, oscillo numérique, multimètre. Perso : micro de mesure +
   interface **Focusrite Scarlett Solo 3ᵉ génération** (confirmée le 16 sept. 2026).
   Caractéristiques du manuel officiel (p. 18) et **ce qu'elles imposent** :
-  - Sortie **ligne** : 4,61 V max mais **430 Ω d'impédance de sortie** → étrangle le
-    courant (0,85 mW dans 8 Ω avec R_ref = 10 Ω). **Ne pas l'utiliser pour le jig.**
-  - Sortie **casque** : 1,73 V max, **< 1 Ω** → 67 mW dans 8 Ω, soit 78 fois plus.
-    **C'est elle qui attaque le jig d'impédance.** Réserve : 91 mA demandés à une
-    sortie prévue pour ≥ 32 Ω, elle peut écrêter → vérifier la linéarité en mesurant
-    la même impédance à deux niveaux (−6 et −18 dBFS), les courbes doivent se superposer.
-  - Entrée **micro** (XLR) : **3 kΩ**, 2,18 V max. Elle **charge** ce qu'elle mesure :
-    −3,2 % aux bornes de 100 Ω, **−0,33 % aux bornes de 10 Ω**.
-  - Entrée **ligne** (jack) : 60 kΩ, 9,75 V max — elle ne charge rien.
-  - **Câblage retenu** : entrée micro aux bornes de **R_ref = 10 Ω**, entrée ligne aux
-    bornes du haut-parleur. (Aux bornes du HP au pic de 63 Ω, l'entrée micro coûterait
-    −2,1 %.) La **R_ref de 100 Ω reste pour la chaîne GBF + oscillo**, dont l'entrée à
-    1 MΩ ne charge pas.
+  - Sortie **ligne** : 4,61 V max mais **430 Ω d'impédance de sortie**. **Ne pas
+    l'utiliser pour le jig** (REW la réserve à une R_sense de 1 kΩ, au prix du bruit).
+  - Sortie **casque** : 1,73 V max, **< 1 Ω**. **C'est elle qui attaque le jig**, et
+    avec R_sense = 100 Ω elle ne débite que quelques mA (≤ 4,5 mA en mesure) : aucun
+    risque d'écrêtage. Le test à deux niveaux (12 dB d'écart) reste nécessaire, mais
+    pour vérifier la **linéarité du haut-parleur**, plus celle de la sortie.
+  - Entrée **micro** (XLR) : **3 kΩ**, 2,18 V max, symétrique ; Focusrite ne publie
+    ni la structure de ses jambes de mode commun ni sa réjection.
+  - Entrée **ligne** (jack TRS, position LINE) : 60 kΩ, 9,75 V max, symétrique.
+  - **Câblage retenu (arbitrage du 23 sept. 2026)** : le montage **standard de REW**,
+    avec **R_sense = 100 Ω à 0,1 %**, lu en 4 fils. Sortie casque, canal gauche : pointe
+    → **33 Ω de protection** → nœud A ; R_sense de A à B ; haut-parleur de B à C ; corps
+    du jack → C, **seul retour de masse du jig** ; bague non raccordée. **Entrée 1 (XLR)
+    = voie de référence** : broche 2 → A, broche 3 → C, broche 1 non raccordée au jig.
+    **Entrée 2 (jack TRS, LINE) = voie de mesure** : pointe → B, bague → C, corps non
+    raccordé au jig. L'entrée micro lit un nœud piloté par la source : **ses 3 kΩ ne
+    faussent rien**, quelle que soit sa structure interne. La seule charge du
+    haut-parleur est l'entrée ligne : −0,11 % au pic de 64 Ω et −0,33 % à 200 Ω, que
+    RINPUT = 60 kΩ et les étalonnages retirent. La soustraction logicielle amplifie une
+    dérive de voie par |Z + R|/R = 1,64 au pic de 64 Ω (7,4 avec 10 Ω). **GAIN 1 au
+    minimum ; GAIN 2 monté d'environ 13 dB** jusqu'à égalité des deux voies à 1 dB près,
+    fils ouverts (REW abandonne l'étalonnage open au-delà de 2 dB), **puis bloqué** :
+    0,01 dB de rotation coûte 0,19 % au pic. 48 V, AIR, INST et DIRECT MONITOR éteints ;
+    **sorties ligne arrière débranchées** (même signal que le casque). REW : sortie
+    gauche seule, entrée droite, étalonnages open, short puis reference sur **une seconde
+    100 Ω à 0,1 %** ; validation sur la 10 Ω et le 100 µF, jamais sur la référence.
+    Niveau (V_A = tension du nœud A, fils ouverts) : 0,30 V au premier balayage, puis
+    environ 200 mV aux bornes au pic, soit V_A ≈ 0,62 V pour un pic de 64 Ω. Courant :
+    ≤ 4,5 mA en mesure, ≤ 13,3 mA à pleine échelle même en court-circuit. **Le câblage
+    du 16 sept. 2026 (micro aux bornes d'une R_ref de 10 Ω) était faux** : son calcul de
+    charge ignorait les jambes de mode commun et la réjection, non publiées, de l'entrée
+    XLR, et REW en abandonne l'étalonnage open (30 à 76 dB d'écart entre voies). La
+    **10 Ω** devient le **dipôle de validation** (A2, A5) ; la chaîne GBF + oscillo garde
+    sa R_ref de 100 Ω, désormais la même valeur que R_sense.
   - **Alimentation fantôme 48 V impérativement coupée** avant chaque branchement :
     active, elle injecte 48 V à travers ses résistances de polarisation dans le montage.
   - Réponse garantie **20 Hz – 20 kHz ±0,1 dB** ; **sous 20 Hz : non spécifiée** par le
