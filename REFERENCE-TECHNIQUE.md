@@ -66,6 +66,7 @@ sous-section correspondante de ce document.
 - [02.10 Pièges](#s02-10)
 - [02.11 Protocole reproductible](#s02-11)
 - [02.12 Tableau de relevé et contrat d'interface avec l'acte 2](#s02-12)
+- [02.13 Application à la Scarlett Solo 3ᵉ génération : le jig d'impédance retenu](#s02-13)
 
 **[03. Problème inverse : identification des paramètres de Thiele-Small](#s03)**
 
@@ -743,7 +744,7 @@ Autrement dit : l'optimisation de la phase 3 doit porter sur le **produit** filt
   Rref =  10 ohm, |Z| = 100 ohm (au pic)     : V_HP = 9091 mVcc, I = 90.9 mAcc, P = 103.3 mW
 ```
 
-   Trois recommandations directement actionnables : (a) la méthode à deux voltmètres **n'exige pas** le courant constant, donc utiliser plutôt la **$R_{ref}$ de 10 Ω** déjà prévue à l'achat — on gagne un facteur 7 en tension sur le haut-parleur au point le plus défavorable, donc en rapport signal/bruit, tout en restant à moins de 0,3 W ; (b) **noter et geler** le niveau d'excitation, et vérifier l'absence de ronflement 50 Hz capté par une bobine de 18 pouces (moyennage, ou points de mesure décalés hors de 50 et 100 Hz) ; (c) mesurer $f_s$ **deux fois à quelques minutes d'intervalle** — une dérive de quelques pour cent est un effet de rodage et de niveau sur la compliance, pas une erreur de manip.
+   Trois recommandations directement actionnables : (a) la méthode à deux voltmètres **n'exige pas** le courant constant, et le tableau montre qu'une petite $R_{ref}$ gagnerait un facteur 7 en tension sur le haut-parleur au minimum d'impédance ; mais il suppose une source idéale et ignore les 50 Ω de sortie du GBF, que le § 02.4 juge déterminants — pris au pied de la lettre, il mettrait environ 0,56 W dans une 10 Ω de précision. **Décision (§ 02.4, livret A6) : à l'oscilloscope, $R_{ref} = 100$ Ω 1 % en configuration A ; la 10 Ω n'y sert qu'en configuration B, pour le recoupement au pic** ; sur la chaîne **Scarlett + REW**, le niveau est réglé pour environ 200 mV aux bornes au pic, l'erreur due au bruit n'y dépend plus de la résistance, et la 10 Ω n'y est que **dipôle de validation** et **résistance connue sous 20 Hz**, jamais résistance de mesure (§ 02.13) ; (b) **noter et geler** le niveau d'excitation, et vérifier l'absence de ronflement 50 Hz capté par une bobine de 18 pouces (moyennage, ou points de mesure décalés hors de 50 et 100 Hz) ; (c) mesurer $f_s$ **deux fois à quelques minutes d'intervalle** — une dérive de quelques pour cent est un effet de rodage et de niveau sur la compliance, pas une erreur de manip.
 
 3. **Dérive thermique de $R_e$.** Le cuivre a un coefficient de température d'environ $+0{,}39\ \%/\mathrm{K}$ (constante physique) : une bobine qui chauffe de 50 K voit $R_e$ augmenter d'environ 20 %, ce qui décale $Q_{es}$ (proportionnel à $R_e$), la sensibilité et le $Q$ du filtre passif. La référence active, qui ne voit pas $Z(f)$, y est insensible par construction.
 
@@ -834,7 +835,7 @@ Récapitulatif actionnable, tout ce qui suit découlant des paragraphes ci-dessu
 | Outil d'optimisation | **Environnement vérifié le 2026-09-13 : Python 3.13.2, numpy 2.4.6, scipy 1.18.1, matplotlib 3.11.0 — tous installés et fonctionnels.** À 5 paramètres, avec les valeurs initiales de la méthode $r_0$, un Gauss-Newton ou un Nelder-Mead écrit en numpy suffirait ; à 8, `scipy.optimize.least_squares` est nettement préférable (matrice de covariance quasi gratuite pour les incertitudes) — et il est disponible. Le Levenberg-Marquardt réécrit en numpy pur (§ 03.3) reste au dossier comme **exercice de robustesse** et comme secours si les calculs sont refaits sur une machine du lycée : y **vérifier la présence de scipy** le cas échéant |  |
 | Résolution en fréquence | pas **≤ 0,6 Hz** autour du pic (largeur à mi-hauteur $f_c/Q_{mc}\approx6{,}4$ Hz, il faut ≥ 10 points) ; **1/24 d'octave ou 1 Hz linéaire** sur 60–110 Hz pour le bloc médiums | 01.9, 01.12 |
 | Durée de la manip | 10–500 Hz au 1/12 d'octave = **68 points × 2 voies ≈ 2,3 h** ; +25 points pour le resserrement 40–80 Hz au 1/24 d'octave. **Deux séances de TP, pas une** — à savoir avant de réserver la salle |  |
-| Niveau d'excitation | préférer $R_{ref}=10\ \Omega$ à 100 Ω (facteur 7 sur le signal au minimum d'impédance) ; geler le niveau ; contrôler le ronflement 50 Hz ; deux relevés de $f_s$ espacés | 01.12 |
+| Niveau d'excitation | à l'oscilloscope, $R_{ref}=100\ \Omega$ 1 % en configuration A (§ 02.4) ; la 10 Ω n'y sert qu'en configuration B, pour le recoupement au pic — sur la chaîne Scarlett + REW, $R_{sense}=100\ \Omega$ et la 10 Ω ne sert qu'à valider (§ 02.13) ; geler le niveau ; contrôler le ronflement 50 Hz ; deux relevés de $f_s$ espacés | 01.12 |
 | Mesure de $R_e$ | compenser les cordons, ou extrapoler la méthode à deux voltmètres vers 5–10 Hz ; **$u(Q_{es})/Q_{es}=u(R_e)/R_e$** | 01.2 |
 | Manip supplémentaire | **masse ajoutée** (ou volume clos connu) — sinon $Bl$, $M_{ms}$, $C_{ms}$, $R_{ms}$, $V_{as}$ resteront inconnus | 01.6 |
 | Sensibilités pour le Monte-Carlo | $Q_{es}\propto R_e$ ; $r_0=\lvert Z\rvert_{max}/R_e$ ; $Q_{ms}=f_s\sqrt{r_0}/(f_2-f_1)$, donc très sensible à la résolution autour du pic | 01.4, 01.9 |
@@ -935,9 +936,14 @@ facteur $F_c/F_s$ : le pic se déplace en fréquence, pas en hauteur). Pour un 1
 (Eminence Delta Pro-18A, valeurs constructeur : $R_e = 5{,}3\ \Omega$, $F_s = 28$ Hz,
 $Q_{ms} = 10{,}38$, $Q_{es} = 0{,}33$, $L_e = 3{,}43$ mH), on obtient **172 Ω** ; avec un rapport
 $Q_{ms}/Q_{es}$ plus modeste (10), 58 Ω. **Ordre de grandeur à retenir : 60 à 200 Ω pour le
-sub**, souvent un peu moins en caisse réelle (fuites, absorption). En revanche 40–60 Ω est
-bien l'ordre de grandeur du **bloc médiums** (2 × 4 Ω en série : $R_e \approx 6{,}4\ \Omega$,
-$Z_{pic} \approx 45$–60 Ω, calculé). La valeur réelle sera fixée par la passe 1 [[à mesurer]].
+sub**, souvent un peu moins en caisse réelle (fuites, absorption). Pour le **bloc médiums**
+(2 × 4 Ω en série), 40–60 Ω n'est **pas** non plus un ordre de grandeur sûr : un rapport
+$Q_{ms}/Q_{es}$ modeste ($R_e \approx 6{,}4\ \Omega$, $Q_{ms}/Q_{es} = 7$) donne
+$Z_{pic} \approx 45$–60 Ω, mais le jeu catalogue `MED_TYP` du dépôt (deux 8″ FaitalPRO
+8FE200-4 en série) donne un pic de **117 Ω à 80 Hz**, et le bloc **tel qu'il est câblé**,
+avec ses deux pavillons (modèle 2 × 8 Ω / 6,8 µF, § 02.6), un pic d'environ **112 Ω vers
+77 Hz** (modèles recalculés le 23 sept. 2026, pas des mesures). La description « 8 à 40 Ω »
+du bloc médiums est donc à proscrire. La valeur réelle sera fixée par la passe 1 [[à mesurer]].
 
 Deux conséquences à assumer publiquement :
 
@@ -1103,10 +1109,11 @@ c'est-à-dire le sommet du pic d'impédance, à mieux que 1 % [ordre de grandeur
 
 ### <a id="s02-4"></a>02.4 Choix de $R_{ref}$ et de la configuration
 
-**Ce choix se fait APRÈS la passe 1**, pas avant : il dépend de $Z_{pic}$, qui est justement
-ce que la passe 1 mesure. Passe 1 exploratoire à $R_{ref} = 100\ \Omega$ en configuration A →
-lecture de $f_{pic}$, $Z_{pic}$ et $Q$ → choix définitif de $R_{ref}$, de la configuration et
-des calibres → passes 2 et 3.
+**Pour la passe 1, le choix est fait** : $R_{ref} = 100\ \Omega$ 1 % en configuration A (livret
+A6), la $10\ \Omega$ en configuration B pour le recoupement au pic (décision ci-dessous). Il ne se
+**révise** qu'APRÈS la passe 1, parce qu'il dépend de $Z_{pic}$, que la passe 1 mesure : lecture
+de $f_{pic}$, $Z_{pic}$ et $Q$ → révision éventuelle de $R_{ref}$, de la configuration et des
+calibres, **datée au cahier** → passes 2 et 3.
 
 Quatre contraintes, la première étant dominante :
 
@@ -1145,14 +1152,24 @@ Quatre contraintes, la première étant dominante :
    $X = 0{,}031\ \Omega$, soit $X/R = 0{,}03\ \%$ → **erreur de phase 0,02° et erreur sur le
    module $5\cdot10^{-6}\ \%$** : négligeable sur les deux (calculé).
 
-**Décision.** $R_{ref} = 100\ \Omega$ 1 % en configuration A comme étalon principal ; $10\ \Omega$
-en configuration B pour le recoupement au pic ; **ajouter une $33\ \Omega$ 1 %** à la liste
-d'achats (≈ 1 €, négligeable devant le budget de 500 €) au cas où la passe 1 révélerait un pic
-modeste. L'arbitrage est assumé : le conditionnement 8 bits désignerait 33 Ω, mais on retient
+**Décision.** $R_{ref} = 100\ \Omega$ 1 % (≥ 1 W, film métallique) en configuration A comme
+étalon principal ; $10\ \Omega$ en configuration B pour le recoupement au pic ; une $33\ \Omega$
+1 % **facultative** à la liste d'achats (≈ 1 €, repli du livret A1) au cas où la passe 1
+révélerait un pic modeste. Cette 100 Ω est une **troisième pièce**, distincte des deux 100 Ω à
+0,1 % du jig Scarlett (§ 02.13) : si la référence de REW servait aussi d'étalon à
+l'oscilloscope, les deux chaînes partageraient le même facteur d'échelle et le recoupement A7
+ne pourrait plus détecter une erreur sur cette résistance. L'arbitrage est assumé : le conditionnement 8 bits désignerait 33 Ω, mais on retient
 100 Ω parce qu'il minimise le facteur d'amplification de la soustraction (≤ ×3,9 partout) et
 parce que c'est la valeur recommandée par REW sur une sortie casque, ce qui rend les deux
 méthodes directement comparables. Les deux jeux (10 Ω et 100 Ω) doivent coïncider : c'est un
 **contrôle de cohérence interne** gratuit, chiffré au § 02.8.
+
+*Ce paragraphe concerne la chaîne **GBF + oscilloscope**.* Sur la chaîne **Scarlett + REW**,
+la résistance de mesure est une $R_{sense} = 100\ \Omega$ **à 0,1 %** (§ 02.13) ; la $10\ \Omega$
+n'y est **jamais** résistance de mesure : elle y sert de **dipôle de validation** et de
+**résistance connue sous 20 Hz**, et elle garde ici son rôle de **configuration B de
+recoupement**. La 33 Ω 1 % ci-dessus est distincte de la **33 Ω de protection** du jig
+Scarlett (≥ 0,25 W, tolérance indifférente, § 02.13).
 
 ### <a id="s02-5"></a>02.5 Niveau de signal : régime petits signaux
 
@@ -1289,10 +1306,11 @@ $1{,}0595^{9}\approx1{,}7$ **d'un point au suivant** : c'est inexploitable pour 
    mieux, on le prend de l'**ajustement** (§ 03). Sur le modèle, l'argmin tombe à 34,2 Hz et le
    zéro de phase à 33,5 Hz pour $f_b=35$ Hz vrai : **les deux sont biaisés de quelques pour-cent
    par les pertes** — à savoir avant de comparer à la prédiction géométrique du § 01.10 bis.
-4. **Choix de $R_{ref}$ à refaire.** La dynamique n'est plus celle du cas clos : $|Z|$ va de
-   **6,1 Ω au creux à 64 Ω au pic haut** (rapport 10,5) sur le modèle, alors que le cas clos
-   donnait un pic unique bien plus haut. Le compromis du § 02.4 doit être rejoué sur cette
-   dynamique-là, et il est possible qu'un seul $R_{ref}$ suffise désormais — à trancher sur les
+4. **Choix de $R_{ref}$ : fixé pour la passe 1, révisable après.** La dynamique n'est plus
+   celle du cas clos : $|Z|$ va de **6,1 Ω au creux à 64 Ω au pic haut** (rapport 10,5) sur le
+   modèle, alors que le cas clos donnait un pic unique bien plus haut. La passe 1 se fait à
+   $R_{ref} = 100$ Ω en configuration A (§ 02.4, livret A6) ; le compromis du § 02.4 se rejoue
+   ensuite sur cette dynamique-là, et toute révision se date au cahier — à trancher sur les
    valeurs réelles [[à mesurer]].
 
 #### Borne basse du balayage : règle de sécurité
@@ -1302,30 +1320,44 @@ et confondre les deux peut détruire le haut-parleur.**
 
 En bass-reflex, l'évent **décharge** la membrane sous $f_b$ : le ressort d'air ne la retient plus,
 l'excursion croît vite et rien ne l'arrête. Sur le modèle électro-mécano-acoustique complet
-(script `br3.py` ; $M_{ms}=149$ g, $Bl=25{,}8$ T·m, $S_d=1210$ cm², $f_b=35$ Hz, $Q_l=7$ —
-**MODÈLE, pas une mesure**), le déplacement crête par volt vaut :
+(recalculé le 23 sept. 2026 : $x = \underline{E}/(j\omega\,Bl)$, où $\underline{E}$ est la
+tension aux bornes de la branche motionnelle du modèle électrique `Z_bassreflex8` sur le jeu
+`SUB_TYPIQUE_BR` — $f_s=40$ Hz, $Q_{ms}=6{,}1$, $\alpha=3$, $f_b=35$ Hz, $Q_l=7$ — avec
+$Bl=25{,}8$ T·m supposé ; **MODÈLE, pas une mesure**), le déplacement crête par volt efficace
+vaut :
 
 ```
-  f = 100 Hz : 0.050 mm/V     f = 35 Hz (= fb) : 0.146 mm/V  (reference)
-  f =  50 Hz : 0.104 mm/V     f = 25 Hz        : 0.199 mm/V   (x1.36)
-  f =  40 Hz : 0.129 mm/V     f = 17.5 Hz      : 0.267 mm/V   (x1.83)
-                              f = 10 Hz        : 0.383 mm/V   (x2.34)
+  f = 100 Hz : 0.082 mm/V     f = 35 Hz (= fb) : 0.028 mm/V  (minimum, reference)
+  f =  70 Hz : 0.101 mm/V     f = 25 Hz        : 0.190 mm/V   (x6.9)
+  f =  50 Hz : 0.088 mm/V     f = 17.5 Hz      : 0.442 mm/V   (x16)
+  f =  40 Hz : 0.050 mm/V     f = 10 Hz        : 0.622 mm/V   (x22.5)
 
-sous V = 0.15 V (mesure d'impedance) : x(10 Hz) = 0.057 mm   -- sans objet
-sous V = 8.94 V (10 W dans 8 ohm)    : x(10 Hz) = 3.42 mm
-sous V = 52.9 V (350 W dans 8 ohm)   : x(10 Hz) = 20.3 mm    -- au-dela de tout X_max de 18"
+sous V = 0.15 V (mesure d'impedance) : x(10 Hz) = 0.093 mm   -- sans objet
+sous V = 8.94 V (10 W dans 8 ohm)    : x(10 Hz) = 5.6 mm
+sous V = 52.9 V (350 W dans 8 ohm)   : x(10 Hz) = 32.9 mm    -- au-dela de tout X_max de 18"
 ```
+
+*Le tableau antérieur (script `br3.py`) croissait de façon monotone vers les basses fréquences,
+sans le minimum que la physique impose à $f_b$ — là où l'évent rayonne et où la membrane bouge
+le moins (défaut signalé par le panel du 23 sept. 2026). Celui-ci le retrouve : minimum à $f_b$,
+puis multiplication par 7 dès 25 Hz et par 22 à 10 Hz. Il montre aussi ce qui justifie la borne
+$2f_b$ ci-dessous : ce n'est pas l'élongation entre $f_b$ et $2f_b$ (du même ordre qu'au-dessus
+de $2f_b$ sur ce modèle), c'est que REW balaie à partir de la **moitié** du Start (§ 07.10) —
+Start $= 2f_b$ est la valeur qui garde tout le contenu au-dessus de l'accord — et qu'il faut une
+marge sur l'incertitude de $f_b$ lui-même.*
 
 **Règle gelée.**
 
 - **Mesure d'impédance (§ 02.5, 100–200 mV aux bornes)** : le balayage **descend librement à
   10 Hz**, et il le doit — le pic bas $f_L$ est à 16 Hz et l'initialisation de $Q$ exige une
-  octave sous le pic (§ 03.3). À 150 mV l'excursion prédite à 10 Hz est de 57 µm : trois ordres
-  de grandeur sous $X_{max}$. **Il n'y a aucun risque, et il ne faut pas s'interdire cette
+  octave sous le pic (§ 03.3). À 150 mV l'excursion prédite à 10 Hz est d'environ 0,09 mm :
+  plus de cinquante fois moins que le $X_{max}$ de tout 18″ de sonorisation (plusieurs
+  millimètres). **Il n'y a aucun risque, et il ne faut pas s'interdire cette
   zone** — c'est elle qui porte $f_L$, donc $\alpha$.
 - **Toute mesure au niveau fort** (les deux niveaux d'écoute gelés, mesures acoustiques du
-  § 07, rodage, essais d'écoute) : **interdiction de balayer sous $f_b$**. Borne basse
-  $f_{min}=f_b$, et $1{,}2\,f_b$ si l'on veut une marge sur l'incertitude de $f_b$ lui-même.
+  § 07, rodage, essais d'écoute) : **interdiction de balayer sous $f_b$**. Borne basse :
+  **`Start` $\ge 2f_b$ dans REW, sans exception, avec le $f_b$ mesuré** — REW balaie en réalité
+  à partir de la moitié du Start (§ 07.10), et la marge couvre l'incertitude sur $f_b$ lui-même.
   Sous cette borne, soit on n'excite pas, soit on insère un **passe-haut de protection
   (« subsonique ») du 2ᵉ ordre accordé à $f_b$** — c'est ce que fait tout système de sono, et
   c'est une remarque à faire au jury plutôt qu'à subir.
@@ -1357,14 +1389,15 @@ médium+pavillons tel qu'il est câblé, sans rien débrancher.** C'est cette im
 elle seule, qui entre dans l'acte 3. Ce n'est pas une approximation, c'est la définition de la
 charge.
 
-**Question ouverte, à trancher par l'observation et non par hypothèse : y a-t-il un
-condensateur en série avec les pavillons ?** [[à vérifier auprès de l'étudiant / en ouvrant le
-bornier]] C'est la protection classique du premier ordre. Les deux cas ont des conséquences
-opposées — et c'est pour cela qu'il faut regarder :
+**Un condensateur est présent en série avec les pavillons** (constat de l'étudiant, 16 sept.
+2026) : c'est la protection classique du premier ordre. Sa **valeur** reste [[à mesurer]] au
+bornier. La colonne « sans condensateur » du tableau n'est plus une hypothèse de travail : elle
+sert de **contrôle de câblage** (livret, B1 bis — une lecture DC du bloc d'environ 6 à 7 Ω
+confirme le condensateur ; 2 à 3 Ω trahirait un pavillon non protégé) :
 
-| | avec condensateur (3,3 à 10 µF **par pavillon**) | sans condensateur |
+| | avec condensateur (3,3 à 10 µF **par pavillon**) — le cas constaté | sans condensateur (écarté par le constat ; contrôle B1 bis) |
 |---|---|---|
-| $\lvert Z_{aigu}\rvert$ à 100 Hz, **les DEUX pavillons en parallèle** | **80 à 241 Ω** (241 Ω pour 3,3 µF, 117 Ω pour 6,8 µF, 80 Ω pour 10 µF) | **4 Ω** (deux 8 Ω en parallèle) |
+| $\lvert Z_{aigu}\rvert$ à 100 Hz, **les DEUX pavillons en parallèle** | **80 à 241 Ω** (241 Ω pour 3,3 µF, 117 Ω pour 6,8 µF, 80 Ω pour 10 µF ; soit 160 à 480 Ω par pavillon) | **4 Ω** (deux 8 Ω en parallèle) |
 | effet sur $\lvert Z\rvert$ du bloc médiums à 100 Hz | 29,3 Ω → 26,3 à 21,8 Ω, soit **$-0{,}9$ à $-2{,}6$ dB** ($-10$ à $-26$ %) : **pas négligeable** | 29,3 Ω → **3,7 Ω**, soit **$-17{,}9$ dB** ($-87$ %) : sous le minimum de 4 Ω du E-800 |
 | risque matériel pendant les balayages | faible : les pavillons ne reçoivent presque rien à 100 Hz | **réel** : les pavillons reçoivent le 100 Hz à pleine puissance, hors de leur bande, avec une excursion que leur suspension n'encaisse pas |
 
@@ -1382,14 +1415,16 @@ de sa propre résonance, donc la branche pèse bien plus lourd relativement. L'�
 **conditionnel** : *négligeable devant un bloc à 12 Ω, pas devant un bloc à 29 Ω au voisinage de
 sa résonance.* Le mot « négligeable » sans cette condition est indéfendable. Les trois documents
 qui chiffrent cet enjeu (`analyse/modele_hp.py`, `PARCOURS.md`, cette section) sont depuis alignés
-sur le **seul** jeu `MED_TYP` et sur $n_{aigu}=2$ ; c'est `effet_branche_aigu` qui fait foi.
+sur le **seul** jeu `MED_TYP` et sur $n_{aigu}=2$ (`PARCOURS.md` réaligné le 23 sept. 2026, où
+traînait encore le calcul à un pavillon, « 6 à 16 % ») ; c'est `effet_branche_aigu` qui fait foi.
 
-**La conséquence pratique est la même dans les deux cas** : on mesure le bloc tel qu'il est
-câblé. Ce qui change, c'est (i) ce qu'on **s'attend** à lire — un bloc à ~25 Ω ou à ~4 Ω vers
-100 Hz — donc le choix de $R_{ref}$ ; et (ii) s'il faut **limiter la durée et le niveau** des
-balayages au fort niveau pour ne pas maltraiter les pavillons. La mesure d'impédance, elle,
-se fait à 150 mV : elle ne présente de risque dans aucun des deux cas. Si l'inspection révèle
-qu'il n'y a pas de condensateur, c'est en outre un **résultat de conception à commenter** : le
+**La conséquence pratique** : on mesure le bloc tel qu'il est câblé, et l'on s'attend à lire
+vers 100 Hz un bloc d'environ 22 à 26 Ω selon la valeur du condensateur (29,3 Ω sans les
+pavillons). La mesure d'impédance se fait à 150 mV : elle ne présente aucun risque. Si le
+contrôle B1 bis contredisait le constat (lecture DC de 2 à 3 Ω : un pavillon sans
+condensateur), il faudrait ouvrir le bornier avant tout balayage au fort niveau — ce pavillon
+recevrait le 100 Hz à pleine puissance — et ce serait en outre un **résultat de conception à
+commenter** : le
 passe-haut du raccord ne protège pas les pavillons, puisqu'il les laisse passer avec les
 médiums.
 
@@ -1697,7 +1732,9 @@ exploitable par le code d'identification.
 (fils déconnectés : compense l'écart de gain entre voies — l'équivalent de notre appariement),
 *Short circuit cal* (compense l'impédance série des cordons), *Reference cal* sur une
 résistance connue non inductive ≤ 100 Ω. Niveau ≤ −3 dBFS (plafond), 256 k échantillons,
-moyennage synchrone, filtre de bruit.
+moyennage synchrone, filtre de bruit. *(Réglages génériques. Pour la Scarlett Solo, le § 02.13
+les remplace : attribution des entrées, RINPUT = 60 kΩ, appariement des gains **avant** tout
+étalonnage, niveau exprimé **en volts** au nœud A, balayage 1M moyenné 4 fois.)*
 
 **Valeur de $R_{sense}$ selon la source** (REW) : 100 Ω sur une sortie casque ; 1 kΩ sur une
 sortie ligne (résultats plus bruités, car une sortie ligne ne débite pas dans 100 Ω) ;
@@ -1705,8 +1742,13 @@ sortie ligne (résultats plus bruités, car une sortie ligne ne débite pas dans
 
 **Mesurer l'impédance de sortie réelle de la carte son** (cinq minutes, et cela tranche entre
 100 Ω et 1 kΩ) : relever la tension de sortie à vide $V_0$, puis sur une charge connue
-$R_c = 100\ \Omega$ ; alors $Z_s = R_c\,(V_0/V_c - 1)$. [[à faire dès réception, modèle de carte
-son à documenter.]]
+$R_c = 100\ \Omega$ ; alors $Z_s = R_c\,(V_0/V_c - 1)$. **Question levée le 23 sept. 2026**
+(elle portait la marque « à faire dès réception, modèle de carte son à documenter ») : la carte
+est une **Focusrite Scarlett
+Solo 3ᵉ génération**, dont le constructeur donne < 1 Ω sur la sortie casque et 430 Ω sur la
+sortie ligne. La question « 100 Ω ou 1 kΩ » est tranchée par la spécification (sortie casque,
+100 Ω), et le montage du § 02.13 n'en dépend pas : la tension du nœud source y est **lue**,
+pas supposée.
 
 **Jig derrière l'amplificateur E-800** — seule voie pour mesurer $Z(f)$ à niveau réaliste
 (utile à l'acte 4 et à l'argument de dérive thermique). Dimensionnement proposé, à valider :
@@ -1714,11 +1756,21 @@ son à documenter.]]
 - $R_{sense} = 1\ \Omega$ non inductive, **10 à 25 W** : sous 20 V RMS aux bornes d'une charge
   de 8 Ω, $I = 2{,}5$ A, $V_{sense} = 2{,}5$ V et $P_{sense} = 6{,}2$ W (calculé). Ne jamais
   monter en pleine puissance : à 53 V RMS (350 W/8 Ω) il faudrait 44 W dans $R_{sense}$.
-- **Deux diviseurs IDENTIQUES**, un par voie : $R_1 = 47\ \mathrm{k}\Omega$, $R_2 = 1\ \mathrm{k}\Omega$
-  (rapport 1/48). Étant identiques, leur rapport **s'élimine dans $V_d/V_R$** : il n'a même pas
-  besoin d'être connu, seulement apparié. Charge de 48 kΩ sur les nœuds mesurés : négligeable ;
-  $P(R_1) = 0{,}06$ W même à pleine puissance ; sortie 1,10 V RMS pour 53 V d'entrée (calculé),
-  compatible avec une entrée ligne.
+- **Un diviseur par voie, chacun étalonné en place** (règle du livret, groupe C, variante REW) :
+  $R_1 = 10\ \mathrm{k}\Omega$ 1 % (½ W) en série, $R_2 = 220\ \Omega$ 1 % en pied, rapport
+  nominal 46,5:1. **La Solo n'a qu'une entrée ligne** : la seconde tension passe forcément par
+  l'**entrée 1, XLR, 3 kΩ**, qui charge le pied du diviseur — rapport ≈ 49,8 au lieu de 46,5
+  (+7,2 %), contre +0,36 % sur l'entrée 2, ligne, à 60 kΩ (calculé). Deux diviseurs
+  « identiques » ne donnent donc **pas** le même rapport, et ce rapport ne s'élimine pas de
+  lui-même : **mesurer le rapport de CHAQUE diviseur en place**, sur son entrée, carte branchée,
+  à 100 Hz, contre le multimètre RMS, et le consigner. Attribution comme au jig du § 02.13 :
+  tension côté source (référence) sur l'entrée 1, XLR ; tension aux bornes de la charge
+  (mesure) sur l'entrée 2, TRS en LINE. *Pourquoi pas 47 kΩ / 1 kΩ* : sur l'XLR,
+  1 kΩ ∥ 3 kΩ = 750 Ω donnerait un rapport de 63,7 au lieu de 48 (+33 %), et l'entrée ligne
+  elle-même +1,6 % (calculé). Charge de 10,2 kΩ sur les nœuds mesurés : 0,08 % d'un 8 Ω ;
+  $P(R_1) = 0{,}27$ W à 53 V RMS ; sortie ≈ 1,1 V RMS pour 53 V d'entrée, sous les pleines
+  échelles (entrée 1 : 2,18 V au gain minimal ; entrée 2 : 9,75 V au gain minimal, 2,18 V si
+  GAIN 2 est resté au repère du jig). DIRECT MONITOR sur OFF et 48 V coupé, comme au jig.
 - **Protection** : diodes Zener 5,1 V tête-bêche (ou TVS bidirectionnelle) **après** le diviseur,
   sur chaque entrée de carte son ; elles ne conduisent jamais en fonctionnement normal et
   clampent en cas d'erreur de câblage. [[à vérifier sur l'E-800 : sortie en pont ou masse
@@ -1777,7 +1829,8 @@ accuse la différence de niveau d'excitation (§ 02.5).
    Continuité → configuration A/B. Isolement → **configuration C**, et la moitié des
    difficultés du § 02.2 disparaît.
 1. Mesurer $R_{ref}$ (100 Ω, 10 Ω, éventuellement 33 Ω) au multimètre en REL ; noter valeurs et
-   température.
+   température. (Pour la chaîne Scarlett, les deux 100 Ω à 0,1 % — $R_{sense}$ et référence
+   REW — se saisissent à leur **valeur certifiée**, § 02.13.)
 2. Vérifier l'offset de voie (entrées court-circuitées) puis apparier CH1/CH2 par **couple de
    calibres** ; noter le tableau des $\kappa$.
 3. Câbler la configuration retenue à l'étape 0 ; vérifier à l'ohmmètre que les pinces de masse
@@ -1813,8 +1866,12 @@ accuse la différence de niveau d'excitation (§ 02.5).
       le maximum de $|Z|$ et le passage $\varphi = 0$ coïncident exactement sans $L_e$, et à
       0,03 % près avec $L_e = 3{,}43$ mH (calculé).
     - Recoupement 10 Ω / 100 Ω par $E_n$ (§ 02.8).
-11. Mesure REW + jig sur le même dipôle ; superposer ; $E_n(f)$ tracé et écarts commentés.
-12. Même séquence pour le bloc médiums (les deux HP en série, tels que câblés), jusqu'à 2 kHz.
+11. Mesure REW + jig sur le même dipôle (montage, réglages, étalonnages et validation du
+    § 02.13) ; superposer ; $E_n(f)$ tracé et écarts commentés. Oscilloscope et GBF
+    **débranchés du jig** pendant chaque balayage REW.
+12. Même séquence pour le bloc médiums (les deux HP en série, tels que câblés, pavillons
+    compris — § 02.6), jusqu'à 2 kHz. Attendu sur le modèle : un pic d'environ 112 Ω vers
+    77 Hz, pas « 8 à 40 Ω » (§ 02.1).
 13. **Répétabilité inter-séances** : au début de chaque nouvelle séance, refaire **3 points de
     contrôle** (plateau, pic, haut de bande) et les comparer à la séance précédente par $E_n$.
     C'est ce qui permettra, en phase 4, d'affirmer honnêtement qu'un écart mesuré est un effet
@@ -1857,6 +1914,267 @@ sinon la phase 2 recommencera le dépouillement) :
   flanc de pic, mal conditionnés, y pèseront naturellement moins.
 - Les fichiers **bruts** (le tableau ci-dessus) sont archivés à côté, sous le même nom.
 
+### <a id="s02-13"></a>02.13 Application à la Scarlett Solo 3ᵉ génération : le jig d'impédance retenu
+
+> **Décision du 23 sept. 2026** (arbitrage d'un panel de trois experts indépendants, unanime,
+> calculs refaits indépendamment par l'arbitre). Le § 02.9 donne la méthode générale de REW ;
+> ce paragraphe l'applique à l'interface réellement disponible, une **Focusrite Scarlett Solo
+> 3ᵉ génération**, et fixe le câblage broche par broche. **Aucun chiffre ci-dessous n'est une
+> mesure sur l'enceinte** : les charges sont les modèles du dépôt (`SUB_TYPIQUE_BR` pour le sub,
+> `MED_TYP` + deux pavillons 8 Ω / 6,8 µF pour le bloc médiums), les structures d'entrée de la
+> carte sont modélisées, et tout le reste est calculé.
+>
+> Le câblage envisagé le 16 sept. 2026 (entrée micro en travers d'une $R_{ref}$ de 10 Ω) est
+> **écarté** : son calcul d'erreur de charge ignorait les jambes de mode commun et la réjection,
+> non publiées, de l'entrée XLR, et REW en abandonne l'étalonnage *open* (30 à 76 dB d'écart
+> entre voies, pour un plafond de 2 dB).
+
+**Topologie retenue : le montage standard de REW** (configuration A du § 02.2, soustraction
+logicielle), avec **$R_{sense} = 100\ \Omega$ à 0,1 %**, une attribution des entrées
+explicitée, une **lecture 4 fils** et une **masse unique au nœud C**. Trois nœuds nomment tout
+le câblage :
+
+- **A** : jonction entre la résistance de protection et le haut de $R_{sense}$ ;
+- **B** : bas de $R_{sense}$, c'est-à-dire la borne + du câble du haut-parleur ;
+- **C** : borne − du haut-parleur au jig, **seul retour de masse** du montage.
+
+```
+ SORTIE CASQUE (jack 6,35 TRS), canal gauche seul
+   pointe ----[ 33 ohm, >= 0,25 W ]---- A ----[ R_sense 100 ohm 0,1 % ]---- B ----[ HP + cable ]---- C
+   bague (canal droit) : isolee, NON raccordee                                                       |
+   corps -------------------------------------------------------------------------------------------+  (seul retour de masse)
+
+ ENTREE 1 (XLR, micro, 3 kohm)  = voie de REFERENCE (Left)  : broche 2 -> A ; broche 3 -> C ; broche 1 NON raccordee au jig
+ ENTREE 2 (TRS, LINE, 60 kohm)  = voie de MESURE   (Right) : pointe -> B ; bague -> C ; corps NON raccorde au jig
+
+ Chaque fil de lecture rejoint A, B ou C par son propre conducteur (lecture 4 fils).
+```
+
+| Liaison | Côté interface | Côté jig | Remarque |
+|---|---|---|---|
+| Sortie casque, canal gauche | pointe | **33 Ω** puis nœud A | protection ≥ 0,25 W, tolérance indifférente |
+| Sortie casque, retour | corps | nœud C | **seul** retour de masse du jig |
+| Sortie casque, canal droit | bague | non raccordée, isolée | **jamais de fiche mono TS** dans la sortie casque |
+| Entrée 1 (XLR), point chaud | broche 2 | nœud A | lit $V_A - V_C$ : voie de **référence**, *Left* dans REW |
+| Entrée 1 (XLR), point froid | broche 3 | nœud C | par son propre conducteur |
+| Entrée 1 (XLR), blindage | broche 1 | **non raccordée** | soudée au blindage côté fiche, coupée et isolée côté jig |
+| Entrée 2 (TRS, LINE), chaud | pointe | nœud B | lit $V_B - V_C$ : voie de **mesure**, *Right*, l'« Input channel » par défaut de REW |
+| Entrée 2 (TRS, LINE), froid | bague | nœud C | par son propre conducteur |
+| Entrée 2 (TRS, LINE), blindage | corps | **non raccordé** | relié au blindage côté fiche seulement |
+
+REW calcule alors
+
+$$\underline{Z} = R_{sense}\,\frac{\underline{V}_{right}}{\underline{V}_{left} - \underline{V}_{right}}
+= R_{sense}\,\frac{\underline{V}_B - \underline{V}_C}{\underline{V}_A - \underline{V}_B} ,$$
+
+c'est-à-dire exactement la formule du § 02.1, $\underline{V}_A - \underline{V}_B$ étant la tension
+aux bornes de $R_{sense}$ obtenue par soustraction.
+
+#### Pourquoi ce montage : les chiffres qui le justifient
+
+- **L'entrée micro ne fausse rien, quelle que soit sa structure interne.** Elle lit le nœud A,
+  piloté par la source : ses 3 kΩ chargent la source, pas la mesure, puisque $V_A$ est **lue**
+  et non supposée. Le calcul donne des résultats identiques pour trois structures d'entrée
+  (3 kΩ différentiel pur, jambes de mode commun de 6,81 kΩ, jambes de 1,5 kΩ). Le mode commun
+  qu'elle voit vaut $V_A/2$ : un rapport **constant** de 0,5, donc une réjection finie (que
+  Focusrite ne publie pas) n'agit que comme un gain fixe, retiré par l'étalonnage *open*. Avec
+  45 dB de réjection, l'erreur calculée après étalonnage est de $10^{-13}$ %.
+- **La seule charge du haut-parleur est l'entrée ligne** : 60 kΩ en parallèle, soit, avant
+  correction, **−0,11 % au pic de 64 Ω**, −0,19 % au pic médium de 112 Ω et −0,33 % à 200 Ω
+  (calculé : $-|Z|/(|Z| + 60\ \mathrm{k\Omega})$). RINPUT = 60 kΩ et les étalonnages retirent
+  cet effet ; sans étalonnage de référence, le résidu reste ≤ 0,2 %, même si les 60 kΩ sont en
+  réalité 2 × 30 kΩ vers la masse.
+- **Le facteur de soustraction reste modéré avec 100 Ω.** Une dérive relative d'une voie est
+  amplifiée par $F = |\underline{Z} + R_{sense}|/R_{sense}$ — c'est le $c_A/\sqrt2$ du § 02.2 :
+
+  | $R_{sense}$ | pic sub (64 Ω) | pic médiums (112 Ω) | pic synthétique (200 Ω) |
+  |---|---|---|---|
+  | **100 Ω (retenu)** | **1,64** | 2,12 | 3,00 |
+  | 33 Ω (repli) | 2,93 | 4,39 | 7,06 |
+  | 10 Ω | 7,38 | 12,2 | 21,0 |
+
+  *(Calculé, pics des modèles `SUB_TYPIQUE_BR` et `MED_TYP` + pavillons, $\underline{Z}$ réelle
+  au sommet.)* Concrètement, 0,01 dB de rotation de GAIN 2 après étalonnage coûte **0,19 %**
+  au pic de 64 Ω avec 100 Ω, contre 0,86 % avec 10 Ω ; 0,1 dB coûte 1,9 % contre 9,2 %.
+- **Le courant reste bien en dessous de celui d'un casque.** **≤ 4,5 mA** au niveau de
+  travail, ≤ 13,3 mA à pleine échelle même jig en court-circuit (33 Ω en tête), à comparer aux
+  53,4 mA qu'un casque de 32 Ω demande à la même sortie. Avec une $R_{sense}$ de 10 Ω, le
+  court-circuit d'étalonnage en demanderait 164 mA.
+- **Le bruit acoustique ne plaide pas pour une petite $R_{sense}$.** L'erreur due au bruit
+  ambiant vaut $\mathrm{d}Z = e_n/I$ ; à tension fixée aux bornes au pic, elle **ne dépend pas
+  de $R_{sense}$** (vérifié : 0,1486 Ω simulé contre 0,1488 Ω prédit). Ordre de grandeur, sous
+  hypothèses ($S_d = 0{,}121$ m², $Bl = 28$ T·m, 40 à 60 dB SPL par tiers d'octave, balayage de
+  21,8 s, lissage 1/24 d'octave) : 0,2 à 0,8 % par point lissé, divisé par deux avec
+  4 moyennes. Le pic de 16 Hz est le plus exposé (infrasons).
+- **Les erreurs de câblage restent inoffensives.** Avec la masse unique en C et les 33 Ω en
+  tête, toutes les erreurs simulées (broche 1 posée sur A, jack casque inversé…) restent
+  ≤ 52 mA, sans effet sur la mesure, et 1,3 V restent disponibles au nœud A. Sans les 33 Ω, la
+  broche 1 posée sur A court-circuiterait la sortie casque, que seule sa protection interne,
+  inconnue, limiterait.
+
+#### Réglages de l'interface
+
+- **48 V ÉTEINT** — voyant rouge noir, vérifié **avant chaque branchement**. Activée par
+  erreur, l'alimentation fantôme pousse du continu dans le jig (quelques mA dans le
+  haut-parleur) et peut provoquer une décharge au branchement.
+- **AIR éteint** (il modifie la réponse de l'entrée micro) ; **INST éteint** : l'entrée 2 reste
+  en LINE, symétrique TRS, 60 kΩ.
+- **DIRECT MONITOR sur OFF** : sinon les entrées, sommées, repartent vers la sortie casque, qui
+  est justement celle qui attaque le jig.
+- **GAIN 1 en butée minimum** : pleine échelle +9 dBu = 2,18 V, 2,0 dB au-dessus du maximum du
+  casque (+7 dBu = 1,73 V).
+- **GAIN 2 monté d'environ 13 dB** (écart entre les pleines échelles +22 dBu et +9 dBu : 13,00 dB
+  ; plage disponible 56 dB). Méthode : fils du haut-parleur ouverts, sinus de 1 kHz du
+  générateur de REW, tourner GAIN 2 jusqu'à ce que **les deux voies lisent le même niveau à
+  1 dB près** — aux gains minimaux l'écart vaudrait −13,01 dB, et REW abandonne l'étalonnage
+  *open* au-delà de 2 dB. Puis **bloquer GAIN 2 au ruban adhésif** : toute rotation ultérieure
+  oblige à refaire les étalonnages (0,01 dB = 0,19 % au pic de 64 Ω).
+- **MONITOR** sur une position repérée (par exemple le maximum) : il ne règle que le niveau et
+  ne fausse rien, puisque les deux voies lisent **après** lui. Ce sont GAIN 1 et GAIN 2 qui ne
+  doivent plus bouger.
+- **Sorties ligne arrière DÉBRANCHÉES** pendant tout le jig : même bouton MONITOR, même signal
+  que le casque ; au niveau de travail elles portent environ 1,75 V, de quoi pousser l'E-800
+  (sensibilité 0,775 V) à pleine puissance. Le haut-parleur mesuré est débranché de tout ampli
+  et de tout filtre (§ 02.10).
+- **Chauffe d'un quart d'heure** avant d'étalonner, par précaution, puisque GAIN 2 n'est pas en
+  butée.
+- **Aucun appareil relié à la terre** (oscilloscope, GBF) branché sur le jig pendant une mesure
+  REW : le point de masse unique deviendrait une boucle.
+
+#### Réglages de REW
+
+- *Preferences › Soundcard* : pilote ASIO Focusrite (ou pilote Java), **48 kHz** — changer la
+  fréquence d'échantillonnage oblige à refaire les étalonnages. Sortie : **gauche seule**
+  (Out 1). *Input channel* : **droite** (entrée 2, ligne, aux bornes du haut-parleur), qui est
+  la valeur par défaut ; la voie gauche (entrée 1, XLR) sert alors de référence. Contrôle au
+  *Check levels* : c'est la voie **gauche** qui doit tomber quand on débranche le XLR.
+- Mesure de type *Impedance*. **Sense resistor = valeur certifiée** de la 100 Ω à 0,1 %.
+  **RINPUT = 60 000 Ω** (impédance de l'entrée ligne, celle qui est aux bornes de la charge) ;
+  REW cesse de l'utiliser après l'étalonnage de référence.
+- Balayage de 5 Hz à 20 kHz, longueur **1M** (21,8 s à 48 kHz) ou plus, **4 répétitions
+  moyennées**. Bande exploitée : 10 Hz – 1 kHz pour le sub, 10 Hz – 2 kHz pour les médiums
+  (§ 02.6).
+
+#### Niveau, exprimé en volts au nœud A
+
+Le niveau se fixe par $V_A$, tension du nœud A **fils ouverts**, lue sur la voie de référence ;
+les dBFS ne servent qu'à la lecture et s'écrivent **toujours avec leur convention** (REW affiche
+par défaut un sinus pleine échelle à −3 dBFS ; l'option « Full scale sine rms is 0 dBFS » le met
+à 0 dBFS).
+
+1. **Premier essai à −40 dBFS**, puis *Check levels*.
+2. **Premier balayage à $V_A = 0{,}30$ V** : au plus 180 mV aux bornes même pour un pic de 200 Ω
+   (97 mV au pic du sub, 137 mV au pic médium), courant ≤ 2,2 mA. Lecture : −17,2 dBFS en
+   convention « sinus plein = 0 dBFS », −20,2 dBFS en convention par défaut.
+3. **Ensuite, viser environ 200 mV aux bornes au pic** (le plafond de REW, § 02.5) :
+   $$V_A \approx 0{,}2\ \text{V}\times\frac{133{,}5\ \Omega + |Z|_{pic}}{|Z|_{pic}}$$
+   (133,5 Ω = $R_{sense}$ + protection + ≈ 0,5 Ω supposés pour la sortie casque, spécifiée
+   < 1 Ω). Soit **$V_A \approx 0{,}62$ V pour le pic de 64 Ω** (−11,0 dBFS « sinus plein »,
+   −14,0 dBFS par défaut) et 0,44 V pour le pic médium de 112 Ω (−14,0 / −17,0 dBFS).
+   Courant ≤ 4,5 mA.
+
+200 mV au pic est une consigne de REW, **pas une preuve de linéarité** : le contrôle à deux
+niveaux (12 dB d'écart) du § 02.5 reste nécessaire, cette fois pour le haut-parleur et non plus
+pour l'écrêtage de la sortie casque.
+
+#### Étalonnages, dans l'ordre, au bout du câble du haut-parleur
+
+0. **Appariement des voies AVANT tout étalonnage** : GAIN 2 réglé fils ouverts, à 1 dB près
+   (ci-dessus).
+1. ***Open*** : pinces séparées (écart de gain et de phase entre voies, y compris sous 20 Hz).
+2. ***Short*** : pinces serrées l'une contre l'autre (impédance du câble du haut-parleur, qui
+   est inclus entre B et C).
+3. ***Reference*** sur **une seconde 100 Ω à 0,1 %**, dont on saisit la valeur certifiée.
+
+Sauvegarder le fichier d'étalonnage. **Tout refaire** si un cordon, la fréquence
+d'échantillonnage ou un GAIN change.
+
+**Validation, avant la première mesure du haut-parleur** — jamais sur la résistance qui a servi
+de référence (la validation serait circulaire) :
+
+- la **10 Ω** : courbe plate à sa valeur relevée au multimètre, phase nulle, critères du § 02.8 ;
+- le **100 µF** : $|Z|$ de 159 à 15,9 Ω sur 10–100 Hz, phase −90°, critères du § 02.8 ;
+- **en fin de séance, relire la 100 Ω de référence** : un écart de **0,23 %** trahit 0,01 dB de
+  dérive de la voie 2.
+
+#### Diagnostics
+
+- **Voies permutées** : REW affiche des courbes **décalées vers le haut d'environ
+  $R_{sense}$, soit ≈ +100 Ω**. Avec 100 Ω, impossible de le manquer.
+- *Check levels* qui ne réagit pas sur la voie gauche au débranchement du XLR : attribution des
+  entrées inversée dans les préférences.
+- Étalonnage *open* refusé : écart des voies > 2 dB, GAIN 2 à reprendre.
+- Relecture de la référence en fin de séance décalée : GAIN 2 a dérivé ou bougé (0,23 % par
+  0,01 dB). Consigner l'écart avec la séance ; il chiffre la dérive subie par les mesures du
+  jour.
+- **Avant la mise sous tension**, contrôle à l'ohmmètre du câblage (A, B, C ; broche 1 et corps
+  du TRS non raccordés), puis premier essai à −40 dBFS.
+
+#### Rôle de la 10 Ω : elle n'est plus résistance de mesure
+
+La 10 Ω garde trois rôles, et seulement ceux-là :
+
+1. **dipôle de validation** de la chaîne Scarlett (REW conseille une mesure d'essai sur une
+   résistance de moins de 100 Ω ; mesurée après les trois étalonnages et distincte de la
+   référence, elle casse la circularité) ;
+2. **résistance connue sous 20 Hz** (manip A5 du livret : caractériser les voies jusqu'à
+   10 Hz, là où le constructeur ne spécifie rien) ;
+3. **configuration B de recoupement** de la chaîne GBF + oscilloscope (§ 02.2, § 02.4), rôle
+   inchangé.
+
+Elle ne sert **ni de $R_{sense}$** (facteur de soustraction 7,4 au lieu de 1,64 au pic de 64 Ω,
+164 mA demandés au casque) **ni de référence REW** (résidu de 0,29 % contre 0,08 % pour une
+100 Ω dans le modèle « rapport » ; une 10 Ω connue à 1 % décalerait la courbe de 1,6 à 3,1 %).
+L'acheter **à 0,1 % si possible** : elle validera alors à 0,1 % près au lieu d'environ 1 %.
+
+**Achats qui en découlent** : **deux 100 Ω à 0,1 %** ($R_{sense}$ et référence), **une 33 Ω
+≥ 0,25 W** (protection), la **10 Ω** (idéalement 0,1 %). S'y ajoute, pour la chaîne GBF +
+oscilloscope, une **troisième 100 Ω, à 1 %, ≥ 1 W, film métallique** (§ 02.4), distincte des deux
+0,1 % : sinon les deux chaînes partageraient le même facteur d'échelle et le recoupement A7 ne
+verrait plus une erreur sur cette résistance. **Repli** si une 100 Ω manque : le
+même montage avec $R_{sense} = 33\ \Omega$ (facteur 2,93 au pic de 64 Ω au lieu de 1,64).
+
+#### Ce qui reste incertain
+
+- **Structure interne de l'entrée XLR** (jambes de mode commun, réjection) : non publiée par
+  Focusrite [[à vérifier]]. Le montage retenu **n'en dépend pas** (résultats identiques pour
+  trois structures, $10^{-13}$ % après étalonnage) — c'est précisément ce qui motive son choix.
+- **Algorithme de l'étalonnage de référence de REW** : non publié [[à vérifier]]. Deux modèles
+  plausibles encadrent son effet : dans le modèle open-short-load complet, l'erreur finale égale
+  la tolérance de la référence ; dans le modèle « correction du rapport des voies », il reste
+  **0,08 à 0,28 %** avec une référence de 100 Ω à 0,1 %. Sauter la référence coûterait au plus
+  0,2 %, plus la tolérance de $R_{sense}$.
+- **Comportement sous 20 Hz** : réponse garantie ±0,1 dB sur 20 Hz – 20 kHz seulement. Dans le
+  modèle, l'étalonnage *open* retire l'écart entre voies (sans lui : 1,9 % et 5,5° au pic de
+  16 Hz), ce qui suppose que REW stocke un rapport complexe fonction de la fréquence, ce que sa
+  documentation ne détaille pas [[à mesurer : manip A5, 10 Ω mesurée jusqu'à 10 Hz]].
+- **Diaphonie** : J. Mulcahy, auteur de REW, juge le Solo utilisable mais probablement délicat
+  (diaphonie, entrées dissemblables). Une diaphonie de −60 dB coûte 0,20 % après *open* +
+  *short* et disparaît avec la référence dans le modèle. Le vrai juge reste la validation
+  (10 Ω, 100 µF, relecture de la référence).
+
+#### Sources de ce paragraphe
+
+- Room EQ Wizard, aide « Impedance Measurement »
+  (https://www.roomeqwizard.com/help/help_en-GB/html/impedancemeasurement.html), relue le
+  23 sept. 2026, paraphrasée : formule $Z = R_{sense}V_{right}/(V_{left} - V_{right})$ ;
+  $R_{sense}$ de 100 Ω sur une sortie casque, à 0,1 % ou mesurée ; étalonnage *open* abandonné
+  au-delà de 2 dB d'écart entre voies ; référence de 100 Ω ou moins, après laquelle RINPUT
+  n'est plus utilisé ; 100 à 200 mV aux bornes au plus ; entrées permutées → courbes décalées
+  d'environ $R_{sense}$ ; essai conseillé sur une résistance de moins de 100 Ω. Aide
+  « Soundcard » : la voie de mesure par défaut est la droite.
+- Focusrite, *Scarlett Solo 3rd Gen User Guide* V2
+  (https://fael-downloads-prod.focusrite.com/customer/prod/downloads/Scarlett%20Solo%203rd%20Gen%20User%20Guide%20V2_0.pdf) :
+  p. 17, entrée micro 3 kΩ et +9 dBu, entrée ligne 60 kΩ et +22 dBu, plage de gain 56 dB,
+  casque +7 dBu et < 1 Ω ; p. 18, entrée 2 symétrique (TRS) en LINE ; p. 15, MONITOR règle à
+  la fois les sorties arrière et le casque ; p. 13, DIRECT MONITOR renvoie les entrées vers le
+  casque. Aucune réjection de mode commun ni aucune structure d'entrée n'y est publiée.
+- Calculs de l'arbitre (numpy, 23 sept. 2026) : solveur nodal, trois structures d'entrée XLR,
+  deux structures d'entrée ligne, réjection de mode commun complexe, deux modèles de la chaîne
+  REW ; charges `modele_hp.Z_bassreflex8(SUB_TYPIQUE_BR)` et `Z_charge_passe_haut(MED_TYP)`
+  avec deux pavillons 8 Ω / 6,8 µF (pic médium de 112,0 Ω à 76,7 Hz, recalculé pour ce
+  paragraphe).
+
 ### Ce qu'il faut retenir pour l'oral
 
 - $\underline{Z} = R_{ref}\,\underline{V}_d/\underline{V}_R$ : un rapport de deux tensions sur le
@@ -1876,13 +2194,22 @@ sinon la phase 2 recommencera le dépouillement) :
 - Petits signaux à **tension aux bornes constante** (150 mV réajustés à chaque point), en caisse,
   dipôle nu, pièce silencieuse ; deux $R_{ref}$ et deux méthodes (oscilloscope / REW) recoupées
   par $E_n$.
+- Sur la Scarlett, le **montage standard de REW** : $R_{sense} = 100\ \Omega$ à 0,1 %, entrée
+  micro sur le nœud source (ses 3 kΩ n'y faussent rien), entrée ligne aux bornes du
+  haut-parleur (−0,11 % au pic, corrigé), facteur de soustraction 1,64 au pic de 64 Ω contre
+  7,4 avec 10 Ω. La 10 Ω valide la chaîne, elle ne mesure pas (§ 02.13).
 
 ### Sources
 
 - Room EQ Wizard, aide en ligne, page « Impedance Measurement » (jig, résistance de détection,
   calibrations, niveaux « 100 mV to 200 mV at most », bruit) :
   https://www.roomeqwizard.com/help/help_en-GB/html/impedancemeasurement.html
-  (consultée le 2026-09-02) ; page « Thiele Small Parameters » de la même aide.
+  (consultée le 2026-09-02, relue le 2026-09-23 pour le § 02.13) ; page « Thiele Small
+  Parameters » de la même aide.
+- Focusrite, *Scarlett Solo 3rd Gen User Guide* V2 (caractéristiques des entrées et de la
+  sortie casque, rôle des boutons MONITOR et DIRECT MONITOR) :
+  https://fael-downloads-prod.focusrite.com/customer/prod/downloads/Scarlett%20Solo%203rd%20Gen%20User%20Guide%20V2_0.pdf
+  (pages citées au § 02.13).
 - R. Elliott (Elliott Sound Products), « Measuring Loudspeaker Parameters » :
   https://sound-au.com/tsp.htm — méthode de la résistance série, mesure de $f_s$ et des $Q$
   au générateur ; référence libre, vérifiée en ligne le 2026-09-09, adaptée au niveau prépa.
@@ -2452,7 +2779,7 @@ Critères associés déjà gelés ailleurs : la règle de traitement des points 
 
 > **Ce qu'il faut retenir pour l'oral**
 > - Le modèle direct tient en une formule : $Z = R_e + j\omega L_e + R_{es}/[1 + jQ_{ms}(f/f_s - f_s/f)]$ ; chacun des cinq paramètres se lit sur la courbe, ce qui fournit l'initialisation. Mais cette formule décrit une caisse **close** : la nôtre est **bass-reflex à deux évents**, donc le modèle par défaut a **huit** paramètres (`Z_bassreflex8`), la branche d'évent shuntant la branche motionnelle. Les cinq paramètres restent au dossier comme contrôle : ajustés sur des données à deux pics, ils convergent sans broncher vers des nombres plausibles et faux ($s^2 = 93$ contre ≈ 1) — c'est la meilleure démonstration de ce que vaut un « ça a convergé ».
-> - **$f_b$ se recoupe par trois voies indépendantes** : prédiction géométrique au pied à coulisse (Helmholtz, § 01.10 bis), lecture du creux d'impédance, et paramètre ajusté. Chacune a son biais, que j'annonce : le creux est décalé de quelques pour-cent par les pertes, la prédiction géométrique est un intervalle à ±3 % à cause de la correction de bout. Les faire concorder valide le modèle de caisse **sans passer par l'ajustement**.
+> - **$f_b$ se recoupe par trois voies indépendantes** : prédiction géométrique au pied à coulisse (Helmholtz, § 01.10 bis), lecture directe sur la courbe (au passage par zéro de la phase entre les deux pics, plus net que l'argmin du creux, qui est plat — § 02.6), et paramètre ajusté. Chacune a son biais, que j'annonce : la lecture directe est décalée de quelques pour-cent par les pertes, la prédiction géométrique est un intervalle à ±3 % à cause de la correction de bout. Les faire concorder valide le modèle de caisse **sans passer par l'ajustement**.
 > - Le problème inverse est un problème de moindres carrés *pondérés* : on minimise $\sum r_k^2$ avec $r_k$ = écart / incertitude, et le $\chi^2$ réduit ≈ 1 valide à la fois le modèle et les incertitudes de chaîne. C'est la « procédure de validation par les écarts normalisés » du programme.
 > - Non linéaire ⇒ Gauss-Newton amorti (Levenberg-Marquardt) ; je l'ai réécrit en numpy pur pour ne pas dépendre d'une boîte noire, et il retrouve scipy à $6\times10^{-8}$ près.
 > - Les incertitudes sont **calibrées** : sur 300 réalisations de bruit, l'écart à la valeur vraie reste sous $u$ dans 65 à 71 % des cas (68 % attendus) et sous $2u$ dans 95 à 96 %. $R_{es}$ et $Q_{ms}$ sont corrélés à 0,83 : on propage la covariance complète, pas cinq $u$ indépendants.
@@ -2574,7 +2901,7 @@ Valeurs réelles du sub et des médiums : [[à mesurer]] (phase 1) ; le « simpl
 
 > **Ce que le constat du 16 septembre 2026 change ici.** Le sub est **bass-reflex à deux évents** (§ 01.10) : la charge du passe-bas a **deux pics et un creux**, et sur un jeu plausible le **second pic tombe à 86 Hz**, c'est-à-dire dans la zone de raccord. Les tableaux ci-dessous, établis sur une charge à un seul pic, restent valables comme **illustration de méthode** — ils montrent *comment* une charge non résistive déforme un filtre — mais ils **sous-estiment le cas réel** : à 100 Hz le modèle bass-reflex donne $\lvert Z\rvert = 22{,}4$ Ω contre 14,1 Ω pour le modèle typique à un pic. Ce qui suit est donc à lire comme une borne basse de l'effet. Les valeurs définitives viendront de $\underline{Z}(f)$ mesurée puis ajustée par `Z_bassreflex8`.
 >
-> **Et la charge du passe-haut n'est pas le bloc médiums seul.** Deux pavillons d'ultra-aigu sont câblés **en parallèle** des médiums (§ 02.6). Acoustiquement ils sont hors périmètre ; **électriquement ils sont dans la charge**. Selon qu'un condensateur de protection les découple ou non [[à vérifier]], et **les deux pavillons comptés en parallèle** (§ 02.6, jeu `MED_TYP`), $\lvert Z\rvert$ du bloc à 100 Hz passe de 29,3 Ω à 26,3–21,8 Ω (avec condensateur de 3,3 à 10 µF : $-0{,}9$ à $-2{,}6$ dB, **pas négligeable**) ou à **3,7 Ω** (sans : $-17{,}9$ dB, sous le minimum de 4 Ω du E-800). *Les chiffres de ce paragraphe sont donnés sur `MED_TYP` et non sur le jeu illustratif à 12,2 Ω du présent §, pour qu'il n'y ait qu'un seul jeu dans tout le projet : un effet négligeable devant un bloc à 12 Ω ne l'est plus devant un bloc à 29 Ω au voisinage de sa résonance.* Dans les deux cas l'optimiseur doit recevoir l'impédance du bloc **tel qu'il est câblé**, pavillons connectés.
+> **Et la charge du passe-haut n'est pas le bloc médiums seul.** Deux pavillons d'ultra-aigu sont câblés **en parallèle** des médiums (§ 02.6). Acoustiquement ils sont hors périmètre ; **électriquement ils sont dans la charge**. Un condensateur de protection les découple (**présent**, constat du 16 sept. 2026 ; valeur à mesurer, § 02.6) : **les deux pavillons comptés en parallèle** (§ 02.6, jeu `MED_TYP`), $\lvert Z\rvert$ du bloc à 100 Hz passe de 29,3 Ω à 26,3–21,8 Ω pour 3,3 à 10 µF ($-0{,}9$ à $-2{,}6$ dB, soit $-10$ à $-26$ %, **pas négligeable**). Sans condensateur — cas écarté par le constat, et vérifié par le contrôle B1 bis du livret — il tomberait à **3,7 Ω** ($-17{,}9$ dB, sous le minimum de 4 Ω du E-800). *Les chiffres de ce paragraphe sont donnés sur `MED_TYP` et non sur le jeu illustratif à 12,2 Ω du présent §, pour qu'il n'y ait qu'un seul jeu dans tout le projet : un effet négligeable devant un bloc à 12 Ω ne l'est plus devant un bloc à 29 Ω au voisinage de sa résonance.* L'optimiseur doit recevoir l'impédance du bloc **tel qu'il est câblé**, pavillons connectés.
 
 **Premier ordre de grandeur** — si $Z$ était résistive de module $\lvert Z\rvert$ : $Q_{eff}=\lvert Z\rvert\sqrt{C/L}$ = 0,73 (8 Ω), **1,28** (14 Ω), **4,38** (48 Ω). Le calcul exact avec la phase de $Z$ est pire, car au-dessus de $f_s$ la branche motionnelle est capacitive et s'ajoute à $C_1$ :
 
@@ -3957,7 +4284,7 @@ A la coupure (apres 600 s a 50 W) : dT_bobine = 109.6 K, dT_aimant = 9.7 K, R_e 
 | 0,05 Ω | 9,298 ± 0,021 Ω | 109,6 ± 0,8 K | 9,8 ± 0,8 s |
 | **0,1 Ω (calibre 200 Ω)** | 9,303 ± 0,042 Ω | **109,7 ± 1,6 K** | 9,8 ± 1,2 s |
 
-Le biais est nul et la méthode reste utilisable **même avec un multimètre 3½ digits sans calibre 20 Ω** (le plus bas calibre étant alors 200 Ω, soit 0,1 Ω de résolution sur une lecture de 6,5 Ω) : ±1,6 K sur $\Delta T$, largement suffisant pour comparer à la prédiction de 06.5. `[[à vérifier sur le multimètre du lycée : calibre le plus bas et résolution]]`. **Repli sans achat** : injecter un courant continu ou à 1–2 Hz à travers la $R_{\text{ref}}$ 10 Ω et lire $V_{HP}$ et $V_{R_{\text{ref}}}$ à l'oscilloscope — c'est exactement le montage de la phase 1, avec une meilleure résolution et l'enregistrement automatique de la décroissance.
+Le biais est nul et la méthode reste utilisable **même avec un multimètre 3½ digits sans calibre 20 Ω** (le plus bas calibre étant alors 200 Ω, soit 0,1 Ω de résolution sur une lecture de 6,5 Ω) : ±1,6 K sur $\Delta T$, largement suffisant pour comparer à la prédiction de 06.5. `[[à vérifier sur le multimètre du lycée : calibre le plus bas et résolution]]`. **Repli sans commutateur** (réécrit le 23 sept. 2026, comme le livret C5) : pas de mesure à chaud aux bornes d'un haut-parleur relié à l'ampli. Couper le signal, **éteindre l'E-800**, débrancher le câble du haut-parleur côté filtre, puis appliquer le protocole B1-b du livret : alimentation limitée à 0,2 A (0,15 A visés), **ballast de puissance dédié 10 Ω / 5 W — jamais la 10 Ω de précision**, qui est l'étalon de validation. Le haut-parleur n'est jamais relié en même temps à l'ampli et à une source de continu : le continu partirait dans l'étage de sortie de l'E-800, et la tension de l'ampli se retrouverait sur la résistance (8 W sous 8,94 V dans une 10 Ω). Le geste prend 10 à 20 s : les premières secondes de la décroissance sont perdues et l'extrapolation à $t = 0$ s'appuie sur moins de points. *L'ancien repli (« courant continu à travers la $R_{ref}$ 10 Ω, c'est le montage de la phase 1 ») est retiré : il faisait passer du continu dans l'étalon de précision, aux bornes d'un haut-parleur attaqué par l'ampli, et le montage de la phase 1 n'est plus une $R_{ref}$ de 10 Ω (§ 02.13).*
 
 **Deux précautions pratiques** (absentes du brouillon, elles coûtent une manip ou un commutateur) : (i) **couper le signal et attendre ~1 s l'arrêt du cône avant de basculer** — la bobine encore en mouvement génère une f.é.m. qui fausse la mesure ohmique ; (ii) **commutateur à coupure avant fermeture**, jamais l'inverse, sinon la source de courant du multimètre débite dans la sortie de l'ampli, et l'ouverture d'une charge inductive sur un ampli en marche produit une surtension.
 
@@ -4390,7 +4717,7 @@ Ordre imposé par la feuille de route : (1) filtre sur **résistance de puissanc
 
   Chaîne : GBF (ou REW) → E-800 à bas niveau → filtre → charge. Le E-800 a un gain de 36,7 dB en position 0,77 V (1 V en sortie pour 15 mV en entrée) ou 31,5 dB en position 1,4 V (26 mV) ; le sélecteur a aussi une position « 26 dB » (manuel Thomann), soit 50 mV pour 1 V. On règle le niveau au potentiomètre du canal et on le **mesure** au multimètre RMS.
 
-- **Méthode principale : REW à deux canaux via la carte son** (un balayage donne gain *et* phase). Diviseurs résistifs **50:1** sur chaque tension — pas 20:1 : face à une entrée ligne limitée à ~1,2 V RMS [[à vérifier selon la carte]], un 20:1 ne laisse que 1,6 dB de marge au niveau fort (20 V → 1,00 V) et sature dès 24 V, alors qu'un 50:1 laisse 9,5 dB au niveau fort et ne sature pas avant 60 V.
+- **Méthode principale : REW à deux canaux via la carte son** (un balayage donne gain *et* phase). Diviseurs résistifs **10 kΩ 1 % (½ W) + 220 Ω 1 %**, rapport nominal 46,5:1, sur chaque tension (livret, groupe C, variante REW) — pas 20:1. La Scarlett Solo n'a qu'**une** entrée ligne : $V_E$ (la référence) passe par l'**entrée 1, XLR, 3 kΩ**, qui charge le pied du diviseur (rapport ≈ 49,8, soit +7,2 %), $V_S$ (la mesure) par l'**entrée 2, TRS en LINE** (+0,36 %) : deux diviseurs « identiques » ne donnent pas le même rapport, donc **mesurer le rapport de CHAQUE diviseur en place**, carte branchée, à 100 Hz, contre le multimètre RMS (§ 02.9). Pleines échelles : entrée 1 à 2,18 V au gain minimal (≈ 109 V au point mesuré) ; entrée 2 à 9,75 V au gain minimal, 2,18 V si GAIN 2 est resté au repère du jig (+13 dB). Au niveau fort (20 V → 0,40 V sur l'entrée 1), la marge dépasse 14 dB. DIRECT MONITOR sur OFF avant chaque mise sous tension de l'E-800, 48 V coupé.
 - **Oscilloscope 2 voies : contre-vérification, pas méthode principale.** Au 1/12 d'octave de 20 à 500 Hz il y a 56 fréquences, soit plus de 650 relevés manuels (deux lectures × deux voies × trois filtres), à refaire sur résistance puis sur haut-parleur : plusieurs séances entières, dans une phase 4 qui tient de décembre à février. On garde l'oscilloscope pour ~10 fréquences bien choisies — 20, 50, 80, 94, 97, 100, 125, 200, 315, 500 Hz — ce qui suffit à valider la chaîne REW et reste infaillible si la carte son pose problème. C'est déjà la logique de repli de la phase 1. On y mesure $V_{\text{in}}$ (sortie ampli) et $V_{\text{out}}$ (aux bornes de la charge) : $|H| = V_{\text{out}}/V_{\text{in}}$ en dB, $\varphi = -360\,f\,\Delta t$ (convention C2).
 - **Masses : oscilloscope ET carte son.** Les masses des sondes d'oscilloscope sont reliées à la terre ; **les deux entrées d'une interface audio partagent leur masse, elle-même reliée au châssis du PC donc à la terre** — c'est exactement le même risque, en pire : si la borne − de l'ampli n'est pas au potentiel de masse, y brancher un diviseur la met à la terre, c'est-à-dire un court-circuit partiel d'une sortie de 350 W et la destruction probable de l'interface. Le manuel du E-800 décrit trois modes (stéréo / parallèle / pont) et un interrupteur ground/lift, mais ne dit pas si la borne − HP est au potentiel de masse. **Avant tout branchement** : ampli éteint, continuité borne − ↔ châssis au multimètre ; ampli allumé sans signal, tension borne − ↔ terre ≈ 0 V. Si la sortie est flottante : à l'oscilloscope, deux sondes et fonction A − B ; à la carte son, entrées symétriques réellement flottantes, ou transformateurs de ligne 1:1 (~15 € pièce), ou l'on renonce et l'on reste à l'oscilloscope. **Jamais en mode pont, dans les deux cas.** [[à vérifier au multimètre]]
 - **Attendu sur 8 Ω** (filtre catalogue 18 mH / 150 µF). Convention C1 : **$f_c$ est le croisement des deux voies** (§ 04.1) ; sur 8 Ω résistif et sans DCR il tombe à $f_0 = 96{,}86$ Hz, où les deux branches valent −2,73 dB et sont à ∓90° — coïncidence propre au cas idéal, qui cesse dès qu'il y a une DCR ou une charge réelle (§ 04.1, tableau des DCR). Les autres fréquences sont des **repères** distincts, rapportés à part :
@@ -4639,12 +4966,12 @@ La référence active sert de **borne** (ce que ferait un filtre qui ne voit jam
 
 ### <a id="s07-10"></a>07.10 REW en pratique
 
-- **Matériel et câblage exact** : micro de mesure XLR (alimentation fantôme) sur l'**entrée 1** d'une interface à deux entrées ; **sortie gauche → ampli** ; **sortie droite → entrée 2** (boucle de retour). Le micro et la boucle doivent être sur **la même interface** : l'aide REW n'autorise les balayages multiples qu'en l'absence de référence temporelle **ou** avec boucle de retour, et les interdit si entrée et sortie sont sur des appareils différents. **Un micro USB est donc exclu de tout ce protocole** — à dire au moment de documenter le modèle de carte son [[à documenter]].
+- **Matériel et câblage exact** : micro de mesure XLR (alimentation fantôme) sur l'**entrée 1** d'une interface à deux entrées ; **sortie gauche → ampli** ; **sortie droite → entrée 2** (boucle de retour). Le micro et la boucle doivent être sur **la même interface** : l'aide REW n'autorise les balayages multiples qu'en l'absence de référence temporelle **ou** avec boucle de retour, et les interdit si entrée et sortie sont sur des appareils différents. **Un micro USB est donc exclu de tout ce protocole.** La carte est documentée depuis le 16 sept. 2026 (Focusrite Scarlett Solo 3ᵉ gén. : micro XLR sur l'entrée 1, boucle de retour sur l'entrée 2) ; seul le modèle du micro reste à documenter (`DECISIONS-PHASE-0.md`, D8).
 - **Preferences > Soundcard** : 48 kHz ; « Calibrate soundcard » avec la boucle (compense la réponse de la carte, à faire une fois, fichier sauvegardé) ; référence temporelle « Use loopback as timing reference » — indispensable pour comparer les phases de deux mesures (sommation 07.4, évent 07.3, polarité 07.5).
 - **Preferences > Mic/Meter** : charger systématiquement le fichier de calibration du micro. S'il n'existe pas [[à vérifier]] : la réponse basse-fréquence du micro entre **à l'identique** dans les trois valeurs du critère et se simplifie donc dans la comparaison ; elle ne se simplifie pas si l'on veut lire le critère comme une qualité absolue — ce qu'on s'interdit (07.3). Ne pas affirmer « les micros de mesure sont plats à ±0,5 dB » : à 40 Hz, sur une capsule d'entrée de gamme, l'écart dépasse souvent ±1 dB et certaines sont filtrées vers 20–30 Hz.
 - **Measure — deux jeux de réglages distincts** (voir 07.11) : REW balaie en réalité **de la moitié du Start au double du End**.
   - *Niveau faible* : Start 10 Hz (le contenu descend donc à 5 Hz — c'est justement ce qu'on veut pour caractériser le comportement sous l'accord), End 1 kHz. **Uniquement au niveau faible**, et en surveillant visuellement le débattement au premier balayage de chaque session.
-  - *Niveau fort* : **Start $\ge 2f_B$** ($f_B$ = fréquence d'accord de l'évent, mesurée en phase 1 par le double pic d'impédance [[à mesurer]]), pour que le contenu réel reste au-dessus de $f_B$ ; en caisse close, Start $\ge 2 f_c(\text{caisse})$. À défaut, passe-haut de protection en amont de l'ampli.
+  - *Niveau fort* : **Start $\ge 2f_B$** ($f_B$ = fréquence d'accord de l'évent, mesurée en phase 1 au passage par zéro de la phase entre les deux pics d'impédance, ou prise de l'ajustement [[à mesurer]]), pour que le contenu réel reste au-dessus de $f_B$ ; en caisse close, Start $\ge 2 f_c(\text{caisse})$. À défaut, passe-haut de protection en amont de l'ampli.
   - Commun : Length 256 k (5,46 s à 48 kHz ; chaque doublement gagne ~3 dB de rapport signal/bruit) ; Level −12 dBFS par défaut (ce niveau est **numérique** : la tension aux bornes se **mesure** au multimètre, 07.8) ; « Check levels » avant chaque session ; Repetitions 2 à 4 (pré-moyennage synchrone, autorisé car entrée et sortie sont sur la même carte).
 - **Distorsion** : exporter la **THD** de chaque balayage (REW la fournit dans le même balayage). Sans elle, un écart entre niveau faible et niveau fort ne peut pas être attribué à la dérive thermique plutôt qu'à la non-linéarité de la suspension, de $Bl(x)$ ou à la turbulence de l'évent. Seuil de rejet d'une mesure « fort » [[à geler en phase 0]].
 - **Moyennage des répétitions** : All SPL > « Vector average » (module et phase, mesures avec référence temporelle) ; « RMS average » ignore la phase. Lissage : aucun (ou 1/48) pour l'export ; le lissage 1/12 n'est qu'un confort d'affichage.
@@ -4655,10 +4982,10 @@ La référence active sert de **borne** (ce que ferait un filtre qui ne voit jam
 
 - **Oreilles** : en champ proche, **112 dB SPL dès le niveau faible gelé** (0,5 W), 125 dB à 10 W et 132 dB à 50 W (sensibilité 95 dB/2,83 V/m supposée). Bouchons obligatoires **y compris au niveau faible**, personne dans l'axe pendant les balayages forts, balayages courts, pas de tête à moins de 1 m du 18″.
 - **Micro** : SPL maximal de la capsule [[à vérifier]] ; réduire le gain d'entrée avant le niveau fort ; surveiller l'écrêtage dans « Check levels » ; bonnette au champ proche de l'évent (jet d'air, 07.3).
-- **Haut-parleurs** : médiums jamais en pleine bande au niveau fort sans passe-haut (leur réponse brute se mesure au niveau faible seulement). **Le sub est bass-reflex à deux évents** (§ 01.10) : le seuil pertinent n'est **pas** 20 Hz mais la fréquence d'accord $f_b$, car sous $f_b$ la membrane n'est plus chargée par le ressort d'air et le débattement croît sans butée. Chiffré sur le modèle du § 02.6 : $\times1{,}8$ à $f_b/2$ et $\times2{,}3$ à 10 Hz par rapport à $f_b$, soit **20 mm crête à 52,9 V et 10 Hz** — au-delà du $X_{max}$ de tout 18″. Règle : **au niveau fort, aucun contenu sous l'accord — Start REW $\ge 2f_b$** (07.10), jamais de pleine puissance, et vérification visuelle du débattement avant chaque balayage fort. La règle complète, avec la distinction petit signal / fort signal, est au § 02.6 (« Borne basse du balayage ») : **la mesure d'impédance à 150 mV, elle, descend librement à 10 Hz et le doit** — c'est là que se trouve le pic bas $f_L$.
-  - **Et les pavillons.** Deux haut-parleurs d'ultra-aigu sont câblés en parallèle des médiums (§ 02.6). S'il n'y a **pas** de condensateur en série avec eux [[à vérifier]], ils reçoivent le 100 Hz à pleine puissance pendant les balayages de la voie médium : hors de leur bande, avec une excursion que leur suspension n'est pas faite pour encaisser. **Vérifier la présence du condensateur avant le premier balayage au niveau fort** ; à défaut, limiter durée et niveau, et surveiller l'odeur de colle chaude.
+- **Haut-parleurs** : médiums jamais en pleine bande au niveau fort sans passe-haut (leur réponse brute se mesure au niveau faible seulement). **Le sub est bass-reflex à deux évents** (§ 01.10) : le seuil pertinent n'est **pas** 20 Hz mais la fréquence d'accord $f_b$, car sous $f_b$ la membrane n'est plus chargée par le ressort d'air et le débattement croît sans butée. Chiffré sur le modèle du § 02.6 (recalculé le 23 sept. 2026) : $\times16$ à $f_b/2$ et $\times22$ à 10 Hz par rapport au minimum atteint à $f_b$, soit **33 mm crête à 52,9 V et 10 Hz** — au-delà du $X_{max}$ de tout 18″. Règle : **au niveau fort, aucun contenu sous l'accord — Start REW $\ge 2f_b$** (07.10), jamais de pleine puissance, et vérification visuelle du débattement avant chaque balayage fort. La règle complète, avec la distinction petit signal / fort signal, est au § 02.6 (« Borne basse du balayage ») : **la mesure d'impédance à 150 mV, elle, descend librement à 10 Hz et le doit** — c'est là que se trouve le pic bas $f_L$.
+  - **Et les pavillons.** Deux haut-parleurs d'ultra-aigu sont câblés en parallèle des médiums (§ 02.6), avec un condensateur en série (**présent**, constat du 16 sept. 2026 ; valeur à mesurer) : à 100 Hz, chaque pavillon présente environ 482 Ω (3,3 µF) contre ~29 Ω pour le bloc, et ne reçoit qu'une petite fraction du courant. **Avant le premier balayage au niveau fort, refaire le contrôle B1 bis du livret** (lecture DC du bloc d'environ 6 à 7 Ω) : une lecture de 2 à 3 Ω trahirait un pavillon sans condensateur, qui recevrait le 100 Hz à pleine puissance, hors de sa bande, avec une excursion que sa suspension n'est pas faite pour encaisser — alors aucun balayage fort sur la voie médium avant d'avoir ouvert le bornier.
 - **Limiteur du E-800** : il reste enclenché comme filet de sécurité (le manuel le décrit comme limiteur à 5 % de distorsion), **mais un limiteur qui agit rend la chaîne non linéaire et invalide la mesure de fonction de transfert par balayage**. Toute mesure pendant laquelle la LED limit/clip s'allume est écartée et refaite à niveau réduit ; l'état de la LED est consigné pour chaque balayage. Idéalement, régler le niveau « fort » 3 dB sous le seuil d'action constaté.
-- **Électricité — le dimensionnement des composants ne se fait pas sur la tension de l'ampli.** À pleine puissance sur 8 Ω : 52,9 V RMS, 74,8 V crête. Mais le réseau LC **surtensionne** : le composant shunt (le condensateur du passe-bas, la self du passe-haut) voit la tension de charge, amplifiée d'un facteur $Q \approx \lvert Z\rvert\sqrt{C/L}$ (en assimilant la charge à une résistance égale à $\lvert Z\rvert$) qui croît avec l'impédance réelle du haut-parleur — or $\lvert Z\rvert$ atteint 40 à 60 Ω au pic de résonance, c'est-à-dire justement vers 95–100 Hz si $F_c$(caisse) y tombe. Maximum sur 20–300 Hz, calculé sur 18 mH / 150 µF :
+- **Électricité — le dimensionnement des composants ne se fait pas sur la tension de l'ampli.** À pleine puissance sur 8 Ω : 52,9 V RMS, 74,8 V crête. Mais le réseau LC **surtensionne** : le composant shunt (le condensateur du passe-bas, la self du passe-haut) voit la tension de charge, amplifiée d'un facteur $Q \approx \lvert Z\rvert\sqrt{C/L}$ (en assimilant la charge à une résistance égale à $\lvert Z\rvert$) qui croît avec l'impédance réelle du haut-parleur — or $\lvert Z\rvert$ culmine, sur les modèles du dépôt, à 64 Ω vers 86 Hz pour le sub bass-reflex (pic haut) et à 112 Ω vers 77 Hz pour le bloc médiums avec ses deux pavillons (calculés, pas mesurés ; le « 40 à 60 Ω » de la v1 supposait une caisse close), c'est-à-dire justement près du raccord. Maximum sur 20–300 Hz, calculé sur 18 mH / 150 µF :
 
 | $\lvert Z\rvert$ de la charge | $\lvert V\rvert$ du composant **shunt** / $V_{\text{in}}$ | $\lvert V\rvert$ du composant **série** / $V_{\text{in}}$ |
 |---|---|---|
@@ -4744,7 +5071,7 @@ L'épreuve commune est organisée par le **Concours Centrale-Supélec**, le **Co
 Conséquences pratiques pour ce projet :
 
 - **Le fichier HTML reveal.js ne sera jamais utilisé en salle** : seul le PDF téléversé compte. Les notes du présentateur (`<aside class="notes">`) n'existent pas sur l'ordinateur résident — les imprimer et les apporter comme document papier.
-- **Le gabarit actuel est 16:9 alors que le SCEI projette en 4/3.** Un PDF 16:9 ajusté en largeur sur un écran 4/3 occupe $(9/16)/(3/4) = 0{,}75$ de la hauteur, soit **exactement 25 % de hauteur utile perdue**. Emplacements exacts à corriger (relevés dans le dépôt) : `pre-soutenance.html` l. 784 et `presentation-finale.html` l. 1206 (`width: 1280, height: 720`), `EXPORT-PDF.md` l. 22 et 23 (`-s 1280x720`) et l. 37 (repli bitmap, « window 1280×720 »). Gabarit de remplacement : **1024×768**.
+- **[soldé] Le gabarit était 16:9 alors que le SCEI projette en 4/3** — il est en 1024×768 depuis la refonte v2 (`Reveal.initialize({width: 1024, height: 768})` dans les deux decks, `-s 1024x768` dans `EXPORT-PDF.md`, figures de `analyse/figures.py` au même format). *Constat d'origine :* Un PDF 16:9 ajusté en largeur sur un écran 4/3 occupe $(9/16)/(3/4) = 0{,}75$ de la hauteur, soit **exactement 25 % de hauteur utile perdue**. Emplacements exacts à corriger (relevés dans le dépôt) : `pre-soutenance.html` l. 784 et `presentation-finale.html` l. 1206 (`width: 1280, height: 720`), `EXPORT-PDF.md` l. 22 et 23 (`-s 1280x720`) et l. 37 (repli bitmap, « window 1280×720 »). Gabarit de remplacement : **1024×768**.
   **Quand trancher : en phase 0, pas en phase 5.** Toutes les figures des phases 2 à 4 (module et phase de $Z(f)$, résidus du fit, Bode, comparatifs) seront produites avant la refonte des slides ; il faut donc figer dès le squelette `analyse/` le format de sortie matplotlib (taille en pouces et dpi cohérents avec une zone utile 4/3), sinon chaque figure sera à refaire.
 - **Taille du PDF.** Les PDF v1 pèsent 1 877 821 à 3 006 617 octets, soit **1,88 à 3,01 Mo** ($10^6$ o) ou 1,79 à 2,87 Mio ($2^{20}$ o) — la convention n'était pas déclarée dans le brouillon, et celle du plafond « 5 Mo » ne l'est pas non plus côté SCEI. En lecture conservatrice (5 Mo $= 5\times10^6$ o), la **marge restante est de 1,99 Mo**, soit 66 % de la taille du plus gros PDF actuel. Règle d'export associée (voir le budget chiffré en 08.7) : figures en vectoriel (PDF/SVG) et non en PNG ; photos ré-encodées en JPEG à ≤ 200 ko l'unité ; contrôle de la taille à **chaque** export, pas seulement au dernier.
 - Le code Python `analyse/` doit être **imprimé en double exemplaire et annexé après la conclusion** du PDF. La variante claire `blueprint-light.css` est la bonne base (fond blanc recommandé). Ordre de grandeur de mise en page, calculé pour une vue 1024×768 avec 40 px de marge : **≈ 42 lignes × 131 colonnes** en police monospace 12 px, ≈ 36 × 112 en 14 px, ≈ 31 × 98 en 16 px. En retenant ~33 lignes utiles par vue (en-tête et respiration comprises), 250 lignes de code occupent **8 vues d'annexe**. Ces vues sont hors des 15 minutes ; en poids elles sont du texte vectoriel, donc négligeables devant les images [[à vérifier à l'export]].
@@ -4775,7 +5102,7 @@ Conseil non officiel mais répandu (document de lycée, MPI Faidherbe) : structu
 
 **Étape 3 — Validation par le professeur encadrant.** Sur son propre compte, sur **lycees.scei-concours.fr**. La validation atteste « un travail personnel constaté » et, pour un 5/2, que le travail de 3/2 n'a pas été repris. En cas de refus ou d'absence de validation : « Le candidat aura alors un entretien avant son passage en loge » — note zéro possible. Il n'y a « pas de bouton pour valider ou enregistrer la MCOT » : la saisie est automatique — vérifier en relisant.
 
-> **Action la plus urgente de toute cette section.** Le mot « encadrant » n'apparaît **dans aucun document v2 du dépôt** (vérifié par grep hors `archive-v1/`, 0 occurrence). C'est le seul point du cadre SCEI qui peut coûter la note entière. À inscrire en phase 0 de `FEUILLE-DE-ROUTE.md`, avec échéance **rentrée septembre 2026** : (1) identifier un enseignant encadrant et obtenir son accord explicite ; (2) vérifier qu'il dispose bien d'un compte sur `lycees.scei-concours.fr` ; (3) noter son nom pour la saisie de l'étape 1 (mi-janvier 2027) ; (4) lui rappeler la fenêtre de validation de l'étape 3 (mi-juin 2027, 8 jours seulement).
+> **Action la plus urgente de toute cette section — faite pour l'essentiel.** *Historique (audit du 13 sept. 2026)* : le mot « encadrant » n'apparaissait alors dans aucun document v2 du dépôt. **État au 23 sept. 2026 : M. Chevalier, accord obtenu le 16/09/2026 (D10)** ; restent le compte `lycees.scei-concours.fr` et l'avertissement sur la fenêtre de 8 jours (`PARCOURS.md` 1-A3). Rappel du cadre : c'est le seul point du cadre SCEI qui peut coûter la note entière. À inscrire en phase 0 de `FEUILLE-DE-ROUTE.md`, avec échéance **rentrée septembre 2026** : (1) identifier un enseignant encadrant et obtenir son accord explicite ; (2) vérifier qu'il dispose bien d'un compte sur `lycees.scei-concours.fr` ; (3) noter son nom pour la saisie de l'étape 1 (mi-janvier 2027) ; (4) lui rappeler la fenêtre de validation de l'étape 3 (mi-juin 2027, 8 jours seulement).
 
 **Les 24 positionnements thématiques officiels** (liste des Attendus 2026, regroupée par domaine ; la liste 2027 est [[à vérifier]]) :
 
@@ -4897,7 +5224,7 @@ Relevées dans les Attendus 2026 (« Retour d'expérience », « Retour des exam
   - `presentation-finale.html` l. 1073, slide « Limites assumées » : « incertitudes propagées (± 11 % sur f_c) » ;
   - `NOTES-TIPE.md` l. 94-95 : la même formule, « (≈ 11 % pour un RC) ». **[soldé le 2026-09-13]** — `NOTES-TIPE.md` a été réécrit en v2 ; vérifié par grep : la formule du RC a disparu, et le § 6 des notes (« Propagation d'incertitude sur $f_0$ — formule du LC, PAS celle du RC ») porte désormais le couple **7,1 % en borne au pire cas / 4,1 % en incertitude-type**, avec la consigne explicite « ne jamais reprendre le 11 % de la version 1 ».
 
-  Pire : le **même fichier** affiche l. 668 « f_c = 1 / (2π√LC) » — deux définitions incompatibles de $f_c$ coexistent dans un PDF qui serait remis au jury, sans le dire. C'est exactement ce que sanctionnent le critère A1 (« rigueur des définitions énoncées ») et l'erreur classique n° 8. **À corriger avant toute réutilisation d'une diapositive v1.** *(Non soldé : vérifié par grep le 2026-09-13, les trois passages de `presentation-finale.html` — l. 1073, l. 1153-1173 et l. 668 — sont **toujours en place**. C'est attendu : les supports de la racine sont encore la v1 et leur refonte est prévue en phase 5. Le point reste donc au présent, et redevient bloquant au moment de cette refonte.)*
+  Pire : le **même fichier** affiche l. 668 « f_c = 1 / (2π√LC) » — deux définitions incompatibles de $f_c$ coexistent dans un PDF qui serait remis au jury, sans le dire. C'est exactement ce que sanctionnent le critère A1 (« rigueur des définitions énoncées ») et l'erreur classique n° 8. **À corriger avant toute réutilisation d'une diapositive v1.** *(Non soldé : vérifié par grep le 2026-09-13, les trois passages de `presentation-finale.html` — l. 1073, l. 1153-1173 et l. 668 — sont **toujours en place**. C'est attendu : les supports de la racine sont encore la v1 et leur refonte est prévue en phase 5. Le point reste donc au présent, et redevient bloquant au moment de cette refonte.)* **[soldé par la refonte v2 des deux présentations]** : le « ± 11 % » ne subsiste plus qu'en annexe A3 de `presentation-finale.html`, comme contre-exemple explicitement réfuté.
   (Un quatrième « 11 % » existe, `CLAUDE.md` l. 90 : « DCR 1 Ω face à 8 Ω → ~11 % de la puissance en chaleur ». Celui-là est **légitime et vérifié** — $1/(1+8) = 11{,}1\ \%$ — il demande seulement la désambiguïsation puissance/niveau donnée en 08.5.)
 
 - **Contenu de remplacement pour l'annexe B** (à mettre tel quel sur la diapositive v2, puisque les incertitudes sont un critère explicite) :
@@ -4906,11 +5233,11 @@ Relevées dans les Attendus 2026 (« Retour d'expérience », « Retour des exam
 
 - **Durée de l'exposé** : « ~10 min » est reconduit dans **4 fichiers et 6 endroits** — `CLAUDE.md` l. 85 ; `FEUILLE-DE-ROUTE.md` l. 153 et l. 187 ; `README.md` l. 38 et l. 53 ; `index.html` l. 67 (qui affiche « ≈ 10 min · 16 slides + annexes », donc **deux** chiffres faux sur la même ligne). Seul `presentation-finale.html` l. 27 affiche « ~15 min ». Le format officiel est **15 min** (voir 08.7).
   **[soldé le 2026-09-13]** — vérifié par grep : les quatre fichiers `.md`/`.html` de la racine affichent désormais « 15 min d'exposé + 15 min d'entretien », et le compte « 16 slides » a disparu de `README.md` comme d'`index.html`. Les seules occurrences restantes de « 10 min » sont des **mentions de la correction elle-même** (`CLAUDE.md`, `NOTES-TIPE.md`), ce qui est le comportement voulu.
-- **Format 4/3** : gabarit 16:9 à revoir, emplacements exacts en 08.2 — dont **`EXPORT-PDF.md` l. 22, 23 et 37**, jamais nommé jusqu'ici. Décision à prendre en **phase 0** pour que les figures Python soient produites au bon format dès la phase 2. *(Non soldé : vérifié par grep le 2026-09-13, `EXPORT-PDF.md` l. 22, 23 et 37 portent toujours `1280x720`, soit 16:9.)*
+- **Format 4/3** : gabarit 16:9 à revoir, emplacements exacts en 08.2 — dont **`EXPORT-PDF.md` l. 22, 23 et 37**, jamais nommé jusqu'ici. Décision à prendre en **phase 0** pour que les figures Python soient produites au bon format dès la phase 2. *(Non soldé au 2026-09-13 : `EXPORT-PDF.md` l. 22, 23 et 37 portaient alors `1280x720`.)* **[soldé depuis]** : `EXPORT-PDF.md` porte `-s 1024x768`, et les deux decks `width: 1024, height: 768`.
 - **Objets** : l'enceinte et le filtre ne peuvent pas entrer en salle → photographier avant démontage, tenir le cahier de laboratoire daté (voir 08.2).
 - **Listings** : le code Python devra être imprimé en double exemplaire et annexé après la conclusion ; ordre de grandeur de pagination en 08.2.
 - **Professeur encadrant** : absent de tous les documents v2 → action datée en phase 0 (voir 08.3).
-  **[soldé le 2026-09-13]** *(pour la partie documentaire seulement)* — vérifié par grep : le point figure maintenant dans `CLAUDE.md` (§ Prochaines étapes), dans `FEUILLE-DE-ROUTE.md` (case de phase 0, étapes 1 et 3 du calendrier SCEI) et dans `MCOT.md` (rubrique dédiée en tête de fichier). **La désignation elle-même reste à faire** : `MCOT.md` porte encore `[[à compléter : nom du professeur encadrant + accord obtenu le …]]`, et c'est une action de l'étudiant, pas une correction de document.
+  **[soldé le 2026-09-13]** *(pour la partie documentaire seulement)* — vérifié par grep : le point figure maintenant dans `CLAUDE.md` (§ Prochaines étapes), dans `FEUILLE-DE-ROUTE.md` (case de phase 0, étapes 1 et 3 du calendrier SCEI) et dans `MCOT.md` (rubrique dédiée en tête de fichier). *Historique : à cette date, la désignation elle-même restait à faire.* **Désignation faite le 16 sept. 2026 : M. Chevalier** (D10 ; `MCOT.md` à jour) ; restent le compte `lycees.scei-concours.fr` et l'avertissement sur la fenêtre de 8 jours (`PARCOURS.md` 1-A3).
 - **MCOT v2** : deux rubriques dépassent déjà les limites officielles, une est vide (voir 08.7) ; les positionnements sont à réécrire avec les libellés officiels ; le titre est à réexaminer. *(Non soldé : vérifié le 2026-09-13, « Motivation » est toujours un placeholder, « Ancrage au thème » porte toujours sa note « À CONDENSER : ≈ 98 mots », et la bibliographie commentée est toujours très en dessous des 650 mots.)*
 - **Risque « recette »** : le jury ne demande pas un résultat spectaculaire mais une « valeur ajoutée » et un « questionnement scientifique sur toute la durée ». Le récit v2 (mesure → problème inverse → optimisation → validation contre critères gelés) est conçu pour cela ; ne pas le réduire, à l'oral, à « j'ai calculé un filtre ».
 - **Ne pas conclure « l'actif gagne »** : la référence active est un étalon immunisé par construction, pas un concurrent ; conclure sur le passif optimisé face aux critères gelés.
@@ -5027,8 +5354,8 @@ Regression a 2 points : 0.88 Mo de socle + 100 ko par vue
 
 ### Ce qu'il faut retenir pour l'oral
 
-- **15 min d'exposé + 15 min d'échange avec deux examinateurs**, sur un **PDF 4/3 de 5 Mo max** projeté depuis un ordinateur résident : ni HTML, ni notes, ni objets, ni USB. Les 6 endroits du dépôt qui disaient « 10 min » ont été corrigés [soldé le 2026-09-13] ; il n'en subsiste que dans `presentation-finale.html` (support v1). Le gabarit 16:9 est à repasser en 4/3 **dès la phase 0** (sinon toutes les figures des phases 2-4 seront à refaire) ; le code Python s'imprime en double et s'annexe après la conclusion.
-- **Action prioritaire, hors science : le professeur encadrant.** Il figure désormais dans CLAUDE.md, FEUILLE-DE-ROUTE.md (phase 0), MCOT.md et DECISIONS-PHASE-0.md (D10) [soldé le 2026-09-13 pour la partie documentaire], mais **la désignation elle-même reste à faire**. Sans sa déclaration à l'étape 1 et sa validation à l'étape 3, la note peut être zéro. À régler à la rentrée de septembre 2026.
+- **15 min d'exposé + 15 min d'échange avec deux examinateurs**, sur un **PDF 4/3 de 5 Mo max** projeté depuis un ordinateur résident : ni HTML, ni notes, ni objets, ni USB. Les 6 endroits du dépôt qui disaient « 10 min » ont été corrigés [soldé le 2026-09-13] ; la refonte v2 des présentations les a également purgés. Le gabarit est en 4/3 (1024×768) depuis cette refonte, figures comprises ; le code Python s'imprime en double et s'annexe après la conclusion.
+- **Action prioritaire, hors science : le professeur encadrant.** Il figure désormais dans CLAUDE.md, FEUILLE-DE-ROUTE.md (phase 0), MCOT.md et DECISIONS-PHASE-0.md (D10) [soldé le 2026-09-13 pour la partie documentaire], et **la désignation est faite : M. Chevalier, accord obtenu le 16/09/2026 (D10)**. Restent le compte `lycees.scei-concours.fr` et l'avertissement sur la fenêtre de 8 jours (`PARCOURS.md` 1-A3). Sans sa déclaration à l'étape 1 et sa validation à l'étape 3, la note peut être zéro.
 - Le thème 2026-2027 est bien **« Sobriété, efficacité, optimisation »** (arrêté du 9 janvier 2026, BO ESR n° 5 du 29 janvier 2026) ; le jury veut une « valeur ajoutée » validée « par comparaison au réel » et un ancrage justifiable sur demande — répondre en trois grandeurs (fonction de coût, cuivre/coût, pertes/consommation), présentées comme des grandeurs mesurées, le PDF devant rester « focalisé sur les aspects scientifiques ».
 - Six critères, deux blocs : **potentiel scientifique** (justesse, appropriation, ouverture) et **démarche** (questionnement, résolution, communication). Le jury n'attend pas un master : il attend des **définitions rigoureuses** — d'où le gel d'une définition unique de $f_c$ (la **fréquence de croisement des deux voies**, § 04.1 ; le pôle $f_0 = 1/(2\pi\sqrt{LC}) = 96{,}9$ Hz et les $-3$ dB à 99,9 / 93,9 Hz restant des repères nommés) — des ordres de grandeur désambiguïsés, des incertitudes justes ($7{,}1\ \%$ et non 11 %), et l'aveu des échecs.
 - **MCOT mi-janvier → début février 2027** (900 mots au total : ancrage 50, motivation 50, biblio 650, problématique 50, objectifs 100 ; 2-10 références ; 5+5 mots-clés ; 1er positionnement en Physique/SI → « Électronique », **verrouillé avant les mesures acoustiques**) ; **DOT + PDF au plus tard début juin 2027** (4-8 jalons factuels de 50 mots, soit 200-400 mots) ; oraux à partir de fin juin — dates 2027 [[à vérifier]] sur scei-concours.fr, robustes à ±2 semaines, et l'ouverture de l'étape 2 est la date la moins prévisible.
@@ -5059,8 +5386,10 @@ Documents du projet (lecture seule, audit du 2026-09-09) : `CLAUDE.md`, `FEUILLE
 
 ## <a id="s09"></a>09. Architecture du code d'analyse Python (dossier `analyse/`)
 
-> **Statut.** Cette section est une **spécification** : le dossier `analyse/` n'existe pas encore
-> dans le dépôt (phase 0, dernière case à cocher de la feuille de route). Les extraits ci-dessous
+> **Statut.** Cette section a été écrite comme une **spécification**, avant que le dossier
+> `analyse/` existe. Il existe depuis (19 319 lignes de Python dont 4 253 de tests, 171 tests au
+> vert au 23 sept. 2026 ; voir `analyse/LISEZMOI.md`), et c'est son code qui fait foi en cas
+> d'écart avec les extraits ci-dessous. Les extraits ci-dessous
 > ont néanmoins été écrits et **exécutés** dans un bac à sable de session sur des données
 > **synthétiques** — paramètres illustratifs hérités de `archive-v1/_gen.py` et du § 04.6.
 > **Aucune mesure n'a été faite sur l'enceinte de Thomas** : tout nombre est calculé ou marqué
@@ -5810,10 +6139,10 @@ deux niveaux d'écoute gelés) et de produire la comparaison : à prévoir dans 
 
 ## <a id="index-marques"></a>Index des points `[[à vérifier]]` et `[[à mesurer]]`
 
-Recensement exhaustif des **163 marques** présentes dans les neuf sections, dans leur ordre
+Recensement exhaustif des **161 marques** présentes dans les neuf sections, dans leur ordre
 d'apparition et avec leur section d'origine. C'est la liste des trous à combler avant que ce
 document cesse d'être purement théorique : tant qu'une ligne y figure, la phrase
-correspondante n'est pas un résultat. Répartition : environ 58 marques de vérification, 53 marques
+correspondante n'est pas un résultat. Répartition : environ 60 marques de vérification, 54 marques
 de mesure, le reste étant des marques d'arbitrage (« à geler », « à documenter »,
 « à confirmer », « à trancher », « à chiffrer »).
 
@@ -5834,11 +6163,29 @@ de mesure, le reste étant des marques d'arbitrage (« à geler », « à docume
 > | **Cotes des deux évents** (diamètre au pied à coulisse, longueur, entraxe) [[à mesurer]] | la prédiction géométrique de $f_b$ (§ 01.10 bis) et la pondération de sommation acoustique (§ 07.3) | 10 min |
 > | **Volume net de la caisse** [[à mesurer]] | la même prédiction — et c'est le **terme dominant** de son incertitude (1,44 % sur 1,5 %) | 20 min |
 > | **$f_b$** [[à mesurer]] | la borne basse de sécurité au niveau fort (§ 02.6, § 07.11), le paramètre de départ de `Z_bassreflex8`, et le contrôle croisé du § 03.7 | mesure d'impédance (phase 1) |
-> | **Condensateur en série avec les pavillons : oui ou non ?** [[à vérifier]] | la charge réelle du passe-haut (12 Ω ou 5 Ω à 100 Hz, § 02.6 et § 04.2) et le risque matériel pendant les balayages (§ 07.11) | ouvrir le bornier, 5 min |
+> | ~~**Condensateur en série avec les pavillons : oui ou non ?**~~ **Présent** (constat du 16/09/2026 ; question levée le 23/09/2026) — reste sa **valeur** [[à mesurer]] | la charge réelle du passe-haut (bloc de 29,3 Ω ramené à 26,3–21,8 Ω à 100 Hz pour 3,3 à 10 µF, § 02.6 et § 04.2) | ouvrir le bornier, 5 min |
 >
 > Les trois premiers se font **avant** la première mesure d'impédance, sinon la prédiction
 > géométrique cesse d'en être une. Le quatrième se fait **avant** le premier balayage au niveau
 > fort.
+
+> **Mise à jour du 23 septembre 2026 — le jig d'impédance sur la Scarlett Solo.** L'arbitrage
+> du câblage (§ 02.13) **lève 1 marque** et **en ouvre 3**. Bilan : 163 → 165.
+>
+> **Levée** : « à faire dès réception, modèle de carte son à documenter » (§ 02.9) — la carte est
+> une Focusrite Scarlett Solo 3ᵉ génération, dont la sortie casque est spécifiée < 1 Ω.
+>
+> **Ouvertes** (§ 02.13) : la **structure interne de l'entrée XLR** (jambes de mode commun,
+> réjection), non publiée [[à vérifier]] ; l'**algorithme de l'étalonnage de référence de REW**,
+> non publié [[à vérifier]] ; le **comportement des voies sous 20 Hz**, non spécifié
+> [[à mesurer]] (manip A5). Seule la troisième peut changer un résultat : le montage retenu ne
+> dépend pas de la première, et la deuxième est encadrée (0,08 à 0,28 %).
+
+> **Propagation du 23 septembre 2026 (relecture de cohérence).** **4 marques levées** : la
+> présence du condensateur des pavillons au § 04.2 et au § 07.11 (constat du 16/09/2026), et le
+> modèle de carte son au § 07.7 et au § 07.10 (Scarlett Solo 3ᵉ gén., documentée le 16/09/2026).
+> Au § 02.6, la marque de **présence** du condensateur devient une marque de **valeur**
+> `[[à mesurer]]` (même nombre). Bilan : 165 → 161.
 
 **11 de ces marques se trouvent à l'intérieur d'un extrait de code** : ce sont des
 commentaires Python laissés volontairement sans accents, pour ne pas dépendre de l'encodage
@@ -5850,15 +6197,15 @@ résultat.
 | Section | Marques |
 |---|---:|
 | [01. Modèle électroacoustique du haut-parleur et impédance Z(f)](#s01) | [10](#idx-01) *(+4)* |
-| [02. Mesure de l'impédance Z(f) : montage, formules, incertitudes](#s02) | [24](#idx-02) *(+2)* |
+| [02. Mesure de l'impédance Z(f) : montage, formules, incertitudes](#s02) | [26](#idx-02) *(+2 le 16 sept. ; 1 levée, 3 ouvertes le 23 sept.)* |
 | [03. Problème inverse : identification des paramètres de Thiele-Small](#s03) | [13](#idx-03) *(1 levée, 1 ouverte)* |
-| [04. Filtre de raccord sur charge réelle et formulation de l'optimisation](#s04) | [17](#idx-04) *(inchangé : 1 levée, 1 ouverte)* |
+| [04. Filtre de raccord sur charge réelle et formulation de l'optimisation](#s04) | [16](#idx-04) *(1 levée, 1 ouverte le 16 sept. ; 1 levée le 23 sept.)* |
 | [05. Conception de la self : inductance, cuivre, pertes, fabrication](#s05) | [23](#idx-05) |
 | [06. Pertes, compression thermique et croisement énergétique passif / actif](#s06) | [23](#idx-06) |
-| [07. Validation acoustique : protocole de mesure au micro à 100 Hz](#s07) | [29](#idx-07) *(+3)* |
+| [07. Validation acoustique : protocole de mesure au micro à 100 Hz](#s07) | [26](#idx-07) *(+3 ; 3 levées le 23 sept.)* |
 | [08. Cadre du TIPE (SCEI, session 2027) et attentes du jury](#s08) | [17](#idx-08) |
 | [09. Architecture du code d'analyse Python (dossier `analyse/`)](#s09) | [7](#idx-09) |
-| **Total** | **163** |
+| **Total** | **165** |
 
 ### <a id="idx-01"></a>Marques de la section 01
 
@@ -5879,27 +6226,30 @@ résultat.
 
 | Sous-section | Marque | Contexte |
 |---|---|---|
-| [§ 02.1](#s02-1) | `[[à mesurer]]` | `…$R_e \approx 6{,}4\ \Omega$, $Z_{pic} \approx 45$–60 Ω, calculé). La valeur réelle sera f… (…) . Deux conséquences à assumer publiquement :…` |
+| [§ 02.1](#s02-1) | `[[à mesurer]]` | `…un pic d'environ **112 Ω vers 77 Hz** (modèles recalculés le 23 sept. 2026, pas des mesures). La description « 8 à 40 Ω » du bloc médiums est donc à proscrire. La valeur réelle sera fixée par la passe 1 (…) . Deux conséquences à assumer publiquement :…` — contexte réécrit le 23 sept. 2026 : l'ancien « 45–60 Ω » du bloc médiums ne vaut que pour un $Q_{ms}/Q_{es}$ modeste |
 | [§ 02.1](#s02-1) | `[[à mesurer]]` | `…culée sur des jeux de paramètres plausibles va de **13 à 32**, pas 6. C'est un **résultat… (…) ; la problématique devra être ajustée après…` |
 | [§ 02.2](#s02-2) | `[[à vérifier sur l'oscilloscope du lycée : la voie MATH est-elle acceptée comme **source** des mesures automatiques de délai/phase ? Sur beaucoup d'appareils d'entrée de…` | `…r la sortie de MATH**, c'est-à-dire précisément sur la tension qui porte l'amplification… (…) **Où entre le facteur d'appariement.** Seul…` |
 | [§ 02.4](#s02-4) | `[[à vérifier sur le GBF du lycée]]` | `…*Niveau et courant.** Un GBF de laboratoire a ~50 Ω de sortie et fournit typiquement 10 V… (…) . Courants et puissances (RMS) : \| $V_{GBF}$…` |
 | [§ 02.4](#s02-4) | `[[à vérifier]]` | `…igh-Z / 50 Ω et mesurer à l'oscilloscope la tension réellement délivrée, ne jamais se fie… (…) .* Une résistance étalon de 1 W (ou 2 W) suf…` |
 | [§ 02.5](#s02-5) | `[[à confirmer]]` | `…l'amortissement : ≈ 30 µm pour $V_d = 150$ mV, $Bl \approx 20$ N/A et $f = 40$ Hz [ordre… (…) ]. Le réajustement du niveau **est** la prot…` |
 | [§ 02.6](#s02-6) | ~~`[[type de caisse à confirmer — donnée manquante identifiée dans CLAUDE.md]]`~~ **LEVÉE le 16 sept. 2026** | tranchée : bass-reflex à deux évents. Le § 02.6 porte désormais la règle de densification à deux pics et un creux, et non plus une alternative conditionnelle |
-| [§ 02.6](#s02-6) | `[[à mesurer]]` **(nouvelle)** | `…il est possible qu'un seul $R_{ref}$ suffise désormais — à trancher sur les valeurs réelles (…)` — la dynamique de $\lvert Z\rvert$ en bass-reflex (6 à 64 Ω sur le modèle) n'est pas celle du cas clos, le compromis du § 02.4 est à rejouer |
+| [§ 02.6](#s02-6) | `[[à mesurer]]` **(nouvelle)** | `…le compromis du § 02.4 se rejoue ensuite sur cette dynamique-là, et toute révision se date au cahier — à trancher sur les valeurs réelles (…)` — passe 1 à $R_{ref}$ = 100 Ω en configuration A ; la dynamique de $\lvert Z\rvert$ en bass-reflex (6 à 64 Ω sur le modèle) n'est pas celle du cas clos |
 | [§ 02.6](#s02-6) | `[[$X_{max}$ du 18″ à lire sur la datasheet — la règle ci-dessus est qualitative tant qu'on ne l'a pas]]` **(nouvelle)** | `…**Contrôle visuel obligatoire** avant tout balayage au niveau fort (…)` — borne basse de sécurité sous $f_b$ |
-| [§ 02.6](#s02-6) | `[[à vérifier auprès de l'étudiant / en ouvrant le bornier]]` **(nouvelle)** | `…**y a-t-il un condensateur en série avec les pavillons ?** (…) C'est la protection classique du premier ordre.` — avec : $-0{,}9$ à $-2{,}6$ dB sur $\lvert Z\rvert$ du bloc, **pas négligeable** ; sans : $-17{,}9$ dB, sous les 4 Ω du E-800, **et** risque matériel au niveau fort |
+| [§ 02.6](#s02-6) | ~~`[[à vérifier auprès de l'étudiant / en ouvrant le bornier]]`~~ → `[[à mesurer]]` (23 sept.) | `…**Un condensateur est présent en série avec les pavillons** (…) Sa **valeur** reste (…) au bornier.` — présence constatée le 16/09/2026 ; pour 3,3 à 10 µF, $-0{,}9$ à $-2{,}6$ dB ($-10$ à $-26$ %) sur $\lvert Z\rvert$ du bloc, **pas négligeable** ; la colonne « sans condensateur » devient le contrôle de câblage B1 bis |
 | [§ 02.7](#s02-7) | `[[reporter les spécifications de l'oscilloscope du lycée]]` | `…gain DC **±3 % de la pleine échelle** pour les calibres ≥ 10 mV/div, ±4 % en dessous, bas… (…) : \| Source \| Valeur \| Remède / commentaire \|…` |
 | [§ 02.8](#s02-8) | `[[précision à vérifier]]` | `…og de $\|Z\|$ dans $-1{,}00 \pm 0{,}03$ ; (d) valeur absolue compatible avec le capacimètre… (…) ou la tolérance nominale (±10–20 %). Un élec…` |
 | [§ 02.8](#s02-8) | `[[a mesurer]]` *(code)* | `…Hz - 2 kHz (mediums) : {len(grille_log(10,2000,3))} pts") for f_pic, Q in ((40.0, 5.0), (… (…) : f_pic et Q lus en passe 1 g3 = grille_pic(…` |
 | [§ 02.8](#s02-8) | `[[a mesurer]]` *(code)* | `…g2(1+1/Q)*24:.1f} points") print("\nHauteur du pic : Zpic = Re (1 + Qms/Qes) [ordres de g… (…) ]") for nom, Re, Qms, Qes in (("18\" pro, Qm…` |
 | [§ 02.8](#s02-8) | `[[a mesurer]]` *(code)* | `…,93 %) n'y placerait que 2.0 points Hauteur du pic : Zpic = Re (1 + Qms/Qes) [ordres de g… (…) ] 18" pro, Qms/Qes = 10 Re = 5.3 ohm -> Zpic…` |
-| [§ 02.9](#s02-9) | `[[à faire dès réception, modèle de carte son à documenter.]]` | `…on de sortie à vide $V_0$, puis sur une charge connue $R_c = 100\ \Omega$ ; alors $Z_s =… (…) **Jig derrière l'amplificateur E-800** — seu…` |
+| [§ 02.9](#s02-9) | ~~`[[à faire dès réception, modèle de carte son à documenter.]]`~~ **LEVÉE le 23 sept. 2026** | tranchée : Focusrite Scarlett Solo 3ᵉ génération, sortie casque spécifiée < 1 Ω ; le montage du § 02.13 lit la tension du nœud source au lieu de la supposer |
 | [§ 02.9](#s02-9) | `[[à vérifier sur l'E-800 : sortie en pont ou masse commune ? Si pont, aucune borne n'est à la masse et le diviseur doit être flottant.]]` | `…de carte son ; elles ne conduisent jamais en fonctionnement normal et clampent en cas d'e… (…) **Limites** : impédance de sortie et courant…` |
 | [§ 02.9](#s02-9) | `[[à vérifier]]` | `…, négligeable sur 10–200 Ω) ; couplage capacitif des entrées/sorties → atténuation et dép… (…) ; **le bruit dominant est acoustique et vibr…` |
 | [§ 02.10](#s02-10) | `[[médiums en chambre séparée ?]]` | `…b$. Ce décalage par rapport à la datasheet n'est pas une erreur. - **Autre haut-parleur d… (…) : un haut-parleur voisin en circuit ouvert o…` |
 | [§ 02.12](#s02-12) | `[[à mesurer]]` | `…{CH2}$ (V) \| $\Delta t$ (µs, signe) \| remarques \| \|---\|---\|---\|---\|---\|---\|---\|---\|---\|--… (…) \| 100,3 \| A \| \| \| \| \| \| \| \| \| \| \| … \| \| \| \|…` |
 | [§ 02.12](#s02-12) | `[[à vérifier au premier export]]` | `…. - **Convention de signe de $\varphi$** : positif = inductif (§ 02.1). REW exporte avec… (…) . - **Le fit de l'acte 2 est pondéré par $1/…` |
+| [§ 02.13](#s02-13) | `[[à vérifier]]` **(nouvelle, 23 sept. 2026)** | `…**Structure interne de l'entrée XLR** (jambes de mode commun, réjection) : non publiée par Focusrite (…) . Le montage retenu **n'en dépend pas**…` — marque de traçabilité : elle ne bloque aucun résultat |
+| [§ 02.13](#s02-13) | `[[à vérifier]]` **(nouvelle, 23 sept. 2026)** | `…**Algorithme de l'étalonnage de référence de REW** : non publié (…) . Deux modèles plausibles encadrent son effet…` — 0,08 à 0,28 % avec une référence de 100 Ω à 0,1 % |
+| [§ 02.13](#s02-13) | `[[à mesurer : manip A5, 10 Ω mesurée jusqu'à 10 Hz]]` **(nouvelle, 23 sept. 2026)** | `…**Comportement sous 20 Hz** : réponse garantie ±0,1 dB sur 20 Hz – 20 kHz seulement (…)` — conditionne le pic bas du sub (16 Hz sur le modèle) |
 | Sources | `[[à vérifier]]` | `…1054Z-Specification.pdf (spécification prise comme oscilloscope pédagogique de référence… (…) ). - JCGM 100:2008, *Évaluation des données…` |
 | Sources | `[[paramètres du HP réel à confirmer]]` | `…tres catalogue plausible pour un 18″ 8 Ω de sonorisation, pas comme description du haut-p… (…) . - Coefficient de température du cuivre rec…` |
 | Sources | `[[référence exacte à citer]]` | `…{,}93\cdot10^{-3}\ \mathrm{K^{-1}}$ à 20 °C : valeur tabulée usuelle (tables de physique… (…) . - V. Dickason, *The Loudspeaker Design Coo…` |
@@ -5931,7 +6281,7 @@ résultat.
 | préambule | `[[à mesurer]]` | `…archive-v1/_gen.py', jamais mesurés). **Rien n'a été mesuré sur l'enceinte de Thomas** :… (…) sera remplacée par les résultats des phases…` |
 | [§ 04.2](#s04-2) | `[[à mesurer]]` | `…,5 mH \| 30 Ω \| 60 Hz \| 3,0 \| 36,4 Ω à 60 Hz \| 12,2 Ω ∠−42,2° \| 5,6 \| Valeurs réelles du s… (…) (phase 1) ; le « simple au sextuple » de la…` |
 | [§ 04.2](#s04-2) | ~~`[[à documenter — trente secondes, regarder s'il y a un évent]]`~~ **LEVÉE le 16 sept. 2026** | il y en a **deux**. Le § 04.2 porte désormais le chiffrage sur charge bass-reflex : bosse $+12{,}6$ dB, $\min\lvert Z_{in}\rvert = 2{,}66$ Ω (contre 8,52 Ω sur 8 Ω résistifs), et **deux** points bas de $\lvert Z_{in}\rvert$ au lieu d'un |
-| [§ 04.2](#s04-2) | `[[à vérifier]]` **(nouvelle)** | `…Deux pavillons d'ultra-aigu sont câblés **en parallèle** des médiums (…) Selon qu'un condensateur de protection les découple ou non (…), $\lvert Z\rvert$ du bloc à 100 Hz passe de 29,3 Ω à 26,3–21,8 Ω ou à **3,7 Ω**…` — même marque qu'au § 02.6 et au § 07.11, à lever une fois pour toutes en ouvrant le bornier |
+| [§ 04.2](#s04-2) | ~~`[[à vérifier]]`~~ **levée le 23 sept.** | condensateur des pavillons **présent** (constat du 16/09/2026) ; sa valeur est suivie au § 02.6 |
 | [§ 04.2](#s04-2) | `[[à mesurer — écart entre le centre du 18″ et celui du bloc médiums]]` | `…ruban dès maintenant** (cinq minutes) et mettre $e^{-j\omega\tau}$ avec ce $\tau$ dans la… (…) . Attention : une mesure en **champ proche**…` |
 | [§ 04.2](#s04-2) | `[[à mesurer]]` | `…iltre**. Il faut soit un gain relatif en variable, soit un L-pad sur la voie la plus sens… (…) (phase 1) — conséquence énoncée, à ne pas ou…` |
 | [§ 04.4](#s04-4) | `[[à vérifier]]` | `…nent à pleine puissance exactement à $f_s$.) Coût et matière multipliés par deux ou trois… (…) sur devis) — exactement ce que le thème « so…` |
@@ -5990,7 +6340,7 @@ résultat.
 | [§ 06.5](#s06-5) | `[[à mesurer en phase 4]]` | `…pprox20$ à 60 J/K et, à $R_{tv}=2$ K/W, **$\tau_v$ de l'ordre de 40 s à 2 min**. On retie… (…) ', ordre de grandeur 10 s (petit HP, Klippel…` |
 | [§ 06.5](#s06-5) | `[[à geler avant toute mesure]]` | `…res qui comptent sont ceux des **deux niveaux gelés en phase 0** — $P_{\text{faible}}$ et… (…) '. En attendant, voici le même modèle balayé…` |
 | [§ 06.5](#s06-5) | `[[à mesurer]]` | `…es montent → $r$ monte). Ordre de grandeur : 2 W dissipés dans une self à l'air libre ($R… (…) ') → +40 K → $r$ +16 %. **Le modèle de coût…` |
-| [§ 06.6](#s06-6) | `[[à vérifier sur le multimètre du lycée : calibre le plus bas et résolution]]` | `…ur une lecture de 6,5 Ω) : ±1,6 K sur $\Delta T$, largement suffisant pour comparer à la… (…) '. **Repli sans achat** : injecter un couran…` |
+| [§ 06.6](#s06-6) | `[[à vérifier sur le multimètre du lycée : calibre le plus bas et résolution]]` | `…ur une lecture de 6,5 Ω) : ±1,6 K sur $\Delta T$, largement suffisant pour comparer à la… (…) '. **Repli sans commutateur** (réécrit le 23 sept. 2026, comme le livret C5) : pas de mesure à chaud…` |
 | [§ 06.6](#s06-6) | `[[à vérifier]]` | `…ais le E-800 est spécifié 20 Hz–20 kHz : un pilote à 1 Hz sera probablement atténué par l… (…) '. On peut contourner en n'exploitant que la…` |
 | [§ 06.7](#s06-7) | `[[à mesurer]]` | `…s) \| pertes à vide souvent supérieures à l'AOP lui-même (quelques dixièmes de W à ~2 W) \|… (…) ' \| \| pré-ampli SX-801 \| présent dans les de…` |
 | [§ 06.7](#s06-7) | `[[à mesurer]]` | `…eur, '[[à mesurer]]' \| \| pré-ampli SX-801 \| présent dans les deux scénarios → s'annule da… (…) ' pour info \| \| t.amp E-800, **veille activé…` |
@@ -6020,7 +6370,7 @@ résultat.
 | [§ 07.4](#s07-4) | `[[à mesurer]]` **(nouvelle)** | `…**Décision retenue : (b)**, avec cette justification, et la distance membrane-évent relevée au mètre pour pouvoir borner l'erreur (…)` — choix entre traiter les trois sources du sub séparément (a) ou les recombiner d'abord « en équivalent membrane » (b) |
 | [§ 07.5](#s07-5) | `[[à vérifier]]` | `…rnes, la membrane doit sortir quand le + est sur le +. Consigner le sens de câblage des d… (…) . 2. **Phase relative mesurée** : sur les re…` |
 | [§ 07.6](#s07-6) | `[[à documenter]]` | `…07-6"></a>07.6 Égalisation des niveaux entre voies Les sensibilités (dB/2,83 V/m) du 18″… (…) . Mesure de la sensibilité relative : répons…` |
-| [§ 07.7](#s07-7) | `[[à vérifier selon la carte]]` | `…e). Diviseurs résistifs **50:1** sur chaque tension — pas 20:1 : face à une entrée ligne… (…) , un 20:1 ne laisse que 1,6 dB de marge au n…` |
+| [§ 07.7](#s07-7) | ~~`[[à vérifier selon la carte]]`~~ **levée le 23 sept.** | carte documentée (Scarlett Solo 3ᵉ gén.) : diviseurs 10 kΩ + 220 Ω, rapport de chaque diviseur mesuré en place, pleines échelles 2,18 V (entrée 1) et 9,75 V (entrée 2 au gain minimal) |
 | [§ 07.7](#s07-7) | `[[à vérifier au multimètre]]` | `…:1 (~15 € pièce), ou l'on renonce et l'on reste à l'oscilloscope. **Jamais en mode pont,… (…) - **Attendu sur 8 Ω** (filtre catalogue 18 m…` |
 | [§ 07.8](#s07-8) | `[[à geler]]` | `…égaliser sur le niveau acoustique en champ proche à 100 Hz.) Ordres de grandeur pour la d… (…) : « faible » 2 V (0,5 W/8 Ω), « fort » entre…` |
 | [§ 07.8](#s07-8) | `[[à vérifier sur sa fiche]]` | `…*112 dB SPL au niveau faible, 125 dB à 10 W et 132 dB à 50 W** — à comparer au SPL maxima… (…) ; le niveau « fort » sera plafonné par le mi…` |
@@ -6028,12 +6378,12 @@ résultat.
 | [§ 07.8](#s07-8) | `[[masse de bobine à documenter]]` | `…s à 50 W, c'est **273 J**, soit un échauffement adiabatique de 11 K (bobine de 60 g) à 68… (…) — c'est-à-dire du même ordre que l'effet que…` |
 | [§ 07.9](#s07-9) | `[[à mesurer en phase 1]]` | `…te ?** Les réponses brutes des haut-parleurs ne sont pas plates sur 40–250 Hz (coupure ba… (…) ). Si cette non-planéité domine le critère,…` |
 | [§ 07.9](#s07-9) | `[[à geler]]` | `…seulement *comment* on mesure, mais *quelle valeur constitue un succès*. Proposition à va… (…) : \| Critère \| Succès déclaré si… \| \|---\|---\|…` |
-| [§ 07.10](#s07-10) | `[[à documenter]]` | `…**Un micro USB est donc exclu de tout ce protocole** — à dire au moment de documenter le… (…) . - **Preferences > Soundcard** : 48 kHz ; «…` |
+| [§ 07.10](#s07-10) | ~~`[[à documenter]]`~~ **levée le 23 sept.** | modèle de carte son documenté le 16/09/2026 ; seul le micro reste à documenter (`DECISIONS-PHASE-0.md`, D8) |
 | [§ 07.10](#s07-10) | `[[à vérifier]]` | `…**Preferences > Mic/Meter** : charger systématiquement le fichier de calibration du micro… (…) : la réponse basse-fréquence du micro entre…` |
-| [§ 07.10](#s07-10) | `[[à mesurer]]` | `…**Start $\ge 2f_B$** ($f_B$ = fréquence d'accord de l'évent, mesurée en phase 1 par le do… (…) ), pour que le contenu réel reste au-dessus…` |
+| [§ 07.10](#s07-10) | `[[à mesurer]]` | `…**Start $\ge 2f_B$** ($f_B$ = fréquence d'accord de l'évent, mesurée en phase 1 au passage par zéro de la phase… (…) ), pour que le contenu réel reste au-dessus…` |
 | [§ 07.10](#s07-10) | `[[à geler en phase 0]]` | `…on-linéarité de la suspension, de $Bl(x)$ ou à la turbulence de l'évent. Seuil de rejet d… (…) . - **Moyennage des répétitions** : All SPL…` |
 | [§ 07.11](#s07-11) | `[[à vérifier]]` | `…balayages forts, balayages courts, pas de tête à moins de 1 m du 18″. - **Micro** : SPL m… (…) ; réduire le gain d'entrée avant le niveau f…` |
-| [§ 07.11](#s07-11) | `[[à vérifier]]` **(nouvelle)** | `…**Et les pavillons.** (…) S'il n'y a **pas** de condensateur en série avec eux (…), ils reçoivent le 100 Hz à pleine puissance pendant les balayages de la voie médium…` — **à lever avant le premier balayage au niveau fort** ; même marque qu'aux § 02.6 et § 04.2 |
+| [§ 07.11](#s07-11) | ~~`[[à vérifier]]`~~ **levée le 23 sept.** | condensateur des pavillons **présent** (constat du 16/09/2026) ; avant le premier balayage fort, contrôle de câblage B1 bis du livret |
 | Sources | `[[à recouper sur le texte intégral de Keele 1974 si le jury demande une source pour le cas à deux évents — article AES payant, à demander au CDI]]` **(nouvelle)** | `…Keele (1974) la donne pour **un** évent ; D'Appolito (2012) la reprend sous la forme « pondérer par le rapport des diamètres ». **Aucune des deux sources n'explicite le cas $N>1$** (…)` — la démonstration est donc écrite au § 07.3 et vérifiée numériquement, plutôt que citée |
 | Sources | `[[à vérifier]]` | `…Direct Radiator Loudspeaker Enclosures », *J. Audio Eng. Soc.*, vol. 17, n° 1, 1969 (diff… (…) . - Kuttruff, H., *Room Acoustics*, CRC Pres…` |
 | Sources | `[[édition à préciser]]` | `…coffret) [[à vérifier]]. - Kuttruff, H., *Room Acoustics*, CRC Press (modes propres, fréq… (…) . - Beranek, L. L., Mellow, T., *Acoustics:…` |

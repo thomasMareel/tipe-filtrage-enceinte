@@ -14,6 +14,10 @@ tenir à jour à la fin de chaque session de travail.
 ## Sujet (v2)
 
 - **Auteur** : Thomas Mareel, 2e année de prépa (PTSI → 2e année), TIPE session 2027.
+- **Professeur encadrant : M. Chevalier** — accord obtenu, rapporté par Thomas le
+  16/09/2026 (D10 de `DECISIONS-PHASE-0.md`). Reste à vérifier son compte sur
+  `lycees.scei-concours.fr` et à le prévenir de la fenêtre de validation de
+  **8 jours** de mi-juin 2027 (étape 3 SCEI, note zéro possible sans elle).
 - **Thème national** : Sobriété, efficacité, optimisation.
 - **Enceinte deux voies (DIY)** : 1 subwoofer **8 Ω 18″** + 2 médium-aigu
   **4 Ω câblés en série (= 8 Ω)**. Raccord cible : **100 Hz**.
@@ -21,7 +25,11 @@ tenir à jour à la fin de chaque session de travail.
   **16/09/2026**. Ce n'est plus une inconnue : la décision D8 de
   `DECISIONS-PHASE-0.md` est **répondue**. Restent à relever : dimensions des
   deux évents (diamètre, longueur) et volume interne $V_b$ `[[à mesurer]]`,
-  fréquence d'accord $f_b$ `[[à mesurer]]` (lue au creux d'impédance en phase 1).
+  fréquence d'accord $f_b$ `[[à mesurer]]` en phase 1 — lue au **passage par zéro
+  de la phase** entre les deux pics, ou mieux prise de l'**ajustement**, et **pas** à
+  l'argmin du creux du module, trop plat pour être localisé sous 1 % de bruit
+  (REFERENCE-TECHNIQUE.md § 02.6 ; les deux lectures sont biaisées de quelques
+  pour-cent par les pertes).
 - **Composition réelle de l'enceinte** : le sub 18″, les 2 médiums en série, et
   **2 haut-parleurs d'ultra-aigu (pavillons) câblés EN PARALLÈLE des médiums**.
   Distinguer les deux plans : les pavillons sont **hors périmètre ACOUSTIQUE**
@@ -31,17 +39,20 @@ tenir à jour à la fin de chaque session de travail.
   cette distinction est faux.
 - **Condensateur en série avec les pavillons** (protection classique du 1ᵉʳ
   ordre) : **CONFIRMÉ PRÉSENT** par l'étudiant le **16/09/2026**. Sa *valeur*
-  reste `[[à mesurer]]`. Ce que le calcul en dit, pour 3,3 à 10 µF : la branche
-  aiguë présente **160 à 480 Ω vers 100 Hz**, ce qui déplace $|Z|$ du bloc
-  médiums de **6 à 16 %** — modeste, mais **pas négligeable**, et visible sur un
-  ajustement. (La première estimation, « effet négligeable », était trop rapide :
-  le bloc médiums est encore sur le flanc de sa propre résonance à 100 Hz, donc
-  son impédance y est haute et une branche de quelques centaines d'ohms compte.)
+  reste `[[à mesurer]]`. Ce que le calcul en dit, pour 3,3 à 10 µF et les **deux**
+  pavillons (`analyse/modele_hp.py::effet_branche_aigu`, `n_aigu = 2`) : chaque
+  branche présente **160 à 480 Ω vers 100 Hz**, les deux en parallèle **80 à
+  241 Ω**, et $|Z|$ du bloc médiums de modèle passe de **29,3 Ω à 26,3 – 21,7 Ω**
+  à 100 Hz, soit **−10 à −26 %** (−19 % pour 6,8 µF) — **pas négligeable**, et
+  visible sur un ajustement. Deux estimations antérieures étaient fausses :
+  « effet négligeable » (le bloc est encore sur le flanc de sa résonance à
+  100 Hz, son impédance y est haute), puis « 6 à 16 % » (calcul à **un seul**
+  pavillon, sur un autre modèle du bloc).
   **Conséquence pratique** : on mesure le bloc médiums **tel qu'il est câblé,
   pavillons connectés** — c'est ce que le filtre voit, et l'effet est alors inclus
-  sans avoir à le modéliser. **Côté sécurité** : à 100 Hz le pavillon voit ~482 Ω
-  contre ~34 Ω pour les médiums, il ne reçoit qu'une fraction infime de la
-  puissance — aucun risque pendant les balayages.
+  sans avoir à le modéliser. **Côté sécurité** : à 100 Hz chaque pavillon voit
+  ~482 Ω (3,3 µF) contre ~29 Ω pour le bloc, il ne reçoit qu'une fraction infime
+  de la puissance — aucun risque pendant les balayages.
 
 ## Problématique (v2)
 
@@ -86,6 +97,12 @@ Détail des phases, portes de validation, critères et calendrier :
   qu'il fait, dans quel ordre, avec quoi. C'est le document de terrain.
 - **analyse/LISEZMOI.md** — la chaîne de calcul (lecture des mesures →
   ajustement → optimisation → figures), ses garde-fous et sa commande gelée.
+- **protocole/PROTOCOLE-EXPERIENCES.html** — le **livret de manipulations** (23
+  manips, groupes A étalonnage, B impédances, C banc électrique, D acoustique et
+  énergie ; 27 schémas de câblage ; page de sécurité à signer ; fiche de séance).
+  **Relu de façon adversariale le 23/09/2026** (câblage et sécurité : 51 corrections
+  toutes appliquées ; utilisabilité : 36 sur 38). C'est le HTML qui fait foi : le
+  PDF se régénère depuis lui (`chrome --headless --print-to-pdf`, A4).
 - **EXPORT-PDF.md** — procédure d'export PDF.
 
 ## Ce que la v1 lègue à la v2
@@ -171,17 +188,16 @@ Détail des phases, portes de validation, critères et calendrier :
 - f_s réelle du sub et des médiums (→ phase 1, mesure d'impédance).
 - Câblage exact des médiums (série confirmée ?).
 - ~~Condensateur en série avec les pavillons ?~~ **CONFIRMÉ PRÉSENT** (Thomas,
-  16 sept. 2026). Sa **valeur** reste `[[à mesurer]]` : pour 3,3 à 10 µF, la branche
-  aiguë présente 160 à 480 Ω vers 100 Hz et déplace $|Z|$ du bloc médiums de **6 à
-  16 %** (calculé) — modeste mais pas négligeable, et visible sur un ajustement.
-  Conséquence inchangée : on mesure le bloc **tel qu'il est câblé**, l'effet est
-  alors inclus sans avoir à le modéliser. Côté sécurité, le pavillon voit ~482 Ω
-  contre ~34 Ω pour les médiums à 100 Hz : aucun risque pendant les balayages.
+  16 sept. 2026). Sa **valeur** reste `[[à mesurer]]` : pour 3,3 à 10 µF, les deux
+  branches aiguës abaissent $|Z|$ du bloc médiums de **−10 à −26 %** à 100 Hz
+  (calculé, voir § Sujet). Conséquence inchangée : on mesure le bloc **tel qu'il
+  est câblé** ; aucun risque pour les pavillons pendant les balayages.
 - **Dimensions des deux évents** (diamètre et longueur de chacun) et **volume
   interne de la caisse** $V_b$ `[[à mesurer]]` — ils permettent une prédiction
   falsifiable de $f_b$, à confronter au creux d'impédance mesuré.
-- **Fréquence d'accord $f_b$** `[[à mesurer]]` (creux entre les deux pics de
-  $|Z|$, phase 1) — elle commande la borne basse de sécurité au niveau fort.
+- **Fréquence d'accord $f_b$** `[[à mesurer]]` (phase 1 : passage par zéro de la
+  phase entre les deux pics de $|Z|$, ou valeur ajustée — pas l'argmin du creux)
+  — elle commande la borne basse de sécurité au niveau fort.
 - Sensibilités (dB/W/m) pour l'égalisation des niveaux.
 - Les 2 niveaux d'écoute de référence à geler (le modèle de carte son est confirmé : voir § Matériel).
 
@@ -239,8 +255,9 @@ Détail des phases, portes de validation, critères et calendrier :
   débattement avant chaque balayage.
 - **Z exacte sans approximation courant constant** : mesurer V_HP ET V_Rref →
   Z = Rref·(V_HP/V_Rref). L'hypothèse I≈cst se dégrade au pic : |Z|_max = R_e(1+Q_ms/Q_es)
-  vaut **60 à 200 Ω pour un 18″** de catalogue (le « 40–60 Ω » hérité de la v1 est l'ordre
-  de grandeur du **bloc médiums**) → voir REFERENCE-TECHNIQUE.md § 02.4.
+  vaut **60 à 200 Ω pour un 18″** de catalogue ; le « 40–60 Ω » hérité de la v1 ne vaut
+  **ni** pour le 18″ **ni** pour le bloc médiums, dont le modèle culmine vers **112 Ω
+  à 77 Hz** avec ses pavillons (calcul du 23/09/2026) → REFERENCE-TECHNIQUE.md § 02.4.
   **Incise obligatoire depuis le constat de caisse** : cette formule vaut **en
   champ libre et en caisse close**. En bass-reflex la résonance se **dédouble**
   et elle ne décrit **aucun** des deux pics — sur le modèle ci-dessus elle
@@ -317,18 +334,26 @@ Détail des phases, portes de validation, critères et calendrier :
   `Reveal.initialize({width: 1024, height: 768})` dans `presentation-finale.html`
   et `pre-soutenance.html` — et les figures matplotlib de `analyse/figures.py`
   sont produites au même format (détail : REFERENCE-TECHNIQUE.md § 08.2). Rien
-  n'est donc à refaire de ce côté ; ce qui reste à régénérer, ce sont les **PDF**.
+  n'est donc à refaire de ce côté. Les PDF sont régénérés au 23/09/2026 (finale
+  50 pages, **1,80 Mo** après allègement).
 - Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
   Site : https://thomasmareel.github.io/tipe-filtrage-enceinte/
   Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH).
 
 ## Procédure PDF (résumé — détail dans EXPORT-PDF.md)
 
-PDF vectoriels via decktape (Chrome système, PUPPETEER_EXECUTABLE_PATH) ;
-variante claire imprimable via css/blueprint-light.css. Repli bitmap :
+PDF vectoriels via decktape (Chrome système, PUPPETEER_EXECUTABLE_PATH) sur
+l'URL `…html?export` (retire le quadrillage) ; variante claire imprimable via
+css/blueprint-light.css ; **puis toujours `python _alleger_pdf.py *.pdf`** —
+sans cette étape la finale fait 5,2 Mo (glyphes Type 3 dupliqués vue par vue :
+9 643 dessins pour 506 distincts), avec elle 1,80 Mo, rendu identique au pixel.
+Piège connu : sans `text-rendering: geometricPrecision` sur le texte SVG
+(`css/blueprint.css`), Chrome imprime le texte des SVG en colonnes à ~0,78 de sa
+taille et de sa position — invisible à l'écran, flagrant dans le PDF. Toujours
+**regarder** quelques pages du PDF sorti, pas seulement le HTML. Repli bitmap :
 captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 
-## État actuel (2026-09-16)
+## État actuel (2026-09-23)
 
 - [x] **Constat du 16/09/2026 (étudiant) : la caisse du sub est BASS-REFLEX à
       DEUX ÉVENTS**, et 2 pavillons d'ultra-aigu sont câblés en parallèle des
@@ -338,8 +363,22 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       (D3 et D8). **Rien d'autre ne change** : problématique, récit en 4 actes,
       critères, chaîne de mesure, optimisation E12 et portes de validation sont
       inchangés — le modèle à 7-8 paramètres était déjà écrit et testé pour ce
-      cas. Reste à propager dans `REFERENCE-TECHNIQUE.md`, `MCOT.md`,
-      `NOTES-TIPE.md` et les supports (non traité dans cette session).
+      cas. Propagé depuis dans `REFERENCE-TECHNIQUE.md`, `MCOT.md`,
+      `NOTES-TIPE.md`, le code et les deux présentations (16/09/2026).
+- [x] **Encadrant désigné : M. Chevalier** (16/09/2026, D10). Restent le contrôle
+      de son compte SCEI et l'avertissement sur la fenêtre de mi-juin.
+- [x] **Interface de mesure connue** : Focusrite Scarlett Solo 3ᵉ gén. (16/09).
+- [x] **Jig d'impédance arbitré le 23/09/2026** par un panel de trois relecteurs
+      et un arbitre : montage standard de REW, R_sense = 100 Ω (§ Matériel). Le
+      câblage du 16/09 (micro en travers d'une 10 Ω) était faux. Propagé dans le
+      livret, REFERENCE-TECHNIQUE.md (§ 02, sous-section Scarlett), PARCOURS.md,
+      FEUILLE-DE-ROUTE.md, DECISIONS-PHASE-0.md, NOTES-TIPE.md et les diapositives.
+- [x] **PARCOURS.md** (202 actions, A à Z) et **livret de manipulations** écrits ;
+      livret relu le 23/09 (voir § Documents).
+- [x] **Liste d'achats de la phase 1 établie** (PARCOURS.md, 1-B4) : trois 100 Ω
+      (deux à 0,1 % pour le jig, une à 1 % pour l'oscilloscope), une 33 Ω, la 10 Ω
+      de validation, un ballast 10 Ω / 5 W, condensateurs étalons, connecteurs.
+      **Rien n'est encore commandé.**
 
 - [x] v1 complète (pré-soutenance présentée aux profs début juin 2026 ; finale
       v1 structurée en attente de mesures) — **gelée dans archive-v1/**.
@@ -358,10 +397,9 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       tests**, **171 tests au vert** (`python -m unittest discover -s
       analyse/tests`, 16 sept. 2026) et `python analyse/tout_refaire.py` en
       8 étapes, exit 0.
-- [ ] Phase 0 à finir : critères + 2 niveaux d'écoute à geler (décision
-      étudiant), liste d'achats phase 1,
-      **désignation du professeur encadrant** (obligatoire pour la saisie SCEI
-      de mi-janvier 2027 — voir REFERENCE-TECHNIQUE.md § 08.3).
+- [ ] Phase 0 à finir : critères + 2 niveaux d'écoute à geler, cible de sommation
+      (D2, reportée), r_max de la self, gabarit D7 à signer — décisions de l'étudiant,
+      à dater dans `DECISIONS-PHASE-0.md`.
 - [x] **NOTES-TIPE.md réécrit en v2** (13 sept. 2026) : questions du jury sur le
       problème inverse, l'optimisation E12 et les incertitudes ; la v1 portait
       encore les trois architectures (dont le RC 1er ordre abandonné) et le
@@ -372,34 +410,34 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       dans la présentation finale, 2 dans la pré-soutenance). Le « ± 11 % sur
       f_c » n'y figure plus qu'en **annexe A3, comme contre-exemple explicitement
       réfuté**. Le site Pages reflète donc la v2.
-- [ ] **Seuls les PDF exportés** restent à régénérer après ces corrections
-      (procédure : EXPORT-PDF.md ; plafond SCEI 5 Mo, dernier export 4,81 Mo).
+- [x] **PDF régénérés le 23/09/2026** après ces corrections : présentation
+      finale 50 pages **1,80 Mo**, pré-soutenance 10 pages 0,51 Mo (sombre et
+      claire), livret 90 pages A4 1,80 Mo. Deux défauts d'export corrigés au
+      passage : poids (glyphes Type 3 dupliqués → `_alleger_pdf.py`, sans perte)
+      et libellés SVG décalés dans le PDF (→ `geometricPrecision`). Détail :
+      EXPORT-PDF.md § 3.3 et § 4.
 
 ## Prochaines étapes
 
-1. Étudiant : valider/amender les critères et les 2 niveaux d'écoute
-   (FEUILLE-DE-ROUTE.md § Critères) → les geler, et consigner la décision datée
-   dans **DECISIONS-PHASE-0.md**. La définition de f_c, elle, **n'est plus à
-   choisir** : c'est le croisement des deux voies (ci-dessus, § 04.1 fait foi).
-   Restent à trancher : la **cible de sommation** (Butterworth +3 dB à f_x avec
-   inversion de polarité, *ou* somme plate LR2 — les deux ne peuvent pas être
-   gelées ensemble, voir FEUILLE-DE-ROUTE.md et REFERENCE-TECHNIQUE.md § 04.3)
-   et le **r_max de la self**, qui est le vrai choix caché derrière le budget
-   (REFERENCE-TECHNIQUE.md § 05.8 et § 05.10).
-2. Étudiant : demander à un professeur d'être **encadrant** et vérifier qu'il a
-   un compte sur lycees.scei-concours.fr (échéance : rentrée).
-3. Étudiant : acheter R_ref 100 Ω 1 % (+ 10 Ω), pinces, wattmètre de prise ;
-   vérifier résistance de puissance 8 Ω au lycée.
-4. Étudiant, **avant la première mesure** : relever au pied à coulisse les cotes
-   des **deux évents** et le **volume net** de la caisse `[[à mesurer]]`, et
-   ouvrir le bornier pour savoir s'il y a un **condensateur en série avec les
-   pavillons** `[[à vérifier]]`. Le premier relevé rend la prédiction de $f_b$
-   *falsifiable* — elle doit être écrite et datée **avant** la mesure de Z(f) ;
-   le second décide de ce qu'on s'attend à lire sur le bloc médiums.
-5. Claude (sur demande) : régénérer les **PDF** des deux decks après ces
-   corrections — c'est le seul livrable qui traîne encore derrière ses sources.
-6. Phase 1 dès la rentrée : étalonnage de la chaîne sur composants connus,
-   puis Z(f) du sub en caisse. C'est la clé de voûte — rien d'autre avant.
+1. Étudiant : **passer la commande de la phase 1** d'après `PARCOURS.md` 1-B4
+   (version révisée du 23/09 — ne pas commander d'après une version antérieure).
+2. Étudiant : relever au pied à coulisse les cotes des **deux évents** et le
+   **volume net** de la caisse, puis faire **calculer et dater la prédiction de
+   $f_b$ AVANT** toute mesure de Z(f) — sinon elle n'est plus falsifiable.
+3. Étudiant, avec M. Chevalier (1-A3) : compte `lycees.scei-concours.fr`,
+   prénom ou initiale et discipline pour le formulaire, fenêtre de 8 jours de
+   mi-juin 2027 ; lui faire relire le **groupe C** du livret (tensions élevées)
+   avant la première mise sous tension au banc.
+4. Étudiant : geler et dater dans `DECISIONS-PHASE-0.md` les critères, les deux
+   niveaux d'écoute, la cible de sommation (D2, échéance : avant le premier achat
+   de composants du filtre et avant la rédaction du MCOT), le r_max de la self et
+   le gabarit D7. La définition de f_c, elle, n'est plus à choisir (§ 04.1).
+5. Phase 1, dès réception des composants : étalonnage des deux chaînes sur
+   composants connus (livret, groupe A), puis Z(f) du sub en caisse et du bloc
+   médiums câblé (groupe B). C'est la clé de voûte — rien d'autre avant.
+6. Claude, sur demande : dépouiller les premières mesures avec `analyse/`, puis
+   remplacer les données synthétiques des figures par les vraies (marqueurs
+   `<!--FIG:nom-->`, injection idempotente) et régénérer les PDF.
 
 ## Historique
 

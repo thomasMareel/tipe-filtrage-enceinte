@@ -1182,8 +1182,8 @@ def _autotest():
     # ---- 3 bis. charge COMPOSITE du passe-haut : pavillons en parallele -------
     _titre('3 bis. Les pavillons sont hors bande ACOUSTIQUE, pas hors charge ELECTRIQUE')
     th_med = [MED_UNITAIRE_TYP[c] for c in ('Re', 'Le', 'Res', 'fs', 'Qms')]
-    print('  [[a verifier aupres de l etudiant]] : y a-t-il un condensateur en serie')
-    print('  avec les pavillons ? Le calcul ci-dessous chiffre ce que la reponse change.')
+    print('  Condensateur en serie avec les pavillons : PRESENT (constat du 16/09/2026),')
+    print('  valeur [[a mesurer]]. Le calcul ci-dessous encadre son effet.')
     print('  %-12s %12s %12s %12s' % ('condensateur', '|Z| branche', '|Z| bloc', 'ecart'))
     for etiquette, C in (('aucun', None), ('3,3 uF', 3.3e-6), ('6,8 uF', 6.8e-6),
                          ('10 uF', 10e-6)):

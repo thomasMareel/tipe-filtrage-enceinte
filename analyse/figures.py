@@ -128,6 +128,11 @@ DOSSIER_FIGURES = DOSSIER_RESULTATS
 # pour montrer ce qui se passe hors de la bande de jugement -- c'est souvent la
 # que le catalogue se trahit.
 BANDE_TRACE = (20.0, 500.0)
+# Les figures d'IMPEDANCE descendent plus bas : la caisse est bass-reflex (constat
+# du 16/09/2026) et son premier pic tombe vers 16 Hz. Tracees a partir de 20 Hz,
+# elles ne montraient qu'un pic sous une legende qui en annonce deux. Le protocole
+# mesure d'ailleurs de 10 Hz a 1 kHz (livret, manip B2).
+BANDE_TRACE_Z = (10.0, 500.0)
 N_PAR_OCTAVE_TRACE = 48
 
 # Design "catalogue" : Butterworth 2e ordre 100 Hz calcule sur 8 ohm RESISTIFS,
@@ -366,6 +371,32 @@ def _interp_log(f, y, f0):
     return float(np.exp(np.interp(np.log(f0), np.log(f), np.log(y))))
 
 
+def _valeur_incertitude(valeur, u):
+    """Écrit « valeur ± u » selon la règle d'arrondi des incertitudes.
+
+    u garde 2 chiffres significatifs si son premier chiffre est 1 ou 2, sinon 1 ;
+    la valeur est arrondie AU MÊME RANG décimal. Avant : « 6,238 ± 0,17 », trois
+    décimales sur la valeur pour deux sur l'incertitude -- la faute qu'un jury
+    relève en premier.
+    """
+    if not (u > 0 and np.isfinite(u)):
+        return BP.fr(valeur, '%.4g'), '?'
+    exposant = int(np.floor(np.log10(u)))
+    premier = int(u / 10 ** exposant)
+    chiffres = 2 if premier in (1, 2) else 1
+    rang = -(exposant - chiffres + 1)            # nombre de decimales a garder
+    if rang > 0:
+        fmt = '%.' + str(rang) + 'f'
+        return BP.fr(valeur, fmt), BP.fr(u, fmt)
+    pas = 10.0 ** (-rang)
+    return BP.fr(round(valeur / pas) * pas, '%.0f'), BP.fr(round(u / pas) * pas, '%.0f')
+
+
+def _fraction_log(f0, f1, f2):
+    """Position de f0 sur un axe logarithmique [f1 ; f2], en fraction de l'axe."""
+    return float(np.log(f0 / f1) / np.log(f2 / f1))
+
+
 def _texte_design(design, prefixe=''):
     """Ligne compacte 'L1 / C1 | C2 / L2' en mH et uF, pour un cartouche."""
     return ('%s%.3g mH / %.3g µF | %.3g µF / %.3g mH'
@@ -381,8 +412,9 @@ def fig_z_sub_mesure(taille=None):
     """|Z(f)| et phase du sub, avec barres d'erreur : la figure de l'acte 1.
 
     CE QU'ELLE DOIT FAIRE COMPRENDRE EN DIX SECONDES : la charge n'est pas
-    8 ohm. Le module varie du simple au sextuple dans la bande du raccord, et
-    c'est exactement l'hypothese que le filtre catalogue suppose fausse.
+    8 ohm. En bass-reflex le module presente deux pics et un creux, le second
+    pic tombant dans la zone du raccord, et c'est exactement l'hypothese que le
+    filtre catalogue suppose fausse.
 
     Deux incertitudes cohabitent et la figure les distingue, parce que les
     confondre fausse le chi2 et biaise Re (§ 09.3) :
@@ -395,7 +427,8 @@ def fig_z_sub_mesure(taille=None):
     z = donnees_z()
     f, mod, phi = z['f'], z['module'], z['phase']
     u_syst = IO.meta_flottant(z['meta'], 'u_systematique_relative_pct', 0.0) / 100.0
-    f2 = min(BANDE_TRACE[1], float(f.max()))
+    f1 = max(BANDE_TRACE_Z[0], float(f.min()))
+    f2 = min(BANDE_TRACE_Z[1], float(f.max()))
 
     fig, (haut, milieu, bas) = BP.figure(3, 1, taille=taille or BP.TAILLE_HAUTE,
                                          hauteurs=(2.1, 1.15, 0.85), sharex=True)
@@ -404,16 +437,18 @@ def fig_z_sub_mesure(taille=None):
         haut.fill_between(f, mod * (1 - u_syst), mod * (1 + u_syst),
                           color=BP.couleur('filet'), alpha=0.9, linewidth=0,
                           label='systématique de chaîne ±%s %%' % BP.fr(100 * u_syst, '%.1f'))
+    # capsize=0 sur toutes les barres d'erreur : a 1,5 pt les chapeaux etaient
+    # invisibles, mais ajoutaient deux objets par point au PDF (plafond SCEI 5 Mo).
     haut.errorbar(f, mod, yerr=z['u_module'], fmt='o', markersize=2.2,
                   color=BP.couleur('mesure'), ecolor=BP.couleur('mesure'),
-                  elinewidth=0.8, capsize=1.5, linestyle='none',
+                  elinewidth=0.8, capsize=0, linestyle='none',
                   label='|Z| ± u aléatoire (k = 1)')
     haut.set_ylabel(TEXTES['module'])
     haut.set_ylim(0.8 * float(mod.min()), 1.6 * float(mod.max()))
     BP.axe_impedance(haut)
 
     f_pic, mod_pic = MH.pic_principal(f, mod)
-    rapport = MH.rapport_max_min(f, mod, bande=BANDE_TRACE)
+    rapport = MH.rapport_max_min(f, mod, bande=(f1, f2))
     z100 = _interp_log(f, mod, 100.0)
     haut.plot([f_pic], [mod_pic], marker='v', markersize=5,
               color=BP.couleur('somme'), linestyle='none', zorder=5)
@@ -427,14 +462,17 @@ def fig_z_sub_mesure(taille=None):
                  '▼ pic : %s Ω à %s Hz\n|Z|(100 Hz) = %s Ω\nmax/min = %s  (%g–%g Hz)\n'
                  '%d points'
                  % (BP.fr(mod_pic, '%.0f'), BP.fr(f_pic, '%.1f'), BP.fr(z100, '%.1f'),
-                    BP.fr(rapport, '%.1f'), BANDE_TRACE[0], BANDE_TRACE[1], len(f)),
-                 'bas gauche')
+                    BP.fr(rapport, '%.1f'), f1, f2, len(f)),
+                 # Entre les deux pics, en haut : la seule zone vide de la figure
+                 # bass-reflex (le coin bas gauche masquait le creux et le flanc
+                 # du premier pic). Abscisse en fraction de l'axe logarithmique.
+                 (_fraction_log(38.0, f1, f2), 0.97, 'center', 'top'))
     BP.legende(haut, loc='upper right')
 
     milieu.axhline(0.0, color=BP.couleur('filet'), linewidth=0.8)
     milieu.errorbar(f, phi, yerr=z['u_phase'], fmt='o', markersize=2.0,
                     color=BP.couleur('mesure'), ecolor=BP.couleur('mesure'),
-                    elinewidth=0.8, capsize=1.5, linestyle='none')
+                    elinewidth=0.8, capsize=0, linestyle='none')
     milieu.set_ylabel(TEXTES['phase'])
     BP.repere_vertical(milieu, 100.0)
 
@@ -454,7 +492,7 @@ def fig_z_sub_mesure(taille=None):
     bas.set_yticks([y for y in (0, 1, 2, 3, 4, 5) if y <= haut_panneau])
     BP.legende(bas, loc='lower left', ncols=2)
     BP.repere_vertical(bas, 100.0)
-    BP.axe_frequence(bas, BANDE_TRACE[0], f2, textes=TEXTES)
+    BP.axe_frequence(bas, f1, f2, textes=TEXTES)
 
     # LE TITRE DIT LE STATUT, comme l'estampille (correction de relecture du
     # 2026-09-14). Il ecrivait "IMPEDANCE MESUREE DU HAUT-PARLEUR" alors que les points
@@ -495,36 +533,55 @@ def fig_fit_ts_sub(taille=None):
     theta = np.asarray(res['theta'], float)
     u = np.asarray(res['u_composee'], float)
 
-    fd = _grille_trace((max(BANDE_TRACE[0], float(f.min())),
-                        min(BANDE_TRACE[1], float(f.max()))))
+    fd = _grille_trace((max(BANDE_TRACE_Z[0], float(f.min())),
+                        min(BANDE_TRACE_Z[1], float(f.max()))))
     Z = TS.evaluer(modele, fd, theta)
 
-    fig, (a, b, c) = BP.figure(3, 1, taille=taille or BP.TAILLE_HAUTE,
-                               hauteurs=(2.1, 1.25, 1.05), sharex=True)
+    # Une COLONNE A DROITE pour la table des parametres. En cartouche dans le
+    # panneau du module, ses neuf lignes occupaient les trois quarts de la hauteur
+    # et masquaient le premier pic du bass-reflex -- or il n'y a pas de coin libre
+    # sur une courbe a deux pics et un creux. Motif matplotlib documente : une
+    # grille 3 x 2 dont on retire la colonne droite pour la remplacer par un seul
+    # axe qui la couvre ; constrained_layout s'en accommode.
+    fig, axes = BP.figure(3, 2, taille=taille or BP.TAILLE_HAUTE,
+                          hauteurs=(2.1, 1.25, 1.05), largeurs=(2.75, 1.0), sharex='col')
+    a, b, c = axes[:, 0]
+    grille = axes[0, 0].get_gridspec()
+    for ax in axes[:, 1]:
+        ax.remove()
+    colonne = fig.add_subplot(grille[:, 1])
+    colonne.axis('off')
 
     a.errorbar(f, mod, yerr=z['u_module'], fmt='o', markersize=2.2,
                color=BP.couleur('mesure'), ecolor=BP.couleur('mesure'),
-               elinewidth=0.7, capsize=1.2, linestyle='none', label=TEXTES['mesure'])
+               elinewidth=0.7, capsize=0, linestyle='none', label=TEXTES['mesure'])
     a.plot(fd, np.abs(Z), color=BP.couleur('modele'), linewidth=1.7,
-           label='%s (%s, %d paramètres)' % (TEXTES['modele'], modele, len(theta)))
+           label='%s %s\n(%d paramètres)' % (TEXTES['modele'], modele, len(theta)))
     a.set_ylabel(TEXTES['module'])
     a.set_ylim(0.8 * float(mod.min()), 1.7 * float(mod.max()))
     BP.axe_impedance(a)
-    BP.legende(a, loc='upper right')
+    # Pas de legende DANS les panneaux : sur deux pics et un creux, aucun coin
+    # n'est libre (elle masquait le sommet du second pic). Tout va en colonne.
 
     noms, unites = res['noms'], res['unites']
     echelles = {'H': (1e3, 'mH'), 'ohm': (1.0, 'Ω'), 'Hz': (1.0, 'Hz'), '-': (1.0, '')}
-    lignes = []
+    lignes = ['PARAMÈTRES AJUSTÉS', '']
     for nom, val, inc, unite in zip(noms, theta, u, unites):
         k, symbole = echelles.get(unite, (1.0, unite))
-        lignes.append('%-4s %8s ± %-6s %s' % (nom, BP.fr(val * k, '%.4g'),
-                                              BP.fr(inc * k, '%.2g'), symbole))
-    lignes.append('χ² réduit %s' % BP.fr(res['chi2_reduit'], '%.2f'))
-    BP.cartouche(a, '\n'.join(lignes), 'bas gauche')
+        v, i = _valeur_incertitude(val * k, inc * k)
+        lignes.append('%-5s %s ± %s %s' % (nom, v, i, symbole))
+    lignes += ['', 'χ² réduit %s' % BP.fr(res['chi2_reduit'], '%.2f'),
+               '(u à k = 1)']
+    colonne.text(0.04, 0.98, '\n'.join(lignes), transform=colonne.transAxes,
+                 ha='left', va='top', family='monospace', linespacing=1.45,
+                 fontsize=plt.rcParams['font.size'] * 0.74,
+                 color=BP.couleur('texte_doux'),
+                 bbox=dict(boxstyle='round,pad=0.45', facecolor=BP.couleur('panneau'),
+                           edgecolor=BP.couleur('filet'), linewidth=0.6))
 
     b.errorbar(f, phi, yerr=z['u_phase'], fmt='o', markersize=2.0,
                color=BP.couleur('mesure'), ecolor=BP.couleur('mesure'),
-               elinewidth=0.7, capsize=1.2, linestyle='none')
+               elinewidth=0.7, capsize=0, linestyle='none')
     b.plot(fd, np.degrees(np.angle(Z)), color=BP.couleur('modele'), linewidth=1.5)
     b.axhline(0.0, color=BP.couleur('filet'), linewidth=0.8)
     b.set_ylabel(TEXTES['phase'])
@@ -550,12 +607,36 @@ def fig_fit_ts_sub(taille=None):
         c.plot(fr, r_phi, 's', markersize=2.4, color=BP.couleur('medium'), label='phase')
     c.set_ylabel(TEXTES['residus'])
     c.set_ylim(-4.0, 4.0)
-    BP.legende(c, loc='upper right', ncols=2)
-    BP.cartouche(c, 'RMS %s %% (module)  %s° (phase)  |r|max = %s σ'
+    BP.axe_frequence(c, float(fd.min()), float(fd.max()), textes=TEXTES)
+
+    # La colonne recoit aussi les deux legendes et le bilan des residus, au lieu
+    # de les poser sur les donnees (le cartouche RMS masquait la moitie de la
+    # legende du panneau des residus).
+    poignees = a.get_legend_handles_labels()
+    poignees_r = c.get_legend_handles_labels()
+    # Libelles COURTS : la colonne est etroite, et un libelle long elargit la
+    # figure entiere (bbox_inches='tight'). L'ordre suit celui des panneaux.
+    etiquettes = {TEXTES['mesure']: 'points synthétiques'}
+    libelles = [etiquettes.get(l, l if not l.startswith(TEXTES['modele'])
+                               else 'modèle %s' % modele) for l in poignees[1]]
+    leg = colonne.legend(poignees[0] + poignees_r[0],
+                         libelles + ['résidu (module)', 'résidu (phase)'][:len(poignees_r[0])],
+                         loc='center left', bbox_to_anchor=(0.0, 0.335),
+                         fontsize=plt.rcParams['font.size'] * 0.72, frameon=False,
+                         handlelength=1.4, labelspacing=0.7)
+    for t in leg.get_texts():
+        t.set_color(BP.couleur('texte_doux'))
+    colonne.text(0.04, 0.02,
+                 'RÉSIDUS\n\nRMS module %s %%\nRMS phase  %s°\n|r|max     %s σ'
                  % (BP.fr(res['residus']['rms_module_pct_ajustement'], '%.2f'),
                     BP.fr(res['residus']['rms_phase_deg_ajustement'], '%.2f'),
-                    BP.fr(res['residus']['max_abs'], '%.1f')), 'haut gauche')
-    BP.axe_frequence(c, float(fd.min()), float(fd.max()), textes=TEXTES)
+                    BP.fr(res['residus']['max_abs'], '%.1f')),
+                 transform=colonne.transAxes, ha='left', va='bottom',
+                 family='monospace', linespacing=1.45,
+                 fontsize=plt.rcParams['font.size'] * 0.74,
+                 color=BP.couleur('texte_doux'),
+                 bbox=dict(boxstyle='round,pad=0.45', facecolor=BP.couleur('panneau'),
+                           edgecolor=BP.couleur('filet'), linewidth=0.6))
 
     BP.kicker(fig, 'acte 2 — problème inverse : identification de Thiele-Small')
     BP.marque_synthetique(fig)

@@ -289,8 +289,9 @@ lectures extrapolées à $t = 0$ ; l'écart fait partie du résultat.
   insuffisants.**
 - **Borne basse de balayage — la caisse EST bass-reflex** (D8, constat du
   16/09/2026, deux évents) : au niveau fort, **aucun contenu sous l'accord** —
-  `Start` REW $\ge 2f_b$, **sans exception**, avec le $f_b$ **mesuré** au creux
-  d'impédance en phase 1 et non un chiffre de catalogue (un 18″ est typiquement
+  `Start` REW $\ge 2f_b$, **sans exception**, avec le $f_b$ **mesuré** en
+  phase 1 — au passage par zéro de la phase entre les deux pics (et non à
+  l'argmin du creux), ou pris de l'ajustement — et non un chiffre de catalogue (un 18″ est typiquement
   accordé vers 30–40 Hz, mais ce n'est pas une mesure). Sous $f_b$ la membrane
   n'est plus chargée par les évents et l'excursion devient maximale : c'est le
   seul geste du projet qui puisse **détruire mécaniquement** le haut-parleur.
@@ -758,13 +759,14 @@ ce seuil.
 | Si oui : nombre d'évents | **DEUX** (constaté le 16/09/2026) |
 | Diamètre et longueur de chaque évent | `[[à mesurer]]` |
 | Volume interne estimé $V_b$ | `[[à mesurer]]` |
-| Fréquence d'accord $f_b$ | `[[à mesurer]]` — lue au **creux** de $\lvert Z\rvert$ entre les deux pics (phase 1) |
+| Fréquence d'accord $f_b$ | `[[à mesurer]]` — lue au **passage par zéro de la phase** entre les deux pics, dont la pente est raide (et non à l'argmin du creux, plat et indiscernable sous 1 % de bruit ; les deux lectures sont biaisées de quelques % par les pertes, § 02.6), ou prise de l'ajustement (phases 1-2) |
 | Aires à relever pour la sommation de Keele : $S_d$ (membrane) et $S_p$ (un évent) | `[[à mesurer — mètre ruban]]` |
 | Câblage exact des deux médiums (série confirmée ?) | `[[à vérifier]]` |
 | **2 pavillons d'ultra-aigu en parallèle des médiums** | **CONSTATÉ le 16/09/2026** — hors périmètre *acoustique*, mais **dans la charge électrique** du passe-haut |
-| Condensateur en série avec les pavillons ? Si oui, valeur | `[[à vérifier auprès de Thomas]]` — ne pas supposer |
+| Condensateur en série avec les pavillons | **PRÉSENT** (constat du 16/09/2026) ; **valeur** `[[à mesurer]]` au bornier. Contrôle de câblage : lecture DC du bloc d'environ 6 à 7 Ω (livret, B1 bis) |
 | Écart entre le centre du 18″ et celui du bloc médiums (pour $\tau$, D5) | `[[à mesurer — mètre ruban]]` |
-| Modèle du micro de mesure et de la carte son ; SPL max du micro | `[[à documenter]]` |
+| Carte son | **Documentée le 16/09/2026** : Focusrite Scarlett Solo 3ᵉ génération (câblage du jig arrêté le 23/09/2026, `CLAUDE.md` § Matériel) |
+| Modèle du micro de mesure ; SPL max du micro | `[[à documenter]]` |
 | Sensibilités des deux voies (dB/W/m) | `[[à mesurer en phase 1]]` |
 
 ### Ce que le constat déclenche (quatre conséquences, toutes actées)
@@ -853,8 +855,9 @@ on continue d'écrire « varie fortement avec la fréquence » dans les document
 > $f_b$ au niveau faible seulement ; **sommation champ proche membrane + deux
 > évents pondérée par les aires (Keele)** en phase 4.
 > — reste `[[à mesurer]]` : diamètre et longueur des évents, volume interne
-> $V_b$, $f_b$ (creux d'impédance) ; reste `[[à vérifier]]` : condensateur
-> éventuel en série avec les pavillons d'ultra-aigu.
+> $V_b$, $f_b$ (passage par zéro de la phase entre les deux pics, ou
+> ajustement) ; condensateur en série avec les pavillons d'ultra-aigu :
+> **présent** (constat du même jour), **valeur** `[[à mesurer]]`.
 
 ---
 
@@ -947,9 +950,11 @@ seulement**), sur son propre compte. Sa validation atteste « un travail
 personnel constaté ». En cas de refus ou d'absence de validation : « Le candidat
 aura alors un entretien avant son passage en loge » — **note zéro possible**.
 
-Au moment de l'audit, le mot « encadrant » n'apparaissait **dans aucun document
-v2 du dépôt** hors `archive-v1/`. Échéance fixée par la feuille de route :
-**rentrée septembre 2026** — c'est-à-dire maintenant.
+*Historique (audit du 13/09/2026)* : au moment de l'audit, le mot
+« encadrant » n'apparaissait **dans aucun document v2 du dépôt** hors
+`archive-v1/`, et la feuille de route fixait l'échéance à la **rentrée de
+septembre 2026**. Échéance tenue : M. Chevalier a donné son accord le
+16/09/2026.
 
 ### Les quatre actions, dans l'ordre
 
@@ -965,9 +970,9 @@ le **nom du lycée** ; rien n'y concerne le nom d'un enseignant, et l'encadrant
 est de toute façon déclaré au SCEI. Neutraliser le nom d'un enseignant cité en
 source est une **interprétation prudente**, pas une exigence.
 
-> **DÉCISION — encadrant : [[nom à remplir]]** · **accord obtenu le :
-> [[JJ/MM/AAAA]]** · **compte SCEI vérifié : [[oui/non]]**
-> — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
+> **DÉCISION — encadrant : M. Chevalier** · **accord obtenu le : 16/09/2026**
+> · **compte SCEI vérifié : `[[oui/non]]`** (action 1-A3 de `PARCOURS.md`)
+> — date : `16/09/2026` — signé : `[[TM]]`
 
 ---
 
@@ -1003,20 +1008,31 @@ source est une **interprétation prudente**, pas une exigence.
       évents**. Le modèle de la phase 2 est dimensionné en conséquence :
       **7-8 paramètres**. Restent attachés à ce constat, et à faire avant la
       phase 2 : dimensions des évents et $V_b$ `[[à mesurer]]`, $f_b$ lu au
-      creux `[[à mesurer]]`, condensateur éventuel des pavillons
-      `[[à vérifier]]`, borne basse $\ge 2f_b$ au niveau fort inscrite au
+      passage par zéro de la phase entre les deux pics `[[à mesurer]]`,
+      valeur du condensateur des pavillons (présent, 16/09/2026)
+      `[[à mesurer]]`, borne basse $\ge 2f_b$ au niveau fort inscrite au
       protocole, sommation de Keele (membrane + deux évents) inscrite au
       planning de la phase 4.
 - [ ] **D9** — Filière déclarée ; positionnements et titre arrêtés sur le récit
       prévu.
 - [x] **D10** — Encadrant désigné (**M. Chevalier**, 16/09/2026), accord explicite obtenu ; reste à vérifier son compte
-      `lycees.scei-concours.fr` vérifié.
+      `lycees.scei-concours.fr` et à l'avertir de la fenêtre de 8 jours de
+      mi-juin 2027 (`PARCOURS.md` 1-A3).
 - [ ] Porte de la **phase 1** connue et acceptée : la résistance étalon est
       retrouvée à ±3 % et le condensateur suit $1/\omega C$ sur deux décades,
       sinon on diagnostique avant d'avancer.
-- [ ] Achats de la phase 1 passés : $R_{ref}$ 100 Ω 1 % (+ une 10 Ω), pinces et
-      câbles, résistance de puissance 8 Ω (si absente au lycée), wattmètre de
-      prise.
+- [ ] Achats de la phase 1 passés (liste révisée le 23/09/2026, après
+      l'arbitrage sur le jig d'impédance) : **deux 100 Ω à 0,1 %** ($R_{sense}$
+      du jig carte son et référence d'étalonnage de REW), **une 100 Ω à 1 %,
+      ≥ 1 W, film métallique** ($R_{ref}$ de la chaîne GBF + oscilloscope,
+      **distincte des deux 0,1 %**, sans quoi le recoupement A7 perd son
+      indépendance), **une 33 Ω ≥ 0,25 W** (protection de la sortie casque),
+      **une 10 Ω, à 0,1 % si possible** — dipôle de validation, résistance
+      connue de A5 et configuration B du recoupement, **pas** résistance de
+      mesure —, *facultatif* une 33 Ω à 1 % (repli du livret, A1), fiches du
+      jig (XLR mâle, deux jacks 6,35 TRS), **condensateurs étalons 100 µF et
+      10 µF MKP**, pinces et câbles, résistance de puissance 8 Ω (si absente
+      au lycée), wattmètre de prise. Détail : `PARCOURS.md`, action `1-B4`.
 - [ ] Cahier de laboratoire ouvert et daté ; appareil photo prêt (les objets
       sont interdits en salle d'oral).
 

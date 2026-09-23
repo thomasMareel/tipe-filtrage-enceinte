@@ -59,11 +59,8 @@
     <p class="sous">Enceinte deux voies — réalisation personnelle</p>
     <p class="auteur">THOMAS MAREEL · 2e ANNÉE</p>
 
-    <p class="encadre warn"><strong>État des supports.</strong> Les deux présentations sont à jour du sujet v2 et au gabarit SCEI 4/3 (1024 × 768). Les <strong>PDF de juin 2026 ont été retirés du téléchargement</strong> : ils portaient encore la v1 (« passif ou actif ») en 16:9. Régénération en cours — procédure dans <a href="EXPORT-PDF.md">EXPORT-PDF.md</a>. Aucune mesure n'a encore été faite sur l'enceinte : les vues annoncent une démarche et montrent l'outillage, les données expérimentales y sont des emplacements réservés explicites.</p>
+    <p class="encadre warn"><strong>État des supports.</strong> Les deux présentations sont à jour du sujet v2 et au gabarit SCEI 4/3 (1024 × 768) ; leurs <strong>PDF ont été régénérés le 23 septembre 2026</strong> (présentation finale : 50 pages, 1,80 Mo pour 5 Mo autorisés — procédure dans <a href="EXPORT-PDF.md">EXPORT-PDF.md</a>). Aucune mesure n'a encore été faite sur l'enceinte : les vues annoncent une démarche et montrent l'outillage, les données expérimentales y sont des emplacements réservés explicites.</p>
 
-    <!-- Les quatre boutons PDF pointaient vers les fichiers de juin 2026 (mauvais sujet,
-         mauvais format). L'encadre d'avertissement ne suffit pas : un visiteur qui clique
-         sans le lire repart avec la v1. Liens neutralises jusqu'a la regeneration. -->
     <div class="cartes">
       <div class="carte">
         <span class="duree">≈ 5 min 30 · 10 vues</span>
@@ -71,23 +68,25 @@
         <p>Pourquoi le sujet a pivoté, le récit en quatre actes, l'outillage déjà en place et ce qui est gelé — ou ne l'est pas — avant la première mesure.</p>
         <div class="liens">
           <a class="btn primary" href="pre-soutenance.html">Ouvrir la présentation</a>
-          <span class="btn" style="opacity:.45;cursor:default">PDF en cours de régénération</span>
+          <a class="btn" href="pre-soutenance.pdf">PDF</a>
+          <a class="btn" href="pre-soutenance-clair.pdf">PDF clair</a>
         </div>
       </div>
       <div class="carte">
-        <span class="duree">15 + 15 min · 18 vues + 31 annexes</span>
+        <span class="duree">15 + 15 min · 18 vues + 32 d'annexes</span>
         <h2>Présentation finale</h2>
-        <p>Oral SCEI : 15 min d'exposé (18 vues, 30 à 60 s chacune — 14 min 45 au total) puis 15 min d'entretien, avec un sommaire d'annexes, 14 annexes et 16 vues de listings Python appelées à la demande.</p>
+        <p>Oral SCEI : 15 min d'exposé (18 vues, 30 à 60 s chacune — 14 min 45 au total) puis 15 min d'entretien, avec un sommaire d'annexes, 15 annexes et 16 vues de listings Python appelées à la demande.</p>
         <div class="liens">
           <a class="btn primary" href="presentation-finale.html">Ouvrir la présentation</a>
-          <span class="btn" style="opacity:.45;cursor:default">PDF en cours de régénération</span>
+          <a class="btn" href="presentation-finale.pdf">PDF</a>
+          <a class="btn" href="presentation-finale-clair.pdf">PDF clair</a>
         </div>
       </div>
     </div>
 
     <div class="cartes">
       <div class="carte">
-        <span class="duree">18 002 lignes de Python, dont 3 637 de tests · 148 tests au vert</span>
+        <span class="duree">19 319 lignes de Python, dont 4 253 de tests · 171 tests au vert</span>
         <h2>Le code d'analyse</h2>
         <p>La chaîne de calcul du TIPE : lecture des mesures d'impédance, identification des paramètres de Thiele-Small par moindres carrés, optimisation du filtre sur la charge réelle en valeurs E12, figures et netlists. Tout chiffre cité à l'oral est régénérable par une commande — python analyse/tout_refaire.py — et le journal produit porte les empreintes SHA-256 des entrées.</p>
         <div class="liens">
@@ -101,6 +100,9 @@
       <span>Ressources :</span>
       <a href="https://github.com/thomasMareel/tipe-filtrage-enceinte">Dépôt GitHub</a>
       <a href="FEUILLE-DE-ROUTE.md">Feuille de route</a>
+      <a href="PARCOURS.md">Parcours (actions dans l'ordre)</a>
+      <a href="protocole/PROTOCOLE-EXPERIENCES.html">Livret de manipulations</a>
+      <a href="protocole/PROTOCOLE-EXPERIENCES.pdf">Livret (PDF A4 à imprimer)</a>
       <a href="DECISIONS-PHASE-0.md">Registre de décisions</a>
       <a href="REFERENCE-TECHNIQUE.md">Référence technique</a>
       <a href="NOTES-TIPE.md">Questions du jury</a>

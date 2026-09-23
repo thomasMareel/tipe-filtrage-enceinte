@@ -144,30 +144,32 @@ amont de l'ampli. → § 01.10, § 07.8
 **Acoustiquement**, ils sont hors bande : ils ne rayonnent rien autour de 100 Hz et ne
 participent pas au raccord étudié — donc hors périmètre. **Électriquement, non** : ils sont
 **câblés en parallèle des médiums**, ils font donc partie de la charge que voit le filtre
-passe-haut. La conséquence est la même dans les deux cas de figure — qu'il y ait ou non un
-condensateur de protection en série avec eux : je mesure le **bloc médiums tel qu'il est
-câblé, pavillons connectés**, puisque c'est ce dipôle-là, et pas un médium isolé, que le
-filtre charge. Ce que le condensateur change, c'est seulement l'**ampleur** de leur
-contribution : s'il existe (quelques µF), la branche aigu présente vers 100 Hz plusieurs
-centaines d'ohms — mais **pas au point d'être négligeable** : deux pavillons en parallèle,
-avec 3,3 à 10 µF chacun, font tout de même perdre 0,9 à 2,6 dB sur $|Z|$ du bloc au voisinage
-de sa résonance. S'il n'y en a pas, la branche est un parallèle direct : $|Z|$ du bloc chute
-de 87 % **et** les pavillons reçoivent du 100 Hz à pleine puissance.
+passe-haut. Je mesure donc le **bloc médiums tel qu'il est câblé, pavillons connectés**,
+puisque c'est ce dipôle-là, et pas un médium isolé, que le filtre charge. Un condensateur de
+protection est **présent** en série avec les pavillons (constaté le 16/09/2026) ; sa valeur
+fixe l'**ampleur** de leur contribution. Pour 3,3 à 10 µF, chaque pavillon présente 160 à
+480 Ω vers 100 Hz, soit 80 à 241 Ω pour les deux en parallèle — **pas au point d'être
+négligeable** : $|Z|$ du bloc passe de 29,3 Ω à 26,3 – 21,8 Ω, soit −10 à −26 % (−0,9 à
+−2,6 dB) au voisinage de sa résonance (calculé sur le modèle, pas mesuré). Sans condensateur,
+la branche serait un parallèle direct : $|Z|$ du bloc chuterait de 87 % **et** les pavillons
+recevraient du 100 Hz à pleine puissance — c'est pourquoi un contrôle à l'ohmmètre (environ
+6 à 7 Ω en continu attendus) vérifie le câblage avant toute mesure.
 **La parade est le niveau, jamais le débranchement** : la mesure d'impédance se fait à
-100–200 mV, sans risque dans les deux cas de câblage ; ce sont les seuls **balayages
-acoustiques forts** qui se limitent en niveau et en durée. Débrancher les pavillons
-reviendrait à mesurer une charge qui n'existe pas dans le montage — c'est-à-dire à défaire
-exactement ce que je viens d'expliquer.
-[[à vérifier sur l'enceinte : présence et valeur d'un condensateur en série avec les
-pavillons]]
+100–200 mV, sans risque ; ce sont les seuls **balayages acoustiques forts** qui se limitent
+en niveau et en durée. Débrancher les pavillons reviendrait à mesurer une charge qui n'existe
+pas dans le montage — c'est-à-dire à défaire exactement ce que je viens d'expliquer.
+[[à mesurer sur l'enceinte : valeur du condensateur en série avec les pavillons (sa présence
+est constatée depuis le 16/09/2026)]]
 
 **« "Du simple au sextuple", d'où sort ce chiffre ? »**
 → Le rapport pic/plancher vaut $|Z|_{max}/R_e=1+Q_{ms}/Q_{es}$ ; ce n'est donc pas un
 accident, c'est le rapport des amortissements mécanique et électrique. Ce chiffre a été
 **retiré de la problématique** : il n'était pas mesuré et il était trop bas. Les fiches de
 18″ de sonorisation donnent $|Z|_{max}$ entre 60 et 200 Ω (Delta Pro-18A : 172 Ω calculé),
-soit ×8 à ×25 face à 8 Ω nominaux ; l'ordre de grandeur 40–60 Ω hérité de la v1 est celui du
-**bloc médiums**, pas du 18″. Les pertes de la caisse rabaissent le pic. La problématique dit
+soit ×8 à ×25 face à 8 Ω nominaux ; l'ordre de grandeur 40–60 Ω hérité de la v1 ne vaut
+**ni pour le 18″ ni pour le bloc médiums** : modélisé avec ses deux pavillons (2 × 8 Ω avec
+6,8 µF), ce bloc culmine lui aussi vers **112 Ω à 77 Hz** (calculé, non mesuré). Les pertes
+de la caisse rabaissent le pic. La problématique dit
 donc « varie fortement avec la fréquence », et le rapport sera chiffré après la phase 1.
 [[réponse à compléter après la phase 1 : rapport max/min mesuré en caisse]] → § 01.8
 
@@ -199,7 +201,9 @@ amplitudes, la phase du décalage temporel. → § 02.1, § 02.3
 
 **« Pourquoi ne pas supposer le courant constant, avec une grosse résistance série ? »**
 → Parce que l'hypothèse casse là où c'est le plus intéressant. Au pic, l'impédance d'un
-18″ vaut $R_e(1+Q_{ms}/Q_{es})$, soit plusieurs dizaines d'ohms : avec $R_{ref}=100$ Ω, le
+18″ vaut $R_e(1+Q_{ms}/Q_{es})$, soit 60 à 200 Ω pour un 18″ de catalogue (majorant : la
+formule vaut en caisse close ; en bass-reflex, le pic haut modélisé vaut 64 Ω) : avec
+$R_{ref}=100$ Ω, le
 courant n'est plus constant du tout et l'erreur sur le pic atteint 50 à 63 % (calculé).
 La mesure des deux tensions coûte une voie d'oscilloscope de plus et supprime le problème.
 → § 02.1
@@ -225,7 +229,53 @@ toutes les impédances par 1,01 : $R_e$, $R_{es}$ et $L_e$ se décalent d'exacte
 $\chi^2$ ne bronche pas. C'est une incertitude **systématique de type B**, invisible pour
 les estimateurs statistiques. En revanche $f_s$ et $Q_{ms}$ y sont **immunisés** : ce sont
 une position et une forme, pas un niveau. D'où l'achat d'une résistance à 1 %, mesurée au
-multimètre, et sa tolérance reportée à part. → § 03.5
+multimètre, et sa tolérance reportée à part : c'est la $R_{ref}$ de 100 Ω de l'oscilloscope,
+**distincte** des deux 100 Ω à 0,1 % de la chaîne carte son (résistance de mesure et
+référence de REW) — si les deux chaînes partageaient la même résistance, leur recoupement ne
+verrait plus une erreur sur elle. → § 03.5
+
+**« Pourquoi une carte son, et pas seulement l'oscilloscope ? »**
+→ Pour la finesse de la grille et la phase. À l'oscilloscope, chaque fréquence demande un
+réglage du GBF et une lecture de deux amplitudes et d'un décalage : c'est exact, mais lent,
+alors que le premier pic veut un point tous les 0,2 Hz environ. La carte son (Focusrite
+Scarlett Solo) pilotée par REW balaie de 5 Hz à 20 kHz en une vingtaine de secondes et rend
+module et phase sur une grille serrée. Je ne la crois pas pour autant sur parole : la chaîne
+GBF + oscilloscope reste le **recoupement**, justement parce qu'elle ne partage avec la carte
+son ni ses entrées, ni son logiciel. → § 02.13 (application à la Scarlett Solo) ; § 02.9
+pour le principe de REW
+
+**« Pourquoi 100 Ω, et pas une petite résistance ? »**
+→ Parce que REW ne lit pas la tension aux bornes de la résistance : une voie lit la sortie
+de la carte, l'autre le haut-parleur, et la soustraction est **logicielle**,
+$\underline Z=R\,\underline V_{HP}/(\underline V_{source}-\underline V_{HP})$. Une petite
+erreur sur une voie est alors multipliée par le facteur de soustraction $|Z+R|/R$ : au pic
+modélisé de 64 Ω, il vaut **1,64 avec 100 Ω** contre **7,4 avec 10 Ω** (calculé). Et avec
+100 Ω, le courant reste de quelques milliampères (au plus 4,5 mA au niveau de travail), moins
+qu'un casque ordinaire ; une 10 Ω en demanderait 91 à 164 mA à la sortie casque. C'est
+d'ailleurs la valeur que l'aide de REW conseille derrière une sortie casque.
+→ § 02.13
+
+**« Vos deux entrées ne sont pas identiques : comment le gérez-vous ? »**
+→ Elles ne le sont pas : l'entrée micro (XLR, 3 kΩ) et l'entrée ligne (60 kΩ) diffèrent
+d'impédance et de 13 dB de pleine échelle. **Un** : je mets chacune là où son défaut ne compte
+pas — l'entrée micro lit la sortie de la carte, un nœud piloté à moins de 1 Ω où ses 3 kΩ ne
+faussent rien ; l'entrée ligne lit le haut-parleur, qu'elle ne charge que de −0,11 % au pic de
+64 Ω (calculé, corrigé ensuite). **Deux** : j'apparie les voies — GAIN 2 monté d'environ
+13 dB jusqu'à égalité à 1 dB près, fils ouverts, puis **bloqué au ruban**, car REW abandonne
+l'étalonnage open au-delà de 2 dB d'écart. **Trois** : trois étalonnages au bout du câble —
+open (écart de gain et de phase entre voies), short (câble), puis reference sur une **seconde**
+100 Ω à 0,1 %. Et je ne valide jamais sur la résistance qui a servi de référence : ce contrôle
+serait circulaire. → § 02.13
+
+**« Et la chaîne carte son, comment savez-vous qu'elle mesure juste ? »**
+→ Par trois contrôles qui ne réutilisent pas l'étalonnage. **Un** : après les étalonnages, je
+mesure des dipôles **distincts de la référence** — une 10 Ω (module plat, phase nulle) et un
+100 µF ($|Z|$ de 159 à 15,9 Ω sur 10–100 Hz, phase $-90°$). **Deux** : je recoupe avec la
+chaîne GBF + oscilloscope ; les deux méthodes doivent coïncider dans leurs incertitudes.
+**Trois** : en fin de séance, je relis la 100 Ω de référence — un écart de 0,23 % trahirait
+une dérive de 0,01 dB de la voie de mesure, soit 0,19 % sur le pic de 64 Ω (calculé).
+[[réponse à compléter après la phase 1 : écarts de validation réellement obtenus]]
+→ § 02.13 ; § 02.8
 
 ---
 
@@ -275,7 +325,8 @@ si je mets trop de paramètres, cela se voit aux **incertitudes** — un paramè
 ressort avec une barre d'erreur énorme et une forte corrélation avec un autre. **Trois**, et
 c'est le plus convaincant : **$f_b$ se recoupe par trois voies indépendantes** — la
 **géométrie** (formule de Helmholtz avec les sections et longueurs des deux évents et le
-volume de la caisse, § 4 check-list), le **creux d'impédance** lu directement sur la courbe,
+volume de la caisse, § 4 check-list), la **lecture directe** sur la courbe (au passage par
+zéro de la phase entre les deux pics, plus net que l'argmin du creux, qui est plat),
 et la valeur **ajustée** par les moindres carrés. Trois routes qui ne partagent aucune
 hypothèse : si elles se recoupent, le modèle a la bonne taille ; sinon, c'est un résultat à
 expliquer, pas un paramètre à ajouter. C'est là une **prédiction falsifiable**, faite avant
@@ -829,16 +880,18 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
 4. **Modèle économique de la self** : les deux placeholders de la version brouillon se
    contredisaient d'un facteur 4,2 et pénalisaient deux fois le cuivre. Le bon modèle passe
    par la masse ($m=K_{Cu}(L/r)^{3/2}$). [[à intégrer avant la phase 3]] → § 04.5, § 05.9
-5. **« ≈ 10 min » et « ± 11 % »** — corrigés le 2026-09-13 dans tous les `.md` et dans
-   `index.html`. Il n'en subsiste que dans `presentation-finale.html` (l. 1073 et 1173),
-   support v1 en attente de refonte : le format est **15 min + 15 min**, et l'incertitude sur
-   $f_0$ s'écrit en couple (7,1 % borne au pire cas / 4,1 % incertitude-type). À corriger
-   avant tout réemploi d'une diapositive. → § 08.6
-6. **Gabarit 16:9 → 4/3** : à changer **dès la phase 0**, sinon toutes les figures des
-   phases 2 à 4 seront à refaire. → § 08.2
+5. ~~**« ≈ 10 min » et « ± 11 % »**~~ — **résolu** : corrigés le 2026-09-13 dans tous les
+   `.md` et dans `index.html`, puis dans les deux présentations lors de leur refonte v2. Le
+   « ± 11 % » ne subsiste plus qu'en **annexe A3** de `presentation-finale.html`, comme
+   contre-exemple explicitement réfuté. Le format est **15 min + 15 min**, et l'incertitude
+   sur $f_0$ s'écrit en couple (7,1 % borne au pire cas / 4,1 % incertitude-type). → § 08.6
+6. ~~**Gabarit 16:9 → 4/3**~~ — **fait** : les deux présentations et les figures de
+   `analyse/figures.py` sont en 1024×768 depuis la refonte v2 ; reste seulement à signer D7.
+   → § 08.2
 7. **Professeur encadrant** : sa déclaration à l'étape 1 et sa validation à l'étape 3 sont
-   obligatoires ; sans elles, la note peut être nulle. [[action datée, rentrée septembre]]
-   → § 08.3
+   obligatoires ; sans elles, la note peut être nulle. **M. Chevalier, accord obtenu le
+   16/09/2026 (D10)** ; restent le compte lycees.scei-concours.fr et l'avertissement sur la
+   fenêtre de 8 jours de mi-juin 2027 (`PARCOURS.md` 1-A3). → § 08.3
 8. ~~**Type de caisse du sub**~~ — **résolu le 2026-09-16** (constat de l'étudiant, décision
    D8) : la caisse est **bass-reflex, à deux évents**. Ce n'était pas une inconnue de
    modélisation mais le **choix du modèle direct** : le modèle à 7-8 paramètres était déjà
@@ -846,11 +899,11 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
    reprise, c'est une hypothèse qui se lève. Purger de tout support la formulation « clos ou
    bass-reflex, à documenter ». **Reste ouvert** : dimensions des deux évents et volume
    interne [[à mesurer]], nécessaires au recoupement géométrique de $f_b$.
-9. **Condensateur en série avec les pavillons d'ultra-aigu** : présence et valeur
-   [[à vérifier sur l'enceinte]]. Cela ne change **ni** le protocole (on mesure le bloc
-   médiums tel qu'il est câblé) **ni** le modèle du filtre, seulement l'ampleur de la
-   contribution de la branche aigu à la charge du passe-haut — et le risque matériel pendant
-   les balayages forts s'il n'y en a pas. → § 2.1
+9. **Condensateur en série avec les pavillons d'ultra-aigu** : **présent** (constat du
+   16/09/2026) ; valeur [[à mesurer]] au bornier. Elle ne change **ni** le protocole (on
+   mesure le bloc médiums tel qu'il est câblé) **ni** le modèle du filtre, seulement
+   l'ampleur de la contribution de la branche aigu à la charge du passe-haut (−10 à −26 % sur
+   $|Z|$ du bloc à 100 Hz pour 3,3 à 10 µF, calculé). → § 2.1
 
 ---
 
@@ -862,10 +915,12 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
       condensateur connus → $Z(f)$ en caisse → identification → sanity check 8 Ω → mesures.
 - [ ] **Relever la géométrie du bass-reflex avant la phase 1** : diamètre et longueur des
       **deux** évents, volume interne de la caisse — pour prédire $f_b$ par Helmholtz
-      **avant** de le lire sur le creux d'impédance. Une prédiction publiée avant la mesure
+      **avant** de le lire sur la mesure (passage par zéro de la phase entre les deux pics,
+      ou ajustement). Une prédiction publiée avant la mesure
       vaut beaucoup plus qu'un accord constaté après.
-- [ ] **Vérifier le câblage du bloc aigu** (condensateur en série avec les pavillons ?) et
-      photographier le bornier ; consigner la réponse, ne pas la supposer.
+- [ ] **Relever la valeur du condensateur des pavillons** (présent depuis le constat du
+      16/09/2026), contrôler le câblage à l'ohmmètre (environ 6 à 7 Ω en continu) et
+      photographier le bornier ; consigner la valeur, ne pas la supposer.
 - [ ] Remplacer chaque `[[réponse à compléter]]` de ce document par le chiffre mesuré, ou
       l'assumer à voix haute comme non mesuré.
 - [ ] Tenir le **cahier de laboratoire daté** dès la première mesure : c'est la matière du

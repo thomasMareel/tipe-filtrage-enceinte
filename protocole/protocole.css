@@ -377,13 +377,16 @@ h4 {
 .note { border-style: dotted; }
 
 /* --- Valeur non mesuree : placeholder explicite (convention du depot) ---- */
-.placeholder, .a-mesurer {
+.placeholder, .a-mesurer, .todo {
   font-family: var(--police-mono);
   border-bottom: 0.8pt dashed #000;
   padding: 0 0.5mm;
 }
-.placeholder::before, .a-mesurer::before { content: "[[ "; }
-.placeholder::after,  .a-mesurer::after  { content: " ]]"; }
+.placeholder::before, .a-mesurer::before, .todo::before { content: "[[ "; }
+.placeholder::after,  .a-mesurer::after,  .todo::after  { content: " ]]"; }
+/* Texte qui porte deja ses crochets dans la source (« [[a geler]] ») : classe
+   « brute », sinon ils s'impriment deux fois. (Ajout du 23/09/2026.) */
+.placeholder.brute::before, .placeholder.brute::after { content: none; }
 
 
 /* --------------------------------------------------------------------------
@@ -547,12 +550,18 @@ figure.schema svg, .bloc-schema svg, section.manip svg {
   stroke-linejoin: round;
   color: #000;
   font-family: var(--police-texte);
+  /* Taille PAR DEFAUT, posee sur le conteneur et donc seulement heritee : un
+     attribut font-size porte par un <text> ou par son <g> l'emporte sur une
+     valeur heritee. (Posee sur « svg text », une regle CSS ecrasait tous les
+     attributs de presentation : les 745 textes sortaient a 12 px, les titres
+     perdaient leur hierarchie et les legendes grossies se chevauchaient.
+     Corrige le 23/09/2026.) */
+  font-size: 12px;
 }
 
 section.manip svg text {
   fill: #000;
   stroke: none;
-  font-size: 12px;
   font-family: var(--police-texte);
 }
 section.manip svg text.mono,
@@ -827,3 +836,97 @@ section.manip.compact p { margin-bottom: 0.4em; }
 @media screen {
   .impression-seulement { display: none !important; }
 }
+
+
+/* --------------------------------------------------------------------------
+   12. Classes employees par les fragments assembles (ajout du 23/09/2026)
+   Elles etaient utilisees sans etre definies : les encadres « regle » et
+   « pourquoi », par exemple, s'imprimaient comme du texte courant, sans cadre.
+   Tout reste lisible en noir et blanc : cadres, filets, pas de couleur.
+   -------------------------------------------------------------------------- */
+
+/* Encadre « regle » : double filet, sans etiquette automatique (le titre est
+   ecrit dans l'encadre lui-meme : « PORTE D'ENTREE », « La regle absolue »...) */
+.encadre-regle {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 5mm 1.2pt;
+  padding: 2.8mm 3.2mm;
+  border: var(--trait-epais) solid #000;
+  box-shadow: 0 0 0 1.2pt #fff, 0 0 0 2.2pt #000;
+}
+.encadre-regle > :last-child { margin-bottom: 0; }
+
+/* Encadre « pourquoi » : l'explication, en pointilles comme .note */
+.encadre-pourquoi {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 3.5mm 0;
+  padding: 2.8mm 3.2mm;
+  border: var(--trait) dotted #000;
+}
+.encadre-pourquoi > :last-child { margin-bottom: 0; }
+
+/* Titre ecrit dans un encadre du groupe D */
+.titre-encadre {
+  font-weight: 700;
+  font-size: 9.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5mm;
+}
+/* L'encadre « rappel » (les regles du groupe D) : filet epais */
+.encadre.rappel { border-width: var(--trait-epais); }
+ol.regles > li { margin-bottom: 1.8mm; }
+
+/* Paragraphe d'alerte dans un encadre : filet gras a gauche */
+.alerte {
+  border-left: var(--trait-epais) solid #000;
+  padding-left: 2.5mm;
+}
+
+/* Formules : centrees, sur leur propre ligne */
+p.formule, .bloc-formule {
+  text-align: center;
+  margin: 2.2mm 0;
+}
+.encadre.formule { border-style: solid; }
+
+/* Chapeaux d'ouverture de groupe, et pages d'ouverture */
+.chapeau, .chapo { font-size: 11pt; margin-bottom: 3mm; }
+section.manip.groupe-ouverture > h2 { font-size: 18pt; }
+section.manip.grp-c-intro > h2 { margin-top: 0; }
+
+/* En-tete de serie a remplir : cadre, interligne large pour le crayon */
+p.entete-serie {
+  border: var(--trait-fin) solid #000;
+  padding: 2mm 2.5mm;
+  line-height: 1.9;
+}
+
+/* Listes de pieges et de reglages */
+ul.pieges { border-left: var(--trait-epais) solid #000; padding-left: 7mm; }
+ul.pieges > li { margin-bottom: 1.4mm; }
+ol.reglages > li { margin-bottom: 1.6mm; }
+table.reglages td, table.reglages th { vertical-align: top; }
+
+/* Tableaux : lignes de calcul, tableau de diagnostic, cases vides */
+table tr.calc td { font-family: var(--police-texte); text-align: left; }
+table.diagnostic th { background: var(--gris-trame); }
+td.vide { min-width: 12mm; }
+span.vide {
+  display: inline-block;
+  min-width: 18mm;
+  border-bottom: 0.8pt solid #000;
+}
+
+/* Precision sous un intitule de colonne (chiffres significatifs, resolution) */
+.sc {
+  display: block;
+  font-family: var(--police-mono);
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
+/* Ordre de grandeur calcule, pas une mesure : partout, pas seulement au groupe C */
+.odg { font-style: italic; font-size: 0.92em; }

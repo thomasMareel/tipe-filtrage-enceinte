@@ -103,6 +103,12 @@ html.export, html.export body { background-image: none !important; }
 /* --- Visuels SVG --- */
 .reveal .viz { display:flex; justify-content:center; align-items:center; }
 .reveal .viz svg { width:100%; height:auto; max-height:500px; }
+/* Sans cette regle, l'export PDF (Chrome, via decktape) dessine le texte des SVG
+   places en colonnes a ~0,78 de sa taille et de sa position, pendant que les traits
+   restent a l'echelle : libelles hors de leur cadre, « ampli » hors champ (vues 2
+   et 3, constat du 23/09/2026). A l'ecran rien ne se voit. geometricPrecision
+   supprime la mise a l'echelle de la police propre au texte SVG ; rendu ecran inchange. */
+.reveal svg text { text-rendering: geometricPrecision; }
 .reveal .deux-viz { display:flex; gap:2em; align-items:flex-start; justify-content:center; }
 .reveal .deux-viz > figure { flex:1; margin:0; text-align:center; }
 .reveal .deux-viz svg { width:100%; height:auto; max-height:420px; }

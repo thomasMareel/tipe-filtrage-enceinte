@@ -108,7 +108,8 @@ premières mesures comparatives** — c'est ce qui rend la conclusion honnête.
 
 > **Glissement assumé d'un mois.** La phase 0 était calée sur août 2026 ; elle
 > n'est pas close à la mi-septembre (critères, niveaux d'écoute, cible de
-> sommation, $r_{max}$, encadrant : tous non gelés). Elle est donc re-datée
+> sommation, $r_{max}$ : tous non gelés ; l'encadrant, lui, est désigné depuis
+> le 16/09/2026, D10). Elle est donc re-datée
 > **août – sept. 2026** et **recouvre le début de la phase 1**, ce qui est
 > acceptable : l'étalonnage de la chaîne de mesure ne dépend d'aucune des
 > décisions restantes. Ce qui ne l'est pas, c'est de laisser glisser la suite —
@@ -137,18 +138,28 @@ premières mesures comparatives** — c'est ce qui rend la conclusion honnête.
       supports compris) : une seule définition affichée, les repères annoncés
       comme tels, avec leur convention. La décision est prise, la mise en
       cohérence reste à faire.
-- [ ] **Désigner le professeur encadrant** et obtenir son accord explicite ;
-      vérifier qu'il a un compte sur lycees.scei-concours.fr. Sans encadrant
-      déclaré à l'étape 1 (mi-janvier 2027) et sans sa validation (mi-juin
-      2027), la note peut être zéro. Échéance : rentrée sept. 2026.
-- [ ] Trancher le **gabarit 4/3 (1024×768)** avant de produire la moindre figure
-      des phases 2-4, sinon elles seront toutes à refaire.
-- [ ] Liste d'achats phase 1 (voir ci-dessous) ; vérifier le matériel du lycée.
-- [ ] Squelette du code d'analyse Python (`analyse/` : mesure → fit → optimisation).
+- [x] **Professeur encadrant désigné : M. Chevalier, accord explicite obtenu le
+      16/09/2026** (D10 de `DECISIONS-PHASE-0.md`). Sans encadrant déclaré à
+      l'étape 1 (mi-janvier 2027) et sans sa validation (mi-juin 2027), la note
+      peut être zéro.
+- [ ] **Action restante sur l'encadrant (`PARCOURS.md` 1-A3)** : vérifier qu'il a
+      un compte sur lycees.scei-concours.fr, relever son prénom (ou initiale) et
+      sa discipline, et l'avertir de la fenêtre de validation de 8 jours de
+      mi-juin 2027.
+- [ ] **Signer D7** (gabarit 4/3, 1024×768) dans `DECISIONS-PHASE-0.md`. Le
+      gabarit est **déjà appliqué** — les deux decks sont en
+      `Reveal.initialize({width: 1024, height: 768})` et `analyse/figures.py`
+      produit au même format — : seule la décision datée manque.
+- [ ] Liste d'achats phase 1 : **établie** (révisée le 23/09/2026, voir
+      ci-dessous et `PARCOURS.md` 1-B4) ; reste à **passer la commande** (fin
+      septembre, pour la porte d'étalonnage de mi-octobre) et à vérifier le
+      matériel du lycée.
+- [x] Code d'analyse Python (`analyse/` : mesure → fit → optimisation →
+      figures) : **écrit et éprouvé**, 171 tests au vert (16/09/2026).
 
 **Porte de validation** : critères datés et signés avant la première mesure comparative.
 
-### Phase 1 — La clé de voûte : chaîne de mesure d'impédance (sept. 2026)
+### Phase 1 — La clé de voûte : chaîne de mesure d'impédance (sept. – oct. 2026)
 
 Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pas
 à la suite tant que cette capacité n'est pas démontrée.
@@ -159,6 +170,28 @@ Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pa
   « courant constant ».
 - Variante rapide : jig d'impédance sur carte son + REW (balayage automatique).
   Les deux méthodes doivent se recouper.
+  **Câblage arrêté le 23/09/2026** (arbitrage ; détail et chiffres dans
+  `CLAUDE.md` § Matériel, puce « Câblage retenu ») : le **montage standard de
+  REW** sur la Scarlett Solo 3ᵉ gén., lu en 4 fils. Sortie casque (canal gauche)
+  → **33 Ω de protection** → nœud A → **$R_{sense}$ = 100 Ω à 0,1 %** → nœud B →
+  haut-parleur (câble compris) → nœud C → corps du jack casque, **seul retour de
+  masse**. **Entrée 1 (XLR) = voie de référence** (A–C), **entrée 2 (TRS, LINE)
+  = voie de mesure** (B–C) ; REW calcule $Z = R_{sense}\,V_{droite}/(V_{gauche} - V_{droite})$.
+  GAIN 1 au minimum, **GAIN 2 monté d'environ 13 dB** jusqu'à égalité des voies à
+  1 dB près fils ouverts, puis bloqué ; 48 V, AIR, INST et DIRECT MONITOR
+  éteints ; sorties ligne arrière débranchées. Étalonnages REW dans l'ordre :
+  **open, short, reference sur une seconde 100 Ω à 0,1 %** ; validation sur la
+  **10 Ω** et le **100 µF**, jamais sur la référence ; relecture de la référence
+  en fin de séance. Le câblage du 16/09/2026 (micro aux bornes d'une $R_{ref}$ de
+  10 Ω) était **faux** : son calcul de charge ignorait les jambes de mode commun
+  et la réjection, non publiées, de l'entrée XLR, et REW en abandonne
+  l'étalonnage open (30 à 76 dB d'écart entre voies). La **10 Ω** n'est donc
+  plus une résistance de mesure : c'est le dipôle de validation de cette chaîne
+  (manips A2 et A5 du livret) et le recoupement de la chaîne GBF + oscillo.
+  **Le livret HTML (`protocole/PROTOCOLE-EXPERIENCES.html`, relu le 23/09/2026)
+  est conforme ; son PDF, antérieur, ne l'est pas : ne pas imprimer
+  `protocole/PROTOCOLE-EXPERIENCES.pdf` tant qu'il ne porte pas la mention
+  « Relu le 23 septembre 2026 »** (il décrit encore l'ancien câblage).
 - **Étalonnage sur composants CONNUS d'abord** : une résistance de puissance
   (courbe plate attendue), un condensateur connu (\|Z\| = 1/ωC, phase −90°).
   → incertitudes de la chaîne chiffrées.
@@ -197,12 +230,17 @@ Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pa
   connectés.** Les 2 pavillons sont en **parallèle** des médiums : hors périmètre
   acoustique (hors bande à 100 Hz), mais **dans la charge électrique** que voit
   le passe-haut. Débrancher les pavillons « parce qu'on n'en parle pas »
-  mesurerait une charge qui n'existe pas dans le montage. Consigner au passage
-  s'il y a ou non un **condensateur en série** avec eux `[[à vérifier]]` : s'il
-  existe (3 à 10 µF typiques), la branche aigu pèse plusieurs centaines d'ohms
-  vers 100 Hz et n'influe quasiment pas ; sinon elle abaisse $|Z|$ du bloc et
-  les pavillons reçoivent du 100 Hz à pleine puissance pendant les balayages
-  (prudence sur le niveau). Dans les deux cas la mesure à faire est la même.
+  mesurerait une charge qui n'existe pas dans le montage. Le **condensateur en
+  série** avec les pavillons est **présent** (constat du 16/09/2026) ; sa
+  **valeur** reste `[[à mesurer]]` au bornier. Ce qu'il fait, **calculé** sur le
+  modèle du dépôt (`analyse/modele_hp.effet_branche_aigu`, deux pavillons de
+  8 Ω, aucune mesure) : pour 3,3 à 10 µF, chaque pavillon présente 160 à
+  480 Ω vers 100 Hz, soit **80 à 241 Ω pour les deux en parallèle** ; $|Z|$ du
+  bloc passe de **29,3 Ω à 26,3 – 21,8 Ω**, soit **−10 à −26 %** (−19 % pour
+  6,8 µF). Modeste, mais pas négligeable : l'effet est inclus sans modèle en
+  mesurant le bloc tel qu'il est câblé. Contrôle de câblage avant la mesure
+  (livret, B1 bis) : à l'ohmmètre, le bloc doit lire environ 6 à 7 Ω en continu
+  — le condensateur isole les pavillons.
 - **Balayage acoustique en champ proche de chaque haut-parleur** (micro à
   quelques centimètres du centre du cône, voie par voie, HP nu sans filtre) :
   il donne les **sensibilités relatives** $G_{sub}(f)$ et $G_{méd}(f)$.
@@ -215,7 +253,8 @@ Tout le sujet repose sur la capacité à mesurer Z(f) proprement. On ne passe pa
   protocole complet (niveaux gelés, distance, calibrage) reste en phase 4.
 
 **Livrables** : courbes Z(f) module+phase avec barres d'erreur ; f_s en caisse ;
-**la fréquence d'accord $f_b$ lue au creux d'impédance** entre les deux pics
+**la fréquence d'accord $f_b$ lue au passage par zéro de la phase entre les
+deux pics** (et non à l'argmin du creux), ou prise de l'ajustement de la phase 2
 `[[à mesurer]]`, avec les deux fréquences de pic $f_L$ et $f_H$ — $f_b$ commande
 à la fois le modèle à ajuster en phase 2 et la borne basse de sécurité au niveau
 fort ; **le rapport $\max|Z|/\min|Z|$ sur la bande utile** `[[à mesurer]]` —
@@ -225,17 +264,29 @@ $G_{sub}(f)$ et $G_{méd}(f)$ en champ proche (sensibilités relatives) ;
 $Z(f)$ du **bloc médiums câblé complet** (médiums + pavillons en parallèle).
 **Prédiction falsifiable à poser AVANT de dépouiller** : à partir des dimensions
 des deux évents et du volume interne `[[à mesurer]]`, calculer le $f_b$ attendu
-et l'écrire daté au cahier, **puis** le confronter au creux mesuré. Un écart
+et l'écrire daté au cahier, **puis** le confronter au $f_b$ mesuré. Un écart
 s'explique (correction d'extrémité, volume occupé par l'aimant et les renforts,
 pertes) ; c'est de la démarche scientifique, pas un échec.
 **Porte de validation** : la résistance étalon est retrouvée à ±3 % et le
 condensateur suit 1/ωC sur deux décades. Sinon on diagnostique avant d'avancer.
 **Repli** : si la carte son pose problème (couplage, impédance de sortie),
 GBF + oscillo point par point au 1/12 d'octave — lent mais infaillible.
-**Achats** : R_ref 100 Ω 1 % (+ une 10 Ω), pinces/câbles, résistance de
-puissance 8 Ω si absente au lycée, wattmètre de prise (~20 €).
+**Achats** (révisés le 23/09/2026) : **deux 100 Ω à 0,1 %** ($R_{sense}$ du jig
+carte son et référence d'étalonnage de REW) ; **une troisième 100 Ω, à 1 %,
+≥ 1 W, film métallique** : la $R_{ref}$ de la chaîne GBF + oscillo, **distincte
+des deux 0,1 %** — si la référence de REW servait aussi d'étalon à
+l'oscilloscope, les deux chaînes partageraient le même facteur d'échelle et le
+recoupement A7 ne pourrait plus détecter une erreur sur cette résistance ;
+**une 33 Ω ≥ 0,25 W** (protection de la sortie casque) ; **une 10 Ω, à 0,1 % si
+possible** (dipôle de validation, résistance connue de A5 et configuration B du
+recoupement ; elle n'est plus résistance de mesure) ; *facultatif* : une 33 Ω
+à 1 % (repli du livret, A1) ; les fiches du jig (XLR mâle, deux jacks 6,35
+TRS), condensateurs étalons 100 µF et 10 µF MKP, pinces/câbles, résistance de
+puissance 8 Ω si absente au lycée, **une résistance de ballast 10 Ω / 5 W**
+(mesures quatre fils, distincte de la 10 Ω de précision), wattmètre de prise
+(~20 €). Liste détaillée : `PARCOURS.md`, action `1-B4`.
 
-### Phase 2 — Problème inverse : identification Thiele-Small (oct. 2026)
+### Phase 2 — Problème inverse : identification Thiele-Small (nov. 2026)
 
 - **Modèle à ajuster : le modèle BASS-REFLEX à 7-8 paramètres**
   (`analyse/modele_hp.py` : `Z_bassreflex`, `Z_bassreflex8`, variante
@@ -267,8 +318,8 @@ courbe mesure vs modèle ; le fit à 5 paramètres tracé **en contre-exemple**,
 son résidu.
 **Porte de validation** : résidu relatif faible sur 20–300 Hz, paramètres
 stables quand on retire aléatoirement des points de mesure, **ET cohérence entre
-le $f_b$ ajusté par le modèle et le $f_b$ lu directement au creux d'impédance en
-phase 1** (deux chemins indépendants vers la même grandeur : s'ils divergent, le
+le $f_b$ ajusté par le modèle et le $f_b$ lu directement sur la mesure de la
+phase 1**, au passage par zéro de la phase entre les deux pics (deux chemins indépendants vers la même grandeur : s'ils divergent, le
 fit est suspect, on diagnostique avant d'avancer). Écart toléré à fixer avec les
 incertitudes de la phase 1 `[[à geler]]`.
 **Repli** : si le fit bute en haut de bande (courants de Foucault), restreindre
@@ -362,8 +413,9 @@ est retenue). S'il n'y retombe pas, il y a un bug — ne rien acheter avant ce t
   5. somme des deux voies au raccord — **avec inversion de polarité d'une voie**
      (2ⁿᵈ ordre : sans inversion → trou, avec → bosse +3 dB).
 - **Borne basse de sécurité au niveau fort : `Start` $\ge 2f_b$, sans
-  exception.** Le $f_b$ à utiliser est celui **mesuré en phase 1** (creux
-  d'impédance), pas une valeur de catalogue. Sous l'accord, la membrane n'est
+  exception.** Le $f_b$ à utiliser est celui **mesuré en phase 1** (passage
+  par zéro de la phase entre les deux pics, ou ajustement), pas une valeur de
+  catalogue. Sous l'accord, la membrane n'est
   plus chargée par les évents, l'excursion devient maximale et le 18″ peut être
   détruit mécaniquement. Toute descente sous $f_b$ se fait **au niveau faible
   uniquement**, avec contrôle visuel du débattement avant le balayage. Cette
@@ -401,7 +453,7 @@ proche ; égalisation des niveaux entre voies ; petites amplitudes d'abord.
   (**15 min** de questions : c'est là que servent les annexes).
 - **Format du support** : le SCEI projette un **PDF 4/3 paysage de 5 Mo max**
   depuis l'ordinateur du jury (ni HTML, ni notes du présentateur, ni objet, ni
-  clé USB). Le gabarit actuel est 16:9 → passage en **1024×768** ; diapositives
+  clé USB). Le gabarit est **déjà en 1024×768** (refonte v2 faite) ; diapositives
   **numérotées** ; listings Python annexés après la conclusion **et** apportés
   en double exemplaire papier. Détail : REFERENCE-TECHNIQUE.md § 08.2.
 - **DOT** (Déroulé Opérationnel du TIPE) : **4 à 8 jalons factuels de 50 mots
@@ -410,8 +462,10 @@ proche ; égalisation des niveaux entre voies ; petites amplitudes d'abord.
   févr. → début juin 2027** (dates 2027 [[à vérifier]]), en même temps que le
   téléversement du PDF. Matière première : le journal daté du dépôt.
 - **Validation par le professeur encadrant** (étape 3, ~mi-juin 2027, fenêtre
-  de 8 jours) : sans elle, note zéro possible. L'encadrant doit être désigné
-  **dès la phase 0**.
+  de 8 jours) : sans elle, note zéro possible. L'encadrant est désigné :
+  **M. Chevalier, accord obtenu le 16/09/2026 (D10)** ; restent son compte
+  lycees.scei-concours.fr et l'avertissement sur cette fenêtre de 8 jours
+  (`PARCOURS.md` 1-A3).
 
 > **Attention au calendrier** : le MCOT ne se saisit **pas** en phase 5 mais à
 > l'**étape 1 SCEI, mi-janvier → début février 2027** (dates 2027
@@ -426,8 +480,8 @@ proche ; égalisation des niveaux entre voies ; petites amplitudes d'abord.
 | Période | Phase | Jalon |
 |---|---|---|
 | **Août – sept. 2026** | 0 — Cadrage | Critères, cible de sommation et $r_{max}$ gelés (`DECISIONS-PHASE-0.md`), achats listés — **glissement d'un mois assumé** |
-| Sept. 2026 (recouvre la phase 0) | 1 — Mesure Z(f) | Chaîne validée sur composants connus ; $\max\|Z\|/\min\|Z\|$ mesuré ; sensibilités champ proche ; **encadrant désigné** |
-| Oct. 2026 | 2 — Problème inverse | Paramètres T-S ± incertitudes |
+| Sept. – oct. 2026 (recouvre la phase 0) | 1 — Mesure Z(f) | **Porte d'étalonnage mi-octobre** (`PARCOURS.md`) : chaîne validée sur composants connus ; $\max\|Z\|/\min\|Z\|$ mesuré ; sensibilités champ proche ; encadrant désigné (16/09) ; compte SCEI de l'encadrant vérifié |
+| Nov. 2026 | 2 — Problème inverse | Paramètres T-S ± incertitudes |
 | Nov.–déc. 2026 | 3 — Optimisation | Design validé par le sanity check 8 Ω |
 | Déc. 2026 – févr. 2027 | 4 — Fabrication/mesures | Courbes finales, tableau brut |
 | Déc. 2026 – janv. 2027 | 3-4 (en parallèle) | **Rédaction du MCOT** (biblio 650 mots, problématique, objectifs) |
@@ -450,8 +504,9 @@ capacité expérimentale : mesurer Z(f) avec des incertitudes maîtrisées. C'es
 pour cela qu'on l'étalonne d'abord sur des composants connus — si la chaîne
 retrouve une résistance et un condensateur, elle saura mesurer un haut-parleur.
 Réussir ces deux manips dérisque ~80 % du projet ; les rater tout de suite
-coûterait une semaine au lieu d'un semestre. Premier geste concret : acheter la
-R_ref 1 % et monter le jig.
+coûterait une semaine au lieu d'un semestre. Premier geste concret : acheter les
+deux 100 Ω à 0,1 % et la 33 Ω de protection (liste révisée le 23/09/2026), et
+monter le jig.
 
 ## Gestion des risques transverses
 

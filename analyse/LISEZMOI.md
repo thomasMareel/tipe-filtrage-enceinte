@@ -71,7 +71,7 @@ sa sortie.
 
 ### Le livrable papier est en **deux parties**, et la règle est écrite ici
 
-Ce dossier fait **plus de 16 000 lignes**. À 55 lignes par page cela représente
+Ce dossier fait **plus de 19 000 lignes** (19 319 au 23/09/2026, dont 4 253 de tests). À 55 lignes par page cela représente
 environ **300 pages**, soit **600 en double exemplaire** : matériellement
 indéposable en annexe, et hors de portée de l'oral — aucun jury n'ouvre 300 pages
 en 15 minutes, et Thomas ne peut pas soutenir 500 fonctions. Une annexe illisible
@@ -354,7 +354,7 @@ et elle se trompe **sans le dire**.
 | **Ordre de grandeur étiqueté** (datasheet publique) | `modele_hp.SUB_TYP` (B&C 18PS76), `MED_TYP` (FaitalPRO 8FE200-4) | Clé `avertissement` dans le dictionnaire, contrôlée par un test |
 | **Placeholder assumé** (modèle à choisir) | prix du cuivre, modèle de DCR, poids de $J$ | Décisions D5 et D6 encore `[[a geler]]` ; tant qu'elles le sont, $w_{euro} = w_W = 0$ et **aucun euro n'entre dans le classement** |
 | **Constat, ni mesure ni choix** | le sub est en **bass-reflex à deux évents** (2026-09-16) ; les pavillons d'ultra-aigu sont **en parallèle des médiums** | Décision **D8** de `DECISIONS-PHASE-0.md` : un constat se fait à l'œil, il ne se choisit pas. Ses **nombres** (α, f_b, Q_l, volume, cotes des évents) restent `[[à mesurer]]` |
-| **Question ouverte, pas hypothèse** | y a-t-il un condensateur en série avec les pavillons ? | `[[à vérifier]]` dans `Z_charge_passe_haut` ; `effet_branche_aigu` chiffre les **deux** cas au lieu d'en supposer un |
+| **Constat, valeur à mesurer** | le condensateur en série avec les pavillons **existe** (confirmé le 2026-09-16) ; sa **valeur** reste inconnue | `effet_branche_aigu` chiffre l'effet pour 3,3 à 10 µF avec les **deux** pavillons : −10 à −26 % sur $\lvert Z\rvert$ du bloc à 100 Hz ; la valeur réelle se lira à l'ajustement du bloc câblé |
 | **Calculé, donc vrai** | portes 8 Ω, $u(f_0)/f_0$, 331 776 combinaisons, $f_b$ de Helmholtz | Ce sont des théorèmes ou de l'arithmétique, pas des mesures. $f_b$ géométrique est un **modèle** : il est fait pour être **contredit** par l'ajustement, pas pour le remplacer |
 
 Tant que D5 n'est pas gelée, la chaîne optimise sur un critère **purement
@@ -409,8 +409,8 @@ D'où les conventions que tout ajout doit respecter :
   était imprimée sur une figure.
 
 **Ce qui s'imprime, et ce qui ne s'imprime pas : voir la règle du § 1**, « Le livrable
-papier est en deux parties ». Ordre de grandeur : **16 400 lignes** au total, dont
-13 300 de modules et 3 100 de tests. Tout imprimer serait illisible ; le noyau
+papier est en deux parties ». Ordre de grandeur : **19 300 lignes** au total, dont
+15 100 de modules et 4 300 de tests (décompte du 23/09/2026). Tout imprimer serait illisible ; le noyau
 imprimé fait 10 à 15 pages, le reste se cite par la page de garde (URL, commande de
 régénération, SHA-256 du journal).
 
@@ -433,8 +433,8 @@ régénération, SHA-256 du journal).
   jamais passer.
 - **Ce qui reste à faire quand les vrais nombres seront là** : la géométrie de la
   caisse (volume et cotes des deux évents) relevée au mètre-ruban, pour que la
-  prédiction de f_b par Helmholtz cesse d'être illustrative ; la réponse au
-  `[[à vérifier]]` sur le condensateur des pavillons ; et le relevé en **champ
+  prédiction de f_b par Helmholtz cesse d'être illustrative ; la **valeur** du
+  condensateur des pavillons (sa présence est confirmée) ; et le relevé en **champ
   proche** de la membrane *et* de chaque évent, seule entrée de la sommation de
   Keele. Le code les attend, aucun n'existe.
 - **Ce qui avait été écrit le 2026-09-14** (après relecture) et qui manquait :

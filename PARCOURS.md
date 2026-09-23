@@ -94,8 +94,8 @@ vacances), et elles supposent l'ordre du document respecté.
 
 | Mois | Codes d'action | Heures estimées | Le verrou du mois |
 |---|---|---|---|
-| **sept. 2026** | `1-A0` à `1-A8`, `1-B1` à `1-B5`, `T-A1` à `T-A10`, `T-B1` à `T-B3`, `T-B8`, `T-C1`, `T-D1`, `T-D5`, `T-D6`, `T-D11`, `T-E1` | 13 à 16 h | l'accord de l'encadrant (`1-A2`) |
-| **oct. 2026** | `1-C1` à `1-C9`, `1-D1` à `1-D7`, `1-E1` à `1-E8` | 24 à 33 h (selon l'export, `1-B2`) | la porte d'étalonnage (`1-D2`/`1-D4`) |
+| **sept. 2026** | `1-A0` à `1-A8`, `1-B1` à `1-B5`, `T-A1` à `T-A10`, `T-B1` à `T-B3`, `T-B8`, `T-C1`, `T-D1`, `T-D5`, `T-D6`, `T-D11`, `T-E1` | 13 à 16 h | l'accord de l'encadrant (`1-A2`, **levé le 16/09/2026** ; reste `1-A3`) |
+| **oct. 2026** | `1-C1` à `1-C9`, `1-D1` à `1-D8`, `1-E1` à `1-E8` | 27 à 36 h (selon l'export, `1-B2` ; dont 3 h pour le jig carte son, `1-D8`) | la porte d'étalonnage (`1-D2`/`1-D4`) |
 | **nov. 2026** | `2-A1` à `2-A3`, `2-B1` à `2-B7`, `2-C1` à `2-C7`, `2-D1` à `2-D4`, `2-E1` à `2-E4`, `2-F1` à `2-F6` | 17 à 22 h | le gel de D2, D5, D6 avant l'optimisation |
 | **déc. 2026** | `2-G1` à `2-G8`, `2-H1` à `2-H3`, `2-I1` à `2-I3`, `2-J1` à `2-J10`, `2-K1` à `2-K6` | 15 à 19 h | la commande avant le 15 décembre (`2-I3`) |
 | **janv. 2027** | `3-A1` à `3-A7`, `3-B1` à `3-B4`, `3-C1` à `3-C5` | 10 à 14 h | la saisie de l'étape 1 (`3-B3`) |
@@ -111,20 +111,25 @@ concours. C'est le vrai point de rupture du calendrier.
 
 ## <a id="ouj"></a>Où j'en suis
 
-> **Dernière revue : 16/09/2026.** Bloc en cours : `1-A`. Prochaine échéance
-> ferme : l'accord de l'encadrant, fin septembre 2026.
+> **Dernière revue : 23/09/2026.** Bloc en cours : `1-A` et `1-B`. Prochaine
+> échéance ferme : la porte d'étalonnage, mi-octobre 2026 (l'accord de
+> l'encadrant est acquis depuis le 16/09/2026 : M. Chevalier, `1-A2` ; reste
+> `1-A3`).
 >
 > *Cette ligne se réécrit à chaque revue mensuelle (`T-D10`) — trois informations,
 > pas plus : la date de la revue, le bloc en cours, la prochaine échéance ferme.*
 
-## Où en est le projet au 16 septembre 2026
+## Où en est le projet au 23 septembre 2026
 
 1. **Tout l'outillage existe déjà** : la documentation complète (feuille de route,
    référence technique, registre de décisions, notes de jury, brouillon de MCOT),
    les deux présentations au gabarit 4/3 imposé par le SCEI avec leurs PDF sous le
-   plafond de 5 Mo, et le dossier `analyse/` — **19 134 lignes de Python au
-   16/09/2026** (14 959 de modules + 4 175 de tests ; commande de contrôle :
-   `wc -l analyse/*.py analyse/tests/*.py`), ~150 tests
+   plafond de 5 Mo (régénérés le 23/09/2026 : 1,80 Mo pour la finale), le livret
+   de manipulations `protocole/PROTOCOLE-EXPERIENCES.html` et son **PDF A4 à
+   imprimer** (relus le 23/09/2026, câblage arbitré du jig), et le dossier
+   `analyse/` — **19 319 lignes de Python au 23/09/2026** (15 066 de modules +
+   4 253 de tests ; commande de contrôle :
+   `wc -l analyse/*.py analyse/tests/*.py`), 171 tests
    au vert, pipeline `tout_refaire.py` exécutable, qui sait déjà lire des mesures,
    ajuster Thiele-Small en caisse close **et** bass-reflex, énumérer les valeurs
    E12, propager les incertitudes et injecter les figures dans les diapositives.
@@ -142,7 +147,7 @@ le projet ; celles-ci, non.
 
 | # | Échéance | Date | Ce qui arrive si elle est manquée |
 |---|---|---|---|
-| 1 | **Obtenir l'accord explicite d'un professeur encadrant** (`1-A2`) | fin septembre 2026 | C'est le seul risque qui annule tout le reste, quelle que soit la qualité du travail. Sans encadrant déclaré à l'étape 1 **et** sans sa validation à l'étape 3, **la note peut être zéro**. Aucun repli n'existe. |
+| 1 | **Obtenir l'accord explicite d'un professeur encadrant** (`1-A2`) — **FAIT le 16/09/2026 : M. Chevalier** ; reste `1-A3` (son compte SCEI, et le prévenir de la fenêtre de 8 jours de mi-juin 2027) | fin septembre 2026 | C'est le seul risque qui annule tout le reste, quelle que soit la qualité du travail. Sans encadrant déclaré à l'étape 1 **et** sans sa validation à l'étape 3, **la note peut être zéro**. Aucun repli n'existe. |
 | 2 | **Franchir la porte d'étalonnage de la chaîne de mesure** (`1-D2`/`1-D4`) | mi-octobre 2026 | Rien ne démarre avant : ni la campagne $Z(f)$, ni l'identification, ni l'optimisation, ni la validation. Tant qu'elle n'est pas franchie, **tout le TIPE est de la théorie**. Une chaîne non qualifiée mesurant un objet inconnu ne produit aucune information. |
 | 3 | **Geler D2 (cible de sommation) et D6 ($r_{max}$)** (`2-F1`, `2-F2`) | avant le premier achat, **début décembre 2026** | Reportées par décision datée du 13/09/2026 avec une échéance ferme : *avant le premier achat et avant le MCOT*. Acheter avant de trancher, c'est trancher sans le dire — et le choix fait varier la self de 18 à 27 mH et le cuivre de 41 à 291 € l'unité. |
 | 4 | **Passer commande du fil et des condensateurs** (`2-I3`) | **avant le 15 décembre 2026** | Décembre-janvier est la pire période de l'année pour les délais. Commander le 20 décembre, c'est recevoir en janvier ; or la période 3 **commence** par le bobinage, qui est le poste le plus long et le plus facile à sous-estimer. |
@@ -151,9 +156,9 @@ le projet ; celles-ci, non.
 | 7 | **Téléverser le PDF définitif et saisir le DOT — étape 2** (`3-H3`) | ouverture fin février, **clôture 9-10 juin 2027** `[[à vérifier]]` | Sans PDF téléversé, il n'y a **rien à projeter** : le jury projette depuis son ordinateur, et ni clé USB, ni ordinateur, ni objet ne sont admis en salle. La parade est `3-H2` : téléverser une version imparfaite dès qu'elle est présentable. |
 | 8 | **Obtenir la validation de l'encadrant — étape 3** (`3-I1`, `3-I2`) | fenêtre de **8 jours seulement**, mi-juin 2027 (clôture ~19 juin) `[[à vérifier]]` | L'action la plus courte et la plus dangereuse du TIPE. Elle tombe en pleine période de jurys et de corrections, **rien ne te prévient si elle se referme**, et sans validation la note peut être zéro. C'est à toi de relancer, pas à lui d'y penser. |
 
-**Charge totale estimée : ~165 h de travail effectif** (fourchette honnête : 140 à
-190 h selon l'export de l'oscilloscope et le temps réel de bobinage — soit 36 à
-50 h en période 1, 35 à 43 h en période 2 et 70 à 95 h en période 3), **dont ~80 h
+**Charge totale estimée : ~165 h de travail effectif** (fourchette honnête : 145 à
+190 h selon l'export de l'oscilloscope et le temps réel de bobinage — soit 39 à
+53 h en période 1, dont 3 h de jig carte son ajoutées le 23/09/2026 (`1-D8`), 35 à 43 h en période 2 et 70 à 95 h en période 3), **dont ~80 h
 entre janvier et mai 2027**. Dit autrement : **la période 3 demande à elle seule
 plus du double de la période 2, dans une fenêtre plus contrainte** — le semestre
 des concours, avec ~15 à 20 h de bobinage à caser avant mi-février et ~20 à 25 h
@@ -173,12 +178,14 @@ seul geste du projet qui puisse détruire mécaniquement le 18″.
 *À réécrire à chaque revue mensuelle (`T-D10`) — daté ci-dessous, sinon cette
 liste devient trompeuse dès novembre.*
 
-**Au 16/09/2026.** Elles ne dépendent de rien ni de personne d'autre que toi, et
-elles débloquent presque tout le reste.
+**Au 23/09/2026** (liste du 16/09 mise à jour : `1-A2` est fait, M. Chevalier a
+dit oui le 16/09/2026). Elles ne dépendent de rien ni de personne d'autre que toi,
+et elles débloquent presque tout le reste.
 
-1. **`1-A2` — Demander à un professeur d'être ton encadrant, et obtenir un oui
-   explicite** (10 min de conversation). Ligne 1 du tableau de bord. Dix minutes
-   aujourd'hui contre le risque d'une note nulle en juin.
+1. **`1-A3` — Vérifier que M. Chevalier a un compte sur `lycees.scei-concours.fr`,
+   et le prévenir dès maintenant de la fenêtre de validation de 8 jours de
+   mi-juin 2027** (10 min). C'est ce qui reste de la ligne 1 du tableau de bord :
+   l'accord est acquis, le compte et l'avertissement ne le sont pas.
 2. **`1-A5` — Photographier l'enceinte, les évents, le câblage et les étiquettes**
    (20 min), **avant d'ouvrir quoi que ce soit**. C'est la seule action
    irréversible du bloc : `1-A4` exige les cotes intérieures, le diamètre
@@ -190,9 +197,11 @@ elles débloquent presque tout le reste.
    et une prédiction écrite après la mesure ne vaut plus rien.
 
 Dans la foulée, si le temps le permet : `1-A0` (lire la partie sécurité avant tout
-branchement), `1-A1` (ouvrir le journal), `1-A3` (compte SCEI de l'encadrant),
-`1-A7` (remontage et contrôle d'étanchéité) et `1-A6` (Claude calcule la prédiction
-de $f_b$ dès que tu lui transmets les cotes).
+branchement), `1-A1` (ouvrir le journal), `1-A7` (remontage et contrôle
+d'étanchéité), `1-A6` (Claude calcule la prédiction de $f_b$ dès que tu lui
+transmets les cotes) et **`1-B4`** (la commande des résistances du jig, dont la
+liste a changé le 23/09/2026 : le délai de livraison est sur le chemin de la porte
+d'étalonnage).
 
 ---
 
@@ -227,11 +236,12 @@ l'administratif.
 > | Ici | Là-bas | Écart de calendrier |
 > |---|---|---|
 > | Période 1 (sept.–oct. 2026) | fin de phase 0 + phase 1 (mesure de $Z(f)$) | conforme |
-> | Période 2 (nov.–déc. 2026) | phases 2 et 3 (identification, optimisation) | la feuille de route date la phase 2 d'**octobre** ; elle glisse ici d'un mois, parce que la porte d'étalonnage occupe octobre |
+> | Période 2 (nov.–déc. 2026) | phases 2 et 3 (identification, optimisation) | conforme depuis le réalignement du 23/09/2026 (la feuille de route date désormais la phase 1 de sept.–oct. et la phase 2 de novembre, la porte d'étalonnage occupant octobre) |
 > | Période 3 (janv.–juin 2027) | phases 4 et 5 (fabrication, validation, oral) | la feuille de route ouvre la phase 4 en **décembre 2026** ; elle démarre ici en **février 2027**, après les selfs |
 >
-> `FEUILLE-DE-ROUTE.md` n'a pas encore été réalignée : c'est un écart connu, à
-> traiter dans la même passe que `T-E7` (relecture trimestrielle de cohérence).
+> `FEUILLE-DE-ROUTE.md` a été réalignée le 23/09/2026 pour les phases 1 et 2 ;
+> l'écart sur la phase 4 demeure : c'est un écart connu, à traiter dans la même
+> passe que `T-E7` (relecture trimestrielle de cohérence).
 > En attendant, **pour les dates, c'est ce document qui sert** ; pour le *pourquoi*
 > scientifique de chaque phase, c'est la feuille de route.
 
@@ -272,9 +282,10 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       déjà l'entrée du 16/09/2026 (« constat : caisse bass-reflex, deux évents,
       2 pavillons en parallèle des médiums »).
 
-- [ ] **1-A2. Demander à un professeur d'être ton encadrant TIPE**, et obtenir un
-      **oui explicite** (pas un « on verra »). Le dépôt cite un professeur
-      N. Cavallo dans un commit de juin 2026 : à confirmer ou à remplacer.
+- [x] **1-A2. Demander à un professeur d'être ton encadrant TIPE**, et obtenir un
+      **oui explicite** (pas un « on verra »). **FAIT le 16/09/2026 : M. Chevalier**,
+      accord explicite obtenu (décision D10 de `DECISIONS-PHASE-0.md`). La mention
+      d'un professeur N. Cavallo dans un commit de juin 2026 est donc caduque.
       *Durée : 10 min de conversation, à provoquer cette semaine.*
       *Débloque :* **la note elle-même**. Sans encadrant déclaré à l'étape 1
       (saisie de mi-janvier 2027) et sans sa validation à l'étape 3 (mi-juin
@@ -288,8 +299,9 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       `lycees.scei-concours.fr`**, et lui signaler dès maintenant la fenêtre de
       validation de mi-juin 2027 (8 jours) pour qu'il ne la découvre pas en
       pleine période de concours.
-      *Durée : 10 min, dans la même conversation que 1-A2 si possible.*
-      *Bloqué par :* 1-A2. *Débloque :* la saisie de l'étape 1.
+      *Durée : 10 min, à la prochaine rencontre avec M. Chevalier (D10 le marque
+      encore « reste à vérifier » au 23/09/2026).*
+      *Bloqué par :* 1-A2 (fait). *Débloque :* la saisie de l'étape 1.
       *Fini quand :* la réponse (oui / non / « je fais créer le compte ») est
       écrite et datée dans `DECISIONS-PHASE-0.md`, décision **D10**.
 
@@ -315,7 +327,7 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       | $S_d$ (diamètre effectif de la membrane) et $S_p$ (section d'un évent) | ±2 mm | pondération de la sommation de Keele en phase 4 |
       | Distance entre le centre du 18″ et le centre du bloc médiums | ±1 cm | c'est le $\tau$ de la décision D5 |
       | Câblage réel des deux médiums : série confirmée ? | vérifié à l'ohmmètre | 8 Ω attendus |
-      | Y a-t-il un **condensateur en série** avec les pavillons ? valeur lue sur le corps ? | valeur exacte | déplace $|Z|$ du bloc médiums de 6 à 16 % vers 100 Hz |
+      | **Valeur** du condensateur en série avec chaque pavillon (**présent**, constat du 16/09/2026), lue sur le corps | valeur exacte | déplace $|Z|$ du bloc médiums de −10 à −26 % à 100 Hz (29,3 → 26,3 à 21,8 Ω pour 3,3 à 10 µF, deux pavillons ; calculé, pas mesuré) |
       *Durée : 1 h 30 à 2 h 30, une seule fois, **à deux obligatoirement** : un 18″
       pèse lourd, il se dépose et se repose à deux, joint propre et vis serrées en
       croix. Cette manutention n'est pas du temps mort, c'est la moitié de la
@@ -329,9 +341,10 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       *Fini quand :* toutes les lignes du tableau ont un nombre ou une phrase, au
       journal, datées — **aucune case vide, aucun « à peu près »** — et la caisse
       est refermée selon `1-A7`.
-      *Note :* la dernière ligne (condensateur des pavillons) est la même question
-      que `T-A8`. Elle y est répétée parce qu'elle a une **conséquence de
-      sécurité** ; y répondre une fois suffit, coche les deux.
+      *Note :* la dernière ligne (valeur du condensateur des pavillons) est la
+      même action que `T-A8`. Sa **présence** est acquise depuis le 16/09/2026 ;
+      seule sa **valeur** reste à relever. Y répondre une fois suffit, coche les
+      deux.
 
 - [ ] **1-A6. (CLAUDE) Calculer la prédiction de $f_b$ par le résonateur de
       Helmholtz** à partir des cotes de 1-A4, avec l'encadrement complet des
@@ -339,8 +352,8 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       l'inscrire **datée** au dépôt et au journal.
       *Durée : quelques minutes côté Claude, une fois 1-A4 transmis.*
       *Bloqué par :* 1-A4. *Débloque :* rien mécaniquement — mais c'est la seule
-      façon d'avoir une **prédiction falsifiable**. Écrite après la mesure du
-      creux d'impédance, elle ne vaut plus rien ; écrite avant, elle ferme une
+      façon d'avoir une **prédiction falsifiable**. Écrite après la mesure de
+      $f_b$, elle ne vaut plus rien ; écrite avant, elle ferme une
       boucle théorie/expérience indépendante de l'ajustement, et c'est exactement
       ce qu'un jury cherche.
       *Fini quand :* un intervalle (pas un nombre unique) est écrit et daté,
@@ -406,6 +419,12 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       frappe qui vont avec. Si l'export n'existe pas, il faut le savoir
       maintenant pour basculer vers la variante carte son + REW, pas le jour de
       la mesure.
+      *État au 23/09/2026 :* cette variante n'est plus hypothétique. L'interface
+      est connue (**Focusrite Scarlett Solo 3ᵉ génération**, confirmée le
+      16/09/2026, voir `1-B3`) et le câblage de son jig d'impédance est arrêté
+      (arbitrage du 23/09/2026, `CLAUDE.md` § Matériel) : si l'oscilloscope
+      n'exporte pas, la bascule ne demande que les composants de `1-B4`. L'export
+      reste à vérifier pour la chaîne GBF + oscilloscope, qui sert de recoupement.
       *Fini quand :* un fichier issu de l'oscilloscope est ouvert sur ton
       ordinateur.
 
@@ -427,17 +446,78 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       *Fini quand :* les trois informations sont écrites au dépôt **et** que la
       ligne « micro XLR sur interface à deux entrées avec boucle de retour :
       oui / non » porte une réponse.
+      *État au 23/09/2026 — la moitié « carte son » est faite :*
+      - [x] **Carte son** : **Focusrite Scarlett Solo 3ᵉ génération** (confirmée
+        le 16/09/2026). Deux entrées : **entrée 1 XLR** (préampli micro, 3 kΩ,
+        48 V disponible) et **entrée 2 jack 6,35 TRS** (LINE 60 kΩ, ou INST) ;
+        sorties ligne arrière (430 Ω) et **sortie casque** (< 1 Ω). Caractéristiques
+        et conséquences : `CLAUDE.md` § Matériel.
+      - [x] **Boucle de retour** : **pas nécessaire en mode impédance de REW** — la
+        voie de référence (entrée 1, XLR) lit directement la sortie casque au
+        nœud A du jig, ce qui fournit la référence de niveau et de temps. Pour
+        l'acoustique (`1-D6`), l'entrée 2 est libre et reçoit la boucle (sortie
+        arrière droite → entrée 2) : micro et boucle sont bien **sur la même
+        interface**.
+      - [ ] **Micro de mesure** : modèle exact, **XLR ou USB**, et **SPL maximal
+        admissible** `[[à documenter]]`. C'est ce qui reste de 1-B3.
+      **Réponse à la ligne** : « micro XLR sur interface à deux entrées avec
+      boucle de retour » — **interface à deux entrées : oui ; boucle de retour :
+      oui (entrée 2) pour l'acoustique, inutile pour l'impédance ; micro XLR :
+      `[[à vérifier]]`** tant que le modèle du micro n'est pas écrit.
 
-- [ ] **1-B4. Passer la commande des composants de la phase 1.** Liste minimale :
-      résistance étalon **100 Ω à 1 %** (puissance ≥ 1 W), une **10 Ω** pour le
-      recoupement, un condensateur **100 µF** et un condensateur **10 µF film
-      MKP** qui serviront d'étalons, cordons et pinces, wattmètre de prise
-      (~20 €), **bouchons d'oreilles**, pied à coulisse si tu n'en as pas, et une
-      résistance de puissance 8 Ω **seulement si 1-B1 montre qu'elle manque au
-      lycée**.
-      *Durée : 45 min de commande, puis 3 à 10 jours de livraison.*
-      *Bloqué par :* 1-B1. *Débloque :* la séance d'étalonnage (1-D2), qui ne peut
-      pas commencer sans étalons.
+- [ ] **1-B4. Passer la commande des composants de la phase 1.** Liste minimale
+      (**révisée le 23/09/2026** après l'arbitrage sur le jig d'impédance, voir
+      `CLAUDE.md` § Matériel) :
+      - **deux résistances de 100 Ω à 0,1 %** : l'une est la **R_sense** du jig
+        carte son, l'autre la **référence d'étalonnage de REW** (étalonnage
+        « reference »). Deux pièces distinctes, obligatoirement : la référence ne
+        sert jamais de R_sense ni de dipôle de validation. Puissance : ≥ 0,25 W
+        suffit au jig (calcul : 32 mW au pire, sortie casque à pleine échelle).
+        **Aucune des deux ne sert à la chaîne GBF + oscilloscope** : si la
+        référence de REW y servait aussi d'étalon, les deux chaînes partageraient
+        le même facteur d'échelle et le recoupement A7 ne pourrait plus détecter
+        une erreur sur cette résistance ;
+      - **une troisième 100 Ω, à 1 %, ≥ 1 W, film métallique** : la $R_{ref}$ de
+        la chaîne **GBF + oscilloscope** (configuration A, livret A6), distincte
+        des deux 0,1 % ;
+      - **une résistance de 33 Ω, ≥ 0,25 W**, tolérance indifférente : la
+        **protection de la sortie casque**, en tête du jig ;
+      - **une 10 Ω, à 0,1 % si possible** (sinon 1 %, mesurée en A1 du livret) :
+        ce n'est **plus** une résistance de mesure, c'est le **dipôle de
+        validation** de la chaîne carte son, la résistance connue de la manip A5
+        (sous 20 Hz) et le recoupement de la chaîne GBF + oscilloscope
+        (configuration B) ;
+      - *facultatif* : **une 33 Ω à 1 %**, le repli du livret (A1) ;
+      - un condensateur **100 µF** et un condensateur **10 µF film MKP** qui
+        serviront d'étalons ;
+      - **connecteurs du jig** : une **fiche XLR mâle à souder** (ou un cordon XLR
+        à couper) pour l'entrée 1, une **fiche jack 6,35 mm TRS** (stéréo) pour
+        l'entrée 2, une **fiche jack 6,35 mm TRS** pour la sortie casque — jamais
+        de fiche mono TS dans la sortie casque ;
+      - **une résistance de ballast 10 Ω / 5 W** (bobinée ou boîtier alu,
+        tolérance indifférente, sa valeur exacte sera mesurée) : elle limite le
+        courant des mesures quatre fils (livret A1-b et B1-b, 0,1 à 0,2 A). Elle
+        est **distincte de la 10 Ω de précision**, qui ne doit jamais chauffer ;
+        à ne pas acheter si le lycée en prête une (à vérifier en 1-B1) ;
+      - cordons et pinces, wattmètre de prise (~20 €), **bouchons d'oreilles**,
+        pied à coulisse si tu n'en as pas, et une résistance de puissance 8 Ω
+        **seulement si 1-B1 montre qu'elle manque au lycée**.
+      *Plus tard, pour le groupe C du livret (banc électrique), pas maintenant* :
+      un **shunt de 1 Ω à 1 %, ≥ 5 W** pour la DCR des selfs à 1 A (C1-b), et, faute
+      d'alimentation de laboratoire limitée en courant, un ballast **10 Ω / 20 W**.
+      *Ce qui a changé et pourquoi* : l'ancienne liste (une 100 Ω à 1 % et une
+      10 Ω « pour le recoupement ») servait un câblage du 16/09/2026 reconnu
+      faux le 23/09/2026 (micro aux bornes d'une $R_{ref}$ de 10 Ω : le calcul de
+      charge ignorait les jambes de mode commun et la réjection, non publiées, de
+      l'entrée XLR, et REW en abandonne l'étalonnage open). Ne pas commander
+      d'après une version antérieure de cette liste.
+      *Durée : 45 min à 1 h de commande (la liste s'allonge des trois
+      connecteurs), puis 3 à 10 jours de livraison. Coût : seul le wattmètre est
+      chiffré (~20 €) ; le reste est à relever sur la commande.*
+      *Bloqué par :* 1-B1 — **pour la seule résistance de puissance 8 Ω** : les
+      résistances et connecteurs du jig ne dépendent pas de l'inventaire du
+      lycée et peuvent partir tout de suite. *Débloque :* la séance d'étalonnage
+      (1-D2), qui ne peut pas commencer sans étalons.
       *Fini quand :* la commande est passée. **Anticipe le délai** : commande
       fin septembre pour mesurer mi-octobre.
       *Garde-fou :* **n'achète aucune self ni aucun condensateur de filtre pour
@@ -446,22 +526,29 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
       prix — de 41 € à 291 € la self selon le choix). Acheter avant de trancher,
       c'est trancher sans le dire.
 
-- [ ] **1-B5. Choisir la configuration de masse (A, B ou C du § 02.2) et la valeur
-      de $R_{ref}$ (§ 02.4), et l'écrire AVANT la première séance.** Trois
+- [ ] **1-B5. Choisir la configuration de masse (A, B ou C du § 02.2) et écrire la
+      $R_{ref}$ de la passe 1 (§ 02.4), AVANT la première séance.** Trois
       configurations de masse existent, elles ne donnent pas les mêmes
       incertitudes, et l'une d'elles court-circuite le dipôle si on la câble à
       l'envers. Le choix de $R_{ref}$ dépend en plus de l'excursion attendue de
       $|Z|$ : sur un 18″ bass-reflex dont le pic peut atteindre 60 à 200 Ω, une
       $R_{ref}$ trop petite noie le signal de référence, une trop grande écrase
-      celui du dipôle.
+      celui du dipôle. **Pour la passe 1, la valeur est fixée** : $R_{ref}$ =
+      100 Ω à 1 % en configuration A (livret A6, § 02.4), la 10 Ω n'intervenant
+      qu'en configuration B, pour le recoupement au pic. Une révision éventuelle
+      se fait **après** la passe 1, sur les valeurs mesurées, et se date au
+      cahier.
+      *Portée (précisée le 23/09/2026) :* ce choix ne concerne que la chaîne
+      **GBF + oscilloscope**. Pour le jig **carte son**, il n'y a rien à choisir :
+      $R_{sense} = 100$ Ω à 0,1 % et la **masse unique au nœud C** sont arrêtées
+      par l'arbitrage du 23/09/2026 (`CLAUDE.md` § Matériel).
       *Durée : 45 min de lecture et de décision.*
-      *Bloqué par :* 1-B1 (ce qui existe au lycée), `T-A8` (la branche aiguë
-      déplace $|Z|$ du bloc médiums, donc le $R_{ref}$ optimal pour ce bloc).
+      *Bloqué par :* 1-B1 (ce qui existe au lycée).
       *Débloque :* `1-D1`, `1-D2` et tout le budget d'incertitude — la
       configuration est une **ligne d'en-tête obligatoire** du cahier (`T-B1`) :
       elle ne peut pas être « celle qu'on avait ce jour-là ».
-      *Fini quand :* une lettre (A, B ou C), une valeur de $R_{ref}$ par dipôle et
-      les deux motifs d'une phrase sont écrits au journal, datés — **avant** la
+      *Fini quand :* une lettre (A, B ou C), la $R_{ref}$ de la passe 1 et les
+      deux motifs d'une phrase sont écrits au journal, datés — **avant** la
       séance, pas pendant.
 
 ---
@@ -604,7 +691,7 @@ après avoir vu les résultats.
 ### <a id="1d"></a>1-D. Mi-octobre — les deux étalonnages : **rien d'autre**
 
 C'est la porte qui dérisque tout le projet. Tant qu'elle n'est
-pas franchie, **tout le reste du TIPE est de la théorie** : 19 134 lignes de
+pas franchie, **tout le reste du TIPE est de la théorie** : 19 319 lignes de
 Python qui tournent sur un fichier étiqueté SYNTHÉTIQUE, des courbes engendrées
 par un modèle, et zéro nombre mesuré. Aucun haut-parleur n'est branché pendant
 ces séances.
@@ -612,7 +699,13 @@ ces séances.
 **Deux chaînes, deux étalonnages.** `1-D1` à `1-D5` qualifient la chaîne
 **électrique** (GBF, oscillo, $R_{ref}$) — une demi-journée au lycée. `1-D6` et
 `1-D7` qualifient la chaîne **acoustique** (carte son, micro, boucle de retour) —
-une soirée chez toi. La maxime du projet, « on ne mesure pas un objet inconnu avec
+une soirée chez toi. **Et la mesure d'impédance a elle-même deux chaînes**, qui
+doivent se recouper : la chaîne GBF + oscilloscope (`1-D2`, manip A6 du livret
+`protocole/PROTOCOLE-EXPERIENCES.html`) et le **jig carte son + REW** sur la
+Scarlett Solo (`1-D8`, manips A2, A3 et A5), recoupées en A7. `1-D8` a été
+ajoutée le 23/09/2026, avec l'arbitrage sur le câblage du jig ; elle est placée
+après `1-D2` parce qu'elle s'exécute là, et numérotée à la suite pour ne casser
+aucun renvoi. La maxime du projet, « on ne mesure pas un objet inconnu avec
 un instrument inconnu », vaut pour les deux moitiés de l'instrumentation, pas
 seulement pour celle qui est la plus facile à étalonner.
 
@@ -620,7 +713,11 @@ seulement pour celle qui est la plus facile à étalonner.
       fiche de relevé, écrire l'ordre des six étapes, préparer le schéma du
       montage (GBF → $R_{ref}$ → dipôle, mesure de **$V_{dipôle}$ ET
       $V_{Rref}$** sur les deux voies, jamais d'hypothèse « courant constant »),
-      et repérer où sont les pinces de masse.
+      et repérer où sont les pinces de masse. **Imprimer le livret depuis
+      `protocole/PROTOCOLE-EXPERIENCES.html`, jamais depuis
+      `protocole/PROTOCOLE-EXPERIENCES.pdf`** tant que ce PDF ne porte pas la
+      mention « Relu le 23 septembre 2026 » : le PDF actuel, antérieur à
+      l'arbitrage, décrit encore l'ancien câblage du jig ($R_{ref}$ de 10 Ω).
       *Durée : 1 h.*
       *Débloque :* une séance qui tient dans une demi-journée au lieu de deux.
       *Fini quand :* la fiche est imprimée et le schéma dessiné au journal.
@@ -640,12 +737,48 @@ seulement pour celle qui est la plus facile à étalonner.
       *Fini quand :* les relevés sont faits et saisis — pas quand ils sont
       « bons » : le verdict, c'est 1-D4.
 
+- [ ] **1-D8. Monter, apparier et étalonner le jig d'impédance carte son + REW,
+      puis le valider sur des dipôles connus** — manips **A2, A3 et A5** du livret.
+      Le détail geste par geste est là-bas, pas ici ; **le câblage qui fait foi
+      est celui de l'arbitrage du 23/09/2026** (`CLAUDE.md` § Matériel, puce
+      « Câblage retenu »). Le livret HTML (relu le 23/09/2026) y est conforme ;
+      **son PDF antérieur ne l'est pas : ne pas imprimer
+      `protocole/PROTOCOLE-EXPERIENCES.pdf` tant qu'il ne porte pas la mention
+      « Relu le 23 septembre 2026 »**. Les étapes, dans cet ordre :
+      | # | Étape | Attendu |
+      |---|---|---|
+      | 0 | **Montage standard de REW**, lu en 4 fils : sortie casque (canal gauche) → 33 Ω → nœud A → $R_{sense}$ 100 Ω à 0,1 % → nœud B → dipôle mesuré (plus tard le haut-parleur), au bout du câble du haut-parleur → nœud C → corps du jack casque, **seul retour de masse**. Entrée 1 (XLR) = voie de référence, A–C ; entrée 2 (TRS, LINE) = voie de mesure, B–C. Contrôle à l'ohmmètre **avant** la mise sous tension | câblage conforme au schéma, aucun court-circuit sortie–masse |
+      | 1 | Réglages : 48 V, AIR, INST et DIRECT MONITOR éteints ; **sorties ligne arrière débranchées** ; aucun appareil relié à la terre sur le jig ; 15 min de chauffe | voyant 48 V noir, rien d'autre branché |
+      | 2 | **Appariement des voies**, fils ouverts, sinus 1 kHz : GAIN 1 au minimum, **GAIN 2 monté d'environ 13 dB** jusqu'à égalité à 1 dB près, **puis bloqué au ruban** | écart ≤ 1 dB (REW abandonne l'étalonnage open au-delà de 2 dB) |
+      | 3 | **Trois étalonnages REW, dans l'ordre**, au bout du câble du haut-parleur : **open**, **short**, puis **reference** sur la **seconde 100 Ω à 0,1 %** (valeur certifiée saisie) ; fichier sauvegardé | les trois acceptés par REW |
+      | 4 | **Validation** sur la **10 Ω** (A2) puis sur le **100 µF** (A3) — **jamais sur la résistance de référence** | selon les critères de A2 et A3 : 10 Ω plate à sa valeur de A1, phase nulle ; 100 µF en $1/\omega C$ (159 à 15,9 Ω sur 10–100 Hz), phase −90° |
+      | 5 | Résistance connue jusqu'à 10 Hz (A5, la 10 Ω) : où la chaîne s'arrête en bas du spectre | bande basse exploitable écrite |
+      | 6 | **En fin de séance, relire la 100 Ω de référence** | écart noté au cahier ; repère : 0,23 % d'écart trahit 0,01 dB de dérive de la voie 2, soit 0,19 % au pic de 64 Ω (calcul) |
+      *Premier essai à −40 dBFS*, puis premier balayage à $V_A = 0{,}30$ V fils
+      ouverts. *Signal d'erreur à connaître* : voies permutées → courbes décalées
+      vers le haut d'environ +100 Ω. Toute rotation d'un GAIN, tout changement de
+      cordon ou de fréquence d'échantillonnage oblige à refaire les trois
+      étalonnages.
+      *Durée : 3 h la première fois (dont ~1 h de soudure des trois fiches et
+      15 min de chauffe), 45 min à chaque séance ensuite (chauffe, étalonnages,
+      validation, relecture) — estimations.*
+      *Bloqué par :* 1-B4 (les deux 100 Ω, la 33 Ω, la 10 Ω, les fiches),
+      `T-A2`/`T-A3` (check-list de séance). *Débloque :* avec `1-D2`, le verdict de
+      la porte (`1-D4`, recoupement des deux chaînes en A7), puis `1-E2` à `1-E4`.
+      *Fini quand :* les trois étalonnages sont sauvegardés, les deux validations
+      et la relecture de fin de séance sont au cahier avec leurs valeurs — pas
+      quand elles sont « bonnes » : le verdict, c'est `1-D4`.
+
 - [ ] **1-D3. Saisir les relevés au format CSV attendu par le dépôt** (une ligne
       d'en-tête commentée par métadonnée : date, dipôle, montage, $R_{ref}$
       nominale et mesurée, niveau, température, opérateur, appareil ; puis les
       colonnes `f_Hz, V_dipole_V, V_Rref_V, dt_s`). Un exemple complet est dans
       `analyse/mesures/exemple_synthetique_sub.csv` : **copier son en-tête et
       remplacer les valeurs**.
+      Pour le jig carte son (`1-D8`), pas de saisie : export texte de REW
+      (*File > Export > Export measurement as text*), que lit
+      `analyse/io_mesures.py::lire_rew` ; joindre le fichier d'étalonnage REW
+      sauvegardé et noter au cahier la valeur certifiée des deux 100 Ω.
       *Durée : 30 min à 1 h si l'export de 1-B2 fonctionne ; 2 à 3 h si saisie
       manuelle.*
       *Fini quand :* le fichier est dans `analyse/mesures/` et que son en-tête ne
@@ -654,7 +787,10 @@ seulement pour celle qui est la plus facile à étalonner.
 - [ ] **1-D4. (CLAUDE) Dépouiller l'étalonnage et rendre le verdict de la porte** :
       $|Z|$ et phase avec barres d'erreur, écart normalisé point par point, biais
       moyen, pente log-log du condensateur, budget d'incertitude complet avec sa
-      composante aléatoire enfin mesurée.
+      composante aléatoire enfin mesurée. Le verdict porte sur les **deux**
+      chaînes d'impédance : la chaîne GBF + oscilloscope (`1-D2`) et le jig carte
+      son (`1-D8` : validations 10 Ω et 100 µF, relecture de la référence), puis
+      leur recoupement (manip A7 du livret).
       *Critères, gelés d'avance :* écart normalisé ≤ 2 sur chaque point ; **biais
       moyen ≤ 3 %** sur la résistance ; dispersion du $C$ déduit ≤ 5 % par
       décade ; pente dans −1,00 ± 0,03.
@@ -664,7 +800,11 @@ seulement pour celle qui est la plus facile à étalonner.
       Causes à passer en revue dans l'ordre : pinces de masse, signal sur trop
       peu de divisions, voies non appariées, sondes ×1 et ×10 mélangées, valeur
       de $R_{ref}$ erronée, contact oxydé, couplage AC, offset de voie. Refaire
-      une demi-séance.
+      une demi-séance. Côté jig carte son (`1-D8`), en plus : **voies permutées**
+      (courbes décalées vers le haut d'environ +100 Ω), GAIN 2 tourné après
+      étalonnage, DIRECT MONITOR resté actif, 48 V allumé, sortie arrière encore
+      branchée, appareil relié à la terre sur le jig, étalonnage « reference »
+      fait sur la mauvaise 100 Ω.
       *Durée : 2 à 4 h supplémentaires.*
       *Critère dégradé, gelé d'avance et donc utilisable sans se renier* : biais
       ≤ **5 %** au lieu de 3 %, dispersion ≤ 8 % par décade. Le prix à payer est
@@ -683,6 +823,11 @@ seulement pour celle qui est la plus facile à étalonner.
       | 2 | *Preferences > Soundcard* | 48 kHz, « Calibrate soundcard » avec la boucle — **à faire une fois, fichier sauvegardé** ; cocher « Use loopback as timing reference » |
       | 3 | *Preferences > Mic/Meter* | charger le **fichier de calibration du micro**. S'il n'existe pas, l'écrire : le critère ne se lira plus qu'en comparaison, jamais en absolu |
       | 4 | *Check levels* | avant **chaque** session, et réglage du gain d'entrée **avant** de monter au niveau fort, jamais pendant |
+      *Même interface que le jig d'impédance, réglages incompatibles* : ici le
+      48 V est allumé pour le micro et GAIN 1 est monté ; pour le jig (`1-D8`),
+      48 V éteint et GAIN 1 au minimum. **Éteindre le 48 V avant de rebrancher le
+      jig, et refaire son appariement de GAIN 2 puis ses trois étalonnages** après
+      toute séance acoustique : un GAIN touché invalide l'étalonnage.
       *Durée : 2 h la première fois (dont la recherche du fichier de calibration),
       15 min à chaque session ensuite.*
       *Bloqué par :* 1-B3. *Débloque :* `1-E7`, et tout le bloc `3-E.3`.
@@ -718,12 +863,22 @@ seulement pour celle qui est la plus facile à étalonner.
       à 3 dB près), personne dans l'axe, pas de tête à
       moins d'un mètre, limiteur de l'ampli enclenché, état de la LED de
       limitation consigné à chaque balayage.
+      **Pour les balayages d'impédance au jig carte son (`1-E2` à `1-E4`)**,
+      l'ampli n'est pas dans le circuit : haut-parleur **débranché de l'ampli et
+      de tout filtre**, **sorties ligne arrière de la Scarlett débranchées** (elles
+      portent le même signal que le casque, de quoi pousser l'E-800 à pleine
+      puissance), 48 V éteint, DIRECT MONITOR sur OFF. L'ampli et son limiteur ne
+      reviennent qu'en `1-E7`.
       *Durée : 15 min, à chaque séance.*
       *Fini quand :* les bouchons sont sur place et la consigne est au journal.
 
 - [ ] **1-E2. Faire un balayage grossier au niveau faible pour repérer les
       accidents** : les **deux pics** ($f_L$ puis $f_H$) et le **creux** entre
       eux, qui donne $f_b$. C'est ce repérage qui dit où resserrer la grille.
+      Au jig carte son : étalonnages de `1-D8` refaits **au bout du câble du
+      haut-parleur** le jour même (open, short, reference), premier essai à
+      −40 dBFS, puis **premier balayage à $V_A = 0{,}30$ V fils ouverts** (au plus
+      180 mV aux bornes même pour un pic de 200 Ω — calcul) ; manip B2 du livret.
       *Durée : 45 min.*
       *Bloqué par :* la porte 1-D4. *Débloque :* la grille fine de 1-E3.
       *Fini quand :* trois fréquences approximatives sont notées, et que tu as
@@ -741,10 +896,17 @@ seulement pour celle qui est la plus facile à étalonner.
       **Niveau d'excitation : 100 à 200 mV (régime petits signaux), et rien
       d'autre.** À ce niveau, la descente à 10 Hz est **obligatoire et sans
       risque** — c'est cette zone qui porte le pic bas $f_L$, et l'excursion
-      prédite à 10 Hz sous 150 mV vaut **57 µm, trois ordres de grandeur sous
-      $X_{max}$**. C'est la formulation de `T-A6` : elle est répétée ici parce que
+      prédite à 10 Hz sous 150 mV vaut **environ 0,09 mm** (modèle recalculé le
+      23/09/2026, § 02.6), **plus de cinquante fois moins que le $X_{max}$ de tout
+      18″ de sonorisation**. C'est la formulation de `T-A6` : elle est répétée ici parce que
       c'est ici qu'elle s'exécute, et qu'une règle de sécurité écrite à 1 300 lignes
       du geste n'est pas une règle de sécurité.
+      **Au jig carte son** (manip B2 du livret, réglages de `1-D8`) : viser
+      **environ 200 mV aux bornes au pic**, soit $V_A \approx 0{,}62$ V fils ouverts
+      pour un pic de 64 Ω (valeur **modélisée**, à recaler sur le pic lu en
+      `1-E2`) ; courant ≤ 4,5 mA. Balayage long, 4 répétitions moyennées. **En fin
+      de séance, relire la 100 Ω de référence** : c'est elle qui dit si GAIN 2 a
+      dérivé pendant la campagne.
       *Durée : une demi-journée (3 à 4 h) avec export automatique ; une journée
       sans.*
       *Débloque :* toute la phase 2. *Pourquoi monter jusqu'à 1 kHz :* au-dessus
@@ -758,17 +920,22 @@ seulement pour celle qui est la plus facile à étalonner.
 - [ ] **1-E4. Mesurer $Z(f)$ du bloc médiums TEL QU'IL EST CÂBLÉ, de 10 Hz à
       2 kHz** — les deux pavillons d'ultra-aigu **restent connectés**.
       **Même niveau qu'en `1-E3` : 100 à 200 mV, régime petits signaux.** À ce
-      niveau, la mesure est sans risque pour les pavillons, **qu'il y ait ou non un
-      condensateur de protection** (`T-A8`) — ce qui n'est vrai à aucun autre
-      niveau.
+      niveau, la mesure est sans risque pour les pavillons, protégés de surcroît
+      par leur condensateur série (**présent**, constat du 16/09/2026 ; valeur
+      relevée en `T-A8`). Au jig carte son (manip B3 du livret) : le bloc avec ses pavillons
+      présente, **sur le modèle du dépôt** (2 pavillons de 8 Ω avec un condensateur de
+      6,8 µF, valeur supposée ; aucune mesure), un pic d'environ **112 Ω vers 77 Hz** ; pour 200 mV au pic, $V_A \approx 0{,}44$ V fils
+      ouverts. Même relecture de la référence en fin de séance.
       *Durée : 2 à 3 h.*
       *Pourquoi :* les pavillons sont hors périmètre *acoustique*, mais ils sont
       **dans la charge électrique** que voit le passe-haut, et selon la valeur du
-      condensateur qui les protège, la branche aiguë déplace $|Z|$ du bloc de 6 à
-      16 % vers 100 Hz. Les débrancher « parce qu'on n'en parle pas » revient à
+      condensateur qui les protège (3,3 à 10 µF), la branche aiguë — 160 à 480 Ω
+      par pavillon, 80 à 241 Ω pour les deux en parallèle — fait passer $|Z|$ du
+      bloc de 29,3 Ω à 26,3 – 21,8 Ω à 100 Hz, soit −10 à −26 % (−19 % pour
+      6,8 µF ; calculé avec `modele_hp.effet_branche_aigu`, pas mesuré). Les débrancher « parce qu'on n'en parle pas » revient à
       mesurer une charge qui n'existe pas dans le montage.
-      *Fini quand :* le CSV est complet et que la présence (ou l'absence) du
-      condensateur de protection est consignée avec sa valeur.
+      *Fini quand :* le CSV est complet et que la valeur du condensateur de
+      protection (présent depuis le constat du 16/09/2026) est consignée.
 
 - [ ] **1-E5. (CLAUDE) Dépouiller la campagne** : courbes module et phase avec
       barres d'erreur, lecture de $f_L$, du creux et de $f_H$, calcul du rapport
@@ -839,10 +1006,10 @@ seulement pour celle qui est la plus facile à étalonner.
 
 | Risque | Signe précurseur | Ce qu'on fait |
 |---|---|---|
-| L'encadrant ne se trouve pas | pas de oui explicite fin septembre | **Priorité absolue, rien d'autre ne compte.** Demander à un deuxième, puis à un troisième. C'est le seul risque qui peut annuler la note. |
+| L'encadrant ne se trouve pas — **écarté le 16/09/2026 (M. Chevalier)** ; le risque résiduel est le compte SCEI et la fenêtre de juin (`1-A3`) | pas de oui explicite fin septembre | **Priorité absolue, rien d'autre ne compte.** Demander à un deuxième, puis à un troisième. C'est le seul risque qui peut annuler la note. |
 | L'oscilloscope n'exporte pas | découvert en 1-B2 | Bascule immédiate sur la variante carte son + REW, décidée en septembre et non au banc. Repli ultime : GBF + oscillo point par point au 1/12 d'octave — lent mais infaillible. |
 | La porte d'étalonnage échoue deux fois | biais > 5 % après diagnostic | On change de montage (configuration de masse), pas de critère. Si ça persiste : REW. On ne mesure toujours pas le haut-parleur. |
-| Le calendrier scolaire mange octobre | une seule séance de banc tenue | **On reporte `1-E7` (sensibilités) en novembre** — le document le prévoit déjà, c'est la seule action reportable de la période. **`1-E4` ne se coupe pas** : le supprimer, c'est supprimer la charge réelle du passe-haut, donc la moitié du sujet, et rendre invérifiable l'argument « la branche aiguë déplace $\lvert Z\rvert$ du bloc de 6 à 16 % vers 100 Hz » — on optimiserait le passe-haut sur une charge **supposée**. Si tout s'effondre, on le **dégrade** : grille lâche au **1/12 d'octave sur 40–250 Hz** seulement, et on l'écrit. `1-E3` ($Z(f)$ du sub) se garde coûte que coûte : c'est la clé de voûte. |
+| Le calendrier scolaire mange octobre | une seule séance de banc tenue | **On reporte `1-E7` (sensibilités) en novembre** — le document le prévoit déjà, c'est la seule action reportable de la période. **`1-E4` ne se coupe pas** : le supprimer, c'est supprimer la charge réelle du passe-haut, donc la moitié du sujet, et rendre invérifiable l'argument « la branche aiguë déplace $\lvert Z\rvert$ du bloc de −10 à −26 % à 100 Hz » (calculé) — on optimiserait le passe-haut sur une charge **supposée**. Si tout s'effondre, on le **dégrade** : grille lâche au **1/12 d'octave sur 40–250 Hz** seulement, et on l'écrit. `1-E3` ($Z(f)$ du sub) se garde coûte que coûte : c'est la clé de voûte. |
 | La clé USB des mesures est perdue, ou le cahier disparaît | rien — c'est justement le problème | **Parade préventive, `T-B8`** : les pages du cahier sont photographiées à chaque séance, les CSV bruts versionnés dans le dépôt le soir même. Une clé perdue en mai 2027 est au moins aussi probable qu'un haut-parleur grillé, qui a deux pages de parade ; celle-ci en coûte cinq minutes par séance. |
 | Tentation d'acheter les composants du filtre maintenant | « autant s'avancer » | Non. D2 et D6 ne sont pas tranchées ; le choix change la self de 18 à 27 mH et le prix de 41 à 291 € l'unité. Acheter avant de décider, c'est décider en cachette. |
 | Tentation de descendre en fréquence au niveau fort | « juste pour voir le premier pic » | Non. Sous l'accord, au niveau fort, le 18″ peut être détruit. Le premier pic se relève **au niveau faible**, avec contrôle visuel. C'est le seul geste irréversible du projet. |
@@ -857,11 +1024,12 @@ seulement pour celle qui est la plus facile à étalonner.
 | 1-A — Journal, encadrant, cotes, photos, remontage | 1-A0 à 1-A8 | ~5 h 30 + suivi du journal |
 | 1-B — Inventaire, achats, montage de mesure | 1-B1 à 1-B5 | ~3 h 15 + délai de livraison |
 | 1-C — Gel des décisions | 1-C1 à 1-C9 | ~4 h 30 |
-| 1-D — Étalonnages électrique **et** acoustique | 1-D1 à 1-D7 | **7 h 30 à 12 h** (1-D1 1 h + 1-D2 4 h + 1-D3 0,5 à 3 h + 1-D5 0 à 4 h si reprise) **+ 2 h 30** de chaîne acoustique et $Z_s$ |
+| 1-D — Étalonnages électrique **et** acoustique | 1-D1 à 1-D8 | **7 h 30 à 12 h** (1-D1 1 h + 1-D2 4 h + 1-D3 0,5 à 3 h + 1-D5 0 à 4 h si reprise) **+ 3 h** de jig carte son (`1-D8`, première fois) **+ 2 h 30** de chaîne acoustique et $Z_s$ |
 | 1-E — Campagne $Z(f)$ et sensibilités | 1-E1 à 1-E8 | 2 demi-journées + 2 h — **+ 4 h si l'oscillo n'exporte pas** (1-E3 passe d'une demi-journée à une journée) |
 
-**Total : environ 36 à 42 h de travail effectif si l'export de l'oscilloscope
-fonctionne ; 42 à 50 h s'il ne fonctionne pas.** (L'estimation de 25 à 30 h qui
+**Total : environ 39 à 45 h de travail effectif si l'export de l'oscilloscope
+fonctionne ; 45 à 53 h s'il ne fonctionne pas** (3 h de plus qu'au 16/09/2026 :
+le jig carte son, `1-D8`). (L'estimation de 25 à 30 h qui
 figurait ici comptait un bloc `1-D` à 4-8 h alors que le détail de ses actions en
 donne 7 h 30 à 12 h, et ne comptait ni les prérequis transverses, ni les
 étalonnages acoustiques, ni les sensibilités au protocole bass-reflex.)
@@ -872,7 +1040,8 @@ manuelle en `1-D3` (2 à 3 h au lieu de 30 min) et `1-E3` passe d'une demi-journ
 des estimations, pas des mesures — et elles ne contiennent aucune heure de cours,
 de colle ni de DS.
 
-**Les cinq verrous de la période, dans l'ordre :** l'accord de l'encadrant (1-A2) →
+**Les cinq verrous de la période, dans l'ordre :** l'accord de l'encadrant (1-A2,
+**levé le 16/09/2026**) →
 les cotes de l'enceinte (1-A4) → l'export des données de l'oscilloscope (1-B2) →
 la livraison des étalons (1-B4) → **la porte d'étalonnage (1-D2/1-D4)**. Chacun bloque
 tout ce qui suit. Aucun ne prend plus d'une demi-journée.
@@ -929,7 +1098,7 @@ Ce bloc dure une demi-heure et évite deux mois de travail sur du sable.
 - [ ] **2-A2. Vérifier que la chaîne de calcul tourne encore sur ta machine**
       (~10 min) : `python analyse/tout_refaire.py --rapide --sans-figures` puis
       `python -m unittest discover -s analyse/tests -v`. *Fini quand* : code de
-      retour 0 et les ~150 tests au vert. *Si ça échoue* : c'est un problème
+      retour 0 et les 171 tests au vert (compte du 23/09/2026). *Si ça échoue* : c'est un problème
       d'environnement, pas de physique — le régler avant d'y mettre des mesures.
 - [ ] **2-A3. Dernier rappel — vérifier que D10 (professeur encadrant) porte une
       date** (~2 min). Ce n'est **pas** une nouvelle démarche : c'est un filet de
@@ -1022,11 +1191,13 @@ $\alpha$, $f_b$, $Q_l$), et **pas** les cinq de la caisse close.
       nombre de pics trouvés. *Si le diagnostic ne voit qu'un pic alors que la
       caisse est bass-reflex* : ta grille de fréquences est trop lâche, ou tu
       n'es pas descendu assez bas — c'est un problème de mesure, retour phase 1.
-- [ ] **2-C2. Remplir D8 dans `DECISIONS-PHASE-0.md`** (~10 min) : type = bass-reflex,
-      date du constat = 16/09/2026, $n$ paramètres du fit = 8.
+- [ ] **2-C2. Vérifier D8 dans `DECISIONS-PHASE-0.md`** (~5 min) : D8 est **déjà
+      remplie** depuis le 16/09/2026 (type = bass-reflex à deux évents, modèle à
+      7-8 paramètres). Il reste à contrôler que `criteres_geles.json` porte les
+      mêmes champs ($n$ paramètres du fit = 8).
       *Débloque* : le code refuse d'ajuster 5 paramètres sur une courbe à deux
-      pics tant que ce champ n'est pas cohérent. *Fini quand* : les trois champs
-      sont remplis et datés, et `criteres_geles.json` est à jour.
+      pics tant que ce champ n'est pas cohérent. *Fini quand* :
+      `criteres_geles.json` est cohérent avec D8.
 - [ ] **2-C3. Lancer l'ajustement à 8 paramètres, avec une seule perte globale**
       (~1 h avec les allers-retours). Commencer par **une** perte et n'en ajouter
       une seconde que si le résidu structuré dépasse **0,62 dB RMS** (seuil du
@@ -1083,14 +1254,15 @@ le fit qui est en cause.
       *Attention* : $V_b$ est le volume **net** — brut moins les saladiers, les
       renforts et les tubes d'évent eux-mêmes. C'est la grandeur la plus facile à
       surestimer sur une caisse DIY, et c'est elle qui domine l'incertitude.
-- [ ] **2-D2. Lire $f_b$ directement au creux d'impédance mesuré** (~15 min). Lecture
-      directe, sans modèle. *Biais connu à annoncer* : le creux n'est pas
+- [ ] **2-D2. Lire $f_b$ directement sur la mesure, au passage par zéro de la phase
+      entre les deux pics** (~15 min) — pas à l'argmin du creux, plat et
+      indiscernable sous 1 % de bruit (§ 02.6). Lecture directe, sans modèle. *Biais connu à annoncer* : le creux n'est pas
       exactement à $f_b$ quand il y a des pertes — sur le modèle de référence, le
       minimum tombe 2,3 % sous $f_b$ et le passage par zéro de la phase 4,3 %
       sous. *Fini quand* : la valeur lue est notée **avec** ce biais annoncé.
 - [ ] **2-D3. Confronter les trois valeurs et trancher** (~30 min, avec Claude pour le
-      calcul). Géométrie / creux / ajustement. *Fini quand* : l'écart entre
-      $f_b$ ajusté et $f_b$ lu au creux est chiffré et comparé au seuil que tu
+      calcul). Géométrie / lecture directe / ajustement. *Fini quand* : l'écart
+      entre $f_b$ ajusté et $f_b$ lu sur la mesure est chiffré et comparé au seuil que tu
       dois **geler maintenant** avec les incertitudes de la phase 1 (le champ
       `[[à geler]]` de la porte de validation de la phase 2).
       *Si les trois divergent de plus de ~5 %* : ne pas avancer. Diagnostiquer
@@ -1135,7 +1307,7 @@ La phase 3 ne repart pas de huit incertitudes indépendantes : elle reçoit la
 - [ ] **2-E4. Franchir (ou non) la porte de validation de la phase 2** (~15 min de
       décision). *Fini quand* : la porte est cochée et datée — résidu faible sur
       20–300 Hz, paramètres stables sous retrait de points, **et** $f_b$ ajusté
-      cohérent avec $f_b$ lu au creux. *Si la porte ne passe pas* : le repli
+      cohérent avec $f_b$ lu sur la mesure. *Si la porte ne passe pas* : le repli
       documenté est `Z_deux_pics`, modèle phénoménologique à 8 paramètres qui
       décrit les deux pics sans prétendre nommer $f_b$ et $Q_l$. Il suffit pour
       l'acte 3 (qui ne voit que $Z(f)$) mais **il coupe la boucle de validation
@@ -1254,7 +1426,7 @@ réellement disqualifiante de ce projet.
       $R_1$ et $R_2$ si c'est (a), et `criteres_geles.json` en porte la trace.
 - [ ] **2-F5. (Claude) Reporter D2, D5, D6 dans `criteres_geles.json` et relancer les
       tests** (~30 min de travail de Claude). *Fini quand* : plus aucune marque
-      `[[a geler]]` dans les sections D2, D5, D6, et les ~150 tests toujours au
+      `[[a geler]]` dans les sections D2, D5, D6, et les 171 tests toujours au
       vert. *Rappel du mécanisme* : tant qu'un champ porte `[[a geler]]`, le code
       **refuse** de s'en servir pour produire un chiffre d'oral. Ce n'est pas une
       formalité, c'est ce qui rend vérifiable l'affirmation « les critères ont
@@ -1936,14 +2108,16 @@ Aucun test ne commence tant que le précédent n'est pas passé.
       peut être **détruit mécaniquement**. C'est le seul geste irréversible du
       projet.
       **Fini quand** : la borne basse est saisie dans REW et relue à l'écran avant
-      de lancer le balayage, **et** que la réponse de `T-A8` — condensateur en
-      série avec les pavillons : oui / non, et sa valeur — est **relue sur la
-      feuille de manip**. **S'il n'y a pas de condensateur**, les pavillons
-      reçoivent le 100 Hz à pleine puissance, complètement hors de leur bande, avec
-      une excursion que leur suspension n'encaisse pas : les balayages forts sur la
-      voie médium sont alors **courts et à niveau réduit**, et on l'écrit au
-      cahier. (La mesure d'impédance à 150 mV de `1-E4`, elle, était sans risque
-      dans les deux cas — c'est le niveau fort qui change tout.)
+      de lancer le balayage, **et** que la valeur du condensateur des pavillons
+      (présent, constat du 16/09/2026 ; valeur relevée en `T-A8`) et le contrôle
+      de câblage B1 bis du livret (lecture DC du bloc d'environ 6 à 7 Ω) sont
+      **relus sur la feuille de manip**. **Si ce contrôle avait lu 2 à 3 Ω**
+      (un pavillon sans condensateur, incohérent avec le constat), les pavillons
+      recevraient le 100 Hz à pleine puissance, complètement hors de leur bande,
+      avec une excursion que leur suspension n'encaisse pas : aucun balayage fort
+      sur la voie médium avant d'avoir ouvert le bornier, et on l'écrit au
+      cahier. (La mesure d'impédance à 150 mV de `1-E4`, elle, est sans risque —
+      c'est le niveau fort qui change tout.)
 
 - [ ] **3-E12. Conditionner thermiquement (bruit rose au niveau fort, durée gelée en D3
       — proposition 5 min), relever $R_e$ en quatre fils avant et après chaque
@@ -2087,8 +2261,8 @@ Aucun test ne commence tant que le précédent n'est pas passé.
 
 - [ ] **3-G6. Préparer le listing papier en deux parties.**
       **Durée : 2 h.**
-      **La règle, fixée d'avance** : `analyse/` fait **19 134 lignes** (mesure du
-      16/09/2026, `wc -l analyse/*.py analyse/tests/*.py`), soit
+      **La règle, fixée d'avance** : `analyse/` fait **19 319 lignes** (mesure du
+      23/09/2026, `wc -l analyse/*.py analyse/tests/*.py`), soit
       ~360 pages, ~720 en double exemplaire — matériellement indéposable, et une
       annexe illisible donne l'impression d'un travail non maîtrisé. Donc : (1) un
       **noyau imprimé de 10 à 15 pages**, exactement les fonctions que le récit
@@ -2371,12 +2545,14 @@ conclure.
       deux lignes sont au cahier :
       - **mesure d'impédance à 100–200 mV** : le balayage **descend à 10 Hz et il
         le doit** — c'est cette zone qui porte le pic bas $f_L$. Excursion prédite
-        à 10 Hz sous 150 mV : 57 µm, trois ordres de grandeur sous $X_{max}$.
+        à 10 Hz sous 150 mV : environ 0,09 mm (modèle, § 02.6), plus de cinquante
+        fois moins que le $X_{max}$ de tout 18″ de sonorisation.
         Aucun risque ;
       - **toute mesure au niveau fort** (acoustique, robustesse, écoute) :
         **interdiction de descendre sous $f_b$**, `Start` $\ge 2f_b$ dans REW,
-        avec le $f_b$ **mesuré en phase 1** au creux d'impédance — pas une valeur
-        de catalogue, pas une estimation. Tant que $f_b$ n'est pas mesuré :
+        avec le $f_b$ **mesuré en phase 1** (passage par zéro de la phase entre
+        les deux pics, ou ajustement) — pas une valeur de catalogue, pas une
+        estimation. Tant que $f_b$ n'est pas mesuré :
         **aucun balayage lent au niveau fort**, point final. La prédiction de
         Helmholtz (§ 01.10 bis) donne une borne provisoire, pas une autorisation.
 
@@ -2398,20 +2574,20 @@ conclure.
       Règle transverse : **toujours du faible vers le fort, toujours la
       résistance avant le haut-parleur.**
 
-- [ ] **T-A8. Vérifier au bornier s'il y a un condensateur en série avec les deux
-      pavillons, et l'écrire.** — 30 min (démontage du bornier compris).
-      **Débloque** **`1-B5`** (le choix de $R_{ref}$ pour le bloc médiums) et
-      **borne `3-E11`** (le niveau autorisé pendant les balayages forts).
-      *C'est la même question que la dernière ligne du tableau de `1-A4`* : elle
-      est répétée ici parce que sa conséquence est une conséquence de sécurité, pas
-      de modèle. Y répondre une fois suffit — coche les deux.
-      *Fini quand* la réponse est notée dans
-      `DECISIONS-PHASE-0.md`, avec la valeur lue sur le composant s'il existe.
-      Enjeu de sécurité, pas seulement de modèle : **s'il n'y a pas de
-      condensateur**, les pavillons reçoivent le 100 Hz à pleine puissance,
-      complètement hors de leur bande, avec une excursion que leur suspension
-      n'encaisse pas → balayages forts **courts et à niveau réduit**. La mesure
-      d'impédance à 150 mV, elle, est sans risque dans les deux cas.
+- [ ] **T-A8. Relever la valeur du condensateur de chaque pavillon, et l'écrire.**
+      — 30 min (démontage du bornier compris). Sa **présence** est acquise
+      (constat du 16/09/2026) ; sa **valeur** reste `[[à mesurer]]`.
+      **Débloque** ce qu'on s'attend à lire sur le bloc médiums en `1-E4`
+      (29,3 Ω ramenés à 26,3 – 21,8 Ω à 100 Hz pour 3,3 à 10 µF, calculé) et
+      **borne `3-E11`**.
+      *C'est la même action que la dernière ligne du tableau de `1-A4`* : y
+      répondre une fois suffit — coche les deux.
+      *Fini quand* la valeur lue sur chaque composant est notée dans
+      `DECISIONS-PHASE-0.md` (D8). Contrôle de câblage à faire en même temps
+      (livret, B1 bis) : à l'ohmmètre, le bloc médiums doit lire environ 6 à
+      7 Ω en continu ; une lecture de 2 à 3 Ω trahirait un pavillon sans
+      condensateur, incohérent avec le constat — ouvrir le bornier avant toute
+      suite. La mesure d'impédance à 150 mV, elle, est sans risque.
 
 - [ ] **T-A9. Dimensionner les condensateurs du filtre en tension alternative
       permanente, pas en tension d'ampli.** — 30 min de lecture, puis c'est une
@@ -2780,14 +2956,17 @@ relire en dix minutes le premier week-end de chaque mois.
   la qualité du travail.
 - **Parade** : demander **dès la rentrée**, vérifier qu'il a bien un compte sur
   `lycees.scei-concours.fr`, et lui rappeler la fenêtre de juin **deux fois** : en
-  janvier à la saisie de l'étape 1, et début juin au téléversement du PDF. Un
-  commit de juin 2026 cite un professeur N. Cavallo : à confirmer, ce n'est pas un
-  accord.
+  janvier à la saisie de l'étape 1, et début juin au téléversement du PDF.
+  **État au 23/09/2026 : accord obtenu le 16/09/2026 (M. Chevalier, `1-A2`)** ;
+  le compte SCEI et l'avertissement sur la fenêtre de juin restent à faire
+  (`1-A3`). La mention de N. Cavallo dans un commit de juin 2026 est caduque.
 - **Ce qu'on coupe en premier** : rien. C'est la seule action du projet qui n'a
   aucun repli.
 
-- [ ] **T-D11. Mettre trois rappels d'agenda aujourd'hui : « relancer l'encadrant »
-      (rentrée → `1-A2`), « confirmer son compte SCEI » (janvier 2027 → `3-A5`),
+- [ ] **T-D11. Mettre trois rappels d'agenda aujourd'hui : « vérifier le compte
+      SCEI de l'encadrant » (prochaine rencontre avec M. Chevalier → `1-A3` ;
+      `1-A2` est fait depuis le 16/09/2026), « confirmer son compte SCEI »
+      (janvier 2027 → `3-A5`),
       « fenêtre de validation » (1er juin 2027 → `3-I1`).** — 10 min, **à faire
       aujourd'hui** : c'est un prérequis de la période 1, appelé par `1-A0`.
       **Débloque** la sérénité sur R7.
@@ -2876,7 +3055,7 @@ apportes — des **données** et des **décisions datées**.
 2. **On ne mesure pas un objet inconnu avec un instrument inconnu.** La chaîne se
    qualifie d'abord sur des composants dont tu connais la valeur ; tant que cette
    porte n'est pas franchie, le haut-parleur ne se branche pas, et les
-   19 134 lignes de Python du dépôt ne décrivent rien de réel. Et la chaîne
+   19 319 lignes de Python du dépôt ne décrivent rien de réel. Et la chaîne
    **acoustique** compte autant que l'électrique : c'est `1-D6`.
 3. **Une décision se gèle avant de voir les courbes, et se change au grand jour ou
    pas du tout.** Ajouter un critère, déplacer une bande ou changer la cible de

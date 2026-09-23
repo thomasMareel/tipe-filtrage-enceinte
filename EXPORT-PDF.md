@@ -67,13 +67,21 @@ Chrome déjà installé sur la machine. reveal.js 5.1, MathJax (build SVG,
 > `SVG`. Puis rejouer l'export et re-peser : c'est le premier levier à tester,
 > avant de toucher aux photos.
 
-> ### Statut au 2026-09-14 — les PDF versionnés sont **périmés**
+> ### Statut au 2026-09-23 — les quatre PDF sont **à jour**
 >
-> Les quatre PDF présents dans le dépôt datent du 3–4 juin 2026 : ils portent
-> encore la **v1** du sujet, en 1280 × 720 (16:9), c'est-à-dire ni le bon sujet
-> ni le bon format. Les deux HTML, eux, sont passés en **v2 / 1024 × 768**.
-> Tant que la procédure ci-dessous n'a pas été rejouée, **ne pas diffuser ni
-> téléverser ces PDF**.
+> Régénérés le 23/09/2026 par la procédure ci-dessous (§ 3.1 à 3.3), après le
+> constat de caisse bass-reflex, l'arbitrage du jig et les nouvelles figures
+> d'impédance (deux pics visibles, fenêtre 10–500 Hz) :
+>
+> | Fichier | Pages | Poids | Verdict SCEI |
+> |---|---|---|---|
+> | `presentation-finale.pdf` | 50 | **1,80 Mo** | passe, 64 % de marge |
+> | `presentation-finale-clair.pdf` | 50 | 1,80 Mo | — (impression) |
+> | `pre-soutenance.pdf` | 10 | 0,51 Mo | passe |
+> | `pre-soutenance-clair.pdf` | 10 | 0,51 Mo | — (impression) |
+>
+> Toute modification d'une vue **périme** ces fichiers : les régénérer avant de
+> les diffuser, et les re-peser.
 
 Nombre de vues attendu après régénération (aucun fragment dans les deux decks,
 donc **une vue = une page**, sans exception — **compte vérifié à l'export du
@@ -82,13 +90,18 @@ donc **une vue = une page**, sans exception — **compte vérifié à l'export d
 | Deck | Pages attendues | Détail |
 |---|---|---|
 | `pre-soutenance` | **10** | 10 vues, ≈ 5 min 30 |
-| `presentation-finale` | **49** | 18 vues d'exposé (30 à 60 s pièce, 14 min 45 au total) + 1 sommaire d'annexes + 14 annexes `A1`–`A14` + 16 vues de listings `L0`–`L9` |
+| `presentation-finale` | **50** | 18 vues d'exposé (30 à 60 s pièce, 14 min 45 au total) + 1 sommaire d'annexes + 15 annexes `A1`–`A15` + 16 vues de listings `L0`–`L9` |
 
 > **Le compte est passé de 46 à 49 le 2026-09-14** : ajout du sommaire d'annexes
 > (page 19), de l'annexe `A12` « niveau et température » et de l'annexe `A13`
 > « pourquoi pas un Zobel ? », la bibliographie devenant `A14`. **Le sommaire
 > d'annexes porte des numéros de page : ils sont à revérifier sur le PDF sorti**
 > (A1 = 20, A14 = 33, L0 = 34, L9 = 49).
+>
+> **Puis de 49 à 50** avec l'annexe `A14` « l'accord des évents f_b par trois
+> chemins indépendants » (la prédiction falsifiable du constat bass-reflex), la
+> bibliographie devenant `A15`. **Sommaire vérifié sur le PDF du 2026-09-23** :
+> A1 = 20, A14 = 33, A15 = 34, L0 = 35, L9 = 50 — conforme.
 
 Si le compte diffère, la cause est presque toujours l'ajout de fragments
 (`class="fragment"`) : decktape les capture **étape par étape**, une page par
@@ -165,6 +178,32 @@ CSS ; tous les schémas SVG, écrits en `var(--...)`, se recolorent seuls.
 
 3. Même opération pour `pre-soutenance.html` → `pre-soutenance-clair.pdf`.
 
+### 3.3 Alléger — étape obligatoire, sans perte
+
+Chrome convertit les polices web du thème (Inter, JetBrains Mono, Space Grotesk)
+en polices **Type 3** : chaque lettre devient un petit dessin vectoriel. Et
+decktape imprime chaque vue **séparément** avant de fusionner, donc chaque page
+embarque ses propres copies de ces dessins. Mesure du 2026-09-23 sur la finale :
+**9 643 dessins de glyphes, dont 506 seulement distincts**, qui pesaient 2,81 Mo
+sur 5,20 Mo — 54 % du fichier. C'est eux, et non le contenu, qui faisaient
+dépasser le plafond.
+
+`_alleger_pdf.py` (racine du dépôt) remplace chaque copie identique par une
+référence à un exemplaire unique, puis vérifie avant d'écrire : même nombre de
+pages, même texte extrait page par page, fichier structurellement valide (qpdf).
+S'il échoue, le fichier d'origine n'est pas touché. Dépendances : `pikepdf` et
+`pypdf`.
+
+```powershell
+python _alleger_pdf.py presentation-finale.pdf presentation-finale-clair.pdf pre-soutenance.pdf pre-soutenance-clair.pdf
+```
+
+Résultat du 2026-09-23 : finale **5,22 → 1,80 Mo**, pré-soutenance 1,11 → 0,51 Mo.
+Le rendu est **rigoureusement identique** : les 50 pages de la finale, rendues à
+80 dpi avant et après, sont identiques au pixel près. Le script s'applique aussi
+au PDF du livret (`protocole/PROTOCOLE-EXPERIENCES.pdf`, 3,67 → 1,80 Mo — là, le
+gain vient de la seule recompression des flux).
+
 > Les vues de listings `L0`–`L9` portent **déjà** leur propre fond clair (fond et
 > variables de couleur posés en ligne sur la `<section>`, conformément à la
 > recommandation SCEI « listings sur fond blanc »). Elles sortent donc
@@ -184,7 +223,12 @@ Get-ChildItem *.pdf | Select-Object Name,
   @{n='verdict';   e={ if ($_.Length -le 5e6) {'OK'} else {'> 5 Mo - A REDUIRE'} }}
 ```
 
-### Résultat de l'export d'essai du 2026-09-14 — **la finale ne passe pas**
+### Historique — export d'essai du 2026-09-14, **avant l'étape 3.3**
+
+> Section conservée pour la trace : elle explique pourquoi l'étape 3.3 existe.
+> Le diagnostic « fontes Type 3 » ci-dessous était juste ; la cause de leur
+> poids — la duplication page par page, et non la rastérisation — n'a été
+> trouvée que le 2026-09-23. Les chiffres à jour sont dans le statut du § 2.
 
 Procédure du § 3.1 jouée telle quelle sur les deux decks v2, decktape 3 et
 Chrome, sortie hors dépôt :
@@ -232,7 +276,9 @@ environ 66 %.
    418 ko. Les ramener à 200 ko (largeur ≈ 1200 px, qualité ≈ 80) fait gagner
    ≈ 0,40 Mo et ramène la finale à **≈ 4,9 Mo** : sous la limite, mais avec 2 %
    de marge seulement. C'est un correctif, pas un confort.
-2. **Les fontes Type 3 — le vrai gisement, non résolu.** Essais déjà faits, tous
+2. **Les fontes Type 3 — le vrai gisement, résolu le 2026-09-23 par l'étape 3.3**
+   (déduplication sans perte, § 3.3). Ce qui suit est la trace des essais
+   antérieurs. Essais déjà faits, tous
    sans effet sur le poids : `--chrome-arg=--font-render-hinting=none`, et
    l'allongement des pauses de chargement (`--load-pause`, `-p`). La piste la plus
    sérieuse est le point 0 ci-dessus (MathJax CHTML → SVG). Ensuite, si le poids
@@ -270,7 +316,9 @@ environ 66 %.
       SVG ne rend pas (défaut constaté en vue 5 le 2026-09-14). Notation `<tspan>`.
 - [ ] **Format 4/3** : le lecteur PDF annonce 1024 × 768 px (ou 4:3) ; pas de
       bandes noires en haut et en bas.
-- [ ] **Compte de pages** conforme au tableau du § 2 (10 / 46).
+- [ ] **Compte de pages** conforme au tableau du § 2 (10 / 50).
+- [ ] **Étape 3.3 jouée** : le script a affiché « texte identique » pour chaque
+      fichier, et la finale pèse moins de 4,9 Mo.
 - [ ] **Numéro de vue visible sur chaque page**, y compris les annexes.
 - [ ] Nom, prénom et numéro d'inscription sur la **première** vue.
 - [ ] Une vue par page, rien n'est coupé, aucune barre de défilement figée.
@@ -286,7 +334,21 @@ environ 66 %.
 - [ ] Aucun placeholder de figure resté visible (`<!--FIG:...-->` non rempli, ou
       bloc `.placeholder` là où une mesure était attendue).
 
-> ### Anomalie ouverte — les libellés `text-anchor="middle"` des SVG dérivent
+> ### Anomalie **résolue le 2026-09-23** — les libellés des SVG dérivaient
+>
+> **Cause réelle et correctif.** Le décalage ne venait ni des piles de polices,
+> ni de `text-anchor` : dans les SVG placés **en colonnes** (vues 2 et 3 de la
+> finale, vue 3 de la pré-soutenance), Chrome dessinait *tout* le texte à ≈ 0,78
+> de sa taille **et de sa position** à l'impression, pendant que les traits
+> restaient à l'échelle — d'où les libellés hors de leur cadre, les 10,0 pt au
+> lieu de 12,8 pt, et le libellé vertical « ampli » sorti du champ. La règle
+> `.reveal svg text { text-rendering: geometricPrecision; }` (dans
+> `css/blueprint.css`) supprime la mise à l'échelle de police propre au texte
+> SVG ; le rendu écran est inchangé. Vérifié sur les PDF du 2026-09-23 :
+> « R = 8 Ω ? » est dans son cadre, « ampli » est revenu. Le livret, dont les
+> schémas ne sont pas en colonnes, n'était pas touché (contrôlé page 11).
+>
+> Diagnostic d'origine, conservé :
 >
 > Mesuré sur l'export d'essai du 2026-09-14, vue 3 de la finale : le libellé
 > « R = 8 Ω ? » occupe 262,3 → 304,9 pt alors que le cadre pointillé qui doit le
@@ -340,7 +402,10 @@ non plus : decktape pilote Chrome en média **écran**. D'où l'interrupteur
 explicite (`?export` → classe `export` sur `<html>` → règle dans
 `css/blueprint.css`).
 
-**La marge est mince : 4,81 Mo pour 5 Mo, soit 4 %.** Toute figure ajoutée peut
+**Mise à jour du 2026-09-23 : avec l'étape 3.3, la finale pèse 1,80 Mo** — la
+marge n'est plus un souci. Le paragraphe suivant reste vrai *avant* allègement.
+
+**Sans l'étape 3.3, la marge est mince : 4,81 Mo pour 5 Mo, soit 4 %.** Toute figure ajoutée peut
 faire repasser au-dessus. Donc : mesurer la taille **à chaque export**, pas
 seulement avant le téléversement. Les deux leviers, dans l'ordre de
 préférence :
@@ -375,7 +440,7 @@ Ce sont donc **deux livrables distincts**, et il faut les deux :
 
 Le noyau imprimé tient en 10 à 15 pages : seulement les fonctions que le récit
 cite et sur lesquelles Thomas doit pouvoir être interrogé. Le reste du dossier
-`analyse/` (**18 002 lignes**, dont 3 637 de tests — comptage du 2026-09-14, à
+`analyse/` (**19 319 lignes**, dont 4 253 de tests — comptage du 2026-09-23, à
 reprendre par `tout_refaire.py` plutôt qu'à retaper) n'est **pas** imprimable et
 ne doit pas l'être ; il est annoncé par une page de garde donnant l'URL du dépôt, le commit,
 la commande de régénération (`python analyse/tout_refaire.py`) et l'empreinte
@@ -419,10 +484,9 @@ Trois avertissements, dans l'ordre d'importance :
 
 ## 7. Divergences connues
 
-- `README.md` donne `python -m http.server 8000`, `.claude/launch.json` donne
-  **8123** (et l'ancienne version de ce fichier donnait 8090). Le port qui fait
-  foi est celui de `launch.json` — **8123** — repris partout ci-dessus. Le
-  `README.md` reste à aligner : il n'est pas modifié ici.
+- Le port qui fait foi est celui de `.claude/launch.json` — **8123** — repris
+  partout ci-dessus ; `README.md` y est aligné depuis le 2026-09-23 (il donnait
+  8000, et l'ancienne version de ce fichier 8090).
 - Le port n'a aucune importance fonctionnelle : n'importe quel port libre
   convient, à condition qu'il soit le même dans la commande `http.server` et
   dans l'URL passée à decktape.

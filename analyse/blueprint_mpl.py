@@ -763,14 +763,21 @@ def cartouche(ax, texte, position='haut gauche', role='texte_doux', mono=True,
 
     C'est l'equivalent du .chip des diapositives : on y met les chiffres qu'on
     citerait a l'oral, pour que la figure se suffise a elle-meme en annexe.
+
+    `position` est un coin nomme, ou un quadruplet (x, y, ha, va) en fraction
+    des axes quand aucun coin n'est libre -- cas de l'impedance bass-reflex, dont
+    les deux pics et le creux occupent les deux coins bas et le coin haut droit.
     """
     coins = {'haut gauche': (0.02, 0.97, 'left', 'top'),
              'haut droite': (0.98, 0.97, 'right', 'top'),
              'bas gauche': (0.02, 0.03, 'left', 'bottom'),
              'bas droite': (0.98, 0.03, 'right', 'bottom')}
-    if position not in coins:
+    if isinstance(position, tuple) and len(position) == 4:
+        x, y, ha, va = position
+    elif position in coins:
+        x, y, ha, va = coins[position]
+    else:
         raise ValueError('position inconnue : %r' % (position,))
-    x, y, ha, va = coins[position]
     return ax.text(x, y, texte, transform=ax.transAxes, ha=ha, va=va,
                    fontsize=plt.rcParams['font.size'] * 0.80, color=couleur(role),
                    family='monospace' if mono else 'sans-serif', linespacing=1.35,

@@ -39,7 +39,9 @@ sur sa charge réelle.
   refus ou d'absence de validation, le candidat a un entretien avant son passage
   en loge — **note zéro possible**. Le lui rappeler dès la saisie de janvier,
   puis à l'ouverture de la fenêtre.
-- À régler dès la rentrée de septembre 2026 (phase 0 de FEUILLE-DE-ROUTE.md) ;
+- Action restante (`PARCOURS.md` 1-A3) : vérifier son compte
+  lycees.scei-concours.fr, relever prénom (ou initiale) et discipline, et
+  l'avertir de la fenêtre de validation de 8 jours de mi-juin 2027 ;
   détail du cadre et des dates : REFERENCE-TECHNIQUE.md § 08.3 et § 08.4
   (dates 2027 [[à vérifier]], données par analogie avec 2025 et 2026).
 
@@ -159,8 +161,9 @@ en matière ?
 > se saisit plus tard, dans le **DOT** (4 à 8 jalons de 50 mots max), à
 > l'étape 2 — fin févr. → début juin 2027.
 
-1. Chaîne de mesure d'impédance étalonnée ; Z(f) des deux voies (sept. 2026).
-2. Identification Thiele-Small, résidus et incertitudes (oct. 2026).
+1. Chaîne de mesure d'impédance étalonnée (porte d'étalonnage mi-octobre) ;
+   Z(f) des deux voies (sept. – oct. 2026).
+2. Identification Thiele-Small, résidus et incertitudes (nov. 2026).
 3. Optimisation numérique sous contraintes + étude de la bobine (nov.–déc. 2026).
 4. Fabrication (bobinage, filtres, référence active) et mesures électriques puis
    acoustiques, aux deux niveaux d'écoute de référence (déc. 2026 – févr. 2027).
@@ -178,7 +181,7 @@ mais **dans la charge électrique** que voit le passe-haut, donc mesurés avec l
 bloc médiums tel qu'il est câblé · pré-ampli
 JB Systems SMX SX-801 · ampli t.amp E-800 (2×350 W/8 Ω, deux canaux → référence
 active bi-amplifiée sans achat d'ampli) · GBF, oscilloscope, multimètre (lycée) ·
-carte son + micro de mesure · REW, LTspice, Python (numpy/scipy/matplotlib) ·
+carte son Focusrite Scarlett Solo 3ᵉ gén. + micro de mesure · REW, LTspice, Python (numpy/scipy/matplotlib) ·
 fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
 
 <!-- Environnement Python vérifié le 2026-09-13 sur la machine du projet :
@@ -287,8 +290,10 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
 > au-dessus de leur limite, la Problématique est sans marge — ce qu'il faudrait
 > éventuellement y dire, et ce qu'il faudrait rendre en échange, est consigné en
 > commentaire avant la bibliographie, **à arbitrer par Thomas**.
-> **Hors budget de mots, mais bloquant : le professeur encadrant n'est pas encore
-> désigné** (rubrique ajoutée en tête de ce fichier) — sans sa déclaration à
-> l'étape 1 ni sa validation à l'étape 3, la note peut être zéro.
+> **Hors budget de mots, mais bloquant : le professeur encadrant** (rubrique en
+> tête de ce fichier) — **M. Chevalier, accord obtenu le 16/09/2026 (D10)** ;
+> restent son compte lycees.scei-concours.fr et l'avertissement sur la fenêtre
+> de 8 jours (`PARCOURS.md` 1-A3). Sans sa déclaration à l'étape 1 ni sa
+> validation à l'étape 3, la note peut être zéro.
 > Détail du cadre officiel et des citations littérales : REFERENCE-TECHNIQUE.md
 > § 08.3.
