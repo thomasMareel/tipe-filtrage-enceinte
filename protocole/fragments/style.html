@@ -1,0 +1,335 @@
+<section class="manip garde">
+
+  <div class="bandeau">
+    <p class="surtitre">TIPE — session 2027</p>
+    <h1>Livret de manipulations</h1>
+    <p class="sujet">Optimisation du filtre de raccord a 100 Hz d'une enceinte
+    deux voies sur sa charge reelle : mesurer <em>Z(f)</em>, identifier les
+    parametres de Thiele-Small, optimiser le filtre, valider au banc et au micro.</p>
+  </div>
+
+  <table class="identite">
+    <tbody>
+      <tr><th>Candidat</th><td>Thomas Mareel</td></tr>
+      <tr><th>Professeur encadrant</th><td>M. Chevalier</td></tr>
+      <tr><th>Session</th><td>2027 &nbsp;&mdash;&nbsp; theme de l'annee :
+        <em>Sobriete, efficacite, optimisation</em></td></tr>
+      <tr><th>Objet mesure</th><td>Subwoofer 18&nbsp;pouces 8&nbsp;&#937; en caisse
+        bass-reflex a deux events ; bloc medium = 2&nbsp;HP de 4&nbsp;&#937; en
+        serie, avec 2 pavillons d'ultra-aigu en parallele</td></tr>
+      <tr><th>Exemplaire n&deg;</th><td><span class="ligne courte"></span>
+        &nbsp;&nbsp;imprime le&nbsp;<span class="ligne courte"></span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="objectif">
+    <p>Ce livret existe pour qu'une seance de laboratoire se deroule
+    <strong>sans avoir a reflechir au protocole</strong> : tout est decide avant
+    d'entrer en salle. Sur place, il ne reste qu'a cabler, regler, cocher, ecrire.</p>
+  </div>
+
+  <div class="piege">
+    <p><strong>Ce livret se remplit au crayon, pendant la seance, pas apres.</strong>
+    Les tableaux sont vides a dessein : ils portent des unites et un nombre de
+    chiffres significatifs, aucune valeur attendue. Une mesure recopiee de
+    memoire le soir n'est plus une mesure.</p>
+    <p>Les pages remplies sont la <strong>matiere premiere du journal de bord</strong>,
+    donc du <strong>DOT</strong> (4 a 8 jalons de 50 mots, a deposer entre fin
+    fevrier et debut juin 2027) et des questions du jury. Le cahier de
+    laboratoire est aussi, avec les listings, le seul document papier reellement
+    admis en salle d'oral : l'enceinte, le filtre et la self, eux, sont des
+    objets interdits.</p>
+    <p><strong>Une seance = une fiche de seance signee</strong>, agrafee aux
+    releves du jour. Une seance sans fiche signee est une seance dont on ne
+    pourra plus dire, six mois plus tard, dans quelles conditions elle a ete
+    faite : ses mesures ne servent a rien.</p>
+  </div>
+
+  <h3>Sommaire</h3>
+
+  <p class="petit">L'ordre est celui des campagnes gelees en phase&nbsp;0 :
+  <strong>du moins destructif au plus destructif</strong>. On ne saute jamais un
+  echelon. Les numeros de page se remplissent a la main apres impression.</p>
+
+  <table class="sommaire">
+    <thead>
+      <tr><th class="code">Code</th><th>Manipulation</th>
+        <th class="page">Page</th><th class="fait">Fait le</th></tr>
+    </thead>
+    <tbody>
+      <tr class="groupe"><td colspan="4">Avant chaque seance</td></tr>
+      <tr><td class="code">S</td>
+        <td>Securite — a lire, cocher, dater et signer avant de brancher</td>
+        <td class="page"></td><td class="fait"></td></tr>
+
+      <tr class="groupe"><td colspan="4">Echelon 1 — petits signaux sur composants connus : rien ne peut casser</td></tr>
+      <tr><td class="code">M1</td>
+        <td>Qualifier la chaine <strong>carte son</strong> (Scarlett&nbsp;Solo,
+          sortie casque, R<sub>ref</sub>&nbsp;=&nbsp;10&nbsp;&#937;) sur etalons</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M2</td>
+        <td>Qualifier la chaine <strong>GBF + oscilloscope</strong>
+          (R<sub>ref</sub>&nbsp;=&nbsp;100&nbsp;&#937;) sur les memes etalons</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M3</td>
+        <td><strong>Recouper les deux chaines</strong> : c'est ce recoupement qui
+          donne l'incertitude reelle, pas la notice du constructeur</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M4</td>
+        <td>Carte son <strong>sous 20&nbsp;Hz</strong> (zone non specifiee) et
+          <strong>linearite de la sortie casque</strong> a deux niveaux</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M5</td>
+        <td>Etalonner la chaine <strong>acoustique</strong> : boucle de retour,
+          calibration carte son et micro</td>
+        <td class="page"></td><td class="fait"></td></tr>
+
+      <tr class="groupe"><td colspan="4">Echelon 2 — impedance en petit signal (150&nbsp;mV) : descente a 10&nbsp;Hz autorisee</td></tr>
+      <tr><td class="code">M6</td>
+        <td><em>Z(f)</em> du <strong>subwoofer 18&nbsp;pouces en caisse</strong> :
+          les deux pics, et le creux qui donne f<sub>b</sub></td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M7</td>
+        <td><em>Z(f)</em> du <strong>bloc medium tel qu'il est cable</strong>,
+          pavillons connectes</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M8</td>
+        <td>Z<sub>s</sub> du preampli SX-801 — aucun haut-parleur dans le circuit</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M9</td>
+        <td>L et r des <strong>selfs</strong> : resonance, puis DCR en quatre fils</td>
+        <td class="page"></td><td class="fait"></td></tr>
+
+      <tr class="groupe"><td colspan="4">Echelon 3 — le filtre, d'abord sans haut-parleur</td></tr>
+      <tr><td class="code">M10</td>
+        <td>Filtre <strong>sur resistance de puissance 8&nbsp;&#937;</strong></td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M11</td>
+        <td>Filtre <strong>sur haut-parleur reel</strong>, mesures electriques</td>
+        <td class="page"></td><td class="fait"></td></tr>
+
+      <tr class="groupe"><td colspan="4">Echelon 4 — acoustique, le geste le plus agressif en dernier</td></tr>
+      <tr><td class="code">M12</td>
+        <td>Champ proche <strong>au niveau faible</strong> : membrane et chaque
+          event, sommation de Keele</td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M13</td>
+        <td>Champ proche <strong>au niveau fort</strong>, borne a 2&nbsp;f<sub>b</sub></td>
+        <td class="page"></td><td class="fait"></td></tr>
+      <tr><td class="code">M14</td>
+        <td><strong>Robustesse bobine chaude</strong> — en dernier, jamais avant</td>
+        <td class="page"></td><td class="fait"></td></tr>
+    </tbody>
+  </table>
+
+  <p class="petit"><em>Les durees portees sur chaque manipulation sont des
+  estimations de temps de travail effectif, pas des mesures. Les valeurs citees
+  comme ordres de grandeur sont calculees sur des modeles ou lues sur des
+  notices : aucune n'a ete mesuree sur cette enceinte.</em></p>
+
+
+</section>
+
+
+<section class="manip compact">
+
+  <h2><span class="num">Page S</span> Securite — a relire avant chaque seance
+    <span class="sous-titre">Se coche, se date et se signe avant de brancher quoi
+    que ce soit. Aucune case cochee de confiance. Les chiffres cites sont
+    calcules sur des modeles, jamais mesures sur cette enceinte : ils
+    dimensionnent la prudence, ils ne concluent rien.</span></h2>
+
+  <div class="securite">
+    <h4>Les trois interdits — a savoir redire de memoire</h4>
+    <ol class="gestes">
+      <li><strong>Jamais sous la frequence d'accord f<sub>b</sub> au niveau fort.</strong>
+        Sous f<sub>b</sub> la membrane n'est plus chargee par le ressort d'air :
+        l'excursion croit sans butee.</li>
+      <li><strong>Jamais le haut-parleur avant la resistance de puissance.</strong>
+        Un montage neuf se teste d'abord sur une charge qui ne craint rien.</li>
+      <li><strong>Jamais les doigts sur un condensateur non decharge.</strong>
+        Le reseau LC surtensionne : des centaines de volts crete pour quelques
+        dizaines de volts d'ampli.</li>
+    </ol>
+    <p><strong>L'enceinte est unique et en service. Un haut-parleur grille arrete
+    le TIPE.</strong> Pas de rechange, pas de repli, pas de seconde enceinte.</p>
+  </div>
+
+  <h3>1. Electricite — avant de brancher</h3>
+  <ul class="cocher">
+    <li><strong>Alimentation fantome 48&nbsp;V : COUPEE</strong>, LED eteinte,
+      verifiee <em>avant chaque branchement</em>. Active, la carte injecte
+      48&nbsp;V par ses resistances de polarisation dans le jig, dans
+      R<sub>ref</sub> et dans le haut-parleur.</li>
+    <li><strong>Masses verifiees</strong> : borne &minus; de l'ampli contre
+      chassis a l'ohmmetre <em>ampli eteint</em>, puis &asymp;&nbsp;0&nbsp;V
+      ampli allume sans signal. Masses oscilloscope <em>et</em> carte son :
+      un seul point de jonction, jamais deux.</li>
+    <li><strong>Ground / lift sur <em>ground</em></strong> ; <strong>E-800 jamais
+      en mode pont</strong> ; minimum 4&nbsp;&#937; par canal.</li>
+    <li><strong>Offset continu</strong> du GBF ou de la sortie carte son verifie a
+      zero avant de brancher un haut-parleur ; aucune sortie court-circuitee.</li>
+    <li><strong>Condensateurs decharges</strong> avant toute manipulation du
+      filtre, et re-decharges apres chaque coupure.</li>
+  </ul>
+
+  <h3>2. Tensions dangereuses — le filtre, pas l'ampli</h3>
+  <div class="securite">
+    <p>A la resonance du reseau LC, les condensateurs voient <strong>plusieurs
+    centaines de volts crete</strong> quand l'ampli n'en delivre que quelques
+    dizaines. Ordre de grandeur calcule sur 18&nbsp;mH&nbsp;/&nbsp;150&nbsp;&micro;F :
+    surtension &times;&nbsp;2,8 sur 30&nbsp;&#937;, &times;&nbsp;5,5 sur
+    60&nbsp;&#937; — soit <strong>92&nbsp;V RMS, 130&nbsp;V crete</strong> a
+    20&nbsp;V RMS d'entree sur un pic a 50&nbsp;&#937;.</p>
+    <ul class="cocher">
+      <li><strong>Aucune entree de carte son sur ces points</strong> : ni XLR ni
+        jack, ils sont faits pour des volts. <strong>Sonde d'oscilloscope
+        &times;10 obligatoire</strong> sur tout point interne au filtre.</li>
+      <li><strong>Diode 1N4007 en antiparallele</strong> pendant toute mesure de
+        DCR en quatre fils : couper 1&nbsp;A dans 18&nbsp;mH en quelques
+        microsecondes produit des centaines de volts. Courant etabli et coupe
+        <em>progressivement a l'alimentation</em> ; le voltmetre se debranche
+        <em>en dernier</em>.</li>
+    </ul>
+  </div>
+
+  <h3>3. La borne basse du balayage — deux regles, jamais l'une pour l'autre</h3>
+  <table>
+    <thead><tr><th style="width:30mm">Regime</th><th>Regle</th><th>Pourquoi</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Petit signal</strong><br><span class="mono">100–200 mV</span><br>(impedance)</td>
+        <td>Le balayage <strong>descend a 10&nbsp;Hz, et il le doit</strong>.</td>
+        <td>C'est cette zone qui porte le pic bas f<sub>L</sub>. Excursion predite
+          a 10&nbsp;Hz sous 150&nbsp;mV : environ 57&nbsp;&micro;m, trois ordres
+          de grandeur sous X<sub>max</sub>. Aucun risque.</td>
+      </tr>
+      <tr>
+        <td><strong>Niveau fort</strong><br>(acoustique, robustesse, ecoute)</td>
+        <td><strong>Interdiction de descendre sous f<sub>b</sub></strong> :
+          <span class="mono">Start &ge; 2 f<sub>b</sub></span> dans REW, avec le
+          f<sub>b</sub> <strong>mesure</strong> au creux d'impedance — pas une
+          valeur de catalogue, pas une estimation.</td>
+        <td>Sous l'accord, l'excursion est multipliee par environ 1,8 a
+          f<sub>b</sub>/2 et 2,3 a 10&nbsp;Hz : au-dela du X<sub>max</sub> de tout
+          18&nbsp;pouces.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="piege">
+    <p><strong>Tant que f<sub>b</sub> n'est pas mesure : aucun balayage lent au
+    niveau fort, point final.</strong> La prediction de Helmholtz donne une borne
+    provisoire, pas une autorisation. Borne basse du jour, ecrite a la main
+    <em>avant</em> de lancer quoi que ce soit : f<sub>min</sub>&nbsp;=
+    <span class="ligne courte"></span>&nbsp;Hz &mdash; niveau
+    <span class="coche-inline"><span class="case"></span>faible</span><span
+    class="coche-inline"><span class="case"></span>fort</span>.</p>
+  </div>
+
+  <h3>4. Oreilles</h3>
+  <ul class="cocher">
+    <li><strong>Bouchons en place, y compris au niveau faible.</strong> En champ
+      proche d'un 18&nbsp;pouces, l'ordre de grandeur calcule est
+      112&nbsp;dB&nbsp;SPL des 0,5&nbsp;W, 125&nbsp;dB a 10&nbsp;W, 132&nbsp;dB a
+      50&nbsp;W (sensibilite supposee : a ces niveaux, la question n'est pas de
+      savoir si le chiffre est juste a 3&nbsp;dB pres).</li>
+    <li><strong>Personne dans l'axe</strong>, <strong>aucune tete a moins d'un
+      metre</strong>, <strong>balayages courts</strong> au niveau fort, controle
+      visuel du debattement avant chaque balayage.</li>
+    <li><strong>Gain d'entree du micro regle avant</strong> de monter au niveau
+      fort, jamais pendant : c'est tres probablement le SPL maximal de la capsule
+      qui plafonne le niveau fort, pas l'enceinte.</li>
+  </ul>
+
+  <h3>5. Haut-parleurs — ce qui casse en silence</h3>
+  <ul class="cocher">
+    <li><strong>Pavillons d'ultra-aigu</strong> (en parallele des mediums) :
+      <em>s'il n'y a pas de condensateur en serie</em>, ils prennent le
+      100&nbsp;Hz a pleine puissance, hors bande, avec une excursion que leur
+      suspension n'encaisse pas &rarr; balayages forts <strong>courts et a niveau
+      reduit</strong>, surveiller l'odeur de colle chaude. Releve au bornier :
+      condensateur <span class="coche-inline"><span class="case"></span>oui</span><span
+      class="coche-inline"><span class="case"></span>non</span>&mdash; valeur lue
+      <span class="ligne courte"></span>.</li>
+    <li><strong>Mediums</strong> : jamais la pleine bande au niveau fort sans
+      passe-haut. Reponse brute mesuree au niveau faible seulement.</li>
+    <li><strong>LED limit / clip du E-800</strong> : limiteur enclenche comme
+      filet, mais <em>toute mesure pendant laquelle la LED s'allume est ecartee
+      et refaite a niveau reduit</em> — un limiteur qui agit rend la chaine non
+      lineaire. Etat consigne pour <strong>chaque</strong> balayage.</li>
+    <li><strong>Resistance de puissance chaude</strong> apres une serie : ne pas
+      la saisir a pleine main.</li>
+  </ul>
+
+  <h3>6. Ordre des campagnes — on ne saute jamais un echelon</h3>
+  <table>
+    <tbody>
+      <tr><td class="centre mono" style="width:8mm">1</td><td>Etalonnage sur composants <strong>connus</strong> — rien ne peut casser</td>
+          <td class="centre mono" style="width:8mm">5</td><td>Acoustique <strong>au niveau faible</strong></td></tr>
+      <tr><td class="centre mono">2</td><td>Impedance <strong>petit signal</strong> (150&nbsp;mV), 10&nbsp;Hz autorise</td>
+          <td class="centre mono">6</td><td>Acoustique <strong>au niveau fort</strong>, borne a 2&nbsp;f<sub>b</sub></td></tr>
+      <tr><td class="centre mono">3</td><td>Filtre <strong>sur resistance 8&nbsp;&#937;</strong>, sans haut-parleur</td>
+          <td class="centre mono">7</td><td><strong>Robustesse bobine chaude</strong> — en dernier</td></tr>
+      <tr><td class="centre mono">4</td><td>Filtre <strong>sur haut-parleur reel</strong>, mesures electriques</td>
+          <td colspan="2" class="petit"><em>Toujours du faible vers le fort ;
+            toujours la resistance avant le haut-parleur.</em></td></tr>
+    </tbody>
+  </table>
+
+  <div class="critere">
+    <p>La seance peut commencer quand <strong>toutes</strong> les cases ci-dessus
+    sont cochees, que la borne basse est ecrite a la main, et que la fiche de
+    seance de la page suivante est datee et signee. Tant qu'une case est vide,
+    <strong>on ne branche rien</strong>.</p>
+  </div>
+
+
+  <div class="nouvelle-page">
+    <h3>Fiche de seance — une par seance, a photocopier</h3>
+    <p class="petit">Se remplit <strong>avant</strong> la premiere mesure, se
+    signe, et s'agrafe aux releves du jour.</p>
+
+    <table class="fiche-seance">
+      <tbody>
+        <tr><th>Seance n&deg;</th><td></td></tr>
+        <tr><th>Date</th><td></td></tr>
+        <tr><th>Lieu</th><td></td></tr>
+        <tr><th>Operateur(s)</th><td></td></tr>
+        <tr><th>Temperature ambiante</th><td>&nbsp;&nbsp;&deg;C &nbsp;&mdash;&nbsp; relevee a&nbsp;:</td></tr>
+        <tr><th>Manipulation(s) prevue(s)</th><td></td></tr>
+        <tr><th>Chaine utilisee</th>
+          <td><span class="coche-inline"><span class="case"></span>carte son
+            (R<sub>ref</sub>&nbsp;=&nbsp;10&nbsp;&#937;)</span><span class="coche-inline">
+            <span class="case"></span>GBF + oscilloscope
+            (R<sub>ref</sub>&nbsp;=&nbsp;100&nbsp;&#937;)</span></td></tr>
+        <tr><th>R<sub>ref</sub> mesuree</th>
+          <td>&nbsp;&nbsp;&#937; &nbsp;(multimetre, mode REL, cordons compris)</td></tr>
+        <tr><th>Niveau d'attaque</th>
+          <td><span class="coche-inline"><span class="case"></span>faible</span><span
+            class="coche-inline"><span class="case"></span>fort</span>
+            valeur :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V RMS aux bornes du HP</td></tr>
+        <tr><th>Borne basse f<sub>min</sub></th>
+          <td>&nbsp;&nbsp;Hz &nbsp;(ecrite <em>avant</em> le premier balayage)</td></tr>
+        <tr><th>Appareils (modeles)</th><td></td></tr>
+        <tr><th>Fichiers produits</th><td></td></tr>
+        <tr><th>Anomalies, etat LED limit</th><td></td></tr>
+        <tr class="signature">
+          <th>Securite verifiee<br>Date et signature</th>
+          <td><span class="coche-inline"><span class="case"></span>fantome 48&nbsp;V coupe</span><span
+              class="coche-inline"><span class="case"></span>masses verifiees</span><span
+              class="coche-inline"><span class="case"></span>bouchons</span><span
+              class="coche-inline"><span class="case"></span>condensateurs decharges</span><span
+              class="coche-inline"><span class="case"></span>borne basse respectee</span><span
+              class="coche-inline"><span class="case"></span>ground / lift sur ground</span><span
+              class="coche-inline"><span class="case"></span>ordre des campagnes respecte</span><br>
+              Le&nbsp;<span class="ligne courte"></span>&nbsp;&nbsp;signature :
+              &nbsp;<span class="ligne longue"></span></td></tr>
+      </tbody>
+    </table>
+
+    <h4>Notes libres de la seance — ce qui a rate compte autant que ce qui a marche</h4>
+    <div class="lignes-libres"></div>
+
+  </div>
+
+</section>

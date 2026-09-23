@@ -30,15 +30,18 @@ tenir à jour à la fin de chaque session de travail.
   puisqu'ils sont en parallèle des médiums. « Pavillons hors périmètre » sans
   cette distinction est faux.
 - **Condensateur en série avec les pavillons** (protection classique du 1ᵉʳ
-  ordre) : `[[à vérifier auprès de l'étudiant]]` — ne rien supposer. S'il
-  existe (valeur typique 3 à 10 µF), la branche aigu présente vers 100 Hz une
-  impédance de plusieurs centaines d'ohms et son effet sur la charge du
-  passe-haut y est négligeable. S'il n'y en a pas, la branche aigu est en
-  parallèle direct : elle **abaisse** l'impédance du bloc médiums **et** les
-  pavillons reçoivent du 100 Hz à pleine puissance — risque matériel pendant
-  les balayages. **La conséquence pratique est la même dans les deux cas** : on
-  mesure le bloc médiums **tel qu'il est câblé, pavillons connectés**, puisque
-  c'est cela que le filtre voit.
+  ordre) : **CONFIRMÉ PRÉSENT** par l'étudiant le **16/09/2026**. Sa *valeur*
+  reste `[[à mesurer]]`. Ce que le calcul en dit, pour 3,3 à 10 µF : la branche
+  aiguë présente **160 à 480 Ω vers 100 Hz**, ce qui déplace $|Z|$ du bloc
+  médiums de **6 à 16 %** — modeste, mais **pas négligeable**, et visible sur un
+  ajustement. (La première estimation, « effet négligeable », était trop rapide :
+  le bloc médiums est encore sur le flanc de sa propre résonance à 100 Hz, donc
+  son impédance y est haute et une branche de quelques centaines d'ohms compte.)
+  **Conséquence pratique** : on mesure le bloc médiums **tel qu'il est câblé,
+  pavillons connectés** — c'est ce que le filtre voit, et l'effet est alors inclus
+  sans avoir à le modéliser. **Côté sécurité** : à 100 Hz le pavillon voit ~482 Ω
+  contre ~34 Ω pour les médiums, il ne reçoit qu'une fraction infime de la
+  puissance — aucun risque pendant les balayages.
 
 ## Problématique (v2)
 
