@@ -104,6 +104,13 @@ Détail des phases, portes de validation, critères et calendrier :
   toutes appliquées ; utilisabilité : 36 sur 38). C'est le HTML qui fait foi : le
   PDF se régénère depuis lui (`chrome --headless --print-to-pdf`, A4).
 - **EXPORT-PDF.md** — procédure d'export PDF.
+- **dissertation/DISSERTATION-SUJET.html** (+ PDF, 4 pages A4) — « Le filtre et sa
+  charge réelle : un bon sujet de TIPE ? », dissertation pour / contre demandée par
+  Thomas le 30/09/2026 et rédigée par un atelier multi-agents (arguments vérifiés,
+  critique de fond et de forme). Conclusion : **un bon sujet, non un sujet
+  original** ; sa valeur se jouera sur la mesure, les décisions datées, un périmètre
+  resserré et l'appropriation du noyau de code. Le HTML fait foi ; figures calculées
+  sur le modèle `SUB_TYPIQUE_BR` (aucune mesure).
 
 ## Ce que la v1 lègue à la v2
 

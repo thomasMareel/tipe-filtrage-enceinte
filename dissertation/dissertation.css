@@ -1,0 +1,109 @@
+/* dissertation.css — « Le sujet vaut-il un TIPE ? » (deux pages A4)
+   Document imprime : fond blanc, polices systeme (aucune police web, donc
+   aucune fonte Type 3 dans le PDF), schema en SVG inline.
+   PDF : chrome --headless=new --print-to-pdf (voir LISEZMOI en tete du HTML). */
+
+:root {
+  --encre: #111418;
+  --encre-douce: #4a5560;
+  --accent: #0b6a80;
+  --accent-clair: #e6f2f5;
+  --avertissement: #9a4a00;
+  --trait: #9fb3bd;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 14mm 17mm 15mm 17mm;
+  @bottom-right {
+    content: "page " counter(page) " / " counter(pages);
+    font: 8pt "Segoe UI", Arial, sans-serif;
+    color: #6b7680;
+  }
+  @bottom-left {
+    content: "TIPE 2027 — T. Mareel — le sujet vaut-il un TIPE ?";
+    font: 8pt "Segoe UI", Arial, sans-serif;
+    color: #6b7680;
+  }
+}
+
+html { background: #fff; }
+body {
+  margin: 0;
+  color: var(--encre);
+  background: #fff;
+  font-family: Cambria, Georgia, "Times New Roman", serif;
+  font-size: 10.4pt;
+  line-height: 1.37;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media screen {
+  body { max-width: 176mm; margin: 12mm auto; padding: 0 6mm; }
+}
+
+.kicker {
+  font: 600 7.6pt "Segoe UI", Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--encre-douce);
+  margin-bottom: 1.2mm;
+}
+h1 {
+  font: 700 17pt "Segoe UI", Arial, sans-serif;
+  color: var(--encre);
+  margin: 0 0 3mm 0;
+  text-align: left;
+  line-height: 1.15;
+}
+h2 {
+  font: 700 11pt "Segoe UI", Arial, sans-serif;
+  color: var(--accent);
+  margin: 3.6mm 0 1.4mm 0;
+  text-align: left;
+  break-after: avoid;
+}
+h2 .num, h3 .num { color: var(--encre-douce); margin-right: .35em; }
+h3 {
+  font: 600 9.8pt "Segoe UI", Arial, sans-serif;
+  color: var(--encre);
+  margin: 2.6mm 0 1mm 0;
+  text-align: left;
+  break-after: avoid;
+}
+p { margin: 0 0 1.7mm 0; text-indent: 5mm; orphans: 2; widows: 2; }
+.intro p:first-child, h2 + p, h3 + p { text-indent: 0; }
+p.chapeau { text-indent: 0; font-style: italic; color: #2a333b; }
+
+.problematique {
+  border-left: 1mm solid var(--accent);
+  background: var(--accent-clair);
+  padding: 2mm 3.5mm 2.2mm 3.5mm;
+  margin: 0 0 3mm 0;
+}
+.problematique .etiquette {
+  display: block;
+  font: 700 7.6pt "Segoe UI", Arial, sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .8mm;
+}
+.problematique p { text-indent: 0; margin: 0; font-style: italic; text-align: left; }
+
+.transition { font-style: italic; text-indent: 0; margin-top: 2mm; color: #2a333b; }
+
+figure.schema { margin: 2.6mm 0 2mm 0; break-inside: avoid; }
+figure.schema svg { display: block; width: 100%; height: auto; }
+figure.schema figcaption {
+  font: 8.3pt/1.3 "Segoe UI", Arial, sans-serif;
+  color: var(--encre-douce);
+  margin-top: 1.2mm;
+  text-align: left;
+}
+
+.conclusion h2 { color: var(--encre); }
