@@ -49,7 +49,7 @@
 
 | Critère | Définition | Mesure |
 |---|---|---|
-| Fidélité du raccord | Écart RMS (dB) de la somme des deux voies à **la cible de sommation gelée en phase 0** (voir l'encadré ci-dessous : **plate** ou **Butterworth** — la contradiction n'est pas tranchée), bande 40–250 Hz | Micro + REW, protocole champ proche fixé en phase 1 |
+| Fidélité du raccord | Écart RMS (dB) de la somme des deux voies à **la cible Butterworth inversée** (+3,01 dB à $f_c$ ; D2, tranchée le 15/11/2026 — voir l'encadré ci-dessous), bande 40–250 Hz | Micro + REW, protocole champ proche fixé en phase 1 |
 | Précision de f_c | \|f_c réalisée − 100 Hz\|, f_c = **fréquence de croisement des deux voies** (définition unique du projet, REFERENCE-TECHNIQUE.md § 04.1 fait foi) | Bode électrique puis acoustique |
 | Pertes d'insertion | dB et W perdus en bande passante à puissance donnée | V/I au banc, DCR |
 | Consommation au repos | W de la chaîne complète sans signal | Wattmètre de prise |
@@ -69,10 +69,17 @@ Les deux niveaux d'écoute de référence (faible / fort) sont à fixer en phase
 et à ne plus changer. **Aucun critère ne doit être ajouté ou retiré après les
 premières mesures comparatives** — c'est ce qui rend la conclusion honnête.
 
-> ### ⚠ Décision de phase 0 non tranchée : la cible de sommation
+> ### Cible de sommation : **Butterworth 2, tranchée le 15/11/2026** (D2)
 >
-> **Deux cibles incompatibles cohabitent aujourd'hui dans le projet** et l'une
-> des deux doit être abandonnée **avant** le gel des critères.
+> **Thomas a retenu l'option B** (`DECISIONS-PHASE-0.md`, D2) : le critère
+> « Fidélité du raccord » mesure l'écart à la **cible Butterworth inversée**, et
+> l'écart RMS de 2,29 dB d'un Butterworth parfait à une cible plate est sa
+> signature, pas un défaut. Le filtre de référence et le *sanity check* 8 Ω
+> restent 18 mH / 150 µF. L'encadré ci-dessous garde les deux options telles
+> qu'elles étaient posées, pour mémoire.
+>
+> **Deux cibles incompatibles cohabitaient dans le projet** et l'une des deux
+> devait être abandonnée **avant** le gel des critères.
 >
 > - **Option A — cible plate (Linkwitz-Riley 2, $Q = 1/2$)**. C'est ce qu'écrit
 >   ce document (critère « Fidélité du raccord » ci-dessus, et phase 3). Avec
@@ -119,12 +126,19 @@ premières mesures comparatives** — c'est ce qui rend la conclusion honnête.
 - [x] Feuille de route (ce document), MCOT v2, CLAUDE.md v2.
 - [ ] Geler les critères ci-dessus + les 2 niveaux d'écoute (décision étudiant),
       **consignés et datés dans `DECISIONS-PHASE-0.md`**.
-- [ ] Trancher la **cible de sommation** (plate / Butterworth) — voir l'encadré
-      après le tableau des critères. C'est la décision qui bloque la phase 3.
+- [x] Trancher la **cible de sommation** (plate / Butterworth) — **Butterworth 2,
+      15/11/2026** (D2) ; restent le motif et la signature dans le registre.
 - [ ] Geler **$r_{max}$ de la self** (fenêtre praticable 1,5 à 2 Ω, cf.
       REFERENCE-TECHNIQUE.md § 05.8) : c'est ce choix, et non le budget, qui
-      fixe le coût du cuivre.
-- [x] **Définition de f_c : décidée, plus à choisir.** C'est la **fréquence de
+      fixe le coût du cuivre. — **Provisoire au 15/11/2026** : 1,5 Ω, 3 A/mm²,
+      deux selfs à prise intermédiaire (D6) ; à confirmer au devis de fil.
+- [x] **Montage de l'amplification** : **un canal du E-800 par filtre** (D5,
+      option E, 15/11/2026) ; la contrainte $\min|Z_{in}| \ge 4\ \Omega$ se lit
+      voie par voie.
+- [x] **Filière PT, TIPE individuel** (D9, 15/11/2026) ; restent les
+      positionnements thématiques et le titre, avant l'étape 1 SCEI.
+- [x] **Définition de f_c : recommandation appliquée partout, gel non signé**
+      (D1). C'est la **fréquence de
       croisement des deux voies** — l'unique $f \in [40 ; 250]$ Hz telle que
       $|H_{PB}(f)\,G_{sub}(f)| = |H_{PH}(f)\,G_{méd}(f)|$ — seule définition
       insensible à la perte d'insertion et interprétable sur la charge réelle.
@@ -327,20 +341,15 @@ la bande utile au raccord ou mentionner le modèle de semi-inductance en perspec
 
 ### Phase 3 — Optimisation numérique du filtre (nov.–déc. 2026)
 
-- Cible : somme des deux voies sur 40–250 Hz (gain et phase cohérente), **selon
-  la cible de sommation gelée en phase 0**. ⚠ **Contradiction non tranchée** :
-  cette ligne dit « plate » (= Linkwitz-Riley 2, $Q = 1/2$, 27 mH / 100 µF sur
-  8 Ω, somme à 0,000 dB partout après inversion de polarité), alors que le
-  sanity check ci-dessous et toutes les illustrations utilisent **Butterworth**
-  ($Q = 1/\sqrt2$, 18 mH / 150 µF, **+3,01 dB à $f_c$** après inversion, soit
-  **2,29 dB** d'écart RMS à une cible plate — sa signature, pas un défaut).
-  **Les deux ne peuvent pas être gelées ensemble** : la cible du critère
-  « Fidélité » et la cible par défaut du code doivent être la même. Conséquence
-  chiffrée du choix de LR2 : +84 % de cuivre par self à DCR imposée
-  ($m \propto L^{3/2}$), soit ~213 € de fil pour un couple à $r_{max} = 1{,}5\
-  \Omega$ au lieu de ~116 €. Voir l'encadré après le tableau des critères et
-  **REFERENCE-TECHNIQUE.md § 04.3**. Décision de phase 0, à consigner dans
-  `DECISIONS-PHASE-0.md`.
+- Cible : somme des deux voies sur 40–250 Hz (gain et phase cohérente), **cible
+  Butterworth inversée** (D2, tranchée le 15/11/2026) : $Q = 1/\sqrt2$,
+  18 mH / 150 µF sur 8 Ω, **+3,01 dB à $f_c$** après inversion de polarité de la
+  voie médium, soit **2,29 dB** d'écart RMS à une cible plate — sa signature, pas
+  un défaut. La cible du critère « Fidélité » et la cible par défaut du code
+  (`cible_nom='butterworth'`) sont désormais la même. L'option LR2 écartée aurait
+  coûté +84 % de cuivre par self à DCR imposée ($m \propto L^{3/2}$), soit ~213 €
+  de fil pour un couple à $r_{max} = 1{,}5\ \Omega$ au lieu de ~116 €
+  (**REFERENCE-TECHNIQUE.md § 04.3**).
 - Variables : L₁, C₁ (passe-bas), C₂, L₂ (passe-haut), option réseau de Zobel (R, C).
 - Contraintes : valeurs des séries E12/E6 réelles, budget, DCR(L) issu de
   l'étude self (satellite intégré ici), encombrement.
@@ -361,8 +370,8 @@ réelle ; modèle de coût de la self ; plan de bobinage ; **texte du MCOT prêt
 saisir**.
 **Porte de validation (sanity check clé)** : alimenté avec une charge 8 Ω
 résistive pure, l'optimiseur doit retomber sur le filtre catalogue de la cible
-gelée (Butterworth 18 mH / 150 µF, ou LR2 27 mH / 100 µF si c'est l'option A qui
-est retenue). S'il n'y retombe pas, il y a un bug — ne rien acheter avant ce test.
+gelée, **Butterworth 18 mH / 150 µF** (D2, 15/11/2026). S'il n'y retombe pas, il
+y a un bug — ne rien acheter avant ce test.
 
 > **Effet du glissement de la phase 0 sur la marge MCOT.** La phase 0 re-datée
 > « août – sept. 2026 » pousse mécaniquement la suite d'environ un mois :

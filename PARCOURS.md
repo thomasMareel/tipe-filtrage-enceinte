@@ -111,10 +111,12 @@ concours. C'est le vrai point de rupture du calendrier.
 
 ## <a id="ouj"></a>Où j'en suis
 
-> **Dernière revue : 23/09/2026.** Bloc en cours : `1-A` et `1-B`. Prochaine
-> échéance ferme : la porte d'étalonnage, mi-octobre 2026 (l'accord de
-> l'encadrant est acquis depuis le 16/09/2026 : M. Chevalier, `1-A2` ; reste
-> `1-A3`).
+> **Dernière revue : 15/11/2026.** Bloc en cours : `1-B` (la commande `1-B4`
+> n'est pas passée ; la porte d'étalonnage de mi-octobre est donc dépassée).
+> Prochaine échéance ferme : **commande du fil et des condensateurs avant le
+> 15/12/2026** (`2-I3`), qui suppose D6 confirmé au devis. D2 (Butterworth), le
+> montage voie par voie, la filière PT et le TIPE individuel sont tranchés depuis le
+> 15/11/2026. Reste `1-A3`.
 >
 > *Cette ligne se réécrit à chaque revue mensuelle (`T-D10`) — trois informations,
 > pas plus : la date de la revue, le bloc en cours, la prochaine échéance ferme.*
@@ -460,14 +462,23 @@ parce que `1-A4` ouvre la caisse et que la photo d'avant ne se refait pas.
         interface**.
       - [ ] **Micro de mesure** : modèle exact, **XLR ou USB**, et **SPL maximal
         admissible** `[[à documenter]]`. C'est ce qui reste de 1-B3.
+        *15/11/2026 :* **micro XLR**, branché sur l'entrée 1 de la Scarlett Solo
+        (Thomas). Restent le **modèle exact**, son **SPL maximal** et son **fichier
+        d'étalonnage**.
       **Réponse à la ligne** : « micro XLR sur interface à deux entrées avec
-      boucle de retour » — **interface à deux entrées : oui ; boucle de retour :
-      oui (entrée 2) pour l'acoustique, inutile pour l'impédance ; micro XLR :
-      `[[à vérifier]]`** tant que le modèle du micro n'est pas écrit.
+      boucle de retour » — **oui** (15/11/2026) : micro XLR sur l'entrée 1, boucle de
+      retour sur l'entrée 2 pour l'acoustique, inutile pour l'impédance. Un micro de
+      mesure XLR demande en général le 48 V, que le jig interdit : jamais les deux
+      montages branchés en même temps (livret, groupe D).
 
 - [ ] **1-B4. Passer la commande des composants de la phase 1.** Liste minimale
       (**révisée le 23/09/2026** après l'arbitrage sur le jig d'impédance, voir
       `CLAUDE.md` § Matériel) :
+      *État au 15/11/2026 : rien n'est commandé.* **Déjà en ta possession : le
+      wattmètre de prise** (ne pas le racheter). **Prêtés par le lycée : la
+      résistance de puissance 8 Ω et le ballast 10 Ω / 5 W** (ne pas les acheter).
+      Tout le reste de la liste est à commander, **pied à coulisse compris** (ou à
+      emprunter au lycée : il sert aussi aux cotes des évents).
       - **deux résistances de 100 Ω à 0,1 %** : l'une est la **R_sense** du jig
         carte son, l'autre la **référence d'étalonnage de REW** (étalonnage
         « reference »). Deux pièces distinctes, obligatoirement : la référence ne
@@ -607,7 +618,8 @@ après avoir vu les résultats.
       conditionnement sont écrites, datées, signées.
 
 - [ ] **1-C5. Geler D9 — filière (PT ou PSI), TIPE seul ou en groupe, et
-      positionnements thématiques.** Le premier positionnement doit être dans un
+      positionnements thématiques.** *Fait en partie le 15/11/2026 :* **filière PT**,
+      **TIPE individuel**. Restent les trois positionnements et le titre. Le premier positionnement doit être dans un
       domaine de rattachement de ta filière (Physique ou Sciences industrielles
       pour PT et PSI) : la recommandation est **Électronique** en rang 1, puis
       Mathématiques Appliquées, puis Physique Ondulatoire ou Automatique.
@@ -1327,7 +1339,10 @@ pas après en avoir vu le résultat. Changer une pondération une fois les courb
 tracées, c'est choisir le vainqueur puis écrire le règlement — la seule faute
 réellement disqualifiante de ce projet.
 
-- [ ] **2-F1. Trancher D2 : la cible de sommation** (~1 h de réflexion, la décision la
+- [x] **2-F1. Trancher D2 : la cible de sommation** — **fait le 15/11/2026 :
+      Butterworth 2**, voie médium inversée (`DECISIONS-PHASE-0.md` D2). Restent à
+      écrire au registre : le motif en une phrase et ta signature.
+      *Énoncé d'origine :* (~1 h de réflexion, la décision la
       plus lourde de la période). Reportée le 13/09/2026 « après la phase 1 » :
       l'échéance est **maintenant**, avant le premier achat et avant le MCOT.
       Deux options incompatibles :
@@ -1359,6 +1374,11 @@ réellement disqualifiante de ce projet.
       de phase de LR2 y gagne en valeur, mais le budget cuivre s'alourdit
       d'autant. C'est ton arbitrage.
 - [ ] **2-F2. Trancher D6 : $r_{max}$ de la self et le modèle de DCR/prix** (~30 min).
+      *Fait en partie le 15/11/2026, à titre provisoire :* $r_{max} = 1{,}5$ Ω,
+      $J_{max} = 3$ A/mm², **deux selfs à prise intermédiaire**. Restent : la
+      puissance à laquelle $J_{max}$ s'applique (à 350 W permanents, 1,5 Ω donne
+      3,86 A/mm²), le modèle de DCR/prix, la méthode de calcul des critères n° 5 et
+      n° 7, et la confirmation au devis (`DECISIONS-PHASE-0.md` D6).
       Fenêtre praticable 1,5 à 2,0 Ω ; recommandation du registre : **2,0 Ω avec
       $J \le 3$ A/mm²** (fil ~1,24 mm, bobinable à la main, dérive de DCR +3,6 %
       en une minute, sous l'effet thermique du HP lui-même). Passer à 1,5 Ω coûte

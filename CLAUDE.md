@@ -26,7 +26,8 @@ tenir à jour à la fin de chaque session de travail.
 
 ## Sujet (v2)
 
-- **Auteur** : Thomas Mareel, 2e année de prépa (PTSI → 2e année), TIPE session 2027.
+- **Auteur** : Thomas Mareel, 2e année de prépa (**PTSI puis PT**), TIPE
+  **individuel**, session 2027 (filière et mode confirmés le 15/11/2026).
 - **Professeur encadrant : M. Chevalier** — accord obtenu, rapporté par Thomas le
   16/09/2026 (D10 de `DECISIONS-PHASE-0.md`). Reste à vérifier son compte sur
   `lycees.scei-concours.fr` et à le prévenir de la fenêtre de validation de
@@ -203,12 +204,14 @@ Détail des phases, portes de validation, critères et calendrier :
 
 ## Données encore à confirmer par l'étudiant
 
-- **Filière exacte de 2e année (PT ou PSI)** — PTSI mène aux deux. Elle commande
-  le **premier positionnement thématique** à déclarer au MCOT et la **fenêtre
-  d'oraux** (les banques n'interrogent pas les filières aux mêmes dates) : à
-  trancher avant la saisie SCEI de mi-janvier 2027.
-- **TIPE individuel ou en groupe** (le SCEI admet jusqu'à 3 candidats, avec une
-  part personnelle identifiable pour chacun) : à déclarer dès l'étape 1.
+- ~~Filière exacte de 2e année (PT ou PSI)~~ **PT** (Thomas, 15/11/2026). Le
+  premier positionnement thématique doit donc être en Physique ou en Sciences
+  industrielles ; positionnements et titre restent à choisir avant la saisie
+  SCEI de mi-janvier 2027 (D9).
+- ~~TIPE individuel ou en groupe~~ **Individuel** (Thomas, 15/11/2026).
+- **Micro de mesure** : **XLR**, sur l'entrée 1 de la Scarlett Solo (Thomas,
+  15/11/2026) ; restent le **modèle exact**, son **SPL maximal** (il plafonne le
+  niveau fort de D3) et son fichier d'étalonnage.
 - f_s réelle du sub et des médiums (→ phase 1, mesure d'impédance).
 - Câblage exact des médiums (série confirmée ?).
 - ~~Condensateur en série avec les pavillons ?~~ **CONFIRMÉ PRÉSENT** (Thomas,
@@ -401,6 +404,46 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 
 ## État actuel (2026-11-15)
 
+- [x] **Décisions de Thomas du 15/11/2026**, consignées dans
+      `DECISIONS-PHASE-0.md` et propagées (feuille de route, MCOT, PARCOURS,
+      `criteres_geles.json`) :
+      - **D2 tranchée : Butterworth 2**, voie médium inversée ; le report du 13/09
+        est levé. Restent le motif et la signature.
+      - **D5, option E : montage voie par voie.** Un canal du E-800 par filtre (deux
+        sorties du SX-801 vers deux entrées distinctes). La contrainte ≥ 4 Ω se lit
+        voie par voie : catalogue 3,29 Ω (disqualifié), candidat 7,08 / 5,27 Ω.
+        **À reprendre** : le satellite énergétique et la réponse « coût système » de
+        `NOTES-TIPE.md` supposaient le passif sur un seul canal.
+      - **D6 provisoire** : $r_{max} = 1{,}5$ Ω, $J_{max} = 3$ A/mm², deux selfs à
+        prise intermédiaire, prix sur 25 €/kg (pas de devis). **Incompatibles à
+        350 W permanents** (3,86 A/mm²) : question posée à Thomas.
+      - **D9 en partie** : filière PT, TIPE individuel.
+      - **1-B4** : wattmètre possédé, 8 Ω et ballast prêtés par le lycée ; rien de
+        commandé. Micro de mesure XLR (modèle à relever).
+- [ ] **Audit complet du dépôt du 15/11/2026 : défauts trouvés, NON corrigés**
+      (en attente de l'accord de Thomas). Tests (171) et chaîne `tout_refaire.py`
+      reproductibles ; nombres de contrôle et 332 renvois vérifiés. À corriger :
+      1. **« 7,1 % en borne au pire cas » est faux.** C'est ½√(10² + 10²), une
+         somme quadratique, pas une borne. Le pire cas est **+11,1 % / −9,1 %**
+         (10 % au 1ᵉʳ ordre) ; le 4,1 % GUM est juste. Concerne § Nombres de
+         contrôle, `incertitudes.py:500`, LISEZMOI et les tests.
+      2. **La chaîne ne calcule jamais f_c au sens du § 04.1.** Sur la charge
+         modélisée, l'optimisé croise vers 109 Hz.
+      3. **`min|Zin|` est hors de J** : `enumere_e12` est appelé sans `zin_min`.
+      4. **Vue 17 de la finale** : 33,4 % dans la figure, 42,6 % dans le texte et
+         en A9.
+      5. **Oscilloscope** : le code suppose CH2 = V_Rref, alors que le montage A
+         du livret branche CH2 = V_tot.
+      6. **La chaîne prendrait le CSV synthétique**, ou le premier CSV
+         alphabétique, et ne lit pas un export REW.
+      7. **`lire_rew`** est faussé par la virgule décimale doublée d'une virgule
+         séparatrice.
+      8. **Le garde-fou de caisse** ne cherche les pics qu'entre 10 et 100 Hz.
+      9. **Les PDF des decks** sont en retard sur le HTML, et la légende de
+         l'annexe A6 déborde de la vue.
+      10. **Incohérences mineures entre documents** (condensateur des pavillons
+          dit inconnu dans `analyse/LISEZMOI.md`, PDF du livret dit périmé à tort,
+          etc.).
 - [x] **Dépôt organisé pour travailler depuis plusieurs comptes Claude**
       (15/11/2026, demande de Thomas). Tout le travail qui n'existait qu'en local
       a été fusionné sur `main` et poussé : les corrections de la vérification des
@@ -496,15 +539,22 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
    prénom ou initiale et discipline pour le formulaire, fenêtre de 8 jours de
    mi-juin 2027 ; lui faire relire le **groupe C** du livret (tensions élevées)
    avant la première mise sous tension au banc.
-4. Étudiant : geler et dater dans `DECISIONS-PHASE-0.md` les critères, les deux
-   niveaux d'écoute, la cible de sommation (D2, échéance : avant le premier achat
-   de composants du filtre et avant la rédaction du MCOT), le r_max de la self et
-   le gabarit D7. La définition de f_c est déjà appliquée partout (§ 04.1) :
-   il reste à **signer** D1, ou à en choisir une autre en écrivant pourquoi.
+4. Étudiant : geler et dater dans `DECISIONS-PHASE-0.md` les critères (D4), les
+   deux niveaux d'écoute (D3), la fonction de coût (D5) et le gabarit D7 ;
+   **écrire le motif et signer D2** (Butterworth, 15/11) ; **confirmer D6** (devis
+   de fil, puissance à laquelle s'applique $J_{max}$, modèle DCR/prix, méthode de
+   calcul des critères n° 5 et 7 avec les prises) avant la commande du 15/12 ;
+   choisir les positionnements et le titre (D9) avant mi-janvier. La définition
+   de f_c est déjà appliquée partout (§ 04.1) : il reste à **signer** D1, ou à en
+   choisir une autre en écrivant pourquoi.
 5. Phase 1, dès réception des composants : étalonnage des deux chaînes sur
    composants connus (livret, groupe A), puis Z(f) du sub en caisse et du bloc
    médiums câblé (groupe B). C'est la clé de voûte — rien d'autre avant.
-6. Claude, sur demande : dépouiller les premières mesures avec `analyse/`, puis
+6. Claude, sur accord de Thomas : corriger les défauts de l'audit du 15/11/2026
+   (§ État actuel), en priorité ceux qui faussent un chiffre (7,1 %, vue 17)
+   et ceux qui mordront dès les premières mesures (oscilloscope, lecture REW,
+   choix du CSV, garde-fou de caisse), puis régénérer les PDF.
+7. Claude, sur demande : dépouiller les premières mesures avec `analyse/`, puis
    remplacer les données synthétiques des figures par les vraies (marqueurs
    `<!--FIG:nom-->`, injection idempotente) et régénérer les PDF.
 

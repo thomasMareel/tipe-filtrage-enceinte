@@ -14,10 +14,10 @@
     "porte_phase_4_pct": "[[a geler]]"
   },
   "D2_cible_sommation": {
-    "_aide": "D2. VOLONTAIREMENT REPORTEE apres la phase 1 : la cible est un PARAMETRE du code (butterworth | lr2 | plate), jamais une constante. Sanity check sur 8 ohm resistif : 18,0 mH / 140,7 uF en butterworth, 25,5 mH / 99,5 uF en lr2. Butterworth 2nd ordre => inversion de polarite d une voie OBLIGATOIRE.",
-    "cible": "[[a geler]]",
-    "f_cible_Hz": "[[a geler]]",
-    "polarite_voie_medium": "[[a geler]]"
+    "_aide": "D2. TRANCHEE le 2026-11-15 par Thomas : Butterworth 2 (le report du 2026-09-13 est leve ; motif et signature dans DECISIONS-PHASE-0.md). La cible reste un PARAMETRE du code (butterworth | lr2 | plate), jamais une constante. Sanity check sur 8 ohm resistif : 18,0 mH / 140,7 uF en butterworth (E12 : 18 mH / 150 uF, le filtre catalogue). Butterworth 2nd ordre => inversion de polarite d une voie OBLIGATOIRE : par convention la voie medium.",
+    "cible": "butterworth",
+    "f_cible_Hz": 100.0,
+    "polarite_voie_medium": "inversee"
   },
   "D3_niveaux_ecoute": {
     "_aide": "D3. Les deux niveaux d ecoute de reference, definis par une grandeur MESURABLE (tension aux bornes du HP, ou SPL a 1 m), jamais par une position de bouton.",
@@ -66,10 +66,10 @@
     "hauteur_px": "[[a geler]]"
   },
   "D8_type_caisse": {
-    "_aide": "D8. CONSTAT, pas un choix : clos (un pic, 5 parametres) ou bass-reflex (deux pics, 8 parametres). A remplir apres la premiere mesure Z(f) de la phase 1 ; io_mesures.diagnostiquer_caisse() fournit le constat.",
-    "type": "[[a geler]]",
-    "date_du_constat": "[[a geler]]",
-    "n_parametres_fit": "[[a geler]]"
+    "_aide": "D8. CONSTAT, pas un choix : clos (un pic, 5 parametres) ou bass-reflex (deux pics, 8 parametres). Constate visuellement par Thomas le 2026-09-16 (caisse a DEUX EVENTS) et reporte ici le 2026-11-15. A CONFIRMER sur la premiere mesure Z(f) de la phase 1 : io_mesures.diagnostiquer_caisse() doit y trouver les deux pics.",
+    "type": "bass-reflex (deux events)",
+    "date_du_constat": "2026-09-16",
+    "n_parametres_fit": 8
   },
   "tests_non_regression": {
     "_lisez_moi": "Les familles de tests du § 09.6, avec leur critere chiffre. GELES en meme temps que la fonction de cout et lus par analyse/tests/contexte.py : les assertions tirent leurs seuils d ICI, pas de litteraux ecrits dans les tests. C est ce qui rend verifiable l affirmation << les criteres ont ete geles avant les mesures >> : sans ce fichier, une relecture ne peut confronter un test qu a lui-meme. Toute modification doit etre inscrite dans journal_des_modifications ci-dessous, datee et motivee -- et dite a l oral.",
@@ -246,6 +246,12 @@
       "objet": "Ajout de la famille de tests (i) i_bassreflex.",
       "motif": "L etudiant a constate que le sub est en caisse BASS-REFLEX avec DEUX events. Le code portait deja le modele a 7-8 parametres et le garde-fou -- ils avaient ete ecrits PRECISEMENT parce que le type de caisse n etait pas connu -- mais la suite de tests ne couvrait la voie bass-reflex que partiellement : l ajustement y etait initialise sur les valeurs VRAIES, ce qui ne prouve rien du chemin reel (initialisation lue sur la courbe, puis identifier(auto)). Trois fonctions nouvelles s ajoutent avec leur critere : la prediction de f_b par la geometrie (Helmholtz), la sommation en champ proche (Keele) et la charge composite du passe-haut (pavillons en parallele des mediums). AUCUN critere existant n est touche : c est un AJOUT, pas un amendement.",
       "consequence": "Le fichier d exemple mesures/exemple_synthetique_sub.csv est desormais engendre en bass-reflex a deux events (il etait en caisse close), et la chaine complete s exerce donc sur le cas que la phase 1 rencontrera."
+    },
+    {
+      "date": "2026-11-15",
+      "objet": "D2 renseignee (cible butterworth, 100 Hz, voie medium inversee) et D8 renseignee (bass-reflex, constat du 2026-09-16, 8 parametres).",
+      "motif": "Decisions de Thomas consignees le meme jour dans DECISIONS-PHASE-0.md : D2 tranchee pour Butterworth 2 ; D8 etait repondue depuis le 2026-09-16 mais n avait pas ete reportee ici. D6 (r_max 1,5 ohm) reste NON GELEE : elle est PROVISOIRE, en attente du devis de fil.",
+      "consequence": "Aucun calcul ne change : la chaine utilisait deja la cible butterworth par defaut, et seules les ponderations de D5 et le gabarit D7 sont lus par le code. Le nombre de rubriques encore non gelees passe de 42 a 36."
     }
   ]
 }

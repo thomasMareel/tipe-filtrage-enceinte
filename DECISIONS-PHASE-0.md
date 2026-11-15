@@ -45,14 +45,14 @@ même l'intérêt du format, à condition d'écrire pourquoi dans le champ `moti
 | # | Décision | Ce qu'elle commande | À geler avant | Statut |
 |---|---|---|---|---|
 | D1 | Définition de $f_c$ | Le critère « précision de $f_c$ », la porte ±5 % de la phase 4 | Phase 3 | **Recommandation appliquée** dans les documents et le code depuis le 13/09/2026 (croisement des deux voies) — **gel non signé** `[[à signer]]` |
-| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | 1ᵉʳ achat de composants du filtre, et MCOT | **REPORTÉE après la phase 1** — décision datée du 13/09/2026 (Thomas) ; la cible elle-même reste **à trancher** `[[ouvert]]` |
+| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | 1ᵉʳ achat de composants du filtre, et MCOT | **TRANCHÉE le 15/11/2026 (Thomas) : Butterworth 2**, voie médium inversée ; le report du 13/09/2026 est levé — motif et signature `[[à écrire / à signer]]` |
 | D3 | Les deux niveaux d'écoute | Le critère « robustesse », la tenue en tension, la sécurité | Phase 4 | `[[ouvert]]` |
 | D4 | Les 8 critères de comparaison | Toute la conclusion du TIPE | 1ʳᵉ mesure comparative | `[[ouvert]]` |
-| D5 | Bande et pondérations de la fonction de coût | Le design optimisé lui-même | Phase 3 | `[[ouvert]]` |
-| D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | `[[ouvert]]` |
+| D5 | Bande et pondérations de la fonction de coût | Le design optimisé lui-même | Phase 3 | `[[ouvert]]`, sauf l'**option E** (montage de la contrainte $\min\lvert Z_{in}\rvert \ge 4\ \Omega$) : **voie par voie**, un canal du E-800 par filtre — Thomas, 15/11/2026 |
+| D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | **Provisoire, 15/11/2026 (Thomas)** : $r_{max} = 1{,}5\ \Omega$, $J_{max} = 3$ A/mm², **2 selfs à prise intermédiaire** ; à confirmer au devis de fil ; compatibilité $J_{max}$ / niveau fort à vérifier avec D3 |
 | D7 | Gabarit 4/3 des figures et des slides | Toutes les figures des phases 2 à 4 | 1ʳᵉ figure | **Recommandation appliquée** de fait (decks et figures en 1024 × 768 depuis la refonte v2 ; le 4/3 est imposé par le SCEI) — **gel non signé** `[[à signer]]` ; `criteres_geles.json` ne porte pas encore D7 |
 | D8 | Type de caisse du sub (**constat**) | Le modèle à ajuster en phase 2, la sécurité au niveau fort, la sommation acoustique | Phase 1 | **RÉPONDUE le 16/09/2026 — bass-reflex, deux évents** |
-| D9 | Filière et positionnements thématiques | Le binôme d'examinateurs | Étape 1 SCEI | `[[ouvert]]` |
+| D9 | Filière et positionnements thématiques | Le binôme d'examinateurs | Étape 1 SCEI | **Filière PT et TIPE individuel : répondu le 15/11/2026 (Thomas)** ; positionnements et titre `[[ouvert]]` |
 | D10 | Professeur encadrant | **La note elle-même** | Rentrée sept. 2026 | **M. Chevalier, 16/09/2026** |
 
 ---
@@ -233,6 +233,29 @@ RMS à plat de 2,29 dB est la **signature attendue**, pas une erreur.
 > **À vérifier au passage** : l'incohérence de `FEUILLE-DE-ROUTE.md` (critère « fidélité »
 > et phase 3 écrivent « cible plate ») reste ouverte tant que D2 n'est pas tranchée — les
 > deux occurrences portent désormais un renvoi explicite vers cette décision.
+
+> **DÉCISION : BUTTERWORTH 2 ($Q = 1/\sqrt2$), voie médium inversée** — date :
+> `15/11/2026` — décidée par : Thomas — signé : `[[TM]]`
+> — motif : `[[à écrire par Thomas, en une phrase ; il ne peut pas être « le résultat obtenu »]]`
+>
+> **Le report du 13/09/2026 est levé avant la phase 1.** L'échéance qu'il s'était donnée
+> (« avant le premier achat de composants du filtre et avant le MCOT », soit début
+> décembre 2026) arrive avant les premières mesures : la cible est donc choisie sur ses
+> propriétés, pas sur la $Z(f)$ mesurée. Ce qui en découle, et qui est appliqué partout
+> depuis le 15/11/2026 :
+>
+> - **cible de la somme** : « Butterworth inversé », **+3,01 dB à $f_c$** et +1,68 dB à 50
+>   et 200 Hz. Son écart RMS de **2,29 dB** à une cible plate (40–250 Hz) est sa
+>   **signature attendue**, pas un défaut : le critère « Fidélité du raccord » mesure
+>   l'écart à **cette** cible, plus à une cible plate (`FEUILLE-DE-ROUTE.md` amendé) ;
+> - **filtre de référence et *sanity check*** : 18 mH / 150 µF sur 8 Ω, c'est-à-dire le
+>   filtre catalogue lui-même — catalogue et design optimisé visent **la même cible**, ce
+>   qui rend leur comparaison directe ;
+> - **inversion de polarité obligatoire** (2ᵉ ordre) : par convention, la **voie médium**
+>   (permuter les deux fils du bloc médiums), à vérifier au micro — à $f_c$, le bon sens
+>   donne une bosse, le mauvais un trou profond ;
+> - **côté cuivre** : la self de grave reste à 18 mH (et non 27 mH en LR2), soit environ
+>   46 % de cuivre en moins à $r_{max}$ égal, car $(18/27)^{3/2} = 0{,}54$ (D6).
 
 ---
 
@@ -468,8 +491,8 @@ n'était pas gelé (`montage=` dans le code, marqué `[[à trancher en phase 3]]
 
 | Lecture | Ce qu'elle regarde | Catalogue | Design candidat |
 |---|---|---|---|
-| `grave` **(retenue par défaut)** | la cellule passe-bas seule, en bi-amplification | **3,29 Ω** | **5,27 Ω** |
-| `voie` | le plus petit des deux minimums de voie | 3,29 Ω | 5,27 Ω |
+| `grave` (défaut actuel du code) | la cellule passe-bas seule | **3,29 Ω** | **7,08 Ω** |
+| `voie` **(gelée le 15/11/2026)** | le plus petit des deux minimums de voie : chaque canal doit tenir | **3,29 Ω** | **5,27 Ω** (atteint côté médium) |
 | `parallele` | les **deux cellules sur un seul ampli** — le cas d'un filtre passif ordinaire | **1,77 Ω** | **3,48 Ω** |
 
 **Pourquoi il fallait le geler.** Tant que le montage n'était pas fixé, rien
@@ -485,6 +508,33 @@ parallèle — qui est le montage physique d'un filtre passif sur un seul ampli 
 **aucun des deux designs ne satisfait la contrainte** (1,77 et 3,48 Ω). Ce n'est
 pas un détail à taire, c'est une **limite ouverte du design candidat**, et elle
 se dit à l'oral. `[[à geler : Thomas tranche, et la date est consignée ici]]`
+
+> **DÉCISION (option E) : montage VOIE PAR VOIE** — date : `15/11/2026` — décidée par :
+> Thomas — signé : `[[TM]]`
+>
+> **C'est le montage physique retenu, pas une convention de calcul** : les deux sorties
+> du pré-ampli SX-801 attaquent les **deux entrées distinctes** du E-800 ; un canal
+> alimente le filtre passe-bas et le sub, l'autre le filtre passe-haut et le bloc
+> médiums (pavillons compris). Chaque canal ne voit donc qu'**une** cellule, et la
+> contrainte se lit `voie` : les **deux** minimums doivent dépasser 4 Ω. Sur la charge
+> modélisée, le catalogue reste disqualifié (3,29 Ω côté grave), le design candidat passe
+> (7,08 Ω côté grave, 5,27 Ω côté médium).
+>
+> **Conséquences à reporter :**
+>
+> - le défaut du code est `montage='grave'` (`analyse/optim.py`, fonction `cout`), qui ne
+>   regarde que le passe-bas : il doit devenir `'voie'`, la lecture gelée (sans effet sur
+>   les résultats actuels, que la chaîne vérifie déjà voie par voie) ;
+> - la lecture `parallele` (1,77 et 3,48 Ω) décrit un montage **qui ne sera pas construit**.
+>   Elle reste un argument d'oral : un filtre passif ordinaire, sur un seul canal, ne
+>   tiendrait pas les 4 Ω du E-800 sur cette charge ;
+> - les **deux architectures** (passive et active) utilisent désormais **les deux mêmes
+>   canaux** : le satellite énergétique et la réponse « coût système » de `NOTES-TIPE.md`,
+>   qui supposaient le passif sur un seul canal, sont **à reprendre** `[[à recalculer]]` ;
+> - **égalisation des niveaux** : chaque voie ayant son canal, elle peut se faire au gain
+>   du E-800, sans atténuateur résistif (donc sans pertes), à condition de **relever,
+>   consigner et bloquer** les deux réglages pour chaque configuration mesurée ; la règle
+>   de réglage entre configurations reste à fixer avec D4 `[[à geler]]`.
 
 ### Option A — la bande
 
@@ -653,9 +703,51 @@ niveau : c'est précisément le critère « robustesse »), (b) la **maîtrise
 métrologique** ($N$, $\ell$, $m$, $r$ tous connus et mesurables), (c) la
 **liberté de valeur**. Ne pas prétendre que l'argument est économique.
 
-> **DÉCISION — $r_{max}$ = [[à remplir]] Ω** · **$J_{max}$ = [[à remplir]] A/mm²**
-> · **nombre de selfs à bobiner : [[à remplir]]** — date : `[[JJ/MM/AAAA]]`
-> — signé : `[[TM]]`
+> **DÉCISION PROVISOIRE — $r_{max}$ = 1,5 Ω** · **$J_{max}$ = 3 A/mm²** · **nombre de
+> selfs à bobiner : 2** (une par voie, **à prise intermédiaire**) — date : `15/11/2026` —
+> décidée par : Thomas — signé : `[[TM]]`
+>
+> **Provisoire, et pourquoi.** Thomas retient 1,5 Ω « pour l'instant » : la valeur se
+> confirme **au devis de fil émaillé**, avant la commande du 15/12/2026 (`PARCOURS.md`
+> 2-I3). D'ici là, les montants restent calculés sur l'ordre de grandeur non sourcé de
+> 25 €/kg (décision du 15/11/2026 : pas de devis pour l'instant).
+>
+> **Ce que donne ce choix** (cible Butterworth, D2 : self de grave de 18 mH ; tableau
+> ci-dessus) : fil de **1,48 mm**, 2,30 kg et **≈ 57 €** par self, **−1,49 dB**
+> d'insertion sur 8 Ω, +4,5 K et +1,7 % de DCR en une minute à 350 W ; environ **116 €**
+> de cuivre pour les deux selfs si les deux font 18 mH. Le fil est **à la limite** de ce
+> que le § 05.8 juge approvisionnable et bobinable à la main (1,5 mm).
+>
+> **Point à trancher, car les deux nombres ne sont pas compatibles à pleine puissance.**
+> Le tableau calcule $J$ à 350 W permanents (6,61 A efficaces) : à 1,5 Ω, $J = 3{,}86$
+> A/mm², **au-dessus** des 3 A/mm² retenus. Les deux valeurs ne tiennent ensemble que
+> si $J_{max}$ se lit au **niveau fort de D3**, à condition que ce niveau reste sous
+> $350 \times (3/3{,}86)^2 \approx 211$ W permanents par canal. À 350 W permanents, il
+> faudrait $r_{max} \approx 1{,}22$ Ω : fil de 1,68 mm, 3,1 kg et ≈ 77 € par self
+> (calcul `self_bobine.brooks`, 15/11/2026), au-delà du diamètre bobinable à la main.
+> `[[question posée à Thomas le 15/11/2026 : à quelle puissance J_max s'applique-t-il ?]]`
+>
+> **La prise intermédiaire, en pratique** (§ 05.10). Une seule bobine par voie fournit
+> à la fois la valeur du filtre catalogue et celle du filtre optimisé : moitié moins
+> de cuivre et de bobinage, et une comparaison faite **sur le même objet physique**.
+> Deux conséquences :
+>
+> - chaque bobine se dimensionne sur la **plus grande** des deux valeurs de sa voie, et
+>   la prise se place sur l'autre ;
+> - la valeur optimisée n'est connue qu'après l'optimisation sur la $Z(f)$ **mesurée**
+>   (phase 3). Sur la charge synthétique actuelle, l'optimum est 18 mH au grave et
+>   10 mH au médium (contre 18 mH et 18 mH pour le catalogue), mais ce n'est **pas** une
+>   valeur de bobinage. Le diamètre de fil, lui, se fixe dès maintenant par $r_{max}$ ;
+> - **deux des huit critères de D4 deviennent calculés au lieu d'être mesurés**
+>   (`PARCOURS.md` 2-F2). Le n° 7 « encombrement / matière » se mesure à la balance,
+>   et le n° 5 « coût marginal » sur facture : ni l'une ni l'autre ne sépare deux
+>   filtres qui partagent une bobine. Il faut **calculer** la masse et le prix de la
+>   fraction de bobine utilisée par chaque design, avec une méthode écrite **avant**
+>   le bobinage, et le dire à l'oral `[[méthode à écrire avec D4]]`.
+>
+> **Reste ouvert dans D6** : le **modèle de DCR / prix** utilisé par l'optimiseur
+> (A : masse fixée ; B : DCR fixée ; C : fil fixé — `PARCOURS.md` 2-F2), à choisir
+> avant la phase 3 `[[à geler]]`.
 
 ---
 
@@ -928,9 +1020,16 @@ sur l'impédance mesurée d'une enceinte deux voies ».
 mots au total, hors mots-clés et références ; DOT $= 4$ à 8 jalons de 50 mots,
 soit **200 à 400** mots.
 
-> **DÉCISION — filière : [[PT / PSI]]** · **positionnement 1 : [[à remplir]]** ·
-> **2 : [[à remplir]]** · **3 : [[à remplir]]** · **titre retenu :
-> [[à remplir]]** — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
+> **DÉCISION — filière : PT** · **TIPE individuel** — répondu par Thomas le
+> `15/11/2026` (PTSI puis PT). En PT, le premier positionnement doit être en
+> **Physique** ou en **Sciences industrielles** : « Électronique (SI) », proposé en
+> rang 1 ci-dessus, satisfait la règle. Un TIPE individuel n'a pas de part
+> personnelle à délimiter entre candidats : tout le travail déclaré est celui de
+> Thomas, avec l'aide de Claude déclarée comme telle (`CLAUDE.md` § Conventions).
+>
+> **Reste ouvert** : **positionnement 1 : [[à remplir]]** · **2 : [[à remplir]]** ·
+> **3 : [[à remplir]]** · **titre retenu : [[à remplir]]** — avant l'étape 1 SCEI
+> (mi-janvier 2027) — signé : `[[TM]]`
 
 ---
 
@@ -1002,10 +1101,12 @@ source est une **interprétation prudente**, pas une exigence.
 - [ ] **D1** — Définition de $f_c$ gelée, avec sa convention de seuil ; répercutée
       dans `FEUILLE-DE-ROUTE.md` et dans la convention C1 de
       `REFERENCE-TECHNIQUE.md § 07.0`.
-- [ ] **D2** — Cible de sommation gelée ; l'incohérence entre
+- [x] **D2** — Cible de sommation gelée ; l'incohérence entre
       `FEUILLE-DE-ROUTE.md` (cible plate) et `REFERENCE-TECHNIQUE.md`
       (illustrations Butterworth) est **levée**, dans un sens ou dans l'autre ;
-      le *sanity check* de la phase 3 vise la bonne cible.
+      le *sanity check* de la phase 3 vise la bonne cible. — **Butterworth 2,
+      15/11/2026** : la feuille de route est amendée, le *sanity check* vise
+      18 mH / 150 µF ; restent le motif et la signature de Thomas.
 - [ ] **D3** — Deux niveaux d'écoute gelés (tension aux bornes du HP, puissance
       correspondante, durée de conditionnement) ; tenue en tension des
       condensateurs vérifiée pour ces niveaux ; protections auditives présentes.
@@ -1015,7 +1116,9 @@ source est une **interprétation prudente**, pas une exigence.
 - [ ] **D5** — Bande, grille, hypothèse « bruit rose » et cinq pondérations
       gelées ; $\tau$ mesuré au mètre ruban et $w_\varphi$ recalibré dessus.
 - [ ] **D6** — $r_{max}$ et $J_{max}$ gelés ; nombre de selfs arrêté ; devis de
-      fil demandé (le 25 €/kg n'est **pas** une source).
+      fil demandé (le 25 €/kg n'est **pas** une source). — **Provisoire au
+      15/11/2026** : 1,5 Ω, 3 A/mm², 2 selfs à prise intermédiaire ; restent le
+      devis de fil et la puissance à laquelle $J_{max}$ s'applique (avec D3).
 - [ ] **D7** — Gabarit 1024 × 768 acté ; `figsize`/`dpi` matplotlib figés dans le
       squelette `analyse/` **avant** la première figure.
 - [x] **D8** — Type de caisse **constaté le 16/09/2026 : bass-reflex, deux
@@ -1028,7 +1131,8 @@ source est une **interprétation prudente**, pas une exigence.
       protocole, sommation de Keele (membrane + deux évents) inscrite au
       planning de la phase 4.
 - [ ] **D9** — Filière déclarée ; positionnements et titre arrêtés sur le récit
-      prévu.
+      prévu. — **Filière PT et TIPE individuel : 15/11/2026** ; restent les
+      positionnements et le titre.
 - [x] **D10** — Encadrant désigné (**M. Chevalier**, 16/09/2026), accord explicite obtenu ; reste à vérifier son compte
       `lycees.scei-concours.fr` et à l'avertir de la fenêtre de 8 jours de
       mi-juin 2027 (`PARCOURS.md` 1-A3).
@@ -1047,6 +1151,9 @@ source est une **interprétation prudente**, pas une exigence.
       jig (XLR mâle, deux jacks 6,35 TRS), **condensateurs étalons 100 µF et
       10 µF MKP**, pinces et câbles, résistance de puissance 8 Ω (si absente
       au lycée), wattmètre de prise. Détail : `PARCOURS.md`, action `1-B4`.
+      **Au 15/11/2026** : le wattmètre est déjà en possession de Thomas, le lycée
+      prête la résistance de puissance 8 Ω et le ballast 10 Ω / 5 W ; rien
+      d'autre n'est commandé.
 - [ ] Cahier de laboratoire ouvert et daté ; appareil photo prêt (les objets
       sont interdits en salle d'oral).
 

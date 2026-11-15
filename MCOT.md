@@ -86,6 +86,9 @@ sur sa charge réelle.
 > **24 thèmes**, par ordre d'importance décroissante. Le **premier** détermine le
 > binôme d'examinateurs et doit appartenir à un domaine de rattachement de la
 > filière (**Physique ou Sciences industrielles** en PT comme en PSI).
+>
+> **Filière : PT** et **TIPE individuel** (réponses de Thomas du 15/11/2026,
+> `DECISIONS-PHASE-0.md` D9). Restent à choisir : les positionnements et le titre.
 
 <!-- À RÉALIGNER SUR LES LIBELLÉS OFFICIELS. Dans la liste des 24 thèmes,
      « Électronique » est classé en SCIENCES INDUSTRIELLES, pas en Physique
@@ -146,7 +149,7 @@ en matière ?
    moindres carrés sur Z(f) (problème inverse), avec incertitudes propagées.
 3. **Optimiser** le filtre passif (valeurs L, C contraintes aux séries réelles,
    coût, pertes, encombrement) sur la charge modélisée, pour une sommation des
-   deux voies aussi plate que possible autour de 100 Hz ; dimensionner la bobine
+   deux voies conforme à une cible Butterworth à 100 Hz ; dimensionner la bobine
    elle-même (compromis cuivre/pertes).
 4. **Valider** expérimentalement : comparer filtre catalogue, filtre optimisé et
    référence active (insensible à Z(f) par construction) selon des critères

@@ -661,6 +661,13 @@ Les trois sont des **grandeurs mesurées** (€, kg, W), jamais un argumentaire 
 → § 08.5
 
 **« Votre travail est-il "sobre" ou seulement "moins cher" ? »**
+> ⚠ **Réponse à reprendre (15/11/2026).** Elle suppose le filtre passif sur **un seul**
+> canal d'amplification. Or Thomas a retenu un canal du E-800 **par filtre**
+> (`DECISIONS-PHASE-0.md`, D5 option E) : passif et actif utilisent alors les mêmes
+> deux canaux, et l'argument « deux fois plus de canaux pour l'actif » ne tient plus.
+> La différence se réduit aux cartes AOP de l'actif contre les pertes dans les selfs
+> du passif. `[[à recalculer avec analyse/energie.py, puis à réécrire]]`
+
 → Les deux comptabilités répondent : en **coût marginal**, l'amplificateur étant déjà
 possédé, l'actif est avantagé ; en **coût système**, un scénario stéréo complet demande deux
 fois plus de canaux d'amplification en bi-amplification, et le passif reprend l'avantage.
