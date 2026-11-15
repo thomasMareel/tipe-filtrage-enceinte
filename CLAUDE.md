@@ -408,15 +408,22 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       `DECISIONS-PHASE-0.md` et propagées (feuille de route, MCOT, PARCOURS,
       `criteres_geles.json`) :
       - **D2 tranchée : Butterworth 2**, voie médium inversée ; le report du 13/09
-        est levé. Restent le motif et la signature.
+        est levé. Motif de Thomas : près de moitié moins de cuivre qu'en LR2, pour
+        un budget qui permette de comparer l'actif (ALI) et les passifs. Reste la
+        signature.
       - **D5, option E : montage voie par voie.** Un canal du E-800 par filtre (deux
         sorties du SX-801 vers deux entrées distinctes). La contrainte ≥ 4 Ω se lit
         voie par voie : catalogue 3,29 Ω (disqualifié), candidat 7,08 / 5,27 Ω.
         **À reprendre** : le satellite énergétique et la réponse « coût système » de
-        `NOTES-TIPE.md` supposaient le passif sur un seul canal.
+        `NOTES-TIPE.md` supposaient le passif sur un seul canal (Thomas en a pris
+        note).
       - **D6 provisoire** : $r_{max} = 1{,}5$ Ω, $J_{max} = 3$ A/mm², deux selfs à
-        prise intermédiaire, prix sur 25 €/kg (pas de devis). **Incompatibles à
-        350 W permanents** (3,86 A/mm²) : question posée à Thomas.
+        prise intermédiaire, prix sur 25 €/kg (pas de devis). À 350 W permanents,
+        1,5 Ω donnerait 3,86 A/mm². Thomas a donc choisi d'**appliquer $J_{max}$ au
+        niveau fort de D3**, désormais borné à **≈ 211 W permanents par canal**
+        (≈ 41 V eff ; les 9 V eff recommandés en sont loin). Il **accepte** que les
+        critères n° 5 et 7 (coût, masse) soient calculés, avec une méthode à écrire.
+        Restent : le modèle DCR/prix et le devis.
       - **D9 en partie** : filière PT, TIPE individuel.
       - **1-B4** : wattmètre possédé, 8 Ω et ballast prêtés par le lycée ; rien de
         commandé. Micro de mesure XLR (modèle à relever).
@@ -508,9 +515,11 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       `.gitattributes` impose désormais LF aux `.py` ; une copie extraite avant
       cette date se répare en ré-extrayant ses `.py` (sans modification en cours).
 - [ ] Phase 0 à finir : définition de f_c (D1, appliquée partout mais **gel à
-      signer**), critères + 2 niveaux d'écoute à geler, cible de sommation
-      (D2, reportée le 13/09), r_max de la self, gabarit D7 (appliqué, **à signer**)
-      — décisions de l'étudiant, à dater dans `DECISIONS-PHASE-0.md`.
+      signer**), critères (D4), 2 niveaux d'écoute (D3, borné par D6), fonction de
+      coût (D5, sauf l'option E gelée), confirmation de D6 (provisoire), signature
+      de D2 (tranchée le 15/11), positionnements et titre (D9), gabarit D7
+      (appliqué, **à signer**) — décisions de l'étudiant, à dater dans
+      `DECISIONS-PHASE-0.md`.
 - [x] **NOTES-TIPE.md réécrit en v2** (13 sept. 2026) : questions du jury sur le
       problème inverse, l'optimisation E12 et les incertitudes ; la v1 portait
       encore les trois architectures (dont le RC 1er ordre abandonné) et le
@@ -541,9 +550,9 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
    avant la première mise sous tension au banc.
 4. Étudiant : geler et dater dans `DECISIONS-PHASE-0.md` les critères (D4), les
    deux niveaux d'écoute (D3), la fonction de coût (D5) et le gabarit D7 ;
-   **écrire le motif et signer D2** (Butterworth, 15/11) ; **confirmer D6** (devis
-   de fil, puissance à laquelle s'applique $J_{max}$, modèle DCR/prix, méthode de
-   calcul des critères n° 5 et 7 avec les prises) avant la commande du 15/12 ;
+   **signer D2** (Butterworth, motif écrit le 15/11) ; **confirmer D6** (devis de
+   fil, modèle DCR/prix, méthode de calcul des critères n° 5 et 7 avec les prises)
+   avant la commande du 15/12 ; geler D3 sous la borne de ≈ 41 V eff venue de D6 ;
    choisir les positionnements et le titre (D9) avant mi-janvier. La définition
    de f_c est déjà appliquée partout (§ 04.1) : il reste à **signer** D1, ou à en
    choisir une autre en écrivant pourquoi.

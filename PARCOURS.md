@@ -605,6 +605,9 @@ après avoir vu les résultats.
       Recommandation : faible = **2 V eff**, fort = **9 V eff** aux bornes du
       haut-parleur, conditionnement 5 min de bruit rose. Contrainte non
       négociable rattachée : au niveau fort, **aucun contenu sous $2f_b$**.
+      *Borne ajoutée le 15/11/2026 (D6)* : niveau fort **≤ ≈ 41 V eff** (≈ 211 W
+      permanents sur 8 Ω), pour que les selfs de 1,5 Ω restent sous 3 A/mm². Les
+      9 V eff recommandés (≈ 10 W) en sont très loin.
       *Durée : 30 min.*
       *Bloqué par :* 1-B3 et **`T-A5`** (le SPL max du micro plafonne le niveau
       fort, et c'est très probablement lui qui plafonne, pas l'enceinte).
@@ -1340,8 +1343,9 @@ tracées, c'est choisir le vainqueur puis écrire le règlement — la seule fau
 réellement disqualifiante de ce projet.
 
 - [x] **2-F1. Trancher D2 : la cible de sommation** — **fait le 15/11/2026 :
-      Butterworth 2**, voie médium inversée (`DECISIONS-PHASE-0.md` D2). Restent à
-      écrire au registre : le motif en une phrase et ta signature.
+      Butterworth 2**, voie médium inversée (`DECISIONS-PHASE-0.md` D2). Motif
+      écrit le 15/11 : près de moitié moins de cuivre, pour un budget qui permette
+      de comparer l'actif (ALI) et les passifs. Reste ta signature au registre.
       *Énoncé d'origine :* (~1 h de réflexion, la décision la
       plus lourde de la période). Reportée le 13/09/2026 « après la phase 1 » :
       l'échéance est **maintenant**, avant le premier achat et avant le MCOT.
@@ -1375,10 +1379,11 @@ réellement disqualifiante de ce projet.
       d'autant. C'est ton arbitrage.
 - [ ] **2-F2. Trancher D6 : $r_{max}$ de la self et le modèle de DCR/prix** (~30 min).
       *Fait en partie le 15/11/2026, à titre provisoire :* $r_{max} = 1{,}5$ Ω,
-      $J_{max} = 3$ A/mm², **deux selfs à prise intermédiaire**. Restent : la
-      puissance à laquelle $J_{max}$ s'applique (à 350 W permanents, 1,5 Ω donne
-      3,86 A/mm²), le modèle de DCR/prix, la méthode de calcul des critères n° 5 et
-      n° 7, et la confirmation au devis (`DECISIONS-PHASE-0.md` D6).
+      $J_{max} = 3$ A/mm² **appliqué au niveau fort de D3**, qui ne doit donc pas
+      dépasser ≈ 211 W permanents par canal (≈ 41 V eff sur 8 Ω), et **deux selfs à
+      prise intermédiaire** (tu acceptes que les critères n° 5 et n° 7 soient
+      calculés). Restent : le modèle de DCR/prix, la méthode de calcul des critères
+      n° 5 et n° 7, et la confirmation au devis (`DECISIONS-PHASE-0.md` D6).
       Fenêtre praticable 1,5 à 2,0 Ω ; recommandation du registre : **2,0 Ω avec
       $J \le 3$ A/mm²** (fil ~1,24 mm, bobinable à la main, dérive de DCR +3,6 %
       en une minute, sous l'effet thermique du HP lui-même). Passer à 1,5 Ω coûte

@@ -45,11 +45,11 @@ même l'intérêt du format, à condition d'écrire pourquoi dans le champ `moti
 | # | Décision | Ce qu'elle commande | À geler avant | Statut |
 |---|---|---|---|---|
 | D1 | Définition de $f_c$ | Le critère « précision de $f_c$ », la porte ±5 % de la phase 4 | Phase 3 | **Recommandation appliquée** dans les documents et le code depuis le 13/09/2026 (croisement des deux voies) — **gel non signé** `[[à signer]]` |
-| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | 1ᵉʳ achat de composants du filtre, et MCOT | **TRANCHÉE le 15/11/2026 (Thomas) : Butterworth 2**, voie médium inversée ; le report du 13/09/2026 est levé — motif et signature `[[à écrire / à signer]]` |
+| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | 1ᵉʳ achat de composants du filtre, et MCOT | **TRANCHÉE le 15/11/2026 (Thomas) : Butterworth 2**, voie médium inversée ; le report du 13/09/2026 est levé ; motif : près de moitié moins de cuivre, budget cohérent pour comparer actif (ALI) et passifs — signature `[[à signer]]` |
 | D3 | Les deux niveaux d'écoute | Le critère « robustesse », la tenue en tension, la sécurité | Phase 4 | `[[ouvert]]` |
 | D4 | Les 8 critères de comparaison | Toute la conclusion du TIPE | 1ʳᵉ mesure comparative | `[[ouvert]]` |
 | D5 | Bande et pondérations de la fonction de coût | Le design optimisé lui-même | Phase 3 | `[[ouvert]]`, sauf l'**option E** (montage de la contrainte $\min\lvert Z_{in}\rvert \ge 4\ \Omega$) : **voie par voie**, un canal du E-800 par filtre — Thomas, 15/11/2026 |
-| D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | **Provisoire, 15/11/2026 (Thomas)** : $r_{max} = 1{,}5\ \Omega$, $J_{max} = 3$ A/mm², **2 selfs à prise intermédiaire** ; à confirmer au devis de fil ; compatibilité $J_{max}$ / niveau fort à vérifier avec D3 |
+| D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | **Provisoire, 15/11/2026 (Thomas)** : $r_{max} = 1{,}5\ \Omega$, $J_{max} = 3$ A/mm², **2 selfs à prise intermédiaire** ; $J_{max}$ s'applique au niveau fort de D3, borné à ≈ 211 W permanents par canal ; à confirmer au devis de fil |
 | D7 | Gabarit 4/3 des figures et des slides | Toutes les figures des phases 2 à 4 | 1ʳᵉ figure | **Recommandation appliquée** de fait (decks et figures en 1024 × 768 depuis la refonte v2 ; le 4/3 est imposé par le SCEI) — **gel non signé** `[[à signer]]` ; `criteres_geles.json` ne porte pas encore D7 |
 | D8 | Type de caisse du sub (**constat**) | Le modèle à ajuster en phase 2, la sécurité au niveau fort, la sommation acoustique | Phase 1 | **RÉPONDUE le 16/09/2026 — bass-reflex, deux évents** |
 | D9 | Filière et positionnements thématiques | Le binôme d'examinateurs | Étape 1 SCEI | **Filière PT et TIPE individuel : répondu le 15/11/2026 (Thomas)** ; positionnements et titre `[[ouvert]]` |
@@ -236,7 +236,9 @@ RMS à plat de 2,29 dB est la **signature attendue**, pas une erreur.
 
 > **DÉCISION : BUTTERWORTH 2 ($Q = 1/\sqrt2$), voie médium inversée** — date :
 > `15/11/2026` — décidée par : Thomas — signé : `[[TM]]`
-> — motif : `[[à écrire par Thomas, en une phrase ; il ne peut pas être « le résultat obtenu »]]`
+> — motif (Thomas, 15/11/2026) : **près de moitié moins de cuivre qu'en LR2, pour que le
+> budget reste cohérent et permette de comparer la référence active (ALI) et les filtres
+> passifs.**
 >
 > **Le report du 13/09/2026 est levé avant la phase 1.** L'échéance qu'il s'était donnée
 > (« avant le premier achat de composants du filtre et avant le MCOT », soit début
@@ -363,7 +365,9 @@ poser une **borne supérieure**, pas à trancher. Dire cela à l'oral vaut mieux
 que de monter le niveau après coup pour « faire sortir » un effet.
 
 > **DÉCISION — niveau faible : [[à remplir]] V eff ([[...]] W)**
-> **niveau fort : [[à remplir]] V eff ([[...]] W)**
+> **niveau fort : [[à remplir]] V eff ([[...]] W)** — **borne venue de D6 (15/11/2026)** :
+> au plus ≈ 41 V eff, soit ≈ 211 W permanents par canal, pour que les selfs de 1,5 Ω
+> restent sous $J_{max} = 3$ A/mm²
 > **conditionnement : [[...]] min de bruit rose**
 > date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
 
@@ -718,19 +722,22 @@ métrologique** ($N$, $\ell$, $m$, $r$ tous connus et mesurables), (c) la
 > de cuivre pour les deux selfs si les deux font 18 mH. Le fil est **à la limite** de ce
 > que le § 05.8 juge approvisionnable et bobinable à la main (1,5 mm).
 >
-> **Point à trancher, car les deux nombres ne sont pas compatibles à pleine puissance.**
-> Le tableau calcule $J$ à 350 W permanents (6,61 A efficaces) : à 1,5 Ω, $J = 3{,}86$
-> A/mm², **au-dessus** des 3 A/mm² retenus. Les deux valeurs ne tiennent ensemble que
-> si $J_{max}$ se lit au **niveau fort de D3**, à condition que ce niveau reste sous
-> $350 \times (3/3{,}86)^2 \approx 211$ W permanents par canal. À 350 W permanents, il
-> faudrait $r_{max} \approx 1{,}22$ Ω : fil de 1,68 mm, 3,1 kg et ≈ 77 € par self
-> (calcul `self_bobine.brooks`, 15/11/2026), au-delà du diamètre bobinable à la main.
-> `[[question posée à Thomas le 15/11/2026 : à quelle puissance J_max s'applique-t-il ?]]`
+> **Où s'applique $J_{max}$ : au niveau fort de D3** — tranché par Thomas le
+> `15/11/2026`. Le tableau calcule $J$ à 350 W permanents (6,61 A efficaces) : à
+> 1,5 Ω, $J = 3{,}86$ A/mm², au-dessus des 3 A/mm² retenus. Deux sorties étaient
+> possibles : lire $J_{max}$ au niveau fort de D3 en gardant 1,5 Ω, ou descendre à
+> $r_{max} \approx 1{,}22$ Ω pour tenir 3 A/mm² à 350 W permanents (fil de 1,68 mm,
+> 3,1 kg et ≈ 77 € par self, calcul `self_bobine.brooks` du 15/11/2026, au-delà du
+> diamètre bobinable à la main). **Thomas retient la première.** Conséquence, qui
+> devient une **borne de D3** : avec 1,5 Ω, le **niveau fort** doit rester sous
+> $350 \times (3/3{,}86)^2 \approx$ **211 W permanents par canal** (≈ 41 V efficaces
+> sur 8 Ω). La borne porte sur la valeur **efficace** du signal, celle qui échauffe le
+> fil, et non sur ses crêtes.
 >
 > **La prise intermédiaire, en pratique** (§ 05.10). Une seule bobine par voie fournit
 > à la fois la valeur du filtre catalogue et celle du filtre optimisé : moitié moins
 > de cuivre et de bobinage, et une comparaison faite **sur le même objet physique**.
-> Deux conséquences :
+> Trois conséquences :
 >
 > - chaque bobine se dimensionne sur la **plus grande** des deux valeurs de sa voie, et
 >   la prise se place sur l'autre ;
@@ -743,7 +750,8 @@ métrologique** ($N$, $\ell$, $m$, $r$ tous connus et mesurables), (c) la
 >   et le n° 5 « coût marginal » sur facture : ni l'une ni l'autre ne sépare deux
 >   filtres qui partagent une bobine. Il faut **calculer** la masse et le prix de la
 >   fraction de bobine utilisée par chaque design, avec une méthode écrite **avant**
->   le bobinage, et le dire à l'oral `[[méthode à écrire avec D4]]`.
+>   le bobinage, et le dire à l'oral. **Accepté par Thomas le 15/11/2026** ; la
+>   méthode reste à écrire avec D4 `[[à écrire]]`.
 >
 > **Reste ouvert dans D6** : le **modèle de DCR / prix** utilisé par l'optimiseur
 > (A : masse fixée ; B : DCR fixée ; C : fil fixé — `PARCOURS.md` 2-F2), à choisir
@@ -1117,8 +1125,9 @@ source est une **interprétation prudente**, pas une exigence.
       gelées ; $\tau$ mesuré au mètre ruban et $w_\varphi$ recalibré dessus.
 - [ ] **D6** — $r_{max}$ et $J_{max}$ gelés ; nombre de selfs arrêté ; devis de
       fil demandé (le 25 €/kg n'est **pas** une source). — **Provisoire au
-      15/11/2026** : 1,5 Ω, 3 A/mm², 2 selfs à prise intermédiaire ; restent le
-      devis de fil et la puissance à laquelle $J_{max}$ s'applique (avec D3).
+      15/11/2026** : 1,5 Ω, 3 A/mm² au niveau fort de D3 (≤ 211 W permanents
+      par canal), 2 selfs à prise intermédiaire ; restent le devis de fil, le
+      modèle DCR/prix et la méthode de calcul des critères n° 5 et 7.
 - [ ] **D7** — Gabarit 1024 × 768 acté ; `figsize`/`dpi` matplotlib figés dans le
       squelette `analyse/` **avant** la première figure.
 - [x] **D8** — Type de caisse **constaté le 16/09/2026 : bass-reflex, deux

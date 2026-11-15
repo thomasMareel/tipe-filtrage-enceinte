@@ -12,15 +12,16 @@ qu'à Thomas**. Elles vivent dans le dépôt, pas ici :
 - `DECISIONS-PHASE-0.md` — le registre des 10 décisions, avec son **tableau de
   bord** (fait foi). État au 15/11/2026 :
   - D8 (type de caisse) et D10 (encadrant, M. Chevalier) : répondues le 16/09.
-  - **D2 tranchée le 15/11 : Butterworth 2.** Restent le motif et la signature.
+  - **D2 tranchée le 15/11 : Butterworth 2**, avec son motif. Reste la signature.
   - **D5, option E, gelée le 15/11 : voie par voie** (un canal d'ampli par
     filtre). Le reste de D5 est ouvert.
-  - **D6 provisoire le 15/11** : 1,5 Ω, 3 A/mm², 2 selfs à prise. Restent le
-    devis, la puissance à laquelle s'applique $J_{max}$, le modèle DCR/prix et la
-    méthode de calcul des critères n° 5 et 7.
+  - **D6 provisoire le 15/11** : 1,5 Ω, 3 A/mm² appliqués au niveau fort de D3
+    (borné à ≈ 211 W permanents par canal), 2 selfs à prise. Restent le devis, le
+    modèle DCR/prix et la méthode de calcul des critères n° 5 et 7.
+  - **D3** : ouvert, mais borné par D6 à ≈ 41 V eff au niveau fort.
   - **D9 en partie le 15/11** : PT, TIPE individuel. Restent les positionnements
     et le titre.
-  - D1 et D7 : appliquées mais non signées. D3 et D4 : ouvertes.
+  - D1 et D7 : appliquées mais non signées. D4 : ouverte.
 - `CLAUDE.md` § Données encore à confirmer et § Prochaines étapes.
 - `PARCOURS.md` — l'ordre des actions de Thomas et la ligne « Où j'en suis ».
 
