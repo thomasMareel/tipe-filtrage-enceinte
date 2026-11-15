@@ -190,7 +190,10 @@ fil de cuivre émaillé et composants passifs (budget ≤ 500 €).
      le matériel (et en référence [5]) est donc exact : c'est l'outil réellement
      disponible, pas une intention. Un repli en numpy pur (équations normales ou
      Gauss-Newton écrit à la main) reste intéressant à montrer au jury comme
-     preuve de compréhension de l'algorithme, jamais comme une contrainte subie. -->
+     preuve de compréhension de l'algorithme, jamais comme une contrainte subie —
+     à condition que ce soit la version RÉÉCRITE SEUL par Thomas : le repli présent
+     dans analyse/ a été écrit avec Claude, comme tout le code d'analyse, et cela
+     se déclare (NOTES-TIPE.md, « Qu'est-ce qui est de vous dans ce travail ? »). -->
 
 <!-- COMPOSITION DE L'ENCEINTE — information de l'étudiant du 2026-09-16, qui
      fait foi (décision D8 de DECISIONS-PHASE-0.md, désormais répondue). Le sub

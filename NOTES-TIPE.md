@@ -342,12 +342,17 @@ Restreindre la bande n'y suffit pas ; le remède est un modèle à six paramètr
 $Z=R_e+K(j\omega)^n+Z_{mot}$, déjà écrit et testé. → § 03.6
 
 **« Vous utilisez une bibliothèque toute faite ? »**
-→ `scipy.optimize.least_squares` sert de référence, mais j'ai **réécrit Levenberg-Marquardt
-en numpy pur** (vingt-cinq lignes) : mêmes paramètres à $6\cdot10^{-8}$ près en relatif,
-mêmes incertitudes. Ce n'était pas une contrainte — scipy 1.18.1 est bien installé sur mon
-poste — mais un choix : cela me permet de répondre à « que fait votre boîte noire ? », et le
-code reste exécutable sur une machine où scipy manquerait. L'énumération de
-l'acte 3 ne demande, elle aussi, que numpy. → § 03.2, § 09.5
+→ `scipy.optimize.least_squares` fait le calcul de référence. À côté, la chaîne contient un
+**Levenberg-Marquardt en numpy pur** (vingt-cinq lignes) : mêmes paramètres à
+$6\cdot10^{-8}$ près en relatif, mêmes incertitudes. Ce n'était pas une contrainte — scipy
+1.18.1 est bien installé sur mon poste — mais un choix : le code reste exécutable sur une
+machine où scipy manquerait. **Ce repli a été écrit, comme tout le code d'analyse, avec un
+assistant d'IA** : je le dis tel quel (voir « Qu'est-ce qui est de vous ? », § 3). Ce qui
+répond vraiment à « que fait votre boîte noire ? », c'est la version que je réécris **seul** :
+Gauss-Newton, puis l'amortissement de Levenberg-Marquardt, sur le modèle d'impédance.
+[[à compléter par Thomas : réécriture faite ou non, date, écart obtenu avec scipy — tant
+qu'elle n'est pas faite, ne pas dire « je l'ai réécrit »]] L'énumération de l'acte 3 ne
+demande, elle aussi, que numpy. → § 03.2, § 09.5
 
 ---
 
@@ -690,6 +695,29 @@ sobre, et ce point de croisement est mesurable. **Trois** : en coût système, l
 le nombre de canaux d'amplification. Et j'ajoute une raison de méthode : l'actif est mon
 **étalon**, il faut donc le garder à sa place — comparer contre lui, pas contre son absence.
 
+**« Pourquoi ne pas l'avoir fait avec VituixCAD ? »**
+→ Commencer par reconnaître ce que l'outil fait **bien**, sinon la réponse sonne comme une
+ignorance. VituixCAD, logiciel de conception d'enceintes téléchargeable gratuitement,
+**importe l'impédance mesurée** (fichier `.zma`), **simule le filtre passif** sur cette
+charge, **modélise la résistance série des selfs**, **arrondit les valeurs en E12, E24 ou
+E48**, et son optimiseur a une option d'**impédance minimale**. Et l'idée elle-même n'est pas
+neuve : Adams et Roe choisissaient déjà en 1982 les composants d'un filtre passif **par
+minimisation numérique** d'un écart à une réponse visée (*JAES*, vol. 30). Ma valeur ajoutée
+n'est donc pas « optimiser sur la charge mesurée » ; elle est dans ce que l'outil ne traite
+pas, d'après son manuel : (1) **l'identification** de la charge — il prend la courbe telle
+quelle ; il sait simuler une caisse bass-reflex à partir de paramètres **connus**, mais pas
+les **extraire** de l'impédance mesurée, et c'est ce modèle identifié qui me dit ce que
+devient la charge hors de la bande mesurée ou bobine chaude ; (2) les **objectifs de
+sobriété** — son optimiseur vise une réponse, pas un **coût en euros**, une **masse de
+cuivre** ni des **pertes Joule**, qui sont les trois termes que le thème me demande
+d'arbitrer ; (3) les **incertitudes** — ni celle de la mesure de $Z(f)$, ni les tolérances des
+composants, alors que ce sont elles qui disent si deux designs sont départagés. Et une raison
+de méthode : une fonction de coût posée explicitement oblige à **afficher et geler** ses
+pondérations avant de mesurer, ce qu'un bouton « optimiser » ne montre pas.
+[[à faire par Thomas si le temps le permet : importer le `.zma` mesuré dans VituixCAD et
+comparer sa simulation du filtre catalogue à celle de la chaîne Python — un recoupement
+indépendant, qui vaut une ligne de l'exposé]] → § 04.5 et sources de la section 04
+
 **« Votre optimiseur retrouve-t-il le Butterworth du cours ? »**
 → Oui, et c'est ma porte de validation avant tout achat : sur 8 Ω résistifs, l'optimiseur
 continu redonne 18,0063 mH et 140,674 µF, à $10^{-6}$ près des valeurs analytiques. Je
@@ -708,16 +736,38 @@ Zobel, on passerait à 96 millions de points, ce qui justifie de le traiter comm
 → § 04.5
 
 **« Qu'est-ce qui est de vous dans ce travail ? »**
-→ Répondre en gestes concrets, pas en généralités : l'enceinte a été construite et câblée
-par moi ; le montage de mesure d'impédance, son étalonnage et les relevés sont de moi ; le
-code d'analyse est écrit et testé par moi, y compris l'algorithme de Levenberg-Marquardt
-réécrit en numpy pour ne pas dépendre d'une bibliothèque ; le choix, le chiffrage et le gel
-des critères sont de moi ; la self est bobinée et mesurée par moi. Et dire aussi ce qui ne
-l'est pas : les modèles (Thiele, Small, Wheeler, Brooks) viennent de la littérature citée,
-les logiciels utilisés sont REW, LTspice et Python, et l'aide reçue (enseignants, outils de
-mise en forme) est mentionnée. **Ne rien surjouer : un jury repère une contribution gonflée
-plus vite qu'une contribution modeste.** [[réponse à compléter : liste exacte des gestes
-réalisés, à tenir à jour dans le cahier de laboratoire]] → § 08.5 (critère B3)
+→ Répondre en gestes concrets, et **déclarer l'aide reçue avant qu'on la découvre**. Trois
+parts, dites dans cet ordre.
+
+*Ce que je fais moi-même* : l'enceinte, construite et câblée par moi ; le montage de mesure
+d'impédance, son câblage, son étalonnage sur composants connus et les relevés ; les
+décisions de conception, datées et signées dans un registre **avant** les mesures
+comparatives (critères, niveaux d'écoute, cible de sommation, $r_{max}$ de la self) ; le
+bobinage et la mesure de la self. [[à compléter par Thomas : liste exacte des gestes
+**réellement faits**, recopiée du cahier de laboratoire avec leurs dates — n'y inscrire ni
+une mesure pas encore faite, ni une self pas encore bobinée]]
+
+*Ce qui a été fait avec un assistant d'IA (Claude, d'Anthropic)* : le **code d'analyse
+Python** — lecture des mesures, ajustement Thiele-Small, Levenberg-Marquardt en numpy,
+optimisation E12, figures — **et ses tests**, ainsi que la **rédaction** des documents de
+travail et des supports. Le partage a été fixé dès le départ et tenu : je mesure et je
+décide, l'assistant calcule et rédige à partir de mes données et de mes décisions ; il n'a
+jamais comblé une mesure manquante ni pris une décision du registre à ma place.
+
+*Ce que je fais pour que le cœur du calcul soit aussi le mien* : je réécris **seul, sans
+assistant**, un noyau court — le modèle d'impédance, le résidu pondéré, Gauss-Newton puis
+Levenberg-Marquardt, l'énumération E12 — et je vérifie qu'il redonne les résultats de la
+chaîne complète. C'est ce noyau que je peux écrire au tableau et défendre ligne à ligne.
+[[à compléter par Thomas : fait ou non, date, écart constaté avec la chaîne complète — tant
+que ce n'est pas fait, ne pas dire « je l'ai réécrit »]]
+
+Et dire ce qui vient d'ailleurs : les modèles (Thiele, Small, Wheeler, Brooks) sont ceux de
+la littérature citée ; les logiciels sont REW, LTspice et Python ; l'aide des enseignants
+[[à compléter par Thomas : qui, pour quoi]]. **Toute cette aide est déclarée exactement à
+mon encadrant, M. Chevalier**, qui atteste à l'étape 3 un « travail personnel constaté » :
+il doit l'apprendre de moi, pas du jury. **Ne rien surjouer : un jury repère une
+contribution gonflée plus vite qu'une contribution modeste, et les listings annexés peuvent
+faire l'objet de questions.** → § 08.5 (critère B3) ; `PARCOURS.md` § T-E
 
 **« Pourquoi avoir changé de sujet en cours de route ? »**
 → Parce que ma première version répondait à la question « passif ou actif ? », dont la
@@ -776,11 +826,12 @@ bande passante, et la **fréquence de croisement des deux voies**. Pour une rés
 self de 2 Ω, la même réalité physique se note $-18$ % ou $+10$ % selon la convention, alors
 que le croisement ne bouge que de 0,8 %. **Une seule définition doit être gelée et employée
 partout — tableaux de critères, diapositives, portes de validation.**
-**Tranché le 2026-09-13** : $f_c$ = la **fréquence de croisement des deux voies**
+**Convention appliquée dans tout le dépôt depuis le 2026-09-13** (c'est la recommandation de
+la décision D1, **pas encore signée**) : $f_c$ = la **fréquence de croisement des deux voies**
 ($|H_{PB}|=|H_{PH}|$), seule définition insensible à la perte d'insertion — § 04.1 fait foi et
 est le seul passage à porter ce statut. Le pôle (96,86 Hz) et les deux $-3$ dB restent cités
-comme **repères nommés**, jamais comme « la » coupure. À confirmer et dater dans
-`DECISIONS-PHASE-0.md` (décision D1). → § 04.1, § 07.0, § 08.5
+comme **repères nommés**, jamais comme « la » coupure. Le gel reste à dater et signer par
+Thomas dans `DECISIONS-PHASE-0.md` (D1). → § 04.1, § 07.0, § 08.5
 
 **4. Pertes dans la résistance de la self.** Fraction dissipée $=r/(R+r)$. Pour $r=1$ Ω et
 $R=8$ Ω : **11,1 % de la puissance**, soit $10\log_{10}(8/9)=-0{,}51$ dB en **puissance** et
@@ -868,9 +919,10 @@ Réserve de réponses pour « pourquoi n'avez-vous pas fait … ? ». Chaque pis
 
 Les nommer ici évite d'être pris en défaut sur le critère « rigueur des définitions ».
 
-1. ~~**Définition de $f_c$**~~ — **résolu le 2026-09-13** : fréquence de croisement des deux
-   voies (§ 04.1, seul passage à porter ce statut) ; § 07.0 et § 08.5 sont alignés, les autres
-   fréquences sont des repères nommés. Reste à dater dans `DECISIONS-PHASE-0.md` (D1).
+1. **Définition de $f_c$** — **résolu dans les documents le 2026-09-13, pas encore gelé** :
+   fréquence de croisement des deux voies (§ 04.1, seul passage à porter ce statut) ; § 07.0
+   et § 08.5 sont alignés, les autres fréquences sont des repères nommés. Le gel, lui, reste à
+   dater et signer par Thomas dans `DECISIONS-PHASE-0.md` (D1, `PARCOURS.md` 1-C2).
 2. **Cible de sommation** : `FEUILLE-DE-ROUTE.md` écrit « cible plate » (= Linkwitz-Riley 2,
    27 mH / 100 µF) là où les illustrations utilisent la cible Butterworth (+3 dB à $f_c$).
    Les deux ne peuvent pas être gelées ensemble. [[à geler en phase 0]] → § 04.3
@@ -929,5 +981,14 @@ Les nommer ici évite d'être pris en défaut sur le critère « rigueur des dé
       objet n'entre en salle.
 - [ ] Imprimer les listings Python en **double exemplaire** et les annexer après la
       conclusion du PDF.
+- [ ] **Réécrire seul, sans assistant, le noyau du calcul** (modèle d'impédance, résidu
+      pondéré, Gauss-Newton puis Levenberg-Marquardt, énumération E12), vérifier qu'il
+      redonne les résultats de la chaîne complète, et dater l'écart au cahier. Les listings
+      annexés peuvent faire l'objet de questions : c'est ce noyau-là qu'il faut savoir
+      défendre ligne à ligne.
+- [ ] **Déclarer exactement l'aide reçue à M. Chevalier** — enseignants, et assistant d'IA
+      pour le code d'analyse et la rédaction — **avant** l'étape 3, où il atteste un « travail
+      personnel constaté ». Même déclaration dans l'exposé (diapositive de sources) et dans
+      la réponse « Qu'est-ce qui est de vous ? » (§ 3).
 - [ ] Répéter devant un « candide » : si la première minute ne fait pas comprendre pourquoi
       un haut-parleur n'est pas une résistance de 8 Ω, l'exposé est à reprendre.

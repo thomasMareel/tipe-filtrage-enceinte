@@ -44,13 +44,13 @@ même l'intérêt du format, à condition d'écrire pourquoi dans le champ `moti
 
 | # | Décision | Ce qu'elle commande | À geler avant | Statut |
 |---|---|---|---|---|
-| D1 | Définition de $f_c$ | Le critère « précision de $f_c$ », la porte ±5 % de la phase 4 | Phase 3 | `[[ouvert]]` |
-| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | Phase 3 | `[[ouvert]]` |
+| D1 | Définition de $f_c$ | Le critère « précision de $f_c$ », la porte ±5 % de la phase 4 | Phase 3 | **Recommandation appliquée** dans les documents et le code depuis le 13/09/2026 (croisement des deux voies) — **gel non signé** `[[à signer]]` |
+| D2 | Cible de sommation (Butterworth 2 / LR2) | **La fonction de coût entière**, le câblage, les valeurs de composants | 1ᵉʳ achat de composants du filtre, et MCOT | **REPORTÉE après la phase 1** — décision datée du 13/09/2026 (Thomas) ; la cible elle-même reste **à trancher** `[[ouvert]]` |
 | D3 | Les deux niveaux d'écoute | Le critère « robustesse », la tenue en tension, la sécurité | Phase 4 | `[[ouvert]]` |
 | D4 | Les 8 critères de comparaison | Toute la conclusion du TIPE | 1ʳᵉ mesure comparative | `[[ouvert]]` |
 | D5 | Bande et pondérations de la fonction de coût | Le design optimisé lui-même | Phase 3 | `[[ouvert]]` |
 | D6 | $r_{max}$ de la self | Le budget cuivre, les pertes, le critère « robustesse » | Achats phase 4 | `[[ouvert]]` |
-| D7 | Gabarit 4/3 des figures et des slides | Toutes les figures des phases 2 à 4 | 1ʳᵉ figure | `[[ouvert]]` |
+| D7 | Gabarit 4/3 des figures et des slides | Toutes les figures des phases 2 à 4 | 1ʳᵉ figure | **Recommandation appliquée** de fait (decks et figures en 1024 × 768 depuis la refonte v2 ; le 4/3 est imposé par le SCEI) — **gel non signé** `[[à signer]]` ; `criteres_geles.json` ne porte pas encore D7 |
 | D8 | Type de caisse du sub (**constat**) | Le modèle à ajuster en phase 2, la sécurité au niveau fort, la sommation acoustique | Phase 1 | **RÉPONDUE le 16/09/2026 — bass-reflex, deux évents** |
 | D9 | Filière et positionnements thématiques | Le binôme d'examinateurs | Étape 1 SCEI | `[[ouvert]]` |
 | D10 | Professeur encadrant | **La note elle-même** | Rentrée sept. 2026 | **M. Chevalier, 16/09/2026** |
@@ -136,6 +136,12 @@ $u(f_0)/f_0 = \tfrac12\sqrt{(u_L/L)^2 + (u_C/C)^2}$, soit pour $L$ et $C$ à
 ±10 % : **7,1 % en borne au pire cas** et **4,1 % en incertitude-type** (loi
 rectangulaire, convention GUM — c'est celle qui se compare au Monte-Carlo).
 
+> **État au 30/09/2026** : la recommandation (option D, demi-puissance) est **déjà
+> appliquée** dans `REFERENCE-TECHNIQUE.md` § 04.1, § 07.0 et § 08.5, dans
+> `NOTES-TIPE.md`, dans les diapositives et dans le code ; elle n'est **pas gelée**
+> pour autant. Si Thomas retient une autre option, ce sont ces documents qui se
+> réalignent sur la décision, pas l'inverse.
+>
 > **DÉCISION : [[à remplir]]** — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
 > — motif si l'option retenue diffère de la recommandation : `[[...]]`
 
@@ -704,6 +710,14 @@ d'impédance, le bobinage en cours et le filtre monté **avant tout démontage**
 et tenir le cahier de laboratoire daté dès la première mesure — il est à la fois
 la matière première du DOT et le seul document papier réellement admis.
 
+> **État au 30/09/2026** : le gabarit **1024 × 768** est **déjà appliqué** — les deux
+> decks (`Reveal.initialize({width: 1024, height: 768})`), `EXPORT-PDF.md`
+> (`-s 1024x768`) et les figures de `analyse/figures.py` ; les emplacements 16:9
+> listés dans le tableau ci-dessus sont donc corrigés. Ce qui manque est la
+> **signature**, et l'inscription de D7 dans `analyse/criteres_geles.json` : tant
+> qu'elle n'y est pas, `figures.py` annonce « D7 non gelée » et prend la taille par
+> défaut de `blueprint_mpl`.
+>
 > **DÉCISION — gabarit slides : [[à remplir]]** · **figsize/dpi matplotlib :
 > [[à remplir]]** — date : `[[JJ/MM/AAAA]]` — signé : `[[TM]]`
 

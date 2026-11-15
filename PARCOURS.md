@@ -127,7 +127,7 @@ concours. C'est le vrai point de rupture du calendrier.
    plafond de 5 Mo (régénérés le 23/09/2026 : 1,80 Mo pour la finale), le livret
    de manipulations `protocole/PROTOCOLE-EXPERIENCES.html` et son **PDF A4 à
    imprimer** (relus le 23/09/2026, câblage arbitré du jig), et le dossier
-   `analyse/` — **19 319 lignes de Python au 23/09/2026** (15 066 de modules +
+   `analyse/` — **19 407 lignes de Python au 30/09/2026** (15 154 de modules +
    4 253 de tests ; commande de contrôle :
    `wc -l analyse/*.py analyse/tests/*.py`), 171 tests
    au vert, pipeline `tout_refaire.py` exécutable, qui sait déjà lire des mesures,
@@ -691,7 +691,7 @@ après avoir vu les résultats.
 ### <a id="1d"></a>1-D. Mi-octobre — les deux étalonnages : **rien d'autre**
 
 C'est la porte qui dérisque tout le projet. Tant qu'elle n'est
-pas franchie, **tout le reste du TIPE est de la théorie** : 19 319 lignes de
+pas franchie, **tout le reste du TIPE est de la théorie** : 19 407 lignes de
 Python qui tournent sur un fichier étiqueté SYNTHÉTIQUE, des courbes engendrées
 par un modèle, et zéro nombre mesuré. Aucun haut-parleur n'est branché pendant
 ces séances.
@@ -1136,8 +1136,10 @@ commentée par **ce qu'on lui emprunte et pourquoi elle ne suffit pas**.
       d'abord* : c'est **exactement** ta méthode — moindres carrés non linéaires
       Levenberg-Marquardt sur l'impédance mesurée, initialisation
       semi-analytique, comparaison de modèles de bobine à pertes. Tu peux donc
-      écrire honnêtement « la méthode de la phase 2 est celle de [x], que j'ai
-      réimplémentée ». *Fini quand* : tu sais dire en trois phrases ce qu'elle
+      écrire honnêtement « la méthode de la phase 2 est celle de [x] ». Ajouter
+      « que j'ai réimplémentée » seulement pour le noyau que tu auras **réécrit
+      seul** : le code de la chaîne a été écrit avec Claude, et cela se déclare
+      (`NOTES-TIPE.md`, « Qu'est-ce qui est de vous ? »). *Fini quand* : tu sais dire en trois phrases ce qu'elle
       fait, et ce qu'elle ne fait pas (elle ne traite pas le filtre).
 - [ ] **2-B3. Lire Thiele 1971 en diagonale ciblée** (~2 h, dès réception). Ne pas
       tout lire : chercher le circuit équivalent de la caisse à évent, l'origine
@@ -1249,8 +1251,10 @@ le fit qui est en cause.
       $k_a = 1{,}463$ (un bout bridé, un bout libre), encadrement transporté
       $k_a \in [1{,}227\,;1{,}698]$. *Fini quand* : la prédiction est écrite
       **comme un intervalle**, jamais comme un nombre unique — l'incertitude de
-      convention (~3 %) dépasse l'incertitude de mesure (~1,5 %), et le dire est
-      un point d'honnêteté que le jury attend.
+      convention (±2,6 % de demi-largeur, soit ~1,5 % en incertitude-type) est
+      **du même ordre** que l'incertitude de mesure (~1,5 %) : les deux se
+      composent, aucune ne se néglige, et le dire est un point d'honnêteté que le
+      jury attend (§ 01.10 bis).
       *Attention* : $V_b$ est le volume **net** — brut moins les saladiers, les
       renforts et les tubes d'évent eux-mêmes. C'est la grandeur la plus facile à
       surestimer sur une caisse DIY, et c'est elle qui domine l'incertitude.
@@ -2261,8 +2265,8 @@ Aucun test ne commence tant que le précédent n'est pas passé.
 
 - [ ] **3-G6. Préparer le listing papier en deux parties.**
       **Durée : 2 h.**
-      **La règle, fixée d'avance** : `analyse/` fait **19 319 lignes** (mesure du
-      23/09/2026, `wc -l analyse/*.py analyse/tests/*.py`), soit
+      **La règle, fixée d'avance** : `analyse/` fait **19 407 lignes** (mesure du
+      30/09/2026, `wc -l analyse/*.py analyse/tests/*.py`), soit
       ~360 pages, ~720 en double exemplaire — matériellement indéposable, et une
       annexe illisible donne l'impression d'un travail non maîtrisé. Donc : (1) un
       **noyau imprimé de 10 à 15 pages**, exactement les fonctions que le récit
@@ -3055,7 +3059,7 @@ apportes — des **données** et des **décisions datées**.
 2. **On ne mesure pas un objet inconnu avec un instrument inconnu.** La chaîne se
    qualifie d'abord sur des composants dont tu connais la valeur ; tant que cette
    porte n'est pas franchie, le haut-parleur ne se branche pas, et les
-   19 319 lignes de Python du dépôt ne décrivent rien de réel. Et la chaîne
+   19 407 lignes de Python du dépôt ne décrivent rien de réel. Et la chaîne
    **acoustique** compte autant que l'électrique : c'est `1-D6`.
 3. **Une décision se gèle avant de voir les courbes, et se change au grand jour ou
    pas du tout.** Ajouter un critère, déplacer une bande ou changer la cible de

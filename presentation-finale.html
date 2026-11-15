@@ -17403,7 +17403,7 @@ z
       W. M. Leach, « Loudspeaker Voice-Coil Inductance Losses », <em>JAES</em> 50(6), p. 442–450, juin 2002.</p>
       <p><strong>Mesure</strong><br>
       D. B. Keele Jr., « Low-Frequency Loudspeaker Assessment by Nearfield Sound-Pressure Measurement », <em>JAES</em> 22(3), p. 154–162, avril 1974.<br>
-      I. Mateljan, M. Sikora, « Estimation of Loudspeaker Driver Parameters », 6<sup>e</sup> congrès AAAA, Petrčane, 2012, comm. ELA-02, 6 p.<br>
+      I. Mateljan, M. Sikora, « Estimation of Loudspeaker Driver Parameters », 5<sup>e</sup> congrès AAAA, Petrčane, 2012, comm. ELA-02, 6 p.<br>
       JCGM 100:2008, <em>GUM — Guide pour l'expression de l'incertitude de mesure</em>.<br>
       REW (J. Mulcahy), aide en ligne, « Impedance Measurement », consultée le 2026-09-09.</p>
     </div>
@@ -17418,11 +17418,15 @@ z
       F. W. Grover, <em>Inductance Calculations</em>, Van Nostrand, 1946 — constante 1,6994·10<sup>−6</sup> H/m, p. 98.</p>
       <p><strong>Cadre et outils</strong><br>
       SCEI, <em>TIPE — Attendus pédagogiques</em> et <em>Critères d'évaluation</em>, scei-concours.fr, consultés le 2026-09-03.<br>
-      NumPy 2.4, SciPy 1.18 (<code>optimize.least_squares</code>), Matplotlib 3.11 — documentations en ligne.</p>
+      NumPy 2.4, SciPy 1.18 (<code>optimize.least_squares</code>), Matplotlib 3.11 — documentations en ligne.<br>
+      Claude (Anthropic), assistant d'IA — code d'analyse Python et rédaction des documents, à partir de mes mesures et de mes décisions ; aide déclarée à l'encadrant.</p>
       <p style="color:var(--warn)"><strong>Non encore consultées en texte intégral</strong> : Brooks 1931 (page de fin), Small 1972 (scans AES sans couche texte — demande au CDI), CEI 60268-5 (citée de seconde main).</p>
     </div>
   </div>
   <aside class="notes">
+    [[à relire par Thomas avant l'oral : ne présenter comme « lues » que les
+    références effectivement lues — les demandes au CDI sont encore en cours
+    (PARCOURS.md 2-B1)]]
     Je distingue deux choses dans cette liste. D'un côté les références que j'ai
     réellement lues et utilisées : Thiele et Small pour le modèle et les
     paramètres, Keele pour la mesure en champ proche, Linkwitz pour le filtrage
@@ -17455,19 +17459,27 @@ z
     <tr><th>Régénération intégrale</th><td><code>python analyse/tout_refaire.py</code></td></tr>
     <tr><th>Empreinte du journal</th><td>SHA-256 de <code>resultats/journal.txt</code> : <em>[ à reporter ]</em><!-- TODO --></td></tr>
   </table>
-  <!-- Comptage exact des .py de analyse/ au 2026-09-16 : 19 313 lignes, dont 4 253 de tests.
+  <!-- Comptage exact des .py de analyse/ au 2026-09-30 (wc -l analyse/*.py analyse/tests/*.py) :
+       19 407 lignes, dont 4 253 de tests ; 171 tests au vert. Le « 19 313 au 16/09 » precedent
+       etait faux des le depart (19 319 au commit du 16/09), puis perime par le commit c24324f du 23/09.
+       Ligne « Code ecrit avec un assistant d'IA » ajoutee le 2026-09-30 : declaration exacte de
+       l'aide recue (NOTES-TIPE.md, « Qu'est-ce qui est de vous dans ce travail ? »).
+       Ancien commentaire : comptage au 2026-09-16 : 19 313 lignes, dont 4 253 de tests.
        Il DOIT etre redate a chaque fois qu'on le touche : c'est un chiffre qui bouge, et un
        chiffre non date est un chiffre faux six semaines plus tard (le 148 / 18 002 de la
        version precedente datait du 14/09 et a ete perime par la famille (i) bass-reflex).
        Le deck disait « plus de 16 000 » la ou index.html et EXPORT-PDF.md disaient 18 000. -->
   <div class="encadre" style="border-left-color:var(--accent); background:var(--bg-card)">
-    Le dossier fait <strong>19 313 lignes</strong>, dont 4 253 de tests <em>(au 16/09/2026)</em>.
+    Le dossier fait <strong>19 407 lignes</strong>, dont 4 253 de tests <em>(au 30/09/2026)</em>.
     <strong>Seules les fonctions citées dans l'exposé sont imprimées</strong> ;
     toute coupure est signalée par une ligne de commentaire explicite, jamais
-    silencieuse. Le reste est vérifiable sur le dépôt.
+    silencieuse. Le reste est vérifiable sur le dépôt.<br>
+    <strong>Code écrit avec un assistant d'IA</strong> (Claude, Anthropic), à partir
+    de mes mesures et de mes décisions ; noyau réécrit seul :
+    <em>[ à compléter par Thomas — modèle, résidu, Gauss-Newton / Levenberg-Marquardt, énumération E12 ]</em><!-- TODO -->
   </div>
   <div class="chips">
-    <div class="chip"><b>148</b><span>tests de non-régression au vert</span></div>
+    <div class="chip"><b>171</b><span>tests de non-régression au vert</span></div>
     <div class="chip"><b>331 776</b><span>combinaisons E12 énumérées</span></div>
     <div class="chip"><b>2,2 s</b><span>énumération exhaustive</span></div>
     <div class="chip"><b>double</b><span>exemplaire papier fourni</span></div>
@@ -17482,9 +17494,13 @@ z
     tourné » et « la chaîne a tourné juste ». Il écrit ensuite un journal daté
     qui porte les versions des bibliothèques, les graines aléatoires et
     l'empreinte des fichiers d'entrée, et dont je donne ici l'empreinte. Le
-    dossier fait dix-huit mille lignes, dont trois mille six cents de tests, donc
-    je n'imprime que les fonctions dont je parle ; chaque coupure porte un
-    commentaire qui la signale et qui renvoie au dépôt.
+    dossier fait dix-neuf mille quatre cents lignes, dont quatre mille deux cent
+    cinquante de tests, donc je n'imprime que les fonctions dont je parle ; chaque
+    coupure porte un commentaire qui la signale et qui renvoie au dépôt. Et je dis
+    d'où vient ce code : il a été écrit avec un assistant d'IA, à partir de mes
+    mesures et de mes décisions, et je l'ai déclaré à mon encadrant. Ce que je
+    défends ligne à ligne, c'est le noyau que j'ai réécrit seul [[phrase à ne
+    garder qu'une fois cette réécriture faite par Thomas]].
   </aside>
 </section>
 
@@ -17706,7 +17722,7 @@ def residus_ts(theta, f, mod, phi, u_mod, u_phi, modele=None):
 <section data-background-color="#eef3f6"
          style="--bg:#ffffff;--bg-card:#f2f6f8;--ink:#15242e;--ink-soft:#50626d;--accent:#0e6f88;--accent2:#3a8a52;--warn:#b06a14;--wire:#38505c;--trait:#c7d2d8;color:var(--ink)">
   <div class="kicker">Listing L3 · 2/2 · deux moteurs, un seul contrat</div>
-  <h2>SciPy ou repli maison — <span class="accent">la sortie est la même</span></h2>
+  <h2>SciPy ou repli en numpy pur — <span class="accent">la sortie est la même</span></h2>
 <pre style="font-family:'JetBrains Mono',monospace;font-size:.395em;line-height:1.34;background:#ffffff;border:1px solid var(--trait);border-radius:4px;padding:.55em .8em;margin:.25em 0;color:#15242e;white-space:pre;overflow:hidden">    if SCIPY and not forcer_repli:
         echelle = np.where(np.abs(theta0) &gt; 0, np.abs(theta0), 1.0)
         sol = least_squares(residus_ts, theta0, args=args, bounds=(bas, haut),
@@ -17744,7 +17760,7 @@ def residus_ts(theta, f, mod, phi, u_mod, u_phi, modele=None):
     sais pas ce qui sera installé sur le poste du lycée le jour de la manip. Les
     deux branches rendent exactement les mêmes quatre objets, avec la même
     covariance calculée de la même façon, si bien qu'aucun appelant ne peut
-    savoir lequel des deux moteurs a tourné. Un de mes tests fait tourner les
+    savoir lequel des deux moteurs a tourné. Un des tests fait tourner les
     deux sur les mêmes données et vérifie qu'ils tombent d'accord. Je signale le
     calcul du conditionnement, à l'avant-dernier bloc : je mets chaque colonne
     de la jacobienne à l'échelle de son paramètre avant de le calculer, sans quoi
@@ -17758,7 +17774,7 @@ def residus_ts(theta, f, mod, phi, u_mod, u_phi, modele=None):
 <!-- ===================== L4 (1/2) — Levenberg-Marquardt ===================== -->
 <section data-background-color="#eef3f6"
          style="--bg:#ffffff;--bg-card:#f2f6f8;--ink:#15242e;--ink-soft:#50626d;--accent:#0e6f88;--accent2:#3a8a52;--warn:#b06a14;--wire:#38505c;--trait:#c7d2d8;color:var(--ink)">
-  <div class="kicker">Listing L4 · 1/2 · la méthode, écrite à la main</div>
+  <div class="kicker">Listing L4 · 1/2 · la méthode, sans bibliothèque</div>
   <h2><span class="accent">ts_fit.moindres_carres_lm</span> — Levenberg-Marquardt</h2>
 <pre style="font-family:'JetBrains Mono',monospace;font-size:.395em;line-height:1.34;background:#ffffff;border:1px solid var(--trait);border-radius:4px;padding:.55em .8em;margin:.25em 0;color:#15242e;white-space:pre;overflow:hidden">def moindres_carres_lm(residus, theta0, args=(), n_iter=80, lam=1e-3):
 <span style="color:#50626d">    """Levenberg-Marquardt maison (REPLI sans SciPy) -- signature gelee.
@@ -17792,8 +17808,11 @@ def residus_ts(theta, f, mod, phi, u_mod, u_phi, modele=None):
         return float(np.sum(residus(t, *args)**2))
     s = S(th)</pre>
   <aside class="notes">
-    C'est la pièce du code que je préfère montrer, parce qu'elle prouve que la
-    méthode est comprise et pas seulement appelée. L'idée tient en trois lignes.
+    C'est la pièce du code que je préfère montrer, parce qu'elle montre ce que
+    fait la méthode au lieu de seulement l'appeler. Comme le reste du code, elle a
+    été écrite avec un assistant d'IA ; ce qui prouve que je l'ai comprise, c'est
+    que je sais la réécrire seul et l'expliquer au tableau [[à ne dire qu'une fois
+    la réécriture faite par Thomas]]. L'idée tient en trois lignes.
     Autour de l'estimation courante, je linéarise le vecteur des résidus : il
     devient une fonction affine des paramètres, et annuler le gradient du coût
     revient à résoudre un système linéaire. C'est Gauss-Newton, c'est-à-dire la

@@ -82,7 +82,7 @@ TIPE/
 ├── assets/                    Photos de l'enceinte, schémas, courbes de mesure
 ├── analyse/                   Code Python d'analyse (lecture des mesures →
 │                              identification Thiele-Small → optimisation sur
-│                              séries E12 → figures) : 19 319 lignes dont 4 253
+│                              séries E12 → figures) : 19 407 lignes dont 4 253
 │                              de tests, 171 tests au vert ; voir
 │                              analyse/LISEZMOI.md
 ├── protocole/                 Livret de manipulations (PROTOCOLE-EXPERIENCES.html

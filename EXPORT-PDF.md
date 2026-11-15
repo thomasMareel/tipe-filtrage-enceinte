@@ -440,7 +440,7 @@ Ce sont donc **deux livrables distincts**, et il faut les deux :
 
 Le noyau imprimé tient en 10 à 15 pages : seulement les fonctions que le récit
 cite et sur lesquelles Thomas doit pouvoir être interrogé. Le reste du dossier
-`analyse/` (**19 319 lignes**, dont 4 253 de tests — comptage du 2026-09-23, à
+`analyse/` (**19 407 lignes**, dont 4 253 de tests — comptage du 2026-09-30, à
 reprendre par `tout_refaire.py` plutôt qu'à retaper) n'est **pas** imprimable et
 ne doit pas l'être ; il est annoncé par une page de garde donnant l'URL du dépôt, le commit,
 la commande de régénération (`python analyse/tout_refaire.py`) et l'empreinte

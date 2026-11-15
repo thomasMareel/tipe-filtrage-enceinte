@@ -281,7 +281,8 @@ Détail des phases, portes de validation, critères et calendrier :
   Le « ±11 % » qui traîne dans les supports v1 est la formule du **RC 1er ordre
   abandonné** (u/f = √((u_R/R)² + (u_C/C)²)) : ne jamais la reprendre.
 - **Définition officielle de f_c — UNIQUE dans tout le projet**
-  (**REFERENCE-TECHNIQUE.md § 04.1 fait foi**) : f_c est la **fréquence de
+  (**REFERENCE-TECHNIQUE.md § 04.1 fait foi** ; appliquée partout depuis le
+  13/09/2026, mais le **gel D1 n'est pas encore signé** par Thomas) : f_c est la **fréquence de
   croisement des deux voies**, l'unique f de [40 ; 250] Hz telle que
   \|H_PB(f)·G_sub(f)\| = \|H_PH(f)·G_méd(f)\|. C'est la seule définition
   **insensible à la perte d'insertion** (une atténuation commune aux deux voies
@@ -322,6 +323,15 @@ Détail des phases, portes de validation, critères et calendrier :
   (MathJax 3). Ne pas transposer une syntaxe dans l'autre format.
 - **Pas d'invention de résultats** : tout chiffre non mesuré est un placeholder
   explicite (`<!-- TODO -->` ou bloc `.placeholder`).
+- **Pas de contribution gonflée** (vérification des faits du 30/09/2026) : le code
+  d'analyse et la rédaction sont faits **avec Claude** (`PARCOURS.md` § T-E : Thomas
+  mesure et décide, Claude calcule et rédige ; tous les commits portent
+  `Co-Authored-By: Claude`). Ne jamais faire dire à Thomas « j'ai écrit / réécrit
+  le code » ; seul le **noyau qu'il réécrit seul** (modèle d'impédance, résidu,
+  Gauss-Newton puis Levenberg-Marquardt, énumération E12) pourra l'être, une fois
+  fait. L'aide est déclarée à M. Chevalier (qui atteste le « travail personnel
+  constaté ») et dans l'exposé. Réponse de référence : `NOTES-TIPE.md`,
+  « Qu'est-ce qui est de vous dans ce travail ? ».
 - Sobriété visuelle (pas d'emoji, schémas SVG, identité Blueprint).
 - Notes du présentateur dans `<aside class="notes">`, ~40 s par slide → 15 min
   d'exposé feraient ~22 vues à ce rythme, mais **viser 16 à 18 vues à 50-55 s**
@@ -393,13 +403,21 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       FEUILLE-DE-ROUTE.md, MCOT.md, README.md, index.html.
 - [x] **Dossier `analyse/` écrit et éprouvé** : chaîne complète lecture des
       mesures → ajustement Thiele-Small (5 ou 8 paramètres, aiguillage `auto`) →
-      optimisation E12 → figures ; **19 313 lignes de Python dont 4 253 de
-      tests**, **171 tests au vert** (`python -m unittest discover -s
-      analyse/tests`, 16 sept. 2026) et `python analyse/tout_refaire.py` en
-      8 étapes, exit 0.
-- [ ] Phase 0 à finir : critères + 2 niveaux d'écoute à geler, cible de sommation
-      (D2, reportée), r_max de la self, gabarit D7 à signer — décisions de l'étudiant,
-      à dater dans `DECISIONS-PHASE-0.md`.
+      optimisation E12 → figures ; **19 407 lignes de Python dont 4 253 de
+      tests** (recompté le 30/09/2026 : 19 319 du 16/09 jusqu'au commit c15a3da,
+      19 407 depuis c24324f du 23/09 ; le « 19 313 » écrit ici était périmé),
+      **171 tests au vert** (`python -m unittest discover -s analyse/tests`,
+      revérifié le 30/09/2026) et `python analyse/tout_refaire.py` en 8 étapes,
+      exit 0. *Piège Windows* : sur une extraction avec `core.autocrlf=true` (cas
+      des worktrees), **24 sous-cas échouent**, tous du même test de convention
+      (`test_contrat…test_tous_les_sources_sont_utf8_sans_crlf`, un sous-cas par
+      fichier `.py`) — ce n'est pas une régression : le contenu versionné est en LF
+      et la suite passe à 171/171 sur une extraction LF
+      (`git -c core.autocrlf=false archive HEAD`).
+- [ ] Phase 0 à finir : définition de f_c (D1, appliquée partout mais **gel à
+      signer**), critères + 2 niveaux d'écoute à geler, cible de sommation
+      (D2, reportée le 13/09), r_max de la self, gabarit D7 (appliqué, **à signer**)
+      — décisions de l'étudiant, à dater dans `DECISIONS-PHASE-0.md`.
 - [x] **NOTES-TIPE.md réécrit en v2** (13 sept. 2026) : questions du jury sur le
       problème inverse, l'optimisation E12 et les incertitudes ; la v1 portait
       encore les trois architectures (dont le RC 1er ordre abandonné) et le
@@ -431,7 +449,8 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 4. Étudiant : geler et dater dans `DECISIONS-PHASE-0.md` les critères, les deux
    niveaux d'écoute, la cible de sommation (D2, échéance : avant le premier achat
    de composants du filtre et avant la rédaction du MCOT), le r_max de la self et
-   le gabarit D7. La définition de f_c, elle, n'est plus à choisir (§ 04.1).
+   le gabarit D7. La définition de f_c est déjà appliquée partout (§ 04.1) :
+   il reste à **signer** D1, ou à en choisir une autre en écrivant pourquoi.
 5. Phase 1, dès réception des composants : étalonnage des deux chaînes sur
    composants connus (livret, groupe A), puis Z(f) du sub en caisse et du bloc
    médiums câblé (groupe B). C'est la clé de voûte — rien d'autre avant.

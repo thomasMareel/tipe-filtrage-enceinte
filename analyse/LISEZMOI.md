@@ -71,7 +71,7 @@ sa sortie.
 
 ### Le livrable papier est en **deux parties**, et la règle est écrite ici
 
-Ce dossier fait **plus de 19 000 lignes** (19 319 au 23/09/2026, dont 4 253 de tests). À 55 lignes par page cela représente
+Ce dossier fait **plus de 19 000 lignes** (19 407 au 30/09/2026, dont 4 253 de tests). À 55 lignes par page cela représente
 environ **300 pages**, soit **600 en double exemplaire** : matériellement
 indéposable en annexe, et hors de portée de l'oral — aucun jury n'ouvre 300 pages
 en 15 minutes, et Thomas ne peut pas soutenir 500 fonctions. Une annexe illisible
