@@ -100,6 +100,8 @@ TIPE/
 ├── PARCOURS.md                Liste ordonnée des actions de Thomas, de A à Z
 ├── MCOT.md                    Brouillon de la fiche MCOT (v2)
 ├── EXPORT-PDF.md              Procédure d'export PDF
+├── dissertation/              « Un bon sujet de TIPE ? » : dissertation pour / contre
+│                              (HTML + PDF A4 de 4 pages, 30/09/2026)
 ├── _alleger_pdf.py            Allègement sans perte des PDF exportés (plafond SCEI)
 └── NOTES-TIPE.md              Questions probables du jury + réponses préparées (v2)
 ```
