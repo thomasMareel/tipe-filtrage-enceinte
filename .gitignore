@@ -3,8 +3,11 @@
 Thumbs.db
 desktop.ini
 
-# Réglages locaux Claude Code (permissions propres à la machine)
+# Réglages locaux Claude Code (permissions propres à la machine) et copies de
+# travail temporaires créées par l'application (worktrees). La mémoire de
+# travail, elle, est versionnée : .claude/memoire/ (voir CLAUDE.md).
 .claude/settings.local.json
+.claude/worktrees/
 
 # Éditeurs
 .vscode/

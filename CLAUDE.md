@@ -3,6 +3,19 @@
 Ce fichier est la mémoire entre sessions. À relire en début de session et à
 tenir à jour à la fin de chaque session de travail.
 
+> **Projet travaillé depuis plusieurs comptes Claude (depuis le 15/11/2026).**
+> GitHub est la **seule source de vérité** : en début de session, `git status`
+> puis `git pull` avant toute modification ; en fin de session, proposer de
+> commiter et de pousser sur `main` (un worktree ou une branche `claude/*` se
+> fusionne d'abord dans `main`). La mémoire de travail de Claude est
+> **versionnée dans `.claude/memoire/`** — son index est importé ci-dessous et
+> se charge donc quel que soit le compte. Toute leçon durable s'écrit là, **pas**
+> dans la mémoire locale du compte (`~/.claude/projects/…/memory/`), qui ne
+> quitte pas la machine. Procédure côté Thomas : `README.md` § « Reprendre le
+> projet sur un autre compte Claude ».
+
+@.claude/memoire/MEMORY.md
+
 > ⚠️ PIVOT DE SUJET v2 — décision étudiant du 2026-08-04 (FAIT FOI).
 > L'étudiant jugeait la v1 (« passif ou actif ? ») trop « recette » pour le
 > niveau prépa (« il me faut un filtre → j'ai fait un filtre »). Le sujet est
@@ -104,6 +117,10 @@ Détail des phases, portes de validation, critères et calendrier :
   toutes appliquées ; utilisabilité : 36 sur 38). C'est le HTML qui fait foi : le
   PDF se régénère depuis lui (`chrome --headless --print-to-pdf`, A4).
 - **EXPORT-PDF.md** — procédure d'export PDF.
+- **.claude/memoire/** — la mémoire de travail de Claude (façon de travailler
+  avec Thomas, leçons, pièges d'environnement), versionnée depuis le 15/11/2026
+  pour suivre le projet d'un compte à l'autre ; index `MEMORY.md`, importé en
+  tête de ce fichier.
 - **dissertation/DISSERTATION-SUJET.html** (+ PDF, 4 pages A4) — « Le filtre et sa
   charge réelle : un bon sujet de TIPE ? », dissertation pour / contre demandée par
   Thomas le 30/09/2026 et rédigée par un atelier multi-agents (arguments vérifiés,
@@ -207,6 +224,11 @@ Détail des phases, portes de validation, critères et calendrier :
   — elle commande la borne basse de sécurité au niveau fort.
 - Sensibilités (dB/W/m) pour l'égalisation des niveaux.
 - Les 2 niveaux d'écoute de référence à geler (le modèle de carte son est confirmé : voir § Matériel).
+- **Quel appareil filtre aujourd'hui l'enceinte ?** Le pré-ampli SX-801 porte une
+  sérigraphie « CROSSOVER » (relevé sur photo le 13/09/2026, jamais posé à
+  Thomas) : si c'est lui, le « crossover actif du commerce actuellement en
+  service », la référence active existe déjà et le Sallen-Key de la phase 4 n'est
+  peut-être pas nécessaire. `[[à demander]]`
 
 ## Points scientifiques à NE PAS oublier (critique prof 2026-05-25, toujours valides)
 
@@ -352,10 +374,17 @@ Détail des phases, portes de validation, critères et calendrier :
   et `pre-soutenance.html` — et les figures matplotlib de `analyse/figures.py`
   sont produites au même format (détail : REFERENCE-TECHNIQUE.md § 08.2). Rien
   n'est donc à refaire de ce côté. Les PDF sont régénérés au 23/09/2026 (finale
-  50 pages, **1,80 Mo** après allègement).
-- Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte
-  Site : https://thomasmareel.github.io/tipe-filtrage-enceinte/
-  Note : gh.exe est dans "C:\Program Files\GitHub CLI\" (pas dans le PATH).
+  50 pages, **1,80 Mo** après allègement) — **en retard sur le HTML depuis les
+  corrections du 30/09/2026** (finale : vues L0, L3, L4 et A15 ; pré-soutenance :
+  compteur de lignes) : à régénérer avant tout envoi.
+- Dépôt : https://github.com/thomasMareel/tipe-filtrage-enceinte (**public**,
+  compte GitHub `thomasMareel`, branche unique `main`)
+  Site : https://thomasmareel.github.io/tipe-filtrage-enceinte/ (sert la racine
+  de `main` ; Jekyll n'y publie pas `.claude/` ni les dossiers en `_`)
+  Note (poste Windows d'origine) : gh.exe est dans "C:\Program Files\GitHub CLI\"
+  (pas dans le PATH).
+- **Fins de ligne** : `.gitattributes` impose LF aux `.py` (depuis le
+  15/11/2026), quel que soit `core.autocrlf` de la machine qui clone.
 
 ## Procédure PDF (résumé — détail dans EXPORT-PDF.md)
 
@@ -370,7 +399,21 @@ taille et de sa position — invisible à l'écran, flagrant dans le PDF. Toujou
 **regarder** quelques pages du PDF sorti, pas seulement le HTML. Repli bitmap :
 captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 
-## État actuel (2026-09-23)
+## État actuel (2026-11-15)
+
+- [x] **Dépôt organisé pour travailler depuis plusieurs comptes Claude**
+      (15/11/2026, demande de Thomas). Tout le travail qui n'existait qu'en local
+      a été fusionné sur `main` et poussé : les corrections de la vérification des
+      faits du 30/09 (restées dans un worktree), le dossier `dissertation/` (jamais
+      versionné). La mémoire de Claude, jusque-là dans le profil Windows du premier
+      compte, est versionnée dans `.claude/memoire/` (fiches mises à jour) et
+      importée en tête de ce fichier. `.gitattributes` (LF pour les `.py`),
+      `.gitignore` (worktrees) et `README.md` § « Reprendre le projet sur un autre
+      compte Claude » complètent le dispositif.
+- [x] **Vérification des faits du 30/09/2026** (commit 91ab852) : contribution
+      personnelle déclarée honnêtement (§ Conventions), VituixCAD et Adams-Roe
+      en sources, § 01.10 bis et § 08.5 corrigés, tableau de bord des décisions
+      réconcilié. Les PDF n'ont pas été régénérés depuis (§ Conventions).
 
 - [x] **Constat du 16/09/2026 (étudiant) : la caisse du sub est BASS-REFLEX à
       DEUX ÉVENTS**, et 2 pavillons d'ultra-aigu sont câblés en parallèle des
@@ -415,12 +458,12 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       19 407 depuis c24324f du 23/09 ; le « 19 313 » écrit ici était périmé),
       **171 tests au vert** (`python -m unittest discover -s analyse/tests`,
       revérifié le 30/09/2026) et `python analyse/tout_refaire.py` en 8 étapes,
-      exit 0. *Piège Windows* : sur une extraction avec `core.autocrlf=true` (cas
-      des worktrees), **24 sous-cas échouent**, tous du même test de convention
-      (`test_contrat…test_tous_les_sources_sont_utf8_sans_crlf`, un sous-cas par
-      fichier `.py`) — ce n'est pas une régression : le contenu versionné est en LF
-      et la suite passe à 171/171 sur une extraction LF
-      (`git -c core.autocrlf=false archive HEAD`).
+      exit 0. *Piège Windows, réglé le 15/11/2026* : sur une extraction avec
+      `core.autocrlf=true` (cas des worktrees), **24 sous-cas échouaient**, tous du
+      même test de convention (`test_contrat…test_tous_les_sources_sont_utf8_sans_crlf`,
+      un sous-cas par fichier `.py`), sans aucune régression du code.
+      `.gitattributes` impose désormais LF aux `.py` ; une copie extraite avant
+      cette date se répare en ré-extrayant ses `.py` (sans modification en cours).
 - [ ] Phase 0 à finir : définition de f_c (D1, appliquée partout mais **gel à
       signer**), critères + 2 niveaux d'écoute à geler, cible de sommation
       (D2, reportée le 13/09), r_max de la self, gabarit D7 (appliqué, **à signer**)

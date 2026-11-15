@@ -103,8 +103,65 @@ TIPE/
 ├── dissertation/              « Un bon sujet de TIPE ? » : dissertation pour / contre
 │                              (HTML + PDF A4 de 4 pages, 30/09/2026)
 ├── _alleger_pdf.py            Allègement sans perte des PDF exportés (plafond SCEI)
-└── NOTES-TIPE.md              Questions probables du jury + réponses préparées (v2)
+├── NOTES-TIPE.md              Questions probables du jury + réponses préparées (v2)
+├── .claude/
+│   ├── memoire/               Mémoire de travail de Claude, versionnée (index MEMORY.md,
+│   │                          importé par CLAUDE.md) : elle suit le projet d'un compte à l'autre
+│   └── launch.json            Serveur de prévisualisation (python -m http.server 8123)
+└── .gitattributes             Fins de ligne : LF imposé aux sources Python
 ```
+
+## Reprendre le projet sur un autre compte Claude
+
+Le dépôt GitHub est la **seule source de vérité**. Tout ce qui sert au projet
+y est, y compris la mémoire de travail de Claude (`.claude/memoire/`), que
+`CLAUDE.md` charge à chaque session : un autre compte Claude n'a besoin de rien
+d'autre que ce dépôt.
+
+**Une seule fois, sur le nouveau compte**
+
+1. **Accès au dépôt.** Il appartient au compte GitHub `thomasMareel` et il est
+   public : tout le monde peut le lire, seul ce compte GitHub peut y écrire.
+   - *Claude Code sur ordinateur* (application de bureau ou terminal) : cloner
+     le dépôt (étape 2), puis ouvrir le dossier `tipe-filtrage-enceinte` comme
+     dossier de travail. Pour pouvoir pousser, Git doit être connecté au compte
+     GitHub `thomasMareel` sur cette machine (sous Windows, le premier
+     `git push` ouvre la connexion dans le navigateur).
+   - *Claude Code sur le web* (claude.ai/code) : connecter le compte GitHub
+     `thomasMareel` au compte Claude, autoriser l'application GitHub de Claude
+     sur le dépôt `tipe-filtrage-enceinte`, puis le choisir pour la session.
+   - Si l'autre compte Claude est relié à **un autre compte GitHub**, ajouter
+     celui-ci comme collaborateur du dépôt (GitHub → Settings → Collaborators).
+2. **Cloner** (ordinateur seulement) :
+   ```bash
+   git clone https://github.com/thomasMareel/tipe-filtrage-enceinte.git
+   ```
+3. **Installer les dépendances Python** (Python 3.10 ou plus récent) :
+   ```bash
+   python -m pip install -r analyse/requirements.txt
+   ```
+   L'export PDF demande en plus `pikepdf` (et `pypdf`), Chrome et Node pour
+   decktape : voir `EXPORT-PDF.md`.
+4. **Vérifier** : la commande suivante doit annoncer 171 tests et `OK`.
+   ```bash
+   python -m unittest discover -s analyse/tests
+   ```
+
+**À chaque session, quel que soit le compte**
+
+- **Au début** : demander à Claude de récupérer le travail de l'autre compte
+  (`git pull`). Il le sait aussi : c'est écrit en tête de `CLAUDE.md`.
+- **À la fin** : demander à Claude de **commiter et pousser** sur `main`. Ce qui
+  n'est pas poussé n'existe pas pour l'autre compte.
+- **Un seul compte à la fois.** Si les deux ont travaillé en parallèle, demander
+  à Claude de fusionner les deux versions, jamais d'en écraser une.
+- Ce que Claude doit retenir d'une session à l'autre s'écrit dans
+  `.claude/memoire/`, pas dans la mémoire propre au compte.
+
+Reste propre à chaque machine, et n'est pas versionné : `.claude/settings.local.json`
+(permissions accordées à Claude sur ce poste), `.claude/worktrees/` (copies de
+travail temporaires de l'application), `analyse/resultats/` (régénérable par
+`python analyse/tout_refaire.py`) et `_pdfbuild/`.
 
 ## Lancer la présentation
 

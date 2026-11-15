@@ -1,0 +1,20 @@
+# Fins de ligne du dépôt (ajouté le 15/11/2026).
+#
+# Le contenu versionné est en LF. Sous Windows, Git est souvent réglé avec
+# core.autocrlf=true au niveau système : les fichiers extraits passent alors en
+# CRLF, et le test de convention test_tous_les_sources_sont_utf8_sans_crlf
+# (analyse/tests/test_contrat.py) échoue sans aucune régression du code.
+# Les lignes ci-dessous imposent LF aux sources Python dans la copie de travail,
+# quel que soit le réglage de la machine ou du compte qui clone le dépôt.
+
+* text=auto
+*.py text eol=lf
+
+# Binaires : jamais de conversion.
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
