@@ -19,8 +19,7 @@ voir :
 
 | Fichier | Rôle |
 |---|---|
-| `presentation.pdf` | Les diapositives à filmer : **version claire**, celle qui sera projetée. 15 pages, format 4:3 (768 × 576 pt). |
-| `presentation-sombre.pdf` | La même présentation en version sombre. Ne pas l'utiliser pour la vidéo. |
+| `presentation.pdf` | Les diapositives à filmer : la version projetée (style clair, 17/11/2026). 15 pages, format 4:3 (768 × 576 pt). |
 | `script_oral.json` | **La source du texte.** Une entrée par page. Seules les entrées `"narree": true` (pages 1 à 12) se disent. |
 | `script_oral.md` | Le même texte, lisible par un humain, avec ce qu'il faut montrer sur chaque vue. |
 | `CONTEXTE.md` | Le projet, les termes techniques et **leur prononciation**. |

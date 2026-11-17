@@ -1,6 +1,6 @@
 {
   "_lisez_moi": "Script de l'oral du 18/11/2026 (présentation du projet aux professeurs). Source unique du texte : la vidéo synthétise UNIQUEMENT le champ « texte » des vues « narree »: true, dans l'ordre. La transition est déjà incluse à la fin de « texte » : ne pas la synthétiser une seconde fois. Les substitutions de « substitutions_tts » s'appliquent à l'audio seulement, jamais aux sous-titres. Voir oral/CONSIGNES_VIDEO.md.",
-  "presentation": "oral/presentation.pdf (version claire, à projeter) ; oral/presentation-sombre.pdf",
+  "presentation": "oral/presentation.pdf (style clair, celle qui est projetée)",
   "source_html": "presentation-projet.html",
   "date_oral": "2026-11-18",
   "format_pages": "4:3 (768 x 576 pt)",

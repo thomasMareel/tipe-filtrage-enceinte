@@ -11,26 +11,8 @@
   <link rel="stylesheet" href="libs/reveal/reset.css">
   <link rel="stylesheet" href="libs/reveal/reveal.css">
   <link rel="stylesheet" href="css/blueprint.css">
-  <style>
-    /* Compléments propres à ce support (le thème reste css/blueprint.css). */
-    .reveal ul.serre { font-size: .66em; margin: .25em 0 0 1.1em; }
-    .reveal ul.serre li { margin: .18em 0; }
-    .reveal .cartes { display: grid; grid-template-columns: 1fr 1fr; gap: .45em .7em; margin-top: .3em; }
-    .reveal .cartes.trois { grid-template-columns: 1fr 1fr 1fr; }
-    .reveal .carte { border: 1px solid var(--trait); background: var(--bg-card); border-radius: 4px;
-      padding: .4em .65em .45em; font-size: .6em; line-height: 1.35; }
-    .reveal .carte .num { font-family: "JetBrains Mono", monospace; font-size: .82em; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--accent2); }
-    .reveal .carte .num.calcul { color: var(--ink-soft); }
-    .reveal .carte h3 { margin: .08em 0 .18em; font-size: 1.28em; }
-    .reveal .carte p { margin: .12em 0; }
-    .reveal .carte .decide { color: var(--ink-soft); }
-    .reveal .formule { font-size: .8em; text-align: center; margin: .1em 0 .15em; }
-    .reveal .note-ia { font-size: .5em; color: var(--ink-soft); text-align: center; margin-top: .45em;
-      font-family: "JetBrains Mono", monospace; letter-spacing: .3px; }
-    .reveal table.annexe { font-size: .56em; width: 100%; }
-    .reveal table.annexe td, .reveal table.annexe th { padding: .38em .6em; line-height: 1.32; vertical-align: top; }
-  </style>
+  <link rel="stylesheet" href="css/blueprint-light.css">
+  <link rel="stylesheet" href="css/elegant-clair.css">
 </head>
 <body>
   <div class="reveal">
@@ -40,678 +22,746 @@
      PRÉSENTATION DU PROJET — mercredi 18/11/2026, devant les professeurs.
      Demande de Thomas (15/11/2026) : ~8 min d'oral, pas de résultats chiffrés
      (rien n'est encore mesuré), « mettre le paquet sur l'expérience » ; débat
-     sur la faisabilité ensuite. Plan validé par Thomas le 15/11/2026.
-     12 vues chronométrées + 3 annexes hors chrono pour les questions.
+     sur la faisabilité ensuite. 12 vues chronométrées + 3 annexes hors chrono.
+     STYLE « clair élégant » (css/elegant-clair.css), validé par Thomas sur
+     maquette le 17/11/2026 : fond dégradé, panneaux blancs ombrés, schémas
+     redessinés (carte son, haut-parleur, bobine en perspective). Une seule
+     version, claire : c'est celle qu'il projette.
      Le texte de l'oral fait foi dans oral/script_oral.json (et .md) : les notes
-     ci-dessous en sont une copie, budgets entre crochets, total 8 min 15.
-     PDF : oral/presentation.pdf (clair) et oral/presentation-sombre.pdf.
+     ci-dessous en sont une copie, budgets entre crochets.
+     PDF : oral/presentation.pdf (EXPORT-PDF.md, § 3.1 puis § 3.3).
      AUCUNE MESURE : la seule courbe de données (vue 2) est calculée sur le modèle
-     SUB_TYPIQUE_BR (analyse/io_mesures.py, paramètres plausibles d'un 18″ de
-     sono) et l'écran le dit.
-     Gabarit 4/3 (1024 × 768), identité Blueprint ; PDF : EXPORT-PDF.md § 3.
+     SUB_TYPIQUE_BR (analyse/io_mesures.py) et l'écran le dit.
      ========================================================================= -->
 
-      <!-- ===================== 1. TITRE [15 s] ===================== -->
-      <section class="titre">
-        <div class="kicker">TIPE — session 2027 · Sobriété · Efficacité · Optimisation</div>
-        <img class="photo" src="assets/enceinte-face.jpg" alt="Mon enceinte deux voies, construite maison, vue de face"
-             style="max-height:200px;width:auto;margin:0 auto;box-sizing:border-box">
-        <h1>Optimiser le filtre de mon enceinte<br>sur son <em>impédance réelle</em></h1>
-        <div class="sous">Enceinte deux voies construite maison · raccord à 100 Hz</div>
-        <div class="auteur">THOMAS MAREEL · PT · ENCADRANT : M. CHEVALIER</div>
-        <div class="meta">Présentation du projet · 18 novembre 2026 · ce que je vais mesurer, et comment</div>
-        <aside class="notes">
+      <section class="titre-elegant">
+        <div class="titre-grille">
+          <div class="titre-photos">
+            <img class="principale" src="assets/enceinte-face.jpg" alt="Mon enceinte deux voies, construite maison, vue de face">
+            <img class="vignette" src="assets/enceinte-banc.jpg" alt="Le pré-ampli et l'ampli posés sur l'enceinte">
+          </div>
+          <div class="titre-texte">
+            <div class="kicker">TIPE 2027 · SOBRIÉTÉ, EFFICACITÉ, OPTIMISATION</div>
+            <h1>Optimiser le filtre de mon enceinte sur son <em>impédance réelle</em></h1>
+            <div class="trait"></div>
+            <div class="sous">Enceinte deux voies construite maison<br>raccord à 100 Hz</div>
+            <div class="auteur">Thomas Mareel</div>
+            <div class="detail">PT · encadrant : M. Chevalier<br>présentation du projet · 18 novembre 2026</div>
+          </div>
+        </div>
+        <aside class="notes">%
           [20 s] Bonjour. Voici l'enceinte que j'ai construite. Mon TIPE consiste à calculer son filtre de raccord, à cent hertz, pour le vrai haut-parleur, et pas pour un haut-parleur idéal. Et je vais surtout vous parler des expériences, parce que c'est là que tout se joue. Commençons par le problème.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 2. LE PROBLÈME [50 s] ===================== -->
       <section>
-        <div class="kicker">Le problème</div>
+        <div class="kicker">LE PROBLÈME</div>
         <h2>Le haut-parleur n'est <span class="accent">pas</span> une résistance de 8 Ω</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 350" font-family="Inter, sans-serif" role="img"
-               aria-label="Module de l'impédance en fonction de la fréquence, échelles logarithmiques : la droite de 8 ohms supposée par le calcul du catalogue, et l'allure attendue du caisson en bass-reflex, avec deux pics et un creux ; le second pic tombe dans la zone de raccord autour de 100 Hz">
-            <!-- zone de raccord 70-140 Hz -->
-            <rect x="523.6" y="22" width="161.6" height="278" fill="var(--accent)" opacity=".10"/>
-            <text style="fill:var(--accent)" x="604.4" y="40" text-anchor="middle" font-size="16" font-family="'JetBrains Mono', monospace">zone de raccord</text>
-            <!-- grille -->
-            <g stroke="var(--trait)" stroke-width="1">
-              <line x1="70" y1="300" x2="930" y2="300"/>
-              <line x1="70" y1="30" x2="70" y2="300"/>
-              <line x1="231.6" y1="30" x2="231.6" y2="300" stroke-dasharray="3 5"/>
-              <line x1="445.2" y1="30" x2="445.2" y2="300" stroke-dasharray="3 5"/>
-              <line x1="606.8" y1="30" x2="606.8" y2="300" stroke-dasharray="3 5"/>
-              <line x1="768.4" y1="30" x2="768.4" y2="300" stroke-dasharray="3 5"/>
-              <line x1="70" y1="165" x2="930" y2="165" stroke-dasharray="3 5"/>
-              <line x1="70" y1="88.1" x2="930" y2="88.1" stroke-dasharray="3 5"/>
+        <div class="panneau" style="padding:.5em .6em .3em">
+          <svg viewBox="0 0 1000 355" font-family="Inter, sans-serif" role="img"
+               aria-label="Module de l'impédance en fonction de la fréquence, échelles logarithmiques : la droite de 8 ohms supposée par le calcul, et l'allure attendue du caisson en bass-reflex, avec deux pics et un creux ; le second pic tombe dans la zone de raccord autour de 100 Hz">
+            <defs>
+              <linearGradient id="aire-z" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0d6e87" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#0d6e87" stop-opacity=".02"/>
+              </linearGradient>
+            </defs>
+            <rect x="523.6" y="24" width="161.6" height="276" rx="10" fill="#0d6e87" opacity=".08"/>
+            <text style="fill:var(--accent)" x="604.4" y="44" text-anchor="middle" font-size="15" font-weight="600" font-family="'JetBrains Mono', monospace">zone de raccord</text>
+            <g stroke="#e3e9ed" stroke-width="1.2">
+              <line x1="231.6" y1="30" x2="231.6" y2="300"/><line x1="445.2" y1="30" x2="445.2" y2="300"/>
+              <line x1="606.8" y1="30" x2="606.8" y2="300"/><line x1="768.4" y1="30" x2="768.4" y2="300"/>
+              <line x1="70" y1="165" x2="930" y2="165"/><line x1="70" y1="88.1" x2="930" y2="88.1"/>
             </g>
+            <g stroke="#9fb0bb" stroke-width="1.6"><line x1="70" y1="300" x2="930" y2="300"/><line x1="70" y1="30" x2="70" y2="300"/></g>
             <g font-family="'JetBrains Mono', monospace" font-size="15" text-anchor="middle">
-              <text style="fill:var(--ink-soft)" x="70" y="322">10</text>
-              <text style="fill:var(--ink-soft)" x="231.6" y="322">20</text>
-              <text style="fill:var(--ink-soft)" x="445.2" y="322">50</text>
-              <text style="fill:var(--ink-soft)" x="606.8" y="322">100</text>
-              <text style="fill:var(--ink-soft)" x="768.4" y="322">200</text>
-              <text style="fill:var(--ink-soft)" x="930" y="322">400</text>
-              <text style="fill:var(--ink-soft)" x="500" y="345">fréquence (Hz)</text>
+              <text style="fill:var(--ink-soft)" x="70" y="322">10</text><text style="fill:var(--ink-soft)" x="231.6" y="322">20</text>
+              <text style="fill:var(--ink-soft)" x="445.2" y="322">50</text><text style="fill:var(--ink-soft)" x="606.8" y="322">100</text>
+              <text style="fill:var(--ink-soft)" x="768.4" y="322">200</text><text style="fill:var(--ink-soft)" x="930" y="322">400</text>
+              <text style="fill:var(--ink-soft)" x="500" y="347">fréquence (Hz)</text>
             </g>
             <g font-family="'JetBrains Mono', monospace" font-size="15" text-anchor="end">
-              <text style="fill:var(--ink-soft)" x="60" y="305">4</text>
-              <text style="fill:var(--ink-soft)" x="60" y="247">8</text>
-              <text style="fill:var(--ink-soft)" x="60" y="170">20</text>
-              <text style="fill:var(--ink-soft)" x="60" y="93">50</text>
+              <text style="fill:var(--ink-soft)" x="60" y="305">4</text><text style="fill:var(--ink-soft)" x="60" y="247">8</text>
+              <text style="fill:var(--ink-soft)" x="60" y="170">20</text><text style="fill:var(--ink-soft)" x="60" y="93">50</text>
               <text style="fill:var(--ink-soft)" x="60" y="35">100</text>
             </g>
-            <text style="fill:var(--ink-soft)" x="14" y="20" font-size="15" font-family="'JetBrains Mono', monospace">|Z| (Ω)</text>
-            <!-- hypothèse du catalogue -->
-            <line x1="70" y1="241.9" x2="930" y2="241.9" stroke="var(--warn)" stroke-width="3" stroke-dasharray="10 7"/>
-            <!-- légende, en haut à droite (zone vide de la courbe) -->
-            <line x1="712" y1="44" x2="752" y2="44" stroke="var(--warn)" stroke-width="3" stroke-dasharray="10 7"/>
-            <text style="fill:var(--warn)" x="762" y="50" font-size="16">ce que suppose le calcul : 8 Ω</text>
-            <line x1="712" y1="72" x2="752" y2="72" stroke="var(--accent)" stroke-width="3.4"/>
-            <text style="fill:var(--accent)" x="762" y="78" font-size="16">allure attendue du caisson</text>
-            <!-- allure attendue : modèle SUB_TYPIQUE_BR -->
-            <polyline fill="none" stroke="var(--accent)" stroke-width="3.4" points="70.0,236.4 72.9,235.2 75.8,233.8 78.6,232.4 81.5,230.9 84.4,229.4 87.3,227.8 90.1,226.1 93.0,224.4 95.9,222.5 98.8,220.6 101.6,218.6 104.5,216.5 107.4,214.3 110.3,211.9 113.1,209.5 116.0,206.9 118.9,204.1 121.8,201.3 124.6,198.2 127.5,195.0 130.4,191.6 133.3,187.9 136.2,184.0 139.0,179.9 141.9,175.5 144.8,170.8 147.7,165.7 150.5,160.3 153.4,154.5 156.3,148.2 159.2,141.4 162.0,134.1 164.9,126.3 167.8,117.9 170.7,109.3 173.5,100.6 176.4,92.5 179.3,85.9 182.2,82.1 185.1,82.0 187.9,85.8 190.8,92.6 193.7,101.3 196.6,110.7 199.4,120.1 202.3,129.3 205.2,138.0 208.1,146.1 210.9,153.8 213.8,160.9 216.7,167.5 219.6,173.7 222.4,179.5 225.3,184.9 228.2,190.0 231.1,194.8 233.9,199.2 236.8,203.5 239.7,207.4 242.6,211.2 245.5,214.7 248.3,218.1 251.2,221.3 254.1,224.2 257.0,227.1 259.8,229.8 262.7,232.3 265.6,234.7 268.5,236.9 271.3,239.1 274.2,241.1 277.1,243.0 280.0,244.8 282.8,246.5 285.7,248.1 288.6,249.6 291.5,251.0 294.3,252.3 297.2,253.6 300.1,254.7 303.0,255.8 305.9,256.8 308.7,257.8 311.6,258.7 314.5,259.5 317.4,260.2 320.2,260.9 323.1,261.5 326.0,262.1 328.9,262.6 331.7,263.0 334.6,263.4 337.5,263.7 340.4,264.0 343.2,264.3 346.1,264.5 349.0,264.6 351.9,264.7 354.7,264.8 357.6,264.8 360.5,264.7 363.4,264.7 366.3,264.5 369.1,264.4 372.0,264.2 374.9,263.9 377.8,263.6 380.6,263.3 383.5,262.9 386.4,262.5 389.3,262.1 392.1,261.6 395.0,261.0 397.9,260.5 400.8,259.9 403.6,259.2 406.5,258.5 409.4,257.8 412.3,257.0 415.2,256.2 418.0,255.3 420.9,254.4 423.8,253.4 426.7,252.4 429.5,251.4 432.4,250.3 435.3,249.2 438.2,248.0 441.0,246.7 443.9,245.4 446.8,244.1 449.7,242.7 452.5,241.2 455.4,239.7 458.3,238.1 461.2,236.4 464.0,234.7 466.9,232.9 469.8,231.1 472.7,229.1 475.6,227.1 478.4,225.0 481.3,222.8 484.2,220.6 487.1,218.2 489.9,215.7 492.8,213.1 495.7,210.4 498.6,207.6 501.4,204.6 504.3,201.5 507.2,198.3 510.1,194.9 512.9,191.3 515.8,187.6 518.7,183.6 521.6,179.4 524.4,175.0 527.3,170.3 530.2,165.4 533.1,160.1 536.0,154.4 538.8,148.4 541.7,142.0 544.6,135.1 547.5,127.8 550.3,119.9 553.2,111.6 556.1,102.8 559.0,93.8 561.8,84.9 564.7,76.9 567.6,70.9 570.5,67.9 573.3,68.8 576.2,73.2 579.1,80.3 582.0,88.8 584.8,97.9 587.7,106.9 590.6,115.6 593.5,123.8 596.4,131.5 599.2,138.7 602.1,145.5 605.0,151.8 607.9,157.7 610.7,163.2 613.6,168.5 616.5,173.4 619.4,178.0 622.2,182.4 625.1,186.5 628.0,190.5 630.9,194.2 633.7,197.8 636.6,201.2 639.5,204.4 642.4,207.5 645.3,210.4 648.1,213.3 651.0,216.0 653.9,218.6 656.8,221.1 659.6,223.5 662.5,225.8 665.4,228.0 668.3,230.1 671.1,232.1 674.0,234.1 676.9,235.9 679.8,237.8 682.6,239.5 685.5,241.2 688.4,242.8 691.3,244.4 694.1,245.8 697.0,247.3 699.9,248.7 702.8,250.0 705.7,251.3 708.5,252.5 711.4,253.7 714.3,254.9 717.2,256.0 720.0,257.0 722.9,258.0 725.8,259.0 728.7,259.9 731.5,260.8 734.4,261.7 737.3,262.5 740.2,263.3 743.0,264.0 745.9,264.7 748.8,265.4 751.7,266.1 754.5,266.7 757.4,267.3 760.3,267.8 763.2,268.3 766.1,268.8 768.9,269.3 771.8,269.7 774.7,270.2 777.6,270.5 780.4,270.9 783.3,271.2 786.2,271.5 789.1,271.8 791.9,272.1 794.8,272.3 797.7,272.5 800.6,272.7 803.4,272.9 806.3,273.0 809.2,273.1 812.1,273.2 814.9,273.3 817.8,273.4 820.7,273.4 823.6,273.4 826.5,273.4 829.3,273.4 832.2,273.4 835.1,273.3 838.0,273.3 840.8,273.2 843.7,273.0 846.6,272.9 849.5,272.8 852.3,272.6 855.2,272.4 858.1,272.2 861.0,272.0 863.8,271.8 866.7,271.5 869.6,271.3 872.5,271.0 875.4,270.7 878.2,270.4 881.1,270.1 884.0,269.8 886.9,269.4 889.7,269.1 892.6,268.7 895.5,268.3 898.4,267.9 901.2,267.5 904.1,267.1 907.0,266.6 909.9,266.2 912.7,265.7 915.6,265.3 918.5,264.8 921.4,264.3 924.2,263.8 927.1,263.3 930.0,262.7"/>
-            <g font-size="16">
-              <text style="fill:var(--ink)" x="185" y="66" text-anchor="middle">1<tspan dy="-6" font-size="11">er</tspan><tspan dy="6"> pic</tspan></text>
-              <text style="fill:var(--ink)" x="357" y="288" text-anchor="middle">creux : accord des évents</text>
-              <text style="fill:var(--ink)" x="712" y="122">2<tspan dy="-6" font-size="11">e</tspan><tspan dy="6"> pic, en pleine zone de raccord</tspan></text>
+            <text style="fill:var(--ink-soft)" x="14" y="18" font-size="15" font-family="'JetBrains Mono', monospace">|Z| (Ω)</text>
+            <polygon points="70.0,236.4 72.9,235.2 75.8,233.8 78.6,232.4 81.5,230.9 84.4,229.4 87.3,227.8 90.1,226.1 93.0,224.4 95.9,222.5 98.8,220.6 101.6,218.6 104.5,216.5 107.4,214.3 110.3,211.9 113.1,209.5 116.0,206.9 118.9,204.1 121.8,201.3 124.6,198.2 127.5,195.0 130.4,191.6 133.3,187.9 136.2,184.0 139.0,179.9 141.9,175.5 144.8,170.8 147.7,165.7 150.5,160.3 153.4,154.5 156.3,148.2 159.2,141.4 162.0,134.1 164.9,126.3 167.8,117.9 170.7,109.3 173.5,100.6 176.4,92.5 179.3,85.9 182.2,82.1 185.1,82.0 187.9,85.8 190.8,92.6 193.7,101.3 196.6,110.7 199.4,120.1 202.3,129.3 205.2,138.0 208.1,146.1 210.9,153.8 213.8,160.9 216.7,167.5 219.6,173.7 222.4,179.5 225.3,184.9 228.2,190.0 231.1,194.8 233.9,199.2 236.8,203.5 239.7,207.4 242.6,211.2 245.5,214.7 248.3,218.1 251.2,221.3 254.1,224.2 257.0,227.1 259.8,229.8 262.7,232.3 265.6,234.7 268.5,236.9 271.3,239.1 274.2,241.1 277.1,243.0 280.0,244.8 282.8,246.5 285.7,248.1 288.6,249.6 291.5,251.0 294.3,252.3 297.2,253.6 300.1,254.7 303.0,255.8 305.9,256.8 308.7,257.8 311.6,258.7 314.5,259.5 317.4,260.2 320.2,260.9 323.1,261.5 326.0,262.1 328.9,262.6 331.7,263.0 334.6,263.4 337.5,263.7 340.4,264.0 343.2,264.3 346.1,264.5 349.0,264.6 351.9,264.7 354.7,264.8 357.6,264.8 360.5,264.7 363.4,264.7 366.3,264.5 369.1,264.4 372.0,264.2 374.9,263.9 377.8,263.6 380.6,263.3 383.5,262.9 386.4,262.5 389.3,262.1 392.1,261.6 395.0,261.0 397.9,260.5 400.8,259.9 403.6,259.2 406.5,258.5 409.4,257.8 412.3,257.0 415.2,256.2 418.0,255.3 420.9,254.4 423.8,253.4 426.7,252.4 429.5,251.4 432.4,250.3 435.3,249.2 438.2,248.0 441.0,246.7 443.9,245.4 446.8,244.1 449.7,242.7 452.5,241.2 455.4,239.7 458.3,238.1 461.2,236.4 464.0,234.7 466.9,232.9 469.8,231.1 472.7,229.1 475.6,227.1 478.4,225.0 481.3,222.8 484.2,220.6 487.1,218.2 489.9,215.7 492.8,213.1 495.7,210.4 498.6,207.6 501.4,204.6 504.3,201.5 507.2,198.3 510.1,194.9 512.9,191.3 515.8,187.6 518.7,183.6 521.6,179.4 524.4,175.0 527.3,170.3 530.2,165.4 533.1,160.1 536.0,154.4 538.8,148.4 541.7,142.0 544.6,135.1 547.5,127.8 550.3,119.9 553.2,111.6 556.1,102.8 559.0,93.8 561.8,84.9 564.7,76.9 567.6,70.9 570.5,67.9 573.3,68.8 576.2,73.2 579.1,80.3 582.0,88.8 584.8,97.9 587.7,106.9 590.6,115.6 593.5,123.8 596.4,131.5 599.2,138.7 602.1,145.5 605.0,151.8 607.9,157.7 610.7,163.2 613.6,168.5 616.5,173.4 619.4,178.0 622.2,182.4 625.1,186.5 628.0,190.5 630.9,194.2 633.7,197.8 636.6,201.2 639.5,204.4 642.4,207.5 645.3,210.4 648.1,213.3 651.0,216.0 653.9,218.6 656.8,221.1 659.6,223.5 662.5,225.8 665.4,228.0 668.3,230.1 671.1,232.1 674.0,234.1 676.9,235.9 679.8,237.8 682.6,239.5 685.5,241.2 688.4,242.8 691.3,244.4 694.1,245.8 697.0,247.3 699.9,248.7 702.8,250.0 705.7,251.3 708.5,252.5 711.4,253.7 714.3,254.9 717.2,256.0 720.0,257.0 722.9,258.0 725.8,259.0 728.7,259.9 731.5,260.8 734.4,261.7 737.3,262.5 740.2,263.3 743.0,264.0 745.9,264.7 748.8,265.4 751.7,266.1 754.5,266.7 757.4,267.3 760.3,267.8 763.2,268.3 766.1,268.8 768.9,269.3 771.8,269.7 774.7,270.2 777.6,270.5 780.4,270.9 783.3,271.2 786.2,271.5 789.1,271.8 791.9,272.1 794.8,272.3 797.7,272.5 800.6,272.7 803.4,272.9 806.3,273.0 809.2,273.1 812.1,273.2 814.9,273.3 817.8,273.4 820.7,273.4 823.6,273.4 826.5,273.4 829.3,273.4 832.2,273.4 835.1,273.3 838.0,273.3 840.8,273.2 843.7,273.0 846.6,272.9 849.5,272.8 852.3,272.6 855.2,272.4 858.1,272.2 861.0,272.0 863.8,271.8 866.7,271.5 869.6,271.3 872.5,271.0 875.4,270.7 878.2,270.4 881.1,270.1 884.0,269.8 886.9,269.4 889.7,269.1 892.6,268.7 895.5,268.3 898.4,267.9 901.2,267.5 904.1,267.1 907.0,266.6 909.9,266.2 912.7,265.7 915.6,265.3 918.5,264.8 921.4,264.3 924.2,263.8 927.1,263.3 930.0,262.7 930,300 70,300" fill="url(#aire-z)"/>
+            <line x1="70" y1="241.9" x2="930" y2="241.9" stroke="var(--warn)" stroke-width="3" stroke-dasharray="10 7" stroke-linecap="round"/>
+            <polyline fill="none" stroke="var(--accent)" stroke-width="3.6" stroke-linejoin="round" points="70.0,236.4 72.9,235.2 75.8,233.8 78.6,232.4 81.5,230.9 84.4,229.4 87.3,227.8 90.1,226.1 93.0,224.4 95.9,222.5 98.8,220.6 101.6,218.6 104.5,216.5 107.4,214.3 110.3,211.9 113.1,209.5 116.0,206.9 118.9,204.1 121.8,201.3 124.6,198.2 127.5,195.0 130.4,191.6 133.3,187.9 136.2,184.0 139.0,179.9 141.9,175.5 144.8,170.8 147.7,165.7 150.5,160.3 153.4,154.5 156.3,148.2 159.2,141.4 162.0,134.1 164.9,126.3 167.8,117.9 170.7,109.3 173.5,100.6 176.4,92.5 179.3,85.9 182.2,82.1 185.1,82.0 187.9,85.8 190.8,92.6 193.7,101.3 196.6,110.7 199.4,120.1 202.3,129.3 205.2,138.0 208.1,146.1 210.9,153.8 213.8,160.9 216.7,167.5 219.6,173.7 222.4,179.5 225.3,184.9 228.2,190.0 231.1,194.8 233.9,199.2 236.8,203.5 239.7,207.4 242.6,211.2 245.5,214.7 248.3,218.1 251.2,221.3 254.1,224.2 257.0,227.1 259.8,229.8 262.7,232.3 265.6,234.7 268.5,236.9 271.3,239.1 274.2,241.1 277.1,243.0 280.0,244.8 282.8,246.5 285.7,248.1 288.6,249.6 291.5,251.0 294.3,252.3 297.2,253.6 300.1,254.7 303.0,255.8 305.9,256.8 308.7,257.8 311.6,258.7 314.5,259.5 317.4,260.2 320.2,260.9 323.1,261.5 326.0,262.1 328.9,262.6 331.7,263.0 334.6,263.4 337.5,263.7 340.4,264.0 343.2,264.3 346.1,264.5 349.0,264.6 351.9,264.7 354.7,264.8 357.6,264.8 360.5,264.7 363.4,264.7 366.3,264.5 369.1,264.4 372.0,264.2 374.9,263.9 377.8,263.6 380.6,263.3 383.5,262.9 386.4,262.5 389.3,262.1 392.1,261.6 395.0,261.0 397.9,260.5 400.8,259.9 403.6,259.2 406.5,258.5 409.4,257.8 412.3,257.0 415.2,256.2 418.0,255.3 420.9,254.4 423.8,253.4 426.7,252.4 429.5,251.4 432.4,250.3 435.3,249.2 438.2,248.0 441.0,246.7 443.9,245.4 446.8,244.1 449.7,242.7 452.5,241.2 455.4,239.7 458.3,238.1 461.2,236.4 464.0,234.7 466.9,232.9 469.8,231.1 472.7,229.1 475.6,227.1 478.4,225.0 481.3,222.8 484.2,220.6 487.1,218.2 489.9,215.7 492.8,213.1 495.7,210.4 498.6,207.6 501.4,204.6 504.3,201.5 507.2,198.3 510.1,194.9 512.9,191.3 515.8,187.6 518.7,183.6 521.6,179.4 524.4,175.0 527.3,170.3 530.2,165.4 533.1,160.1 536.0,154.4 538.8,148.4 541.7,142.0 544.6,135.1 547.5,127.8 550.3,119.9 553.2,111.6 556.1,102.8 559.0,93.8 561.8,84.9 564.7,76.9 567.6,70.9 570.5,67.9 573.3,68.8 576.2,73.2 579.1,80.3 582.0,88.8 584.8,97.9 587.7,106.9 590.6,115.6 593.5,123.8 596.4,131.5 599.2,138.7 602.1,145.5 605.0,151.8 607.9,157.7 610.7,163.2 613.6,168.5 616.5,173.4 619.4,178.0 622.2,182.4 625.1,186.5 628.0,190.5 630.9,194.2 633.7,197.8 636.6,201.2 639.5,204.4 642.4,207.5 645.3,210.4 648.1,213.3 651.0,216.0 653.9,218.6 656.8,221.1 659.6,223.5 662.5,225.8 665.4,228.0 668.3,230.1 671.1,232.1 674.0,234.1 676.9,235.9 679.8,237.8 682.6,239.5 685.5,241.2 688.4,242.8 691.3,244.4 694.1,245.8 697.0,247.3 699.9,248.7 702.8,250.0 705.7,251.3 708.5,252.5 711.4,253.7 714.3,254.9 717.2,256.0 720.0,257.0 722.9,258.0 725.8,259.0 728.7,259.9 731.5,260.8 734.4,261.7 737.3,262.5 740.2,263.3 743.0,264.0 745.9,264.7 748.8,265.4 751.7,266.1 754.5,266.7 757.4,267.3 760.3,267.8 763.2,268.3 766.1,268.8 768.9,269.3 771.8,269.7 774.7,270.2 777.6,270.5 780.4,270.9 783.3,271.2 786.2,271.5 789.1,271.8 791.9,272.1 794.8,272.3 797.7,272.5 800.6,272.7 803.4,272.9 806.3,273.0 809.2,273.1 812.1,273.2 814.9,273.3 817.8,273.4 820.7,273.4 823.6,273.4 826.5,273.4 829.3,273.4 832.2,273.4 835.1,273.3 838.0,273.3 840.8,273.2 843.7,273.0 846.6,272.9 849.5,272.8 852.3,272.6 855.2,272.4 858.1,272.2 861.0,272.0 863.8,271.8 866.7,271.5 869.6,271.3 872.5,271.0 875.4,270.7 878.2,270.4 881.1,270.1 884.0,269.8 886.9,269.4 889.7,269.1 892.6,268.7 895.5,268.3 898.4,267.9 901.2,267.5 904.1,267.1 907.0,266.6 909.9,266.2 912.7,265.7 915.6,265.3 918.5,264.8 921.4,264.3 924.2,263.8 927.1,263.3 930.0,262.7"/>
+            <g fill="#ffffff" stroke="var(--accent)" stroke-width="3">
+              <circle cx="185.3" cy="82" r="6"/><circle cx="570.6" cy="68" r="6"/><circle cx="357.3" cy="264.6" r="6"/>
             </g>
-            <line x1="708" y1="116" x2="590" y2="76" stroke="var(--ink-soft)" stroke-width="1.3"/>
+            <line x1="712" y1="48" x2="752" y2="48" stroke="var(--warn)" stroke-width="3" stroke-dasharray="10 7"/>
+            <text style="fill:var(--warn)" x="762" y="54" font-size="16" font-weight="600">ce que suppose le calcul : 8 Ω</text>
+            <line x1="712" y1="76" x2="752" y2="76" stroke="var(--accent)" stroke-width="3.6"/>
+            <text style="fill:var(--accent)" x="762" y="82" font-size="16" font-weight="600">allure attendue du caisson</text>
+            <g font-size="16">
+              <text style="fill:var(--ink)" x="185" y="64" text-anchor="middle">1<tspan dy="-6" font-size="11">er</tspan><tspan dy="6"> pic</tspan></text>
+              <text style="fill:var(--ink)" x="357" y="290" text-anchor="middle">creux : accord des évents</text>
+              <text style="fill:var(--ink)" x="712" y="126" font-weight="600">2<tspan dy="-6" font-size="11">e</tspan><tspan dy="6"> pic, en pleine zone de raccord</tspan></text>
+            </g>
+            <line x1="708" y1="120" x2="582" y2="74" stroke="var(--ink-soft)" stroke-width="1.3"/>
           </svg>
         </div>
-        <p class="legende">allure ATTENDUE · modèle d'un 18″ de sono en bass-reflex · ce n'est pas encore une mesure</p>
-        <aside class="notes">
+        <p class="note-bas">allure ATTENDUE · modèle d'un 18″ de sono en bass-reflex · ce n'est pas encore une mesure</p>
+        <aside class="notes">%
           [50 s] Mon enceinte a deux voies : un caisson de basses de dix-huit pouces, et des médiums. Entre les deux, un filtre partage le signal autour de cent hertz. Le calcul classique suppose que le haut-parleur se comporte comme une résistance de huit ohms : c'est cette ligne pointillée orange. Or un haut-parleur dans sa caisse, ce n'est pas ça. Voici l'allure que j'attends pour mon caisson, un bass-reflex à deux évents : deux pics, un creux, et le deuxième pic tombe en pleine zone de raccord. Attention : cette courbe vient d'un modèle, je ne l'ai pas encore mesurée. Mais si elle a cette allure, un filtre calculé pour huit ohms ne fera pas ce qu'on attend de lui. D'où ma question.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 3. LA QUESTION ET LA DÉMARCHE [40 s] ===================== -->
       <section>
-        <div class="kicker">La question</div>
+        <div class="kicker">LA QUESTION</div>
         <h2>Ma problématique, et la démarche en <span class="accent">quatre étapes</span></h2>
-        <div class="encadre">
+        <div class="appel" style="font-size:.64em;padding:.6em .9em">
           Comment concevoir le filtre de raccord à 100 Hz pour qu'il tienne sa cible sur la
           <strong>charge réelle</strong> — un haut-parleur dont l'impédance varie fortement avec la
           fréquence — au moindre coût en composants, en pertes et en cuivre ?
         </div>
-        <div class="viz">
-          <svg viewBox="0 0 1000 250" font-family="Inter, sans-serif" role="img"
-               aria-label="Frise en quatre étapes : mesurer, identifier, optimiser, fabriquer et valider ; la première et la dernière sont des expériences, les deux du milieu des calculs">
-            <defs>
-              <marker id="fl-etapes" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--wire)"/>
-              </marker>
-            </defs>
-            <g font-family="'JetBrains Mono', monospace" font-size="15" text-anchor="middle">
-              <text style="fill:var(--accent2)" x="115" y="28">EXPÉRIENCE</text>
-              <text style="fill:var(--ink-soft)" x="372" y="28">CALCUL</text>
-              <text style="fill:var(--ink-soft)" x="628" y="28">CALCUL</text>
-              <text style="fill:var(--accent2)" x="885" y="28">EXPÉRIENCES</text>
-            </g>
-            <rect x="10"  y="42" width="210" height="150" rx="6" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2.6"/>
-            <rect x="267" y="42" width="210" height="150" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <rect x="523" y="42" width="210" height="150" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <rect x="780" y="42" width="210" height="150" rx="6" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2.6"/>
-            <g stroke="var(--wire)" stroke-width="2.4" marker-end="url(#fl-etapes)">
-              <line x1="222" y1="117" x2="262" y2="117"/>
-              <line x1="479" y1="117" x2="518" y2="117"/>
-              <line x1="735" y1="117" x2="775" y2="117"/>
-            </g>
-            <g font-family="'Space Grotesk', Inter, sans-serif" font-size="22" font-weight="700" text-anchor="middle">
-              <text style="fill:var(--ink)" x="115" y="80">1 · Mesurer</text>
-              <text style="fill:var(--ink)" x="372" y="80">2 · Identifier</text>
-              <text style="fill:var(--ink)" x="628" y="80">3 · Optimiser</text>
-              <text style="fill:var(--ink)" x="885" y="80">4 · Fabriquer</text>
-              <text style="fill:var(--ink)" x="885" y="104">et valider</text>
-            </g>
-            <g font-size="16" text-anchor="middle">
-              <text style="fill:var(--ink-soft)" x="115" y="118">l'impédance Z(f)</text>
-              <text style="fill:var(--ink-soft)" x="115" y="140">du caisson</text>
-              <text style="fill:var(--ink-soft)" x="115" y="162">et des médiums</text>
-              <text style="fill:var(--ink-soft)" x="372" y="118">un modèle physique</text>
-              <text style="fill:var(--ink-soft)" x="372" y="140">du haut-parleur</text>
-              <text style="fill:var(--ink-soft)" x="372" y="162">(problème inverse)</text>
-              <text style="fill:var(--ink-soft)" x="628" y="118">les valeurs de L et C</text>
-              <text style="fill:var(--ink-soft)" x="628" y="140">sous contraintes</text>
-              <text style="fill:var(--ink-soft)" x="628" y="162">(coût, pertes, ampli)</text>
-              <text style="fill:var(--ink-soft)" x="885" y="132">selfs, banc électrique,</text>
-              <text style="fill:var(--ink-soft)" x="885" y="154">micro et wattmètre</text>
-            </g>
-            <text style="fill:var(--ink)" x="500" y="234" text-anchor="middle" font-size="18">la première expérience fournit les données ; les dernières disent si le calcul avait raison</text>
-          </svg>
+        <div class="etapes">
+          <div class="etape exp"><span class="tag">EXPÉRIENCE</span><h4>1 · Mesurer</h4><p>l'impédance Z(f) du caisson et des médiums</p></div>
+          <div class="fleche">→</div>
+          <div class="etape"><span class="tag">CALCUL</span><h4>2 · Identifier</h4><p>un modèle physique du haut-parleur (problème inverse)</p></div>
+          <div class="fleche">→</div>
+          <div class="etape"><span class="tag">CALCUL</span><h4>3 · Optimiser</h4><p>les valeurs de L et C sous contraintes (coût, pertes, ampli)</p></div>
+          <div class="fleche">→</div>
+          <div class="etape exp"><span class="tag">EXPÉRIENCES</span><h4>4 · Fabriquer et valider</h4><p>selfs, banc électrique, micro et wattmètre</p></div>
         </div>
-        <aside class="notes">
+        <p class="note-bas" style="font-size:.5em;font-family:Inter,sans-serif;letter-spacing:0;color:var(--ink);margin-top:1em">la première expérience fournit les données ; les dernières disent si le calcul avait raison</p>
+        <aside class="notes">%
           [39 s] Ma problématique : comment concevoir ce filtre pour qu'il tienne sa cible sur la charge réelle, au moindre coût en composants, en pertes et en cuivre ? Pour y répondre, quatre étapes. Un : je mesure l'impédance réelle. Deux : j'en tire un modèle physique du haut-parleur ; c'est un problème inverse. Trois : je cherche les meilleures valeurs de composants, sous contraintes. Quatre : je fabrique, et je valide. La première et la dernière étape sont des expériences : la première fournit les données, la dernière dit si le calcul avait raison. Voyons ces expériences.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 4. LA CARTE DES EXPÉRIENCES [30 s] ===================== -->
       <section>
-        <div class="kicker">Le cœur du projet</div>
+        <div class="kicker">LE CŒUR DU PROJET</div>
         <h2>Quatre <span class="accent">expériences</span></h2>
-        <div class="cartes">
-          <div class="carte">
-            <div class="num">Expérience 1</div>
-            <h3>Mesurer l'impédance Z(f)</h3>
-            <p>carte son + logiciel REW, recoupée au GBF et à l'oscilloscope</p>
-            <p class="decide">→ fournit la charge réelle sur laquelle tout est calculé</p>
-          </div>
-          <div class="carte">
-            <div class="num">Expérience 2</div>
-            <h3>Bobiner et caractériser les selfs</h3>
-            <p>inductance, résistance du fil, échauffement</p>
-            <p class="decide">→ relie les pertes à la masse de cuivre</p>
-          </div>
-          <div class="carte">
-            <div class="num">Expérience 3</div>
-            <h3>Le banc électrique</h3>
-            <p>filtre catalogue et filtre optimisé, branchés sur les vrais haut-parleurs</p>
-            <p class="decide">→ confronte la prédiction du calcul au réel</p>
-          </div>
-          <div class="carte">
-            <div class="num">Expérience 4</div>
-            <h3>Le micro et le wattmètre</h3>
-            <p>somme acoustique des deux voies, consommation de chaque solution</p>
-            <p class="decide">→ juge le résultat sur ce qu'on entend et ce qu'on consomme</p>
-          </div>
+        <div class="grille-exp">
+          <div class="carte-exp"><svg viewBox="0 0 74 74" aria-hidden="true"><rect width="74" height="74" rx="18" fill="#e3f0f4"/>
+  <path d="M14,58 H62 M14,58 V14" stroke="#9fb0bb" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M16,50 C20,50 21,22 25,22 C29,22 30,46 35,46 C41,46 44,18 48,18 C52,18 54,42 62,44" fill="none" stroke="#0d6e87" stroke-width="3.4" stroke-linecap="round"/></svg><div><div class="num">EXPÉRIENCE 1</div><h4>Mesurer l'impédance Z(f)</h4>
+            <p>carte son + logiciel REW, recoupée au GBF et à l'oscilloscope</p><p class="decide">→ fournit la charge réelle sur laquelle tout est calculé</p></div></div>
+          <div class="carte-exp"><svg viewBox="0 0 74 74" aria-hidden="true"><rect width="74" height="74" rx="18" fill="#f6e7da"/>
+  <g fill="none" stroke="#a8582a" stroke-width="3.2"><ellipse cx="24" cy="37" rx="6" ry="17"/><ellipse cx="32" cy="37" rx="6" ry="17"/>
+  <ellipse cx="40" cy="37" rx="6" ry="17"/><ellipse cx="48" cy="37" rx="6" ry="17"/></g>
+  <path d="M18,37 H10 M54,37 H64" stroke="#a8582a" stroke-width="3.2" stroke-linecap="round"/></svg><div><div class="num">EXPÉRIENCE 2</div><h4>Bobiner et caractériser les selfs</h4>
+            <p>inductance, résistance du fil, échauffement</p><p class="decide">→ relie les pertes à la masse de cuivre</p></div></div>
+          <div class="carte-exp"><svg viewBox="0 0 74 74" aria-hidden="true"><rect width="74" height="74" rx="18" fill="#e3f2e9"/>
+  <path d="M9,30 H15 a5,5 0 0 1 10,0 a5,5 0 0 1 10,0 a5,5 0 0 1 10,0 H56 V38 M48,38 H64 M48,45 H64 M56,45 V58 M50,58 H62"
+        fill="none" stroke="#2e8a52" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div class="num">EXPÉRIENCE 3</div><h4>Le banc électrique</h4>
+            <p>filtre catalogue et filtre optimisé, branchés sur les vrais haut-parleurs</p><p class="decide">→ confronte la prédiction du calcul au réel</p></div></div>
+          <div class="carte-exp"><svg viewBox="0 0 74 74" aria-hidden="true"><rect width="74" height="74" rx="18" fill="#f8ecdd"/>
+  <rect x="28" y="12" width="14" height="27" rx="7" fill="#c2680f"/>
+  <path d="M22,32 a13,13 0 0 0 26,0 M35,45 V56 M27,56 H43" fill="none" stroke="#c2680f" stroke-width="3" stroke-linecap="round"/>
+  <path d="M52,20 a10,10 0 0 1 0,16 M57,15 a16,16 0 0 1 0,26" fill="none" stroke="#c2680f" stroke-width="2.6" stroke-linecap="round" opacity=".7"/></svg><div><div class="num">EXPÉRIENCE 4</div><h4>Le micro et le wattmètre</h4>
+            <p>somme acoustique des deux voies, consommation de chaque solution</p><p class="decide">→ juge le résultat sur ce qu'on entend et ce qu'on consomme</p></div></div>
         </div>
-        <aside class="notes">
+        <aside class="notes">%
           [31 s] Il y en a quatre. Mesurer l'impédance. Bobiner les inductances et les caractériser. Tester les filtres au banc électrique. Et mesurer le son au micro, avec la consommation au wattmètre. Les protocoles sont déjà rédigés, dans un livret de vingt-trois manipulations. Et une règle vaut pour toutes : les critères de comparaison sont écrits et datés avant la première mesure, pour que je ne puisse pas les ajuster après coup. Je commence par la plus importante.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 5. EXP. 1 — MESURER Z(f) [60 s] ===================== -->
       <section>
-        <div class="kicker">Expérience 1 · la clé de voûte</div>
+        <div class="kicker">EXPÉRIENCE 1 · L'OUTIL</div>
         <h2>Mesurer l'impédance <span class="accent">Z(f)</span> du haut-parleur</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 250" font-family="Inter, sans-serif" role="img"
-               aria-label="Principe de la mesure : une seule sortie de la carte son envoie le courant dans une résistance connue de 100 ohms puis dans le haut-parleur, avant le retour à la masse ; les deux entrées de la carte son sont deux voltmètres qui lisent la tension en A, avant la résistance, et en B, aux bornes du haut-parleur">
-            <!-- carte son : une seule sortie -->
-            <rect x="20" y="45" width="200" height="80" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="120" y="78" text-anchor="middle" font-size="19" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">carte son</text>
-            <text style="fill:var(--ink-soft)" x="120" y="104" text-anchor="middle" font-size="14" font-family="'JetBrains Mono', monospace">sortie casque</text>
-            <!-- le chemin du courant : sortie, R, haut-parleur, retour à la masse -->
-            <g fill="none" stroke="var(--wire)" stroke-width="2.6">
-              <path d="M220,85 H390"/>
-              <path d="M520,85 H670"/>
-              <path d="M810,85 H890 V215 H120 V125"/>
-            </g>
-            <g fill="var(--warn)">
-              <polygon points="256,78 270,85 256,92"/>
-              <polygon points="883,143 890,157 897,143"/>
-              <polygon points="664,208 650,215 664,222"/>
-            </g>
-            <rect x="390" y="67" width="130" height="36" rx="3" fill="var(--bg)" stroke="var(--wire)" stroke-width="2.6"/>
-            <text style="fill:var(--ink)" x="455" y="91" text-anchor="middle" font-size="17">R = 100 Ω</text>
-            <text style="fill:var(--ink-soft)" x="455" y="124" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">connue à 0,1 %</text>
-            <line x1="534" y1="72" x2="580" y2="72" stroke="var(--warn)" stroke-width="2"/>
-            <polygon points="578,67 588,72 578,77" fill="var(--warn)"/>
-            <text style="fill:var(--warn)" x="558" y="63" text-anchor="middle" font-size="17" font-style="italic">I</text>
-            <rect x="670" y="61" width="140" height="48" rx="4" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.8"/>
-            <text style="fill:var(--accent)" x="740" y="93" text-anchor="middle" font-size="22" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">Z(f)</text>
-            <text style="fill:var(--ink-soft)" x="740" y="132" text-anchor="middle" font-size="15">haut-parleur</text>
-            <text style="fill:var(--ink-soft)" x="505" y="242" text-anchor="middle" font-size="14">retour à la masse de la carte son</text>
-            <!-- les deux entrées de la carte son = deux voltmètres -->
-            <g fill="none" stroke="var(--accent2)" stroke-width="2">
-              <path d="M320,85 V141 M320,189 V215"/>
-              <path d="M600,85 V141 M600,189 V215"/>
-            </g>
-            <g fill="var(--bg)" stroke="var(--accent2)" stroke-width="2.6">
-              <circle cx="320" cy="165" r="24"/>
-              <circle cx="600" cy="165" r="24"/>
-            </g>
-            <g fill="var(--accent2)">
-              <circle cx="320" cy="85" r="5.5"/>
-              <circle cx="600" cy="85" r="5.5"/>
-              <circle cx="320" cy="215" r="4.5"/>
-              <circle cx="600" cy="215" r="4.5"/>
-            </g>
-            <g font-size="22" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', Inter, sans-serif">
-              <text style="fill:var(--accent2)" x="320" y="173">V</text>
-              <text style="fill:var(--accent2)" x="600" y="173">V</text>
-            </g>
-            <g font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">
-              <text style="fill:var(--accent2)" x="310" y="74" text-anchor="end">A</text>
-              <text style="fill:var(--accent2)" x="612" y="74">B</text>
-              <text style="fill:var(--accent2)" x="354" y="161">V_A</text>
-              <text style="fill:var(--accent2)" x="634" y="161">V_B</text>
-            </g>
-            <g font-size="14">
-              <text style="fill:var(--ink-soft)" x="354" y="182">entrée 1 de la carte son</text>
-              <text style="fill:var(--ink-soft)" x="634" y="182">entrée 2 de la carte son</text>
-            </g>
-          </svg>
+        <div class="panneau" style="padding:.45em .5em .2em">
+          <svg viewBox="0 0 1000 290" font-family="Inter, sans-serif" role="img"
+     aria-label="Principe de la mesure : la sortie casque de la carte son envoie le courant dans une résistance connue de 100 ohms puis dans le haut-parleur, avant le retour à la masse ; les deux entrées de la carte son sont deux voltmètres en A et en B">
+  <defs>
+    <linearGradient id="rouge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2233f"/><stop offset=".55" stop-color="#c3142f"/><stop offset="1" stop-color="#930b21"/>
+    </linearGradient>
+    <radialGradient id="bouton" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#f4f6f7"/><stop offset=".6" stop-color="#9aa3a9"/><stop offset="1" stop-color="#3c4247"/>
+    </radialGradient>
+    <linearGradient id="aimant" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2a3238"/><stop offset=".5" stop-color="#5c6871"/><stop offset="1" stop-color="#1d2328"/>
+    </linearGradient>
+    <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9e1e6"/><stop offset=".45" stop-color="#f6f8f9"/><stop offset="1" stop-color="#a9b6be"/>
+    </linearGradient>
+    <filter id="ombre-douce" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#13222c" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <!-- boucle du courant -->
+  <g fill="none" stroke="var(--wire)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M206,122 H266 V88 H392"/>
+    <path d="M532,88 H846 V112"/>
+    <path d="M846,156 V244 H129 V170"/>
+  </g>
+  <g fill="var(--warn)">
+    <polygon points="292,81 306,88 292,95"/>
+    <polygon points="839,196 846,210 853,196"/>
+    <polygon points="566,237 552,244 566,251"/>
+  </g>
+  <!-- carte son -->
+  <g filter="url(#ombre-douce)">
+    <rect x="24" y="40" width="210" height="130" rx="16" fill="url(#rouge)"/>
+  </g>
+  <rect x="24" y="40" width="210" height="130" rx="16" fill="none" stroke="#7d0a1c" stroke-width="1.4"/>
+  <text x="129" y="76" text-anchor="middle" font-size="19" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif" style="fill:#ffffff">carte son</text>
+  <g stroke="#2a2f33" stroke-width="1.2">
+    <circle cx="70" cy="122" r="16" fill="url(#bouton)"/>
+    <circle cx="120" cy="122" r="16" fill="url(#bouton)"/>
+  </g>
+  <g stroke="#2a2f33" stroke-width="2.4" stroke-linecap="round">
+    <line x1="70" y1="122" x2="61" y2="112"/><line x1="120" y1="122" x2="129" y2="112"/>
+  </g>
+  <circle cx="190" cy="122" r="10" fill="#1b2125" stroke="#b9c0c5" stroke-width="3"/>
+  <text x="190" y="154" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace" style="fill:#ffe3e7">casque</text>
+  <!-- résistance -->
+  <g filter="url(#ombre-douce)">
+    <rect x="392" y="68" width="140" height="40" rx="7" fill="#ffffff" stroke="var(--wire)" stroke-width="3"/>
+  </g>
+  <text x="462" y="95" text-anchor="middle" font-size="18" font-weight="600" style="fill:var(--ink)">R = 100 Ω</text>
+  <text x="462" y="132" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace" style="fill:var(--ink-soft)">connue à 0,1 %</text>
+  <line x1="562" y1="66" x2="606" y2="66" stroke="var(--warn)" stroke-width="2.4" stroke-linecap="round"/>
+  <polygon points="604,60 616,66 604,72" fill="var(--warn)"/>
+  <text x="586" y="56" text-anchor="middle" font-size="19" font-style="italic" font-weight="600" style="fill:var(--warn)">I</text>
+  <!-- haut-parleur -->
+  <g filter="url(#ombre-douce)">
+    <rect x="832" y="112" width="28" height="44" rx="4" fill="url(#aimant)"/>
+    <polygon points="860,112 860,156 904,186 904,82" fill="url(#cone)" stroke="var(--wire)" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <ellipse cx="904" cy="134" rx="6" ry="52" fill="#eef2f4" stroke="var(--wire)" stroke-width="1.6"/>
+  <text x="862" y="214" font-size="16" style="fill:var(--ink)">haut-parleur</text>
+  <text x="862" y="235" font-size="17" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif" style="fill:var(--accent)">Z(f)</text>
+  <!-- voltmètres -->
+  <g fill="none" stroke="var(--accent2)" stroke-width="2.4">
+    <path d="M330,88 V146 M330,198 V244"/>
+    <path d="M652,88 V146 M652,198 V244"/>
+  </g>
+  <g filter="url(#ombre-douce)">
+    <circle cx="330" cy="172" r="26" fill="#ffffff" stroke="var(--accent2)" stroke-width="3"/>
+    <circle cx="652" cy="172" r="26" fill="#ffffff" stroke="var(--accent2)" stroke-width="3"/>
+  </g>
+  <g fill="var(--accent2)">
+    <circle cx="330" cy="88" r="6"/><circle cx="652" cy="88" r="6"/>
+    <circle cx="330" cy="244" r="5"/><circle cx="652" cy="244" r="5"/>
+  </g>
+  <g font-size="23" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', Inter, sans-serif">
+    <text x="330" y="180" style="fill:var(--accent2)">V</text>
+    <text x="652" y="180" style="fill:var(--accent2)">V</text>
+  </g>
+  <g font-size="17" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif">
+    <text x="320" y="74" text-anchor="end" style="fill:var(--accent2)">A</text>
+    <text x="662" y="74" style="fill:var(--accent2)">B</text>
+  </g>
+  <g font-size="18" font-style="italic" font-weight="600">
+    <text x="370" y="170" style="fill:var(--ink)">V<tspan dy="5" font-size="12">A</tspan></text>
+    <text x="692" y="170" style="fill:var(--ink)">V<tspan dy="5" font-size="12">B</tspan></text>
+  </g>
+  <g font-size="14" style="fill:var(--ink-soft)">
+    <text x="370" y="192" style="fill:var(--ink-soft)">entrée 1</text>
+    <text x="692" y="192" style="fill:var(--ink-soft)">entrée 2</text>
+  </g>
+  <text x="488" y="272" text-anchor="middle" font-size="14" style="fill:var(--ink-soft)">retour à la masse de la carte son</text>
+</svg>
         </div>
-        <div class="formule">\[ I = \frac{V_A - V_B}{R} \quad\Rightarrow\quad Z(f) = R\,\frac{V_B}{V_A - V_B} \quad \text{(module et phase)} \]</div>
-        <div class="colonnes">
-          <ul class="serre">
-            <li>la résistance connue sert de <strong>capteur de courant</strong> : la carte son ne mesure que des tensions</li>
-            <li>sans elle, la sortie imposerait sa tension quelle que soit Z : <strong>on ne verrait rien</strong></li>
-          </ul>
-          <ul class="serre">
-            <li>balayage sinus lent de <strong>10 Hz à 1 kHz</strong>, module et phase</li>
-            <li>quelques mA seulement : sans risque pour le haut-parleur</li>
-          </ul>
-        </div>
-        <aside class="notes">
-          [59 s] Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Encore faut-il pouvoir faire confiance à l'appareil.
-        </aside>
-      </section>
-
-      <!-- ===================== 6. EXP. 1 — TESTER L'APPAREIL SUR DU CONNU ===================== -->
-      <section>
-        <div class="kicker">Expérience 1 · avant de brancher le haut-parleur</div>
-        <h2>D'abord, tester l'appareil sur du <span class="accent">connu</span></h2>
-        <p class="cle" style="font-size:.7em;margin:0 0 .35em">Sur le haut-parleur, on ne connaît pas la bonne réponse : une erreur de l'appareil passerait inaperçue.</p>
-        <div class="viz">
-          <svg viewBox="0 0 1000 235" font-family="Inter, sans-serif" role="img"
-               aria-label="Trois contrôles : une résistance de 10 ohms doit donner une droite horizontale à 10 ohms, un condensateur de 100 microfarads une impédance divisée par dix quand la fréquence est multipliée par dix, et deux chaînes de mesure indépendantes doivent donner la même courbe">
-            <!-- panneau 1 : résistance -->
-            <text style="fill:var(--ink)" x="160" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">résistance de 10 Ω</text>
-            <g stroke="var(--trait)" stroke-width="1.6">
-              <line x1="40" y1="40" x2="40" y2="185"/>
-              <line x1="40" y1="185" x2="290" y2="185"/>
-            </g>
-            <line x1="40" y1="112" x2="290" y2="112" stroke="var(--accent)" stroke-width="3.4"/>
-            <text style="fill:var(--ink)" x="165" y="100" text-anchor="middle" font-size="16">on doit lire 10 Ω partout</text>
-            <text style="fill:var(--ink-soft)" x="290" y="203" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
-            <text style="fill:var(--ink-soft)" x="46" y="54" font-size="13" font-family="'JetBrains Mono', monospace">log |Z|</text>
-            <text style="fill:var(--ink)" x="160" y="228" text-anchor="middle" font-size="16">→ une droite horizontale</text>
-            <!-- panneau 2 : condensateur -->
-            <text style="fill:var(--ink)" x="495" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">condensateur de 100 µF</text>
-            <g stroke="var(--trait)" stroke-width="1.6">
-              <line x1="375" y1="40" x2="375" y2="185"/>
-              <line x1="375" y1="185" x2="625" y2="185"/>
-            </g>
-            <line x1="385" y1="50" x2="615" y2="178" stroke="var(--accent2)" stroke-width="3.4"/>
-            <g fill="var(--accent2)">
-              <circle cx="385" cy="50" r="5"/>
-              <circle cx="500" cy="114" r="5"/>
-              <circle cx="615" cy="178" r="5"/>
-            </g>
-            <g font-size="14" font-family="'JetBrains Mono', monospace">
-              <text style="fill:var(--ink)" x="397" y="50">159 Ω à 10 Hz</text>
-              <text style="fill:var(--ink)" x="512" y="112">16 Ω à 100 Hz</text>
-              <text style="fill:var(--ink)" x="590" y="183" text-anchor="end">1,6 Ω à 1 kHz</text>
-            </g>
-            <text style="fill:var(--ink-soft)" x="625" y="203" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
-            <text style="fill:var(--ink)" x="495" y="228" text-anchor="middle" font-size="16">→ f × 10, impédance ÷ 10</text>
-            <!-- panneau 3 : deux chaînes -->
-            <text style="fill:var(--ink)" x="835" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">deux chaînes</text>
-            <rect x="700" y="44" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="835" y="68" text-anchor="middle" font-size="16">chaîne 1 : carte son + REW</text>
-            <text style="fill:var(--ink-soft)" x="835" y="90" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">à la maison</text>
-            <rect x="700" y="132" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="835" y="156" text-anchor="middle" font-size="16">chaîne 2 : GBF + oscilloscope</text>
-            <text style="fill:var(--ink-soft)" x="835" y="178" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">au lycée</text>
-            <path d="M835,104 V128" stroke="var(--wire)" stroke-width="2.2" fill="none"/>
-            <path d="M835,104 l-6,10 h12 z M835,128 l-6,-10 h12 z" fill="var(--wire)"/>
-            <text style="fill:var(--ink-soft)" x="848" y="121" font-size="14">même courbe ?</text>
-            <text style="fill:var(--ink)" x="835" y="228" text-anchor="middle" font-size="16">→ elles doivent concorder</text>
-          </svg>
-        </div>
-        <div class="encadre warn" style="font-size:.6em">
-          <strong>C'est une porte :</strong> résistance retrouvée à ±3 %, condensateur sur sa droite de
-          10 Hz à 1 kHz — sinon, je cherche l'erreur avant d'aller plus loin. La carte son n'étant
-          garantie qu'au-dessus de 20 Hz, je la vérifie aussi <strong>jusqu'à 10 Hz</strong>.
-        </div>
-        <div class="encadre" style="font-size:.6em">
-          <strong>Ensuite seulement :</strong> je mesure le caisson dans sa caisse et le bloc médiums tel
-          qu'il est câblé (pavillons d'aigu compris), et je confronte la courbe à ma
-          <strong>prédiction</strong> de l'accord des évents, calculée d'après leurs cotes.
-        </div>
-        <aside class="notes">
-          [59 s] Avant de brancher le haut-parleur, il y a un piège : sur lui, je ne connais pas la bonne réponse. Si l'appareil se trompe, je ne le verrai pas. Alors je fais comme avec une balance qu'on vérifie avec un poids connu. Une résistance de dix ohms doit donner une droite horizontale, à dix ohms, à toutes les fréquences. Un condensateur doit donner une impédance divisée par dix quand la fréquence est multipliée par dix. Puis une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée, doit donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Ensuite seulement, je mesure le caisson et les médiums, et je compare la courbe à ma prédiction de l'accord des évents, faite d'après leurs dimensions. Une fois la courbe mesurée, place au calcul.
-        </aside>
-      </section>
-
-      <!-- ===================== 7. LE CALCUL ENTRE LES DEUX [45 s] ===================== -->
-      <section>
-        <div class="kicker">Entre les expériences · le calcul</div>
-        <h2>De la courbe mesurée au <span class="accent">meilleur filtre</span></h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 270" font-family="Inter, sans-serif" role="img"
-               aria-label="À gauche, la boucle du problème inverse : mesure, modèle à huit paramètres, écart, ajustement par moindres carrés. À droite, l'entonnoir de l'optimisation : toutes les combinaisons normalisées, filtrées par les contraintes puis classées par un coût">
-            <defs>
-              <marker id="fl-calc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--wire)"/>
-              </marker>
-            </defs>
-            <!-- gauche : problème inverse -->
-            <text style="fill:var(--accent)" x="230" y="22" text-anchor="middle" font-size="19" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">1 · problème inverse</text>
-            <rect x="10" y="44" width="190" height="62" rx="5" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="105" y="72" text-anchor="middle" font-size="16">courbe mesurée</text>
-            <text style="fill:var(--ink-soft)" x="105" y="94" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">expérience 1</text>
-            <rect x="260" y="44" width="200" height="62" rx="5" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="360" y="72" text-anchor="middle" font-size="16">modèle physique</text>
-            <text style="fill:var(--ink-soft)" x="360" y="94" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">8 paramètres</text>
-            <rect x="120" y="170" width="230" height="62" rx="5" fill="var(--bg-card)" stroke="var(--warn)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="235" y="198" text-anchor="middle" font-size="16">écart mesure − modèle</text>
-            <text style="fill:var(--ink-soft)" x="235" y="220" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">à rendre minimal</text>
-            <g fill="none" stroke="var(--wire)" stroke-width="2.2" marker-end="url(#fl-calc)">
-              <path d="M105,108 V140 Q105,160 125,180"/>
-              <path d="M360,108 V140 Q360,160 340,180"/>
-              <path d="M352,200 Q440,190 440,130 V112"/>
-            </g>
-            <text style="fill:var(--ink-soft)" x="452" y="176" font-size="14">on ajuste</text>
-            <text style="fill:var(--ink-soft)" x="452" y="194" font-size="14">les paramètres</text>
-            <text style="fill:var(--ink)" x="235" y="262" text-anchor="middle" font-size="15">moindres carrés (Levenberg-Marquardt)</text>
-            <!-- séparateur -->
-            <line x1="535" y1="40" x2="535" y2="250" stroke="var(--trait)" stroke-width="1.2"/>
-            <!-- droite : optimisation (entonnoir) -->
-            <text style="fill:var(--accent)" x="775" y="22" text-anchor="middle" font-size="19" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">2 · optimisation</text>
-            <path d="M565,42 H985 L925,104 H625 Z" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="775" y="68" text-anchor="middle" font-size="16">toutes les combinaisons de valeurs</text>
-            <text style="fill:var(--ink-soft)" x="775" y="90" text-anchor="middle" font-size="14" font-family="'JetBrains Mono', monospace">normalisées E12 : 331 776 filtres</text>
-            <path d="M625,112 H925 L870,170 H680 Z" fill="var(--bg-card)" stroke="var(--warn)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="775" y="137" text-anchor="middle" font-size="15">contraintes : l'ampli voit ≥ 4 Ω,</text>
-            <text style="fill:var(--ink)" x="775" y="157" text-anchor="middle" font-size="15">tension des condensateurs</text>
-            <path d="M680,178 H870 L830,232 H720 Z" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="775" y="202" text-anchor="middle" font-size="15">coût : fidélité</text>
-            <text style="fill:var(--ink)" x="775" y="221" text-anchor="middle" font-size="15">+ prix + pertes</text>
-            <text style="fill:var(--accent)" x="775" y="262" text-anchor="middle" font-size="16" font-weight="700">→ le meilleur filtre</text>
-          </svg>
-        </div>
-        <div class="encadre" style="font-size:.64em">
-          <strong>Contrôle :</strong> sur une charge de 8 Ω résistifs, l'optimiseur doit retrouver le filtre
-          du catalogue (18 mH / 150 µF). S'il ne le retrouve pas, c'est un bug — rien n'est acheté avant.
-        </div>
-        <p class="note-ia">chaîne de calcul déjà écrite et testée sur des données fictives, avec l'aide d'une IA (Claude), ce que je déclare · j'en réécrirai seul le noyau</p>
-        <aside class="notes">
-          [43 s] Le calcul, je le résume. À gauche, le problème inverse : j'ajuste un modèle physique du haut-parleur, à huit paramètres, jusqu'à ce que sa courbe colle à la mesure ; c'est la méthode des moindres carrés. À droite, l'optimisation : les composants n'existent qu'en valeurs normalisées, donc je peux tester toutes les combinaisons, plus de trois cent mille, et garder la meilleure. Avec une contrainte : l'ampli ne doit jamais voir moins de quatre ohms. Ce code est déjà écrit et testé, avec l'aide d'une IA, je le dis clairement ; j'en réécrirai moi-même le cœur. Mais un filtre, il faut aussi le fabriquer.
-        </aside>
-      </section>
-
-      <!-- ===================== 8. EXP. 2 — LES SELFS [45 s] ===================== -->
-      <section>
-        <div class="kicker">Expérience 2 · fabriquer</div>
-        <h2>Bobiner les selfs, et <span class="accent">mesurer</span> ce qu'elles coûtent</h2>
-        <div class="colonnes" style="align-items:center">
-          <figure style="margin:0;flex:0 0 40%;text-align:center">
-            <svg viewBox="0 -40 420 400" font-family="Inter, sans-serif" role="img"
-                 aria-label="Bobine à air vue en coupe : un mandrin, deux sections de bobinage carrées c par c, et trois fils de sortie dont une prise intermédiaire">
-              <defs>
-                <pattern id="hachure-fil" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                  <line x1="0" y1="0" x2="0" y2="10" stroke="var(--accent)" stroke-width="3"/>
-                </pattern>
-              </defs>
-              <rect x="40" y="100" width="340" height="140" rx="4" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="2"/>
-              <text style="fill:var(--ink-soft)" x="210" y="176" text-anchor="middle" font-size="15">mandrin (air)</text>
-              <rect x="175" y="30" width="70" height="70" fill="url(#hachure-fil)" stroke="var(--accent)" stroke-width="2.4"/>
-              <rect x="175" y="240" width="70" height="70" fill="url(#hachure-fil)" stroke="var(--accent)" stroke-width="2.4"/>
-              <g fill="none" stroke="var(--wire)" stroke-width="2.4">
-                <path d="M182,30 L120,-8"/>
-                <path d="M210,30 V-8"/>
-                <path d="M238,30 L300,-8"/>
-              </g>
-              <g font-size="15" text-anchor="middle">
-                <text style="fill:var(--ink)" x="105" y="-16">début</text>
-                <text style="fill:var(--warn)" x="210" y="-16">prise</text>
-                <text style="fill:var(--ink)" x="315" y="-16">fin</text>
-              </g>
-              <g stroke="var(--ink-soft)" stroke-width="1.4">
-                <line x1="175" y1="330" x2="245" y2="330"/>
-                <line x1="175" y1="322" x2="175" y2="338"/>
-                <line x1="245" y1="322" x2="245" y2="338"/>
-                <line x1="265" y1="240" x2="265" y2="310"/>
-                <line x1="257" y1="240" x2="273" y2="240"/>
-                <line x1="257" y1="310" x2="273" y2="310"/>
-              </g>
-              <text style="fill:var(--ink-soft)" x="210" y="354" text-anchor="middle" font-size="15" font-family="'JetBrains Mono', monospace">c</text>
-              <text style="fill:var(--ink-soft)" x="280" y="280" font-size="15" font-family="'JetBrains Mono', monospace">c</text>
-            </svg>
-            <figcaption>bobine à air, section carrée (forme de Brooks)</figcaption>
-          </figure>
-          <div>
-            <ul class="serre" style="font-size:.64em">
-              <li><strong>à air, sans noyau</strong> : pas de saturation, une valeur qui ne dépend pas du volume</li>
-              <li><strong>le compromis de sobriété</strong> : moins de résistance de fil, c'est beaucoup plus de cuivre,
-                \( m \propto (L/r)^{3/2} \)</li>
-              <li><strong>je mesure</strong> chaque bobine : son inductance par résonance avec un condensateur connu,
-                la résistance de son fil en quatre fils, son échauffement au niveau fort</li>
-              <li><strong>une prise intermédiaire</strong> : la même bobine sert au filtre catalogue et au filtre
-                optimisé — on compare sur le même objet</li>
+        <div class="rangee">
+          <div class="panneau" style="flex:1.15">
+            <h3>Le principe</h3>
+            <div class="formule-grande">\[ I = \frac{V_A - V_B}{R} \qquad Z(f) = R\,\frac{V_B}{V_A - V_B} \]</div>
+          </div>
+          <div class="panneau">
+            <h3>À retenir</h3>
+            <ul class="aere">
+              <li>la résistance sert de <strong>capteur de courant</strong> : la carte son ne mesure que des tensions</li>
+              <li>sans elle, <strong>on ne verrait rien</strong></li>
+              <li>balayage de 10 Hz à 1 kHz, quelques mA</li>
             </ul>
           </div>
         </div>
-        <aside class="notes">
-          [47 s] Deuxième expérience : les inductances, qu'on appelle aussi des selfs. Je les bobine moi-même, à air, sans noyau : un noyau peut saturer, et la valeur changerait avec le volume. Le problème, c'est la résistance du fil, qui gaspille de la puissance. Moins de résistance, c'est un fil plus gros, donc beaucoup plus de cuivre : la masse croît comme le rapport L sur r, à la puissance trois demis. C'est là qu'est l'enjeu de sobriété. Je mesure chaque bobine : son inductance, la résistance de son fil, et son échauffement à fort niveau. Et grâce à cette prise intermédiaire, une même bobine sert au filtre du catalogue et au filtre optimisé. Ensuite, je les branche.
-        </aside>
+        <aside class="notes">%
+          [59 s] Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Encore faut-il pouvoir faire confiance à l'appareil.
+        %</aside>
       </section>
 
-      <!-- ===================== 9. EXP. 3 — LE BANC ÉLECTRIQUE [45 s] ===================== -->
       <section>
-        <div class="kicker">Expérience 3 · valider au banc</div>
-        <h2>Les filtres branchés sur les <span class="accent">vrais</span> haut-parleurs</h2>
-        <div class="viz">
+        <div class="kicker">EXPÉRIENCE 1 · AVANT DE BRANCHER LE HAUT-PARLEUR</div>
+        <h2>D'abord, tester l'appareil sur du <span class="accent">connu</span></h2>
+        <div class="appel">Sur le haut-parleur, on ne connaît pas la bonne réponse : une erreur de l'appareil passerait inaperçue.</div>
+        <div class="panneau" style="padding:.5em .55em .3em">
           <svg viewBox="0 0 1000 250" font-family="Inter, sans-serif" role="img"
-               aria-label="Banc électrique : le pré-amplificateur a deux sorties vers les deux canaux de l'amplificateur ; le canal 1 alimente le filtre passe-bas et le caisson, le canal 2 le filtre passe-haut et les médiums ; on mesure l'impédance d'entrée de chaque filtre et la tension aux bornes de chaque haut-parleur">
+               aria-label="Trois contrôles : une résistance de 10 ohms doit donner une droite horizontale à 10 ohms, un condensateur de 100 microfarads une impédance divisée par dix quand la fréquence est multipliée par dix, et deux chaînes de mesure indépendantes doivent donner la même courbe">
+            <defs><filter id="ombre6" x="-20%" y="-20%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#13222c" flood-opacity=".16"/>
+    </filter></defs>
+            <g font-size="17" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', Inter, sans-serif">
+              <text style="fill:var(--ink)" x="165" y="22">résistance de 10 Ω</text>
+              <text style="fill:var(--ink)" x="500" y="22">condensateur de 100 µF</text>
+              <text style="fill:var(--ink)" x="830" y="22">deux chaînes</text>
+            </g>
+            <rect x="35" y="38" width="265" height="155" rx="10" fill="#f5f8fa"/>
+            <rect x="368" y="38" width="265" height="155" rx="10" fill="#f5f8fa"/>
+            <g stroke="#e1e8ec" stroke-width="1.2">
+              <line x1="35" y1="76" x2="300" y2="76"/><line x1="35" y1="115" x2="300" y2="115"/><line x1="35" y1="154" x2="300" y2="154"/>
+              <line x1="368" y1="76" x2="633" y2="76"/><line x1="368" y1="115" x2="633" y2="115"/><line x1="368" y1="154" x2="633" y2="154"/>
+            </g>
+            <line x1="50" y1="115" x2="285" y2="115" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+            <text style="fill:var(--ink)" x="167" y="101" text-anchor="middle" font-size="15" font-weight="600">on doit lire 10 Ω partout</text>
+            <line x1="385" y1="55" x2="615" y2="178" stroke="var(--accent2)" stroke-width="4" stroke-linecap="round"/>
+            <g fill="#ffffff" stroke="var(--accent2)" stroke-width="3">
+              <circle cx="385" cy="55" r="6"/><circle cx="500" cy="116.5" r="6"/><circle cx="615" cy="178" r="6"/>
+            </g>
+            <g font-size="14" font-family="'JetBrains Mono', monospace" font-weight="600">
+              <text style="fill:var(--ink)" x="397" y="57">159 Ω à 10 Hz</text>
+              <text style="fill:var(--ink)" x="512" y="113">16 Ω à 100 Hz</text>
+              <text style="fill:var(--ink)" x="585" y="184" text-anchor="end">1,6 Ω à 1 kHz</text>
+            </g>
+            <g font-size="12" font-family="'JetBrains Mono', monospace">
+              <text style="fill:var(--ink-soft)" x="296" y="208" text-anchor="end">log f</text>
+              <text style="fill:var(--ink-soft)" x="629" y="208" text-anchor="end">log f</text>
+              <text style="fill:var(--ink-soft)" x="42" y="54">log |Z|</text>
+            </g>
+            <g filter="url(#ombre6)">
+              <rect x="690" y="44" width="280" height="62" rx="12" fill="#ffffff" stroke="var(--accent)" stroke-width="2.2"/>
+              <rect x="690" y="134" width="280" height="62" rx="12" fill="#ffffff" stroke="var(--accent2)" stroke-width="2.2"/>
+            </g>
+            <text style="fill:var(--ink)" x="830" y="70" text-anchor="middle" font-size="15" font-weight="600">chaîne 1 : carte son + REW</text>
+            <text style="fill:var(--ink-soft)" x="830" y="92" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">à la maison</text>
+            <text style="fill:var(--ink)" x="830" y="160" text-anchor="middle" font-size="15" font-weight="600">chaîne 2 : GBF + oscilloscope</text>
+            <text style="fill:var(--ink-soft)" x="830" y="182" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">au lycée</text>
+            <path d="M830,110 V130" stroke="var(--wire)" stroke-width="2.2"/>
+            <path d="M830,108 l-6,9 h12 z M830,132 l-6,-9 h12 z" fill="var(--wire)"/>
+            <text style="fill:var(--ink-soft)" x="842" y="125" font-size="13">même courbe ?</text>
+            <g font-size="15" text-anchor="middle">
+              <text style="fill:var(--ink)" x="167" y="230">→ une droite horizontale</text>
+              <text style="fill:var(--ink)" x="500" y="230">→ f × 10, impédance ÷ 10</text>
+              <text style="fill:var(--ink)" x="830" y="230">→ elles doivent concorder</text>
+            </g>
+          </svg>
+        </div>
+        <div class="rangee">
+          <div class="panneau"><h3 class="warn">C'est une porte</h3><p>résistance retrouvée à ±3 %, condensateur sur sa droite de 10 Hz à 1 kHz ; sinon, je cherche l'erreur. Et je vérifie la carte son jusqu'à 10 Hz, en dessous de sa plage garantie.</p></div>
+          <div class="panneau"><h3 class="accent">Ensuite seulement</h3><p>je mesure le caisson et le bloc médiums tel qu'il est câblé, et je confronte la courbe à ma <strong>prédiction</strong> de l'accord des évents, calculée d'après leurs cotes.</p></div>
+        </div>
+        <aside class="notes">%
+          [59 s] Avant de brancher le haut-parleur, il y a un piège : sur lui, je ne connais pas la bonne réponse. Si l'appareil se trompe, je ne le verrai pas. Alors je fais comme avec une balance qu'on vérifie avec un poids connu. Une résistance de dix ohms doit donner une droite horizontale, à dix ohms, à toutes les fréquences. Un condensateur doit donner une impédance divisée par dix quand la fréquence est multipliée par dix. Puis une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée, doit donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Ensuite seulement, je mesure le caisson et les médiums, et je compare la courbe à ma prédiction de l'accord des évents, faite d'après leurs dimensions. Une fois la courbe mesurée, place au calcul.
+        %</aside>
+      </section>
+
+      <section>
+        <div class="kicker">ENTRE LES EXPÉRIENCES · LE CALCUL</div>
+        <h2>De la courbe mesurée au <span class="accent">meilleur filtre</span></h2>
+        <div class="panneau" style="padding:.55em .55em .35em">
+          <svg viewBox="0 0 1000 290" font-family="Inter, sans-serif" role="img"
+               aria-label="À gauche, la boucle du problème inverse : mesure, modèle à huit paramètres, écart, ajustement par moindres carrés. À droite, l'entonnoir de l'optimisation : toutes les combinaisons normalisées, filtrées par les contraintes puis classées par un coût">
             <defs>
-              <marker id="fl-banc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--wire)"/>
-              </marker>
+              <filter id="ombre7" x="-20%" y="-20%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#13222c" flood-opacity=".16"/>
+    </filter>
+              <marker id="fl7" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6b76"/></marker>
             </defs>
-            <rect x="10" y="70" width="150" height="110" rx="5" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="85" y="118" text-anchor="middle" font-size="16">pré-ampli</text>
-            <text style="fill:var(--ink-soft)" x="85" y="140" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">2 sorties</text>
-            <rect x="225" y="20" width="160" height="210" rx="5" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="305" y="122" text-anchor="middle" font-size="17">ampli</text>
-            <text style="fill:var(--ink-soft)" x="305" y="142" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">2 × 350 W</text>
-            <g font-family="'JetBrains Mono', monospace" font-size="13">
-              <text style="fill:var(--ink-soft)" x="378" y="58" text-anchor="end">canal 1</text>
-              <text style="fill:var(--ink-soft)" x="378" y="208" text-anchor="end">canal 2</text>
+            <text style="fill:var(--accent)" x="245" y="22" text-anchor="middle" font-size="18" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif">1 · le problème inverse</text>
+            <g filter="url(#ombre7)">
+              <rect x="20" y="46" width="200" height="66" rx="14" fill="#ffffff" stroke="var(--accent2)" stroke-width="2.4"/>
+              <rect x="275" y="46" width="200" height="66" rx="14" fill="#ffffff" stroke="var(--accent)" stroke-width="2.4"/>
+              <rect x="130" y="176" width="235" height="66" rx="14" fill="#ffffff" stroke="var(--warn)" stroke-width="2.4"/>
             </g>
-            <g fill="none" stroke="var(--wire)" stroke-width="2.4" marker-end="url(#fl-banc)">
-              <path d="M160,100 H190 V65 H220"/>
-              <path d="M160,150 H190 V185 H220"/>
+            <text style="fill:var(--ink)" x="120" y="75" text-anchor="middle" font-size="16" font-weight="600">courbe mesurée</text>
+            <text style="fill:var(--ink-soft)" x="120" y="97" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">expérience 1</text>
+            <text style="fill:var(--ink)" x="375" y="75" text-anchor="middle" font-size="16" font-weight="600">modèle physique</text>
+            <text style="fill:var(--ink-soft)" x="375" y="97" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">8 paramètres</text>
+            <text style="fill:var(--ink)" x="247" y="205" text-anchor="middle" font-size="16" font-weight="600">écart mesure − modèle</text>
+            <text style="fill:var(--ink-soft)" x="247" y="227" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">à rendre minimal</text>
+            <g fill="none" stroke="#5a6b76" stroke-width="2.2" marker-end="url(#fl7)">
+              <path d="M120,116 V146 Q120,170 140,180"/>
+              <path d="M375,116 V146 Q375,170 355,180"/>
+              <path d="M368,212 Q458,200 458,140 V120"/>
             </g>
-            <g fill="none" stroke="var(--wire)" stroke-width="2.4">
-              <path d="M385,65 H470"/>
-              <path d="M385,185 H470"/>
-              <path d="M650,65 H760"/>
-              <path d="M650,185 H760"/>
+            <text style="fill:var(--ink-soft)" x="468" y="178" font-size="13">on ajuste</text>
+            <text style="fill:var(--ink-soft)" x="468" y="195" font-size="13">les paramètres</text>
+            <text style="fill:var(--ink)" x="247" y="276" text-anchor="middle" font-size="14">moindres carrés (Levenberg-Marquardt)</text>
+            <line x1="540" y1="40" x2="540" y2="270" stroke="#e1e8ec" stroke-width="1.6"/>
+            <text style="fill:var(--accent)" x="775" y="22" text-anchor="middle" font-size="18" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif">2 · l'optimisation</text>
+            <g filter="url(#ombre7)">
+              <path d="M570,44 H980 Q986,44 982,49 L926,104 Q922,108 916,108 H634 Q628,108 624,104 L568,49 Q564,44 570,44 Z" fill="#e6f1f5" stroke="var(--accent)" stroke-width="1.8"/>
+              <path d="M636,118 H914 Q920,118 916,123 L866,172 Q862,176 856,176 H694 Q688,176 684,172 L634,123 Q630,118 636,118 Z" fill="#fbefe2" stroke="var(--warn)" stroke-width="1.8"/>
+              <path d="M696,186 H854 Q860,186 856,191 L820,236 Q816,240 810,240 H740 Q734,240 730,236 L694,191 Q690,186 696,186 Z" fill="#e6f3eb" stroke="var(--accent2)" stroke-width="1.8"/>
             </g>
-            <rect x="470" y="38" width="180" height="54" rx="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.6"/>
-            <text style="fill:var(--ink)" x="560" y="71" text-anchor="middle" font-size="17">filtre passe-bas</text>
-            <rect x="470" y="158" width="180" height="54" rx="5" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2.6"/>
-            <text style="fill:var(--ink)" x="560" y="191" text-anchor="middle" font-size="17">filtre passe-haut</text>
-            <path d="M762,45 h22 l34,-26 v92 l-34,-26 h-22 z" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="2.2"/>
-            <path d="M762,165 h22 l34,-26 v92 l-34,-26 h-22 z" fill="var(--bg-card)" stroke="var(--wire)" stroke-width="2.2"/>
-            <text style="fill:var(--ink)" x="835" y="60" font-size="17">caisson 18″</text>
-            <text style="fill:var(--ink)" x="835" y="180" font-size="17">médiums</text>
-            <text style="fill:var(--ink-soft)" x="835" y="200" font-size="13" font-family="'JetBrains Mono', monospace">+ pavillons</text>
+            <text style="fill:var(--ink)" x="775" y="70" text-anchor="middle" font-size="15" font-weight="600">toutes les combinaisons de valeurs</text>
+            <text style="fill:var(--ink-soft)" x="775" y="92" text-anchor="middle" font-size="12.5" font-family="'JetBrains Mono', monospace">normalisées E12 : 331 776 filtres</text>
+            <text style="fill:var(--ink)" x="775" y="142" text-anchor="middle" font-size="14">contraintes : l'ampli voit ≥ 4 Ω,</text>
+            <text style="fill:var(--ink)" x="775" y="161" text-anchor="middle" font-size="14">tension des condensateurs</text>
+            <text style="fill:var(--ink)" x="775" y="209" text-anchor="middle" font-size="14">coût : fidélité</text>
+            <text style="fill:var(--ink)" x="775" y="227" text-anchor="middle" font-size="14">+ prix + pertes</text>
+            <text style="fill:var(--accent2)" x="775" y="272" text-anchor="middle" font-size="16" font-weight="700">→ le meilleur filtre</text>
+          </svg>
+        </div>
+        <div class="appel" style="margin-top:.6em"><strong>Contrôle :</strong> sur une charge de 8 Ω résistifs, l'optimiseur doit retrouver le filtre du catalogue (18 mH / 150 µF). Sinon, c'est un bug : rien n'est acheté avant.</div>
+        <p class="note-bas" style="margin-top:.3em">chaîne de calcul déjà écrite et testée sur des données fictives, avec l'aide d'une IA (Claude), ce que je déclare · j'en réécrirai seul le noyau</p>
+        <aside class="notes">%
+          [43 s] Le calcul, je le résume. À gauche, le problème inverse : j'ajuste un modèle physique du haut-parleur, à huit paramètres, jusqu'à ce que sa courbe colle à la mesure ; c'est la méthode des moindres carrés. À droite, l'optimisation : les composants n'existent qu'en valeurs normalisées, donc je peux tester toutes les combinaisons, plus de trois cent mille, et garder la meilleure. Avec une contrainte : l'ampli ne doit jamais voir moins de quatre ohms. Ce code est déjà écrit et testé, avec l'aide d'une IA, je le dis clairement ; j'en réécrirai moi-même le cœur. Mais un filtre, il faut aussi le fabriquer.
+        %</aside>
+      </section>
+
+      <section>
+        <div class="kicker">EXPÉRIENCE 2 · FABRIQUER</div>
+        <h2>Bobiner les selfs, et <span class="accent">mesurer</span> ce qu'elles coûtent</h2>
+        <div class="rangee" style="margin-top:0;gap:.8em;align-items:center">
+          <div class="panneau" style="flex:1.12;padding:.5em .4em .35em">
+            <svg viewBox="0 0 600 470" font-family="Inter, sans-serif" role="img"
+                 aria-label="Bobine à air vue en perspective : un enroulement de fil de cuivre de section carrée c par c, de rayon intérieur c, sur un mandrin creux, avec trois sorties dont une prise intermédiaire">
+              <defs>
+  <linearGradient id="cu-corps" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#5e2c0d"/><stop offset=".14" stop-color="#a95a25"/>
+    <stop offset=".30" stop-color="#f2b47c"/><stop offset=".42" stop-color="#d48644"/>
+    <stop offset=".72" stop-color="#9a531f"/><stop offset="1" stop-color="#4f240a"/>
+  </linearGradient>
+  <linearGradient id="cu-face" gradientUnits="userSpaceOnUse" x1="161.0" y1="65.0" x2="269.0" y2="365.0">
+    <stop offset="0" stop-color="#e9a265"/><stop offset=".55" stop-color="#bf6f35"/>
+    <stop offset="1" stop-color="#8a4519"/>
+  </linearGradient>
+  <linearGradient id="mandrin" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9fb0bb"/><stop offset=".3" stop-color="#eef2f5"/>
+    <stop offset=".55" stop-color="#cfd9df"/><stop offset="1" stop-color="#8797a2"/>
+  </linearGradient>
+  <linearGradient id="mandrin-face" gradientUnits="userSpaceOnUse" x1="188.0" y1="140.0" x2="242.0" y2="290.0">
+    <stop offset="0" stop-color="#f4f7f9"/><stop offset="1" stop-color="#b3c1ca"/>
+  </linearGradient>
+  <radialGradient id="creux" cx=".35" cy=".35" r=".8">
+    <stop offset="0" stop-color="#4a5862"/><stop offset="1" stop-color="#151c21"/>
+  </radialGradient>
+  <filter id="flou-ombre" x="-30%" y="-200%" width="160%" height="500%">
+    <feGaussianBlur stdDeviation="9"/>
+  </filter>
+</defs>
+<ellipse cx="310.0" cy="387.0" rx="155.0" ry="16" fill="rgba(19,34,44,.28)" filter="url(#flou-ombre)"/>
+<path d="M290.0,140.0 H385.0 A27.0,75.0 0 0 1 385.0,290.0 H290.0 Z" fill="url(#mandrin)" stroke="#7d8d98" stroke-width="1.4"/>
+<path d="M215.0,65.0 H290.0 A54.0,150.0 0 0 1 290.0,365.0 H215.0 Z" fill="url(#cu-corps)" stroke="#4f240a" stroke-width="1.4"/>
+<path d="M219.2,65.0 A54.0,150.0 0 0 1 219.2,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M220.8,65.0 A54.0,150.0 0 0 1 220.8,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M223.3,65.0 A54.0,150.0 0 0 1 223.3,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M224.9,65.0 A54.0,150.0 0 0 1 224.9,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M227.5,65.0 A54.0,150.0 0 0 1 227.5,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M229.1,65.0 A54.0,150.0 0 0 1 229.1,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M231.7,65.0 A54.0,150.0 0 0 1 231.7,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M233.3,65.0 A54.0,150.0 0 0 1 233.3,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M235.8,65.0 A54.0,150.0 0 0 1 235.8,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M237.4,65.0 A54.0,150.0 0 0 1 237.4,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M240.0,65.0 A54.0,150.0 0 0 1 240.0,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M241.6,65.0 A54.0,150.0 0 0 1 241.6,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M244.2,65.0 A54.0,150.0 0 0 1 244.2,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M245.8,65.0 A54.0,150.0 0 0 1 245.8,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M248.3,65.0 A54.0,150.0 0 0 1 248.3,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M249.9,65.0 A54.0,150.0 0 0 1 249.9,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M252.5,65.0 A54.0,150.0 0 0 1 252.5,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M254.1,65.0 A54.0,150.0 0 0 1 254.1,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M256.7,65.0 A54.0,150.0 0 0 1 256.7,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M258.3,65.0 A54.0,150.0 0 0 1 258.3,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M260.8,65.0 A54.0,150.0 0 0 1 260.8,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M262.4,65.0 A54.0,150.0 0 0 1 262.4,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M265.0,65.0 A54.0,150.0 0 0 1 265.0,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M266.6,65.0 A54.0,150.0 0 0 1 266.6,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M269.2,65.0 A54.0,150.0 0 0 1 269.2,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M270.8,65.0 A54.0,150.0 0 0 1 270.8,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M273.3,65.0 A54.0,150.0 0 0 1 273.3,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M274.9,65.0 A54.0,150.0 0 0 1 274.9,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M277.5,65.0 A54.0,150.0 0 0 1 277.5,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M279.1,65.0 A54.0,150.0 0 0 1 279.1,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M281.7,65.0 A54.0,150.0 0 0 1 281.7,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M283.3,65.0 A54.0,150.0 0 0 1 283.3,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<path d="M285.8,65.0 A54.0,150.0 0 0 1 285.8,365.0" fill="none" stroke="rgba(60,25,6,.42)" stroke-width="1.2"/>
+<path d="M287.4,65.0 A54.0,150.0 0 0 1 287.4,365.0" fill="none" stroke="rgba(255,214,170,.28)" stroke-width=".8"/>
+<ellipse cx="215.0" cy="215.0" rx="54.0" ry="150.0" fill="#c97c40" stroke="#4f240a" stroke-width="1.4"/>
+<ellipse cx="215.0" cy="215.0" rx="30.0" ry="83.3" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="33.0" ry="91.7" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="36.0" ry="100.0" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="39.0" ry="108.3" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="42.0" ry="116.7" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="45.0" ry="125.0" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="48.0" ry="133.3" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="51.0" ry="141.7" fill="none" stroke="rgba(70,30,8,.30)" stroke-width="1"/>
+<ellipse cx="215.0" cy="215.0" rx="27.0" ry="75.0" fill="url(#mandrin-face)" stroke="#7d8d98" stroke-width="1.4"/>
+<ellipse cx="215.0" cy="215.0" rx="21.6" ry="60.0" fill="url(#creux)"/>
+<line x1="215.0" y1="213.0" x2="215.0" y2="143.0" stroke="#ffffff" stroke-width="1.6"/><path d="M215.0,143.0 l-4,7 h8 z M215.0,213.0 l-4,-7 h8 z" fill="#ffffff"/>
+<line x1="215.0" y1="137.0" x2="215.0" y2="68.0" stroke="#ffffff" stroke-width="1.6"/><path d="M215.0,68.0 l-4,7 h8 z M215.0,137.0 l-4,-7 h8 z" fill="#ffffff"/>
+<g font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700"><text style="fill:#ffffff" x="222.0" y="183.5">c</text><text style="fill:#ffffff" x="222.0" y="108.5">c</text></g>
+<g stroke="var(--ink-soft)" stroke-width="1.3"><line x1="215.0" y1="417.0" x2="290.0" y2="417.0"/><line x1="215.0" y1="410.0" x2="215.0" y2="424.0"/><line x1="290.0" y1="410.0" x2="290.0" y2="424.0"/></g>
+<text style="fill:var(--ink-soft)" x="252.5" y="441.0" text-anchor="middle" font-size="17" font-family="'JetBrains Mono', monospace" font-weight="700">c</text>
+<path d="M202.7,141.6 C162.7,101.6 120.0,60.0 92.0,38.0" fill="none" stroke="#9a531f" stroke-width="5" stroke-linecap="round"/><path d="M202.7,141.6 C162.7,101.6 120.0,60.0 92.0,38.0" fill="none" stroke="#f3c48f" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+<path d="M252.5,66.0 C252.5,35.0 260.5,30.0 260.5,20.0" fill="none" stroke="#9a531f" stroke-width="5" stroke-linecap="round"/><path d="M252.5,66.0 C252.5,35.0 260.5,30.0 260.5,20.0" fill="none" stroke="#f3c48f" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+<path d="M286.0,68.0 C316.0,35.0 395.0,50.0 420.0,40.0" fill="none" stroke="#9a531f" stroke-width="5" stroke-linecap="round"/><path d="M286.0,68.0 C316.0,35.0 395.0,50.0 420.0,40.0" fill="none" stroke="#f3c48f" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+<g font-size="17" font-family="Inter, sans-serif"><text style="fill:var(--ink)" x="84" y="30" text-anchor="end" font-weight="600">début</text><text style="fill:var(--warn)" x="260.5" y="12" text-anchor="middle" font-weight="700">prise intermédiaire</text><text style="fill:var(--ink)" x="428" y="45" font-weight="600">fin</text></g>
+<g font-size="15" font-family="Inter, sans-serif" fill="none"><path d="M432,128 H372 L338,150" stroke="var(--ink-soft)" stroke-width="1.2"/><circle cx="338" cy="150" r="3" style="fill:var(--ink-soft)"/><text style="fill:var(--ink)" x="440" y="124">spires de fil de</text><text style="fill:var(--ink)" x="440" y="144">cuivre émaillé</text><path d="M432,300 H405 L372,262" stroke="var(--ink-soft)" stroke-width="1.2"/><circle cx="372" cy="262" r="3" style="fill:var(--ink-soft)"/><text style="fill:var(--ink)" x="440" y="296">mandrin creux :</text><text style="fill:var(--ink)" x="440" y="316">noyau d'air</text></g>
+            </svg>
+            <div class="legende-fig">forme de Brooks : section c × c, rayon intérieur c</div>
+          </div>
+          <div class="points">
+            <div class="point"><div class="pastille">1</div><div><b>À air, sans noyau</b><p>pas de saturation : la valeur ne dépend pas du volume</p></div></div>
+            <div class="point"><div class="pastille cuivre">2</div><div><b>Le compromis de sobriété</b><p>moins de résistance de fil, c'est beaucoup plus de cuivre : \( m \propto (L/r)^{3/2} \)</p></div></div>
+            <div class="point"><div class="pastille">3</div><div><b>Je mesure chaque bobine</b><p>inductance, résistance du fil, échauffement au niveau fort</p></div></div>
+            <div class="point"><div class="pastille cuivre">4</div><div><b>Une prise intermédiaire</b><p>la même bobine sert au filtre catalogue et au filtre optimisé</p></div></div>
+          </div>
+        </div>
+        <aside class="notes">%
+          [47 s] Deuxième expérience : les inductances, qu'on appelle aussi des selfs. Je les bobine moi-même, à air, sans noyau : un noyau peut saturer, et la valeur changerait avec le volume. Le problème, c'est la résistance du fil, qui gaspille de la puissance. Moins de résistance, c'est un fil plus gros, donc beaucoup plus de cuivre : la masse croît comme le rapport L sur r, à la puissance trois demis. C'est là qu'est l'enjeu de sobriété. Je mesure chaque bobine : son inductance, la résistance de son fil, et son échauffement à fort niveau. Et grâce à cette prise intermédiaire, une même bobine sert au filtre du catalogue et au filtre optimisé. Ensuite, je les branche.
+        %</aside>
+      </section>
+
+      <section>
+        <div class="kicker">EXPÉRIENCE 3 · VALIDER AU BANC</div>
+        <h2>Les filtres branchés sur les <span class="accent">vrais</span> haut-parleurs</h2>
+        <div class="panneau" style="padding:.5em .5em .25em">
+          <svg viewBox="0 0 1000 265" font-family="Inter, sans-serif" role="img"
+               aria-label="Banc électrique : le pré-ampli a deux sorties vers les deux canaux de l'ampli ; le canal 1 alimente le filtre passe-bas et le caisson, le canal 2 le filtre passe-haut et les médiums ; on mesure l'impédance d'entrée de chaque filtre et la tension aux bornes de chaque haut-parleur">
+            <defs>
+              <filter id="ombre9" x="-20%" y="-20%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#13222c" flood-opacity=".16"/>
+    </filter>
+              <linearGradient id="table-mix" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a535a"/><stop offset="1" stop-color="#22282d"/></linearGradient>
+              <linearGradient id="rack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4046"/><stop offset="1" stop-color="#14181b"/></linearGradient>
+              <radialGradient id="bouton9" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#f4f6f7"/><stop offset=".6" stop-color="#9aa3a9"/><stop offset="1" stop-color="#3c4247"/></radialGradient>
+              <linearGradient id="aimant9" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a3238"/><stop offset=".5" stop-color="#5c6871"/><stop offset="1" stop-color="#1d2328"/></linearGradient>
+              <linearGradient id="cone9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e1e6"/><stop offset=".45" stop-color="#f6f8f9"/><stop offset="1" stop-color="#a9b6be"/></linearGradient>
+            </defs>
+            <!-- fils -->
+            <g fill="none" stroke="var(--wire)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M178,108 H200 V82 H228"/><path d="M178,152 H200 V178 H228"/>
+              <path d="M384,82 H500"/><path d="M384,178 H500"/>
+              <path d="M660,82 H772"/><path d="M660,178 H778"/>
+            </g>
+            <!-- pré-ampli -->
+            <g filter="url(#ombre9)"><rect x="12" y="66" width="166" height="128" rx="12" fill="url(#table-mix)"/></g>
+            <g fill="#c9d0d4">
+              <circle cx="36" cy="88" r="5"/><circle cx="60" cy="88" r="5"/><circle cx="84" cy="88" r="5"/><circle cx="108" cy="88" r="5"/><circle cx="132" cy="88" r="5"/><circle cx="156" cy="88" r="5"/>
+              <circle cx="36" cy="106" r="5"/><circle cx="60" cy="106" r="5"/><circle cx="84" cy="106" r="5"/><circle cx="108" cy="106" r="5"/><circle cx="132" cy="106" r="5"/><circle cx="156" cy="106" r="5"/>
+            </g>
+            <g stroke="#0d1114" stroke-width="4" stroke-linecap="round">
+              <line x1="36" y1="126" x2="36" y2="178"/><line x1="60" y1="126" x2="60" y2="178"/><line x1="84" y1="126" x2="84" y2="178"/>
+              <line x1="108" y1="126" x2="108" y2="178"/><line x1="132" y1="126" x2="132" y2="178"/><line x1="156" y1="126" x2="156" y2="178"/>
+            </g>
+            <g fill="#e9edf0"><rect x="30" y="150" width="12" height="7" rx="2"/><rect x="54" y="140" width="12" height="7" rx="2"/><rect x="78" y="158" width="12" height="7" rx="2"/>
+              <rect x="102" y="146" width="12" height="7" rx="2"/><rect x="126" y="136" width="12" height="7" rx="2"/><rect x="150" y="154" width="12" height="7" rx="2"/></g>
+            <text style="fill:var(--ink)" x="95" y="220" text-anchor="middle" font-size="16" font-weight="600">pré-ampli</text>
+            <text style="fill:var(--ink-soft)" x="95" y="240" text-anchor="middle" font-size="12" font-family="'JetBrains Mono', monospace">2 sorties</text>
+            <!-- ampli -->
+            <g filter="url(#ombre9)"><rect x="228" y="36" width="156" height="190" rx="12" fill="url(#rack)"/></g>
+            <g stroke="#2a2f33" stroke-width="1.2"><circle cx="262" cy="82" r="17" fill="url(#bouton9)"/><circle cx="262" cy="178" r="17" fill="url(#bouton9)"/></g>
+            <g stroke="#2a2f33" stroke-width="2.6" stroke-linecap="round"><line x1="262" y1="82" x2="272" y2="70"/><line x1="262" y1="178" x2="252" y2="166"/></g>
+            <g stroke="#4b535a" stroke-width="2.4" stroke-linecap="round">
+              <line x1="350" y1="56" x2="370" y2="56"/><line x1="350" y1="66" x2="370" y2="66"/><line x1="350" y1="76" x2="370" y2="76"/>
+              <line x1="350" y1="186" x2="370" y2="186"/><line x1="350" y1="196" x2="370" y2="196"/><line x1="350" y1="206" x2="370" y2="206"/>
+            </g>
+            <circle cx="360" cy="130" r="4.5" fill="#46d17a"/>
+            <g font-size="12" font-family="'JetBrains Mono', monospace">
+              <text style="fill:#e6edf1" x="290" y="87">canal 1</text><text style="fill:#e6edf1" x="290" y="183">canal 2</text>
+            </g>
+            <text style="fill:var(--ink)" x="306" y="250" text-anchor="middle" font-size="16" font-weight="600">ampli · 2 × 350 W</text>
+            <!-- filtres -->
+            <g filter="url(#ombre9)">
+              <rect x="500" y="54" width="160" height="56" rx="14" fill="#ffffff" stroke="var(--accent)" stroke-width="2.6"/>
+              <rect x="500" y="150" width="160" height="56" rx="14" fill="#ffffff" stroke="var(--accent2)" stroke-width="2.6"/>
+            </g>
+            <text style="fill:var(--ink)" x="580" y="88" text-anchor="middle" font-size="16" font-weight="600">filtre passe-bas</text>
+            <text style="fill:var(--ink)" x="580" y="184" text-anchor="middle" font-size="16" font-weight="600">filtre passe-haut</text>
+            <!-- haut-parleurs -->
+            <g filter="url(#ombre9)">
+              <rect x="772" y="60" width="28" height="44" rx="4" fill="url(#aimant9)"/>
+              <polygon points="800,60 800,104 852,136 852,28" fill="url(#cone9)" stroke="var(--wire)" stroke-width="2" stroke-linejoin="round"/>
+              <rect x="778" y="160" width="22" height="36" rx="4" fill="url(#aimant9)"/>
+              <polygon points="800,160 800,196 838,220 838,136" fill="url(#cone9)" stroke="var(--wire)" stroke-width="2" stroke-linejoin="round"/>
+            </g>
+            <ellipse cx="852" cy="82" rx="6" ry="54" fill="#eef2f4" stroke="var(--wire)" stroke-width="1.6"/>
+            <ellipse cx="838" cy="178" rx="5" ry="42" fill="#eef2f4" stroke="var(--wire)" stroke-width="1.6"/>
+            <text style="fill:var(--ink)" x="872" y="88" font-size="16" font-weight="600">caisson 18″</text>
+            <text style="fill:var(--ink)" x="860" y="176" font-size="16" font-weight="600">médiums</text>
+            <text style="fill:var(--ink-soft)" x="860" y="196" font-size="12" font-family="'JetBrains Mono', monospace">+ pavillons</text>
             <!-- points de mesure -->
-            <g font-family="'JetBrains Mono', monospace" font-size="14">
-              <text style="fill:var(--warn)" x="428" y="118" text-anchor="middle">Z_in ≥ 4 Ω ?</text>
-              <text style="fill:var(--accent2)" x="705" y="118" text-anchor="middle">V_HP</text>
+            <g stroke-width="1.8" stroke-dasharray="5 4" fill="none">
+              <path d="M442,86 V114 M442,148 V174" stroke="var(--warn)"/>
+              <path d="M716,86 V114 M716,148 V174" stroke="var(--accent2)"/>
             </g>
-            <g fill="none" stroke-width="1.8" stroke-dasharray="5 4">
-              <path d="M428,70 V100 M428,126 V180" stroke="var(--warn)"/>
-              <path d="M705,70 V100 M705,126 V180" stroke="var(--accent2)"/>
-            </g>
+            <rect x="392" y="117" width="100" height="28" rx="14" fill="#fbefe2" stroke="var(--warn)" stroke-width="1.6"/>
+            <text style="fill:var(--warn)" x="442" y="136" text-anchor="middle" font-size="12" font-weight="600" font-family="'JetBrains Mono', monospace">Z_in ≥ 4 Ω ?</text>
+            <rect x="680" y="117" width="72" height="28" rx="14" fill="#e6f3eb" stroke="var(--accent2)" stroke-width="1.6"/>
+            <text style="fill:var(--accent2)" x="716" y="136" text-anchor="middle" font-size="13" font-weight="600" font-family="'JetBrains Mono', monospace">V_HP</text>
           </svg>
         </div>
-        <div class="colonnes">
-          <ul class="serre">
+        <div class="rangee">
+          <div class="panneau"><h3>Le montage</h3><ul class="aere">
             <li><strong>même banc, deux filtres</strong> : le filtre catalogue, puis le filtre optimisé</li>
-            <li>un canal d'ampli par voie, comme dans l'usage réel</li>
-          </ul>
-          <ul class="serre">
-            <li>je relève : la réponse de chaque voie, la <strong>fréquence où elles se croisent</strong>,
-              l'impédance vue par l'ampli, les pertes dans les selfs</li>
-          </ul>
+            <li>un canal d'ampli par voie, comme dans l'usage réel</li></ul></div>
+          <div class="panneau"><h3>Ce que je relève</h3><ul class="aere">
+            <li>la réponse de chaque voie et la <strong>fréquence où elles se croisent</strong></li>
+            <li>l'impédance vue par l'ampli, les pertes dans les selfs</li></ul></div>
         </div>
-        <aside class="notes">
+        <aside class="notes">%
           [44 s] Troisième expérience : le banc électrique. Le pré-ampli a deux sorties, et l'ampli deux canaux : un canal pour le caisson, un pour les médiums, chacun avec son filtre. Je branche le filtre du catalogue, puis le filtre optimisé, sur les vrais haut-parleurs. Je relève la réponse de chaque voie, la fréquence où elles se croisent, l'impédance que voit l'ampli, et les pertes dans les bobines. C'est là que le calcul est confronté au réel. Et comme ce banc travaille derrière l'ampli, à des tensions élevées, son protocole sera relu par mon professeur avant la première mise sous tension. Reste le plus important : ce qu'on entend.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 10. EXP. 4 — MICRO ET WATTMÈTRE [60 s] ===================== -->
       <section>
-        <div class="kicker">Expérience 4 · ce qu'on entend, ce qu'on consomme</div>
+        <div class="kicker">EXPÉRIENCE 4 · CE QU'ON ENTEND, CE QU'ON CONSOMME</div>
         <h2>Le micro en <span class="accent">champ proche</span>, et le wattmètre</h2>
-        <div class="viz">
-          <svg viewBox="0 0 1000 250" font-family="Inter, sans-serif" role="img"
-               aria-label="À gauche, la face de l'enceinte avec la membrane du caisson et ses deux évents, le micro placé à environ deux centimètres de chacun. À droite, la somme des deux voies : une bosse quand une voie est inversée, un trou profond sinon">
-            <!-- enceinte -->
-            <rect x="20" y="8" width="210" height="234" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="2"/>
-            <circle cx="125" cy="100" r="74" fill="none" stroke="var(--wire)" stroke-width="2.4"/>
-            <circle cx="125" cy="100" r="22" fill="none" stroke="var(--wire)" stroke-width="1.6"/>
-            <circle cx="68" cy="208" r="17" fill="var(--bg)" stroke="var(--wire)" stroke-width="2.2"/>
-            <circle cx="182" cy="208" r="17" fill="var(--bg)" stroke="var(--wire)" stroke-width="2.2"/>
-            <g fill="var(--accent)">
-              <circle cx="125" cy="100" r="7"/>
-              <circle cx="68" cy="208" r="6"/>
-              <circle cx="182" cy="208" r="6"/>
-            </g>
-            <g font-size="15">
-              <text style="fill:var(--ink)" x="250" y="40">micro à ≈ 2 cm de la membrane,</text>
-              <text style="fill:var(--ink)" x="250" y="62">puis de chaque évent :</text>
-              <text style="fill:var(--accent)" x="250" y="86">trois relevés, sommés</text>
-              <text style="fill:var(--ink-soft)" x="250" y="132">à 100 Hz, λ = 3,4 m :</text>
-              <text style="fill:var(--ink-soft)" x="250" y="154">la pièce domine tout,</text>
-              <text style="fill:var(--ink-soft)" x="250" y="176">d'où le champ proche</text>
-            </g>
-            <!-- polarité -->
-            <line x1="535" y1="20" x2="535" y2="235" stroke="var(--trait)" stroke-width="1.2"/>
-            <text style="fill:var(--accent)" x="770" y="26" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">le test de polarité</text>
-            <line x1="580" y1="200" x2="975" y2="200" stroke="var(--trait)" stroke-width="1.6"/>
-            <path d="M580,150 C680,150 730,104 778,104 C826,104 876,150 975,150" fill="none" stroke="var(--accent2)" stroke-width="3.4"/>
-            <path d="M580,150 C680,150 740,152 778,196 C816,152 876,150 975,150" fill="none" stroke="var(--warn)" stroke-width="3.4"/>
-            <line x1="778" y1="80" x2="778" y2="205" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="5 5"/>
-            <text style="fill:var(--ink-soft)" x="786" y="222" font-size="14" font-family="'JetBrains Mono', monospace">100 Hz</text>
-            <text style="fill:var(--accent2)" x="975" y="64" text-anchor="end" font-size="15">une voie inversée : la somme attendue</text>
-            <text style="fill:var(--warn)" x="975" y="244" text-anchor="end" font-size="15">même polarité : un trou au raccord</text>
-          </svg>
+        <div class="rangee" style="margin-top:0">
+          <div class="panneau" style="flex:1.2;padding:.45em .5em .3em">
+            <svg viewBox="0 0 560 280" font-family="Inter, sans-serif" role="img"
+                 aria-label="Le micro est placé à environ deux centimètres de la membrane, puis de chacun des deux évents ; les trois relevés sont sommés">
+              <defs>
+                <linearGradient id="bois" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9cfa3"/><stop offset="1" stop-color="#c9a571"/></linearGradient>
+                <linearGradient id="cone10" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a4248"/><stop offset="1" stop-color="#1c2226"/></linearGradient>
+                <linearGradient id="micro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6870"/><stop offset=".5" stop-color="#2b3238"/><stop offset="1" stop-color="#14181b"/></linearGradient>
+                <linearGradient id="tube" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e353a"/><stop offset=".5" stop-color="#596369"/><stop offset="1" stop-color="#22282c"/></linearGradient>
+              </defs>
+              <g font-size="16" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', Inter, sans-serif">
+                <text style="fill:var(--ink)" x="135" y="22">devant la membrane</text>
+                <text style="fill:var(--ink)" x="420" y="22">devant chaque évent (× 2)</text>
+              </g>
+              <!-- membrane : baffle, haut-parleur en coupe, micro -->
+              <rect x="44" y="40" width="16" height="200" rx="3" fill="url(#bois)"/>
+              <polygon points="44,82 44,198 18,162 18,118" fill="url(#cone10)"/>
+              <rect x="6" y="124" width="14" height="32" rx="3" fill="#596369"/>
+              <path d="M60,84 Q70,140 60,196" fill="none" stroke="#1c2226" stroke-width="3"/>
+              <circle cx="100" cy="140" r="11" fill="#9aa5ad" stroke="#2b3238" stroke-width="1.6"/>
+              <rect x="108" y="133" width="122" height="14" rx="7" fill="url(#micro)"/>
+              <rect x="226" y="135" width="26" height="10" rx="3" fill="#2b3238"/>
+              <g stroke="var(--warn)" stroke-width="1.6"><line x1="64" y1="196" x2="89" y2="196"/><line x1="64" y1="189" x2="64" y2="203"/><line x1="89" y1="189" x2="89" y2="203"/></g>
+              <text style="fill:var(--warn)" x="96" y="201" font-size="14" font-weight="700">≈ 2 cm</text>
+              <!-- évent : baffle percé d'un tube, micro -->
+              <rect x="314" y="40" width="16" height="200" rx="3" fill="url(#bois)"/>
+              <rect x="276" y="116" width="54" height="48" fill="url(#tube)"/>
+              <rect x="314" y="116" width="16" height="48" fill="#3b4348"/>
+              <path d="M276,116 H330 M276,164 H330" stroke="#14181b" stroke-width="2"/>
+              <g stroke="#7fb8c9" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9">
+                <path d="M284,132 H300 M284,148 H300"/><path d="M296,128 l5,4 l-5,4 M296,144 l5,4 l-5,4"/>
+              </g>
+              <circle cx="370" cy="140" r="11" fill="#9aa5ad" stroke="#2b3238" stroke-width="1.6"/>
+              <rect x="378" y="133" width="122" height="14" rx="7" fill="url(#micro)"/>
+              <rect x="496" y="135" width="26" height="10" rx="3" fill="#2b3238"/>
+              <g stroke="var(--warn)" stroke-width="1.6"><line x1="334" y1="196" x2="359" y2="196"/><line x1="334" y1="189" x2="334" y2="203"/><line x1="359" y1="189" x2="359" y2="203"/></g>
+              <text style="fill:var(--warn)" x="366" y="201" font-size="14" font-weight="700">≈ 2 cm</text>
+              <text style="fill:var(--accent)" x="280" y="268" text-anchor="middle" font-size="15" font-weight="700">trois relevés : la membrane et les deux évents, sommés</text>
+            </svg>
+          </div>
+          <div class="panneau" style="padding:.45em .5em .3em">
+            <svg viewBox="0 0 420 280" font-family="Inter, sans-serif" role="img"
+                 aria-label="Le test de polarité : avec une voie inversée, la somme attendue ; avec la même polarité, un trou au raccord">
+              <text style="fill:var(--ink)" x="210" y="22" text-anchor="middle" font-size="16" font-weight="700" font-family="'Space Grotesk', Inter, sans-serif">le test de polarité</text>
+              <rect x="20" y="40" width="380" height="190" rx="10" fill="#f5f8fa"/>
+              <line x1="30" y1="205" x2="390" y2="205" stroke="#9fb0bb" stroke-width="1.6"/>
+              <path d="M30,160 C120,160 165,104 210,104 C255,104 300,160 390,160" fill="none" stroke="var(--accent2)" stroke-width="4" stroke-linecap="round"/>
+              <path d="M30,160 C120,160 175,162 210,200 C245,162 300,160 390,160" fill="none" stroke="var(--warn)" stroke-width="4" stroke-linecap="round"/>
+              <line x1="210" y1="94" x2="210" y2="208" stroke="#9fb0bb" stroke-width="1.3" stroke-dasharray="5 5"/>
+              <text style="fill:var(--ink-soft)" x="218" y="222" font-size="13" font-family="'JetBrains Mono', monospace">100 Hz</text>
+              <text style="fill:var(--accent2)" x="210" y="82" text-anchor="middle" font-size="14" font-weight="700">une voie inversée : la somme attendue</text>
+              <text style="fill:var(--warn)" x="210" y="258" text-anchor="middle" font-size="14" font-weight="700">même polarité : un trou au raccord</text>
+            </svg>
+          </div>
         </div>
-        <div class="chips">
-          <div class="chip"><b>filtre catalogue</b><span>le point de départ</span></div>
-          <div class="chip"><b>filtre optimisé</b><span>ce que je cherche à valider</span></div>
-          <div class="chip"><b>filtre actif à ALI</b><span>avant l'ampli · la référence</span></div>
+        <div class="cartes-ligne">
+          <div><b>filtre catalogue</b><span>le point de départ</span></div>
+          <div><b>filtre optimisé</b><span>ce que je cherche à valider</span></div>
+          <div><b>filtre actif à ALI</b><span>avant l'ampli · la référence</span></div>
         </div>
-        <p class="legende">chaque mesure à deux niveaux d'écoute fixés à l'avance · wattmètre de prise : consommation de chaque solution</p>
-        <aside class="notes">
+        <p class="note-bas">à 100 Hz, λ = 3,4 m : la pièce domine, d'où le champ proche · deux niveaux d'écoute fixés à l'avance · wattmètre : consommation de chaque solution</p>
+        <aside class="notes">%
           [55 s] Quatrième expérience. À cent hertz, la longueur d'onde fait trois mètres quarante : dans une pièce, les réflexions dominent tout. Je mesure donc en champ proche : le micro à deux centimètres de la membrane, puis de chaque évent, et je fais la somme des trois. Je vérifie aussi la polarité : avec ce filtre, il faut inverser l'une des deux voies, sinon la somme fait un trou au raccord. Je compare trois solutions : le filtre du catalogue, le filtre optimisé, et un filtre actif à amplificateurs linéaires intégrés, placé avant l'ampli, qui ne voit jamais l'impédance du haut-parleur : c'est ma référence. Chaque mesure est faite à deux niveaux d'écoute fixés à l'avance, et le wattmètre mesure ce que consomme chaque solution. Pour que tout cela reste honnête et sûr, j'ai prévu des garde-fous.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 11. GARDE-FOUS ET CALENDRIER [40 s] ===================== -->
       <section>
-        <div class="kicker">Pour que ce soit honnête, sûr et faisable</div>
+        <div class="kicker">POUR QUE CE SOIT HONNÊTE, SÛR ET FAISABLE</div>
         <h2>Garde-fous et <span class="accent">calendrier</span></h2>
-        <div class="cartes trois">
-          <div class="carte">
-            <div class="num">Décider avant</div>
-            <p>critères, niveaux d'écoute et cible sont <strong>datés dans un registre</strong> avant la première mesure comparative</p>
-          </div>
-          <div class="carte">
-            <div class="num">Une porte par étape</div>
-            <p>on n'avance que si l'étape passe : <strong>étalons retrouvés</strong>, puis filtre catalogue retrouvé sur 8 Ω</p>
-          </div>
-          <div class="carte">
-            <div class="num" style="color:var(--warn)">Sécurité</div>
-            <p><strong>jamais sous l'accord des évents à fort niveau</strong> (la membrane n'y est plus retenue) ; alimentation 48 V coupée sur le banc d'impédance</p>
-          </div>
+        <div class="cartes-ligne garde-fous" style="margin-top:0">
+          <div><h4>Décider avant</h4><p>critères, niveaux d'écoute et cible sont <strong>datés dans un registre</strong> avant la première mesure comparative</p></div>
+          <div class="vert"><h4>Une porte par étape</h4><p>on n'avance que si l'étape passe : <strong>étalons retrouvés</strong>, puis filtre catalogue retrouvé sur 8 Ω</p></div>
+          <div class="ambre"><h4>Sécurité</h4><p><strong>jamais sous l'accord des évents à fort niveau</strong> (la membrane n'y est plus retenue) ; 48 V coupé sur le banc d'impédance</p></div>
         </div>
-        <div class="viz" style="margin-top:.4em">
+        <div class="panneau" style="margin-top:.65em;padding:.55em .6em .35em">
           <svg viewBox="0 0 1000 175" font-family="Inter, sans-serif" role="img"
                aria-label="Frise de novembre 2026 à juin 2027 : étalonnage et mesure d'impédance, modèle et optimisation, bobinage, banc et micro, analyse et supports, avec les étapes SCEI">
+            <defs>
+              <linearGradient id="barre-exp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fa566"/><stop offset="1" stop-color="#2a7d4a"/></linearGradient>
+              <linearGradient id="barre-calc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1584a0"/><stop offset="1" stop-color="#0b5f75"/></linearGradient>
+            </defs>
             <g>
-              <rect x="40"  y="8"  width="230" height="26" rx="3" fill="var(--accent2)" opacity=".45"/>
-              <rect x="385" y="8"  width="115" height="26" rx="3" fill="var(--accent2)" opacity=".45"/>
-              <rect x="500" y="8"  width="115" height="26" rx="3" fill="var(--accent2)" opacity=".60"/>
-              <rect x="155" y="42" width="230" height="26" rx="3" fill="var(--accent)" opacity=".35"/>
-              <rect x="615" y="42" width="230" height="26" rx="3" fill="var(--accent)" opacity=".35"/>
-              <g font-size="14.5">
-                <text style="fill:var(--ink)" x="48"  y="26">commande · étalonnage · Z(f)</text>
-                <text style="fill:var(--ink)" x="393" y="26">bobinage</text>
-                <text style="fill:var(--ink)" x="508" y="26">banc · micro</text>
-                <text style="fill:var(--ink)" x="163" y="60">modèle · optimisation · MCOT</text>
-                <text style="fill:var(--ink)" x="623" y="60">analyse · supports</text>
-              </g>
+              <rect x="40" y="6" width="226" height="30" rx="15" fill="url(#barre-exp)"/>
+              <rect x="388" y="6" width="108" height="30" rx="15" fill="url(#barre-exp)"/>
+              <rect x="502" y="6" width="110" height="30" rx="15" fill="url(#barre-exp)"/>
+              <rect x="157" y="44" width="226" height="30" rx="15" fill="url(#barre-calc)"/>
+              <rect x="617" y="44" width="226" height="30" rx="15" fill="url(#barre-calc)"/>
             </g>
-            <line x1="40" y1="92" x2="960" y2="92" stroke="var(--trait)" stroke-width="2"/>
-            <g stroke="var(--trait)" stroke-width="1.2">
-              <line x1="40" y1="86" x2="40" y2="98"/><line x1="155" y1="86" x2="155" y2="98"/>
-              <line x1="270" y1="86" x2="270" y2="98"/><line x1="385" y1="86" x2="385" y2="98"/>
-              <line x1="500" y1="86" x2="500" y2="98"/><line x1="615" y1="86" x2="615" y2="98"/>
-              <line x1="730" y1="86" x2="730" y2="98"/><line x1="845" y1="86" x2="845" y2="98"/>
-              <line x1="960" y1="86" x2="960" y2="98"/>
+            <g font-size="14" font-weight="600">
+              <text style="fill:#ffffff" x="153" y="26" text-anchor="middle">commande · étalonnage · Z(f)</text>
+              <text style="fill:#ffffff" x="442" y="26" text-anchor="middle">bobinage</text>
+              <text style="fill:#ffffff" x="557" y="26" text-anchor="middle">banc · micro</text>
+              <text style="fill:#ffffff" x="270" y="64" text-anchor="middle">modèle · optimisation · MCOT</text>
+              <text style="fill:#ffffff" x="730" y="64" text-anchor="middle">analyse · supports</text>
+            </g>
+            <line x1="40" y1="98" x2="960" y2="98" stroke="#9fb0bb" stroke-width="2"/>
+            <g stroke="#9fb0bb" stroke-width="1.4">
+              <line x1="40" y1="92" x2="40" y2="104"/><line x1="155" y1="92" x2="155" y2="104"/><line x1="270" y1="92" x2="270" y2="104"/>
+              <line x1="385" y1="92" x2="385" y2="104"/><line x1="500" y1="92" x2="500" y2="104"/><line x1="615" y1="92" x2="615" y2="104"/>
+              <line x1="730" y1="92" x2="730" y2="104"/><line x1="845" y1="92" x2="845" y2="104"/><line x1="960" y1="92" x2="960" y2="104"/>
             </g>
             <g font-family="'JetBrains Mono', monospace" font-size="14" text-anchor="middle">
-              <text style="fill:var(--ink-soft)" x="97"  y="116">nov.</text><text style="fill:var(--ink-soft)" x="212" y="116">déc.</text>
-              <text style="fill:var(--ink-soft)" x="327" y="116">janv.</text><text style="fill:var(--ink-soft)" x="442" y="116">févr.</text>
-              <text style="fill:var(--ink-soft)" x="557" y="116">mars</text><text style="fill:var(--ink-soft)" x="672" y="116">avril</text>
-              <text style="fill:var(--ink-soft)" x="787" y="116">mai</text><text style="fill:var(--ink-soft)" x="902" y="116">juin</text>
+              <text style="fill:var(--ink-soft)" x="97" y="123">nov.</text><text style="fill:var(--ink-soft)" x="212" y="123">déc.</text>
+              <text style="fill:var(--ink-soft)" x="327" y="123">janv.</text><text style="fill:var(--ink-soft)" x="442" y="123">févr.</text>
+              <text style="fill:var(--ink-soft)" x="557" y="123">mars</text><text style="fill:var(--ink-soft)" x="672" y="123">avril</text>
+              <text style="fill:var(--ink-soft)" x="787" y="123">mai</text><text style="fill:var(--ink-soft)" x="902" y="123">juin</text>
             </g>
-            <g fill="var(--warn)">
-              <polygon points="360,82 370,92 360,102 350,92"/>
-              <polygon points="880,82 890,92 880,102 870,92"/>
-              <polygon points="915,82 925,92 915,102 905,92"/>
+            <g fill="var(--warn)" stroke="#ffffff" stroke-width="2">
+              <polygon points="360,87 371,98 360,109 349,98"/>
+              <polygon points="880,87 891,98 880,109 869,98"/>
+              <polygon points="915,87 926,98 915,109 904,98"/>
             </g>
-            <g font-family="'JetBrains Mono', monospace" font-size="13.5">
-              <text style="fill:var(--warn)" x="360" y="140" text-anchor="middle">SCEI étape 1 · MCOT</text>
-              <text style="fill:var(--warn)" x="960" y="140" text-anchor="end">SCEI étapes 2 et 3 · PDF, validation</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="13.5" font-weight="600">
+              <text style="fill:var(--warn)" x="360" y="148" text-anchor="middle">SCEI étape 1 · MCOT</text>
+              <text style="fill:var(--warn)" x="960" y="148" text-anchor="end">SCEI étapes 2 et 3 · PDF, validation</text>
             </g>
             <g font-size="13">
-              <rect x="40" y="155" width="14" height="12" fill="var(--accent2)" opacity=".5"/>
-              <text style="fill:var(--ink-soft)" x="60" y="166">expériences</text>
-              <rect x="160" y="155" width="14" height="12" fill="var(--accent)" opacity=".4"/>
-              <text style="fill:var(--ink-soft)" x="180" y="166">calcul et rédaction</text>
+              <rect x="40" y="160" width="26" height="10" rx="5" fill="url(#barre-exp)"/>
+              <text style="fill:var(--ink-soft)" x="74" y="170">expériences</text>
+              <rect x="186" y="160" width="26" height="10" rx="5" fill="url(#barre-calc)"/>
+              <text style="fill:var(--ink-soft)" x="220" y="170">calcul et rédaction</text>
             </g>
           </svg>
         </div>
-        <aside class="notes">
+        <aside class="notes">%
           [41 s] Trois garde-fous. Un : je décide avant de mesurer ; les critères, les niveaux d'écoute et la cible sont datés dans un registre. Deux : chaque étape a sa porte de validation. Trois : la sécurité ; on ne descend jamais sous la fréquence d'accord à fort niveau, parce que la membrane n'y est plus retenue par l'air des évents. Côté calendrier : la commande et l'étalonnage maintenant, la mesure d'impédance en décembre, le calcul et la fiche MCOT en janvier, le bobinage en février, le banc et le micro en mars, puis l'analyse jusqu'au dépôt de juin. Voilà mon projet.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== 12. MERCI [5 s] ===================== -->
-      <section class="titre">
-        <div class="kicker">Merci de votre attention</div>
+      <section class="fin">
+        <div class="kicker">MERCI DE VOTRE ATTENTION</div>
         <h1>Questions&nbsp;?</h1>
-        <div class="chips" style="margin-top:1em">
-          <div class="chip"><b>4 expériences</b><span>déjà rédigées</span></div>
-          <div class="chip"><b>1 chaîne de mesure</b><span>étalonnée avant usage</span></div>
-          <div class="chip"><b>des critères</b><span>datés avant les mesures</span></div>
+        <div class="cartes-ligne" style="max-width:86%;margin:1.2em auto 0">
+          <div><b>4 expériences</b><span>déjà rédigées</span></div>
+          <div><b>1 chaîne de mesure</b><span>étalonnée avant usage</span></div>
+          <div><b>des critères</b><span>datés avant les mesures</span></div>
         </div>
-        <div class="meta" style="margin-top:2em">annexes : matériel · risques et parades · critères de comparaison</div>
-        <aside class="notes">
+        <p class="note-bas" style="margin-top:1.6em">annexes : matériel · risques et parades · critères de comparaison</p>
+        <aside class="notes">%
           [7 s] Merci de votre attention. Je suis prêt pour vos questions, en particulier sur la faisabilité.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== A1. MATÉRIEL (hors chrono) ===================== -->
       <section>
-        <div class="kicker">Annexe 1 · faisabilité</div>
+        <div class="kicker">ANNEXE 1 · FAISABILITÉ</div>
         <h2>Le matériel : l'essentiel est <span class="accent">déjà là</span></h2>
-        <table class="annexe">
-          <tr><th style="width:24%">Origine</th><th>Matériel</th></tr>
-          <tr><td><strong>J'ai déjà</strong></td><td>l'enceinte (construite) · ampli t.amp E-800, deux canaux · pré-ampli à deux sorties · carte son Focusrite Scarlett Solo · micro de mesure XLR · wattmètre de prise · logiciels REW, LTspice, Python</td></tr>
-          <tr><td><strong>Le lycée prête</strong></td><td>GBF · oscilloscope · multimètre · résistance de puissance 8 Ω · résistance de ballast 10 Ω</td></tr>
-          <tr><td><strong>J'achète maintenant</strong></td><td>résistances de précision (100 Ω à 0,1 %, 33 Ω, 10 Ω) · condensateurs étalons · fiches XLR et jack · cordons et pinces</td></tr>
-          <tr><td><strong>J'achète ensuite</strong></td><td>fil de cuivre émaillé pour deux selfs · condensateurs du filtre · composants du filtre actif (ALI, alimentation ±15 V)</td></tr>
-        </table>
-        <div class="encadre" style="font-size:.62em;margin-top:.6em">
-          Budget plafonné à <strong>500 €</strong>. Le poste le plus lourd est le cuivre : il dépend de la
-          résistance maximale admise pour le fil, choisie à <strong>1,5 Ω</strong> (décision provisoire, devis
-          à obtenir). Rien de ce qui est acheté ne remplace un appareil de mesure : ils sont déjà là.
-        </div>
-        <aside class="notes">
+        <div class="tableau"><table>
+          <tr><th style="width:26%">Origine</th><th>Matériel</th></tr>
+          <tr><td>J'ai déjà</td><td>l'enceinte (construite) · ampli t.amp E-800, deux canaux · pré-ampli à deux sorties · carte son Focusrite Scarlett Solo · micro de mesure XLR · wattmètre de prise · logiciels REW, LTspice, Python</td></tr>
+          <tr><td>Le lycée prête</td><td>GBF · oscilloscope · multimètre · résistance de puissance 8 Ω · résistance de ballast 10 Ω</td></tr>
+          <tr><td>J'achète maintenant</td><td>résistances de précision (100 Ω à 0,1 %, 33 Ω, 10 Ω) · condensateurs étalons · fiches XLR et jack · cordons et pinces</td></tr>
+          <tr><td>J'achète ensuite</td><td>fil de cuivre émaillé pour deux selfs · condensateurs du filtre · composants du filtre actif (ALI, alimentation ±15 V)</td></tr>
+        </table></div>
+        <div class="appel" style="margin-top:.7em">Budget plafonné à <strong>500 €</strong>. Le poste le plus lourd est le cuivre : il dépend de la résistance maximale admise pour le fil, choisie à <strong>1,5 Ω</strong> (décision provisoire, devis à obtenir). Les appareils de mesure, eux, sont déjà là.</div>
+        <aside class="notes">%
           [Annexe] Si on me demande si j'ai le matériel : oui pour l'essentiel. La chaîne de mesure d'impédance
           repose sur ma carte son, recoupée par le GBF et l'oscilloscope du lycée. Les achats immédiats sont des
           petites pièces de précision. Le gros poste, c'est le cuivre des selfs, et je l'ai borné par un choix
           de résistance de fil, pas par un chiffre au hasard.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== A2. RISQUES ET PARADES (hors chrono) ===================== -->
       <section>
-        <div class="kicker">Annexe 2 · faisabilité</div>
+        <div class="kicker">ANNEXE 2 · FAISABILITÉ</div>
         <h2>Ce qui peut mal tourner, et la <span class="accent">parade</span></h2>
-        <table class="annexe">
+        <div class="tableau"><table>
           <tr><th style="width:42%">Risque</th><th>Parade prévue</th></tr>
           <tr><td>la chaîne de mesure ne retrouve pas les étalons</td><td>porte d'étalonnage : diagnostic avant tout ; deuxième chaîne indépendante (GBF + oscilloscope)</td></tr>
           <tr><td>la carte son n'est pas garantie sous 20 Hz</td><td>vérification sur une résistance connue jusqu'à 10 Hz ; le GBF descend plus bas</td></tr>
@@ -720,22 +770,21 @@
           <tr><td>le 18″ est endommagé par une excursion excessive</td><td>jamais sous l'accord des évents au niveau fort ; contrôle visuel avant chaque balayage</td></tr>
           <tr><td>le filtre optimisé ne bat pas le catalogue</td><td>critères datés avant : la conclusion sera écrite quelle qu'elle soit — un résultat négatif reste un résultat</td></tr>
           <tr><td>retard général</td><td>le bilan énergétique est le premier élément sacrifiable (une seule mesure)</td></tr>
-        </table>
-        <aside class="notes">
+        </table></div>
+        <aside class="notes">%
           [Annexe] Le point dur, c'est la mesure d'impédance, et c'est pour ça que je l'étalonne d'abord sur des
           composants connus : réussir cette étape lève l'essentiel du risque. Pour l'acoustique, le champ
           proche contourne la pièce. Et si le filtre optimisé ne fait pas mieux, mes critères sont fixés avant :
           je le dirai, c'est un résultat.
-        </aside>
+        %</aside>
       </section>
 
-      <!-- ===================== A3. LES CRITÈRES (hors chrono) ===================== -->
       <section>
-        <div class="kicker">Annexe 3 · comment je saurai si c'est mieux</div>
+        <div class="kicker">ANNEXE 3 · COMMENT JE SAURAI SI C'EST MIEUX</div>
         <h2>Les critères de comparaison <span class="accent">(proposition à geler)</span></h2>
-        <table class="annexe">
-          <tr><th style="width:34%">Critère</th><th>Ce qu'il mesure</th><th style="width:28%">Avec quoi</th></tr>
-          <tr><td><strong>Fidélité du raccord</strong></td><td>écart de la somme des deux voies à la cible visée</td><td>micro, champ proche</td></tr>
+        <div class="tableau"><table>
+          <tr><th style="width:30%">Critère</th><th>Ce qu'il mesure</th><th style="width:28%">Avec quoi</th></tr>
+          <tr><td>Fidélité du raccord</td><td>écart de la somme des deux voies à la cible visée</td><td>micro, champ proche</td></tr>
           <tr><td>Précision du raccord</td><td>fréquence où les deux voies se croisent, comparée à 100 Hz</td><td>banc électrique, micro</td></tr>
           <tr><td>Pertes d'insertion</td><td>puissance perdue dans le filtre</td><td>tension et courant, résistance du fil</td></tr>
           <tr><td>Consommation au repos</td><td>ce que consomme la chaîne sans signal</td><td>wattmètre de prise</td></tr>
@@ -743,20 +792,19 @@
           <tr><td>Coût système</td><td>prix du système complet équivalent</td><td>devis</td></tr>
           <tr><td>Matière</td><td>masse de cuivre, encombrement</td><td>calcul, balance, mètre</td></tr>
           <tr><td>Robustesse</td><td>dérive entre niveau faible et niveau fort</td><td>mesures aux deux niveaux</td></tr>
-        </table>
-        <aside class="notes">
+        </table></div>
+        <aside class="notes">%
           [Annexe] Ces huit critères sont une proposition : je les gèlerai et les daterai avant la première
           mesure comparative, et je n'en ajouterai ni n'en retirerai ensuite. C'est ce qui rend la conclusion
           recevable, même si elle est défavorable au filtre que j'ai optimisé.
-        </aside>
+        %</aside>
       </section>
 
     </div>
   </div>
 
   <script>
-    // « ?export » dans l URL : on retire le fond quadrille avant la capture PDF
-    // (voir EXPORT-PDF.md et css/blueprint.css).
+    // « ?export » dans l URL : marque l export PDF (voir EXPORT-PDF.md et css/).
     if (location.search.indexOf("export") !== -1) {
       document.documentElement.classList.add("export");
     }

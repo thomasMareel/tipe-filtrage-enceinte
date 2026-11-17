@@ -1,6 +1,6 @@
 # Script de l'oral — présentation du projet, mercredi 18 novembre 2026
 
-> Le texte que Thomas dit, vue par vue. Support : `oral/presentation.pdf` (version claire, à projeter) ou `oral/presentation-sombre.pdf`. Même contenu dans `oral/script_oral.json`, pour un programme. Contexte : `oral/CONTEXTE.md`. Vidéo d'entraînement : `oral/CONSIGNES_VIDEO.md`.
+> Le texte que Thomas dit, vue par vue. Support : `oral/presentation.pdf` (style clair, celle qui est projetée). Même contenu dans `oral/script_oral.json`, pour un programme. Contexte : `oral/CONTEXTE.md`. Vidéo d'entraînement : `oral/CONSIGNES_VIDEO.md`.
 
 - **Durée visée : 8:15** pour les 12 vues présentées (fourchette acceptée : 7 min 30 à 8 min 30), à 150 mots par minute, une seconde de respiration comprise à chaque changement de vue. Le texte compte 1212 mots.
 - **Les 15 pages du PDF** : vues 1 à 12 présentées, puis 3 annexes (pages 13 à 15) qui ne se présentent pas ; elles servent pendant les questions sur la faisabilité.

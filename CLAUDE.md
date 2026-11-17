@@ -130,8 +130,8 @@ Détail des phases, portes de validation, critères et calendrier :
   annoncée comme telle. Ses PDF et son texte vivent dans **`oral/`**.
 - **oral/** — tout ce qu'il faut pour l'oral du 18/11 et la **vidéo
   d'entraînement** faite par une autre session (voix Mistral « Camille »,
-  YouTube) : `presentation.pdf` (claire, à projeter) et `presentation-sombre.pdf`
-  (15 pages 4:3), `script_oral.md` et `script_oral.json` (le texte dit, vue par
+  YouTube) : `presentation.pdf` (style clair, la seule version depuis le 17/11/2026 ;
+  15 pages 4:3), `script_oral.md` et `script_oral.json` (le texte dit, vue par
   vue, 8 min 15, nombres en toutes lettres, **source du texte** : les notes du
   HTML en sont une copie), `CONTEXTE.md` (projet, prononciation, questions),
   `CONSIGNES_VIDEO.md` (pas à pas de la vidéo). `oral/video/` ne versionne que le
@@ -439,6 +439,15 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       de la vue 4 : la vidéo est **en retard** sur les vues 5 et 6 (note en tête de
       `oral/video/RAPPORT.md`). Le JSON du script est la source ; le Markdown et les notes
       HTML se régénèrent depuis lui.
+- [x] **Nouveau style « clair élégant » sur toute la présentation du projet**
+      (17/11/2026 au soir, maquette des vues 5 et 8 validée par Thomas, puis « tout le PDF
+      dans ce style ») : `css/elegant-clair.css` (fond dégradé, panneaux blancs ombrés,
+      titres soulignés), page de titre en grille avec les deux photos, schémas
+      redessinés (carte son rouge, haut-parleurs, bobine de Brooks en perspective, banc,
+      micro en champ proche). Une seule version, claire : `oral/presentation-sombre.pdf`
+      est retiré. `oral/presentation.pdf` : 15 pages 4:3, 2,33 Mo, contrôlé page par page
+      avec PDFium **et** poppler. Texte dit et notes inchangés. La vidéo d'entraînement
+      montre encore l'ancien style.
 - [x] **Vue 9 : encadré de sécurité retiré** (17/11/2026, demande de Thomas : « tensions
       élevées derrière l'ampli, sondes ×10, protocole relu par M. Chevalier »). Le texte dit
       le mentionne toujours ; la ligne « à montrer » du script est ajustée. PDF réexportés.

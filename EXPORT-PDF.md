@@ -490,3 +490,17 @@ Trois avertissements, dans l'ordre d'importance :
 - Le port n'a aucune importance fonctionnelle : n'importe quel port libre
   convient, à condition qu'il soit le même dans la commande `http.server` et
   dans l'URL passée à decktape.
+
+### Présentation du projet (`presentation-projet.html`, depuis le 17/11/2026)
+
+Elle est **claire par défaut** (thème `css/elegant-clair.css`) : on l'exporte directement,
+sans copie temporaire ni `blueprint-light.css` à ajouter, vers `oral/presentation.pdf`, puis
+`python _alleger_pdf.py oral/presentation.pdf`. Deux pièges vus à l'export :
+
+- **Vérifier avec deux moteurs de rendu.** `pdftoppm` (poppler, celui de nombreuses
+  visionneuses Linux) dessinait la face avant de la bobine de la vue 8 coupée en deux
+  (dégradé sur une ellipse), alors que PDFium (Chrome, Edge) l'affichait juste. Le dégradé a
+  été remplacé par une teinte unie. Contrôle : `pdftoppm` **et** `pypdfium2`.
+- **Le poids** monte à 2,3 Mo (photos, fond dégradé, ombres) : sans enjeu pour cette
+  présentation, mais à surveiller si ce style passe un jour sur le PDF du concours (5 Mo).
+

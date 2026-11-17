@@ -1,0 +1,194 @@
+/* ============================================================
+   Thème « clair élégant » — présentation du projet (18/11/2026).
+   Surcouche chargée APRÈS blueprint.css et blueprint-light.css :
+   fond papier dégradé (jamais blanc pur), contenus posés sur des
+   panneaux blancs ombrés, titres soulignés d'un trait d'accent,
+   textes aérés. Validé par Thomas sur maquette le 17/11/2026.
+   ============================================================ */
+:root {
+  --bg:        #f2f6f8;
+  --bg-card:   #ffffff;
+  --ink:       #13222c;
+  --ink-soft:  #5a6b76;
+  --accent:    #0d6e87;
+  --accent2:   #2e8a52;
+  --warn:      #c2680f;
+  --wire:      #2b3d48;
+  --trait:     #d6dee4;
+  --cuivre:    #b8692e;
+  --ombre: 0 12px 30px rgba(19,34,44,.09), 0 2px 6px rgba(19,34,44,.06);
+  --fond:
+    radial-gradient(1100px 650px at -5% -10%, rgba(13,110,135,.13), transparent 62%),
+    radial-gradient(900px 600px at 108% 112%, rgba(46,138,82,.10), transparent 60%),
+    linear-gradient(165deg, #f7fafb 0%, #e8eef2 100%);
+}
+/* Le fond dégradé remplace le quadrillage, y compris à l'export (?export). */
+html, body, html.export, html.export body {
+  background-color: #eef3f6 !important;
+  background-image: var(--fond) !important;
+  background-size: 100% 100% !important;
+}
+.reveal { color: var(--ink); }
+.reveal .slide-number { color: var(--ink-soft); background: transparent; }
+
+/* --- Titres --- */
+.reveal .kicker {
+  display: inline-block; font-size: .42em; font-weight: 600; letter-spacing: 1.8px;
+  color: var(--accent); background: rgba(13,110,135,.10);
+  padding: .32em .85em; border-radius: 999px; margin-bottom: .55em;
+}
+.reveal h2 {
+  border-bottom: none; position: relative; padding-bottom: .32em; margin-bottom: .6em;
+  font-size: 1.22em; letter-spacing: -.6px;
+}
+.reveal h2::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 64px; height: 4px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+/* --- Panneaux et rangées --- */
+.reveal .panneau {
+  background: #ffffff; border-radius: 16px; box-shadow: var(--ombre);
+  padding: .55em .8em;
+}
+.reveal .panneau h3 {
+  font-size: .5em; letter-spacing: 1.6px; text-transform: uppercase; font-weight: 600;
+  color: var(--ink-soft); margin: 0 0 .5em; font-family: "JetBrains Mono", monospace;
+}
+.reveal .panneau h3.warn { color: var(--warn); }
+.reveal .panneau h3.accent { color: var(--accent); }
+.reveal .panneau p { margin: 0; font-size: .56em; line-height: 1.5; }
+.reveal .panneau svg { display: block; width: 100%; height: auto; }
+.reveal .rangee { display: flex; gap: .7em; align-items: stretch; margin-top: .6em; }
+.reveal .rangee > * { flex: 1; }
+
+/* --- Phrase mise en avant --- */
+.reveal .appel {
+  background: linear-gradient(90deg, rgba(13,110,135,.12), rgba(13,110,135,.04));
+  border-radius: 12px; padding: .45em .8em; margin: 0 0 .6em;
+  font-size: .6em; line-height: 1.4; color: #0a4f61; font-weight: 500;
+}
+.reveal .appel.warn {
+  background: linear-gradient(90deg, rgba(194,104,15,.14), rgba(194,104,15,.04)); color: #8a4a0b;
+}
+.reveal .appel strong { color: inherit; font-weight: 700; }
+.reveal .note-bas { font-size: .46em; color: var(--ink-soft); text-align: center; margin-top: .65em;
+  font-family: "JetBrains Mono", monospace; letter-spacing: .3px; line-height: 1.45; }
+
+/* --- Listes aérées --- */
+.reveal ul.aere { list-style: none; margin: 0; padding: 0; font-size: .56em; line-height: 1.5; }
+.reveal ul.aere li { position: relative; padding-left: 1.2em; margin: 0 0 .6em; }
+.reveal ul.aere li:last-child { margin-bottom: 0; }
+.reveal ul.aere li::before {
+  content: ""; position: absolute; left: .1em; top: .55em; width: .48em; height: .48em;
+  border-radius: 50%; background: var(--accent); opacity: .85;
+}
+
+/* --- Points numérotés --- */
+.reveal .points { display: flex; flex-direction: column; gap: .5em; }
+.reveal .point {
+  display: flex; gap: .7em; align-items: flex-start;
+  background: #ffffff; border-radius: 14px; box-shadow: var(--ombre);
+  padding: .5em .75em; font-size: .56em; line-height: 1.45;
+}
+.reveal .pastille {
+  flex: 0 0 auto; width: 1.9em; height: 1.9em; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--accent), #0a5468);
+}
+.reveal .pastille.cuivre { background: linear-gradient(135deg, #d4874a, #8a4519); }
+.reveal .pastille.vert { background: linear-gradient(135deg, #3fa566, #23683e); }
+.reveal .pastille.ambre { background: linear-gradient(135deg, #e08a2e, #a5560b); }
+.reveal .point b { display: block; color: var(--ink); font-family: "Space Grotesk", sans-serif;
+  font-size: 1.12em; margin-bottom: .12em; }
+.reveal .point p { margin: 0; color: var(--ink-soft); }
+.reveal .legende-fig { font-size: .46em; color: var(--ink-soft); text-align: center; margin-top: .5em;
+  font-family: "JetBrains Mono", monospace; letter-spacing: .4px; }
+.reveal .formule-grande { font-size: .82em; text-align: center; margin: .1em 0 0; }
+
+/* --- Vue de titre --- */
+.reveal section.titre-elegant { text-align: left; }
+.reveal .titre-grille { display: grid; grid-template-columns: 46% 1fr; gap: 1.3em; align-items: center; }
+.reveal .titre-photos { position: relative; padding-bottom: 2.2em; }
+.reveal .titre-photos img.principale {
+  display: block; width: 100%; height: 440px; object-fit: cover; object-position: 54% 72%;
+  border-radius: 20px; box-shadow: 0 18px 40px rgba(19,34,44,.18), 0 3px 8px rgba(19,34,44,.08);
+}
+.reveal .titre-photos img.vignette {
+  position: absolute; right: -.35em; bottom: 0; width: 50%; height: 146px; object-fit: cover;
+  object-position: 50% 40%; border: 6px solid #ffffff; border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(19,34,44,.22);
+}
+.reveal .titre-texte .kicker { margin-bottom: .9em; }
+.reveal .titre-texte h1 { font-size: 1.62em; line-height: 1.1; margin: 0 0 .45em; letter-spacing: -.8px; }
+.reveal .titre-texte h1 em { color: var(--accent); font-style: normal; }
+.reveal .titre-texte .sous { font-size: .66em; color: var(--ink-soft); line-height: 1.45; margin-bottom: 1.3em; }
+.reveal .titre-texte .trait { width: 64px; height: 4px; border-radius: 2px; margin: 0 0 1em;
+  background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.reveal .titre-texte .auteur { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: .78em; }
+.reveal .titre-texte .detail { font-family: "JetBrains Mono", monospace; font-size: .44em; letter-spacing: 1px;
+  color: var(--ink-soft); margin-top: .5em; line-height: 1.7; text-transform: uppercase; }
+
+/* --- Étapes de la démarche --- */
+.reveal .etapes { display: flex; align-items: stretch; gap: .35em; margin-top: .7em; }
+.reveal .etape {
+  flex: 1; background: #ffffff; border-radius: 16px; box-shadow: var(--ombre);
+  padding: .55em .6em .6em; text-align: center; border-top: 5px solid var(--trait);
+}
+.reveal .etape.exp { border-top-color: var(--accent2); }
+.reveal .etape .tag { font-size: .4em; border: none; padding: .3em .75em; border-radius: 999px;
+  background: rgba(90,107,118,.12); color: var(--ink-soft); font-weight: 600; }
+.reveal .etape.exp .tag { background: rgba(46,138,82,.13); color: var(--accent2); }
+.reveal .etape h4 { font-family: "Space Grotesk", sans-serif; font-size: .74em; margin: .55em 0 .35em;
+  color: var(--ink); text-transform: none; letter-spacing: -.2px; }
+.reveal .etape p { font-size: .5em; line-height: 1.45; color: var(--ink-soft); margin: 0; }
+.reveal .etapes .fleche { flex: 0 0 auto; align-self: center; color: var(--ink-soft); font-size: .9em; opacity: .7; }
+
+/* --- Cartes des expériences (vue 4) --- */
+.reveal .grille-exp { display: grid; grid-template-columns: 1fr 1fr; gap: .6em .7em; }
+.reveal .carte-exp {
+  display: flex; gap: .7em; align-items: flex-start; background: #ffffff; border-radius: 16px;
+  box-shadow: var(--ombre); padding: .6em .75em;
+}
+.reveal .carte-exp svg { flex: 0 0 auto; width: 74px; height: 74px; }
+.reveal .carte-exp .num { font-family: "JetBrains Mono", monospace; font-size: .4em; letter-spacing: 1.6px;
+  color: var(--accent2); font-weight: 600; }
+.reveal .carte-exp h4 { font-family: "Space Grotesk", sans-serif; font-size: .68em; margin: .2em 0 .3em;
+  color: var(--ink); text-transform: none; letter-spacing: -.2px; }
+.reveal .carte-exp p { font-size: .5em; line-height: 1.45; margin: 0; color: var(--ink); }
+.reveal .carte-exp p.decide { color: var(--ink-soft); margin-top: .35em; }
+
+/* --- Cartes en ligne (choix, garde-fous, merci) --- */
+.reveal .cartes-ligne { display: flex; gap: .6em; margin-top: .6em; }
+.reveal .cartes-ligne > div {
+  flex: 1; background: #ffffff; border-radius: 14px; box-shadow: var(--ombre);
+  padding: .5em .7em; text-align: center;
+}
+.reveal .cartes-ligne b { display: block; font-family: "Space Grotesk", sans-serif; font-size: .66em; color: var(--accent); }
+.reveal .cartes-ligne span { display: block; font-size: .46em; color: var(--ink-soft); margin-top: .25em;
+  font-family: "JetBrains Mono", monospace; letter-spacing: .3px; }
+.reveal .garde-fous > div { text-align: left; border-top: 5px solid var(--accent); }
+.reveal .garde-fous > div.vert { border-top-color: var(--accent2); }
+.reveal .garde-fous > div.ambre { border-top-color: var(--warn); }
+.reveal .garde-fous h4 { font-family: "JetBrains Mono", monospace; font-size: .42em; letter-spacing: 1.6px;
+  margin: .1em 0 .45em; color: var(--accent); text-transform: uppercase; }
+.reveal .garde-fous .vert h4 { color: var(--accent2); }
+.reveal .garde-fous .ambre h4 { color: var(--warn); }
+.reveal .garde-fous p { font-size: .5em; line-height: 1.5; margin: 0; }
+
+/* --- Vue de fin --- */
+.reveal section.fin { text-align: center; }
+.reveal section.fin h1 { font-size: 2.1em; margin: .1em 0 .1em; letter-spacing: -1px; }
+.reveal section.fin .sous { font-size: .72em; color: var(--ink-soft); margin-bottom: 1.1em; }
+
+/* --- Tableaux des annexes --- */
+.reveal .tableau { background: #ffffff; border-radius: 16px; box-shadow: var(--ombre); overflow: hidden; }
+.reveal .tableau table { width: 100%; border-collapse: collapse; font-size: .52em; margin: 0; }
+.reveal .tableau th { background: linear-gradient(90deg, var(--accent), #0f7d77); color: #ffffff;
+  padding: .6em .8em; border: none; font-family: "Space Grotesk", sans-serif; text-align: left; }
+.reveal .tableau td { padding: .55em .8em; border: none; border-top: 1px solid #e6ecf0;
+  line-height: 1.4; vertical-align: top; }
+.reveal .tableau tr:nth-child(even) td { background: #f6f9fa; }
+.reveal .tableau td:first-child { font-weight: 600; color: var(--ink); }

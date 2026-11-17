@@ -7,7 +7,8 @@
 > (`oral/script_oral.json`) vise désormais **8 min 15**. La vidéo, ce rapport et le `.srt`
 > sont à régénérer pour ces deux vues. Le même soir, l'encadré de sécurité du bas de la
 > vue 9 a été retiré, à la demande de Thomas : seule l'image de cette vue change, pas son
-> texte.
+> texte. Toujours le 17/11, **toute la présentation a changé de style** (fond dégradé clair,
+> panneaux, schémas redessinés) : les images de la vidéo sont toutes à refaire, pas le texte.
 
 **Vidéo (non répertoriée)** : https://youtu.be/boE136EmLqw
 Durée : **7 min 12 s** (431,6 s). Voix « Camille » de Mistral, sous-titres français
