@@ -1,5 +1,12 @@
 # Rapport de rythme : vidéo d'entraînement de l'oral du 18/11/2026
 
+> **En retard sur le script depuis le 17/11/2026 (soir).** Les vues 5 et 6 ont été
+> réordonnées après cette vidéo, à la demande de Thomas : la vue 5 ne garde que le principe
+> du montage, et la vue 6 devient « D'abord, tester l'appareil sur du connu », avec la
+> mesure du haut-parleur et la prédiction de l'accord des évents à la fin. Le script
+> (`oral/script_oral.json`) vise désormais **8 min 15**. La vidéo, ce rapport et le `.srt`
+> sont à régénérer pour ces deux vues.
+
 **Vidéo (non répertoriée)** : https://youtu.be/boE136EmLqw
 Durée : **7 min 12 s** (431,6 s). Voix « Camille » de Mistral, sous-titres français
 intégrés à YouTube. Fabriquée le 17/11/2026 d'après `oral/CONSIGNES_VIDEO.md`, sans

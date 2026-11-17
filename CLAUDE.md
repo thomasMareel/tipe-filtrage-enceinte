@@ -132,7 +132,7 @@ Détail des phases, portes de validation, critères et calendrier :
   d'entraînement** faite par une autre session (voix Mistral « Camille »,
   YouTube) : `presentation.pdf` (claire, à projeter) et `presentation-sombre.pdf`
   (15 pages 4:3), `script_oral.md` et `script_oral.json` (le texte dit, vue par
-  vue, 8 min 09, nombres en toutes lettres, **source du texte** : les notes du
+  vue, 8 min 15, nombres en toutes lettres, **source du texte** : les notes du
   HTML en sont une copie), `CONTEXTE.md` (projet, prononciation, questions),
   `CONSIGNES_VIDEO.md` (pas à pas de la vidéo). `oral/video/` ne versionne que le
   rapport et les sous-titres.
@@ -429,6 +429,16 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       **pas de .pptx**, à sa demande), contexte, consignes vidéo ; vue 5 redessinée
       (une seule sortie, chemin du courant fléché, deux voltmètres) après que Thomas
       a mal lu l'ancien schéma. Fusionné dans `main` le même jour.
+- [x] **Vues 5 et 6 réordonnées** (17/11/2026 au soir, demande de Thomas) : la vue 5
+      ne présente que l'outil (principe du montage) ; la vue 6 devient « D'abord, tester
+      l'appareil sur du connu » (le piège : sur le haut-parleur on ne connaît pas la bonne
+      réponse ; résistance de 10 Ω, condensateur de 100 µF avec ses valeurs, deux chaînes,
+      la porte), puis « ensuite seulement » la mesure du haut-parleur et la prédiction de
+      f_b. Script à 8 min 15. Une autre session avait déjà fait la vidéo (7 min 12 s,
+      YouTube non répertorié, voix plus rapide que prévu) et retiré l'encadré de la règle
+      de la vue 4 : la vidéo est **en retard** sur les vues 5 et 6 (note en tête de
+      `oral/video/RAPPORT.md`). Le JSON du script est la source ; le Markdown et les notes
+      HTML se régénèrent depuis lui.
 - [x] **Décisions de Thomas du 15/11/2026**, consignées dans
       `DECISIONS-PHASE-0.md` et propagées (feuille de route, MCOT, PARCOURS,
       `criteres_geles.json`) :

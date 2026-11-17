@@ -43,7 +43,7 @@
      sur la faisabilité ensuite. Plan validé par Thomas le 15/11/2026.
      12 vues chronométrées + 3 annexes hors chrono pour les questions.
      Le texte de l'oral fait foi dans oral/script_oral.json (et .md) : les notes
-     ci-dessous en sont une copie, budgets entre crochets, total 8 min 09.
+     ci-dessous en sont une copie, budgets entre crochets, total 8 min 15.
      PDF : oral/presentation.pdf (clair) et oral/presentation-sombre.pdf.
      AUCUNE MESURE : la seule courbe de données (vue 2) est calculée sur le modèle
      SUB_TYPIQUE_BR (analyse/io_mesures.py, paramètres plausibles d'un 18″ de
@@ -289,68 +289,81 @@
           <ul class="serre">
             <li>la résistance connue sert de <strong>capteur de courant</strong> : la carte son ne mesure que des tensions</li>
             <li>sans elle, la sortie imposerait sa tension quelle que soit Z : <strong>on ne verrait rien</strong></li>
-            <li>balayage sinus lent de <strong>10 Hz à 1 kHz</strong>, quelques mA</li>
           </ul>
           <ul class="serre">
-            <li>deux objets : le <strong>caisson dans sa caisse</strong>, le bloc médiums <strong>tel qu'il est câblé</strong> (pavillons d'aigu compris)</li>
-            <li><strong>prédire avant de mesurer</strong> : l'accord des évents, calculé d'après leurs cotes et le volume de la caisse</li>
+            <li>balayage sinus lent de <strong>10 Hz à 1 kHz</strong>, module et phase</li>
+            <li>quelques mA seulement : sans risque pour le haut-parleur</li>
           </ul>
         </div>
         <aside class="notes">
-          [65 s] Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Et avant de mesurer, je prédis l'accord des évents d'après leurs dimensions : la mesure tranchera. Encore faut-il pouvoir faire confiance à l'appareil.
+          [59 s] Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Encore faut-il pouvoir faire confiance à l'appareil.
         </aside>
       </section>
 
-      <!-- ===================== 6. EXP. 1 — ÉTALONNER [50 s] ===================== -->
+      <!-- ===================== 6. EXP. 1 — TESTER L'APPAREIL SUR DU CONNU ===================== -->
       <section>
         <div class="kicker">Expérience 1 · avant de brancher le haut-parleur</div>
-        <h2>Étalonner : la chaîne doit retrouver des <span class="accent">valeurs connues</span></h2>
+        <h2>D'abord, tester l'appareil sur du <span class="accent">connu</span></h2>
+        <p class="cle" style="font-size:.7em;margin:0 0 .35em">Sur le haut-parleur, on ne connaît pas la bonne réponse : une erreur de l'appareil passerait inaperçue.</p>
         <div class="viz">
-          <svg viewBox="0 0 1000 255" font-family="Inter, sans-serif" role="img"
-               aria-label="Trois contrôles : une résistance connue doit donner une droite horizontale, un condensateur connu une droite de pente moins un en échelles logarithmiques, et deux chaînes de mesure indépendantes doivent donner la même courbe">
+          <svg viewBox="0 0 1000 235" font-family="Inter, sans-serif" role="img"
+               aria-label="Trois contrôles : une résistance de 10 ohms doit donner une droite horizontale à 10 ohms, un condensateur de 100 microfarads une impédance divisée par dix quand la fréquence est multipliée par dix, et deux chaînes de mesure indépendantes doivent donner la même courbe">
             <!-- panneau 1 : résistance -->
-            <text style="fill:var(--ink)" x="160" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">résistance connue</text>
+            <text style="fill:var(--ink)" x="160" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">résistance de 10 Ω</text>
             <g stroke="var(--trait)" stroke-width="1.6">
-              <line x1="40" y1="40" x2="40" y2="200"/>
-              <line x1="40" y1="200" x2="290" y2="200"/>
+              <line x1="40" y1="40" x2="40" y2="185"/>
+              <line x1="40" y1="185" x2="290" y2="185"/>
             </g>
-            <line x1="40" y1="120" x2="290" y2="120" stroke="var(--accent)" stroke-width="3.4"/>
-            <text style="fill:var(--ink-soft)" x="160" y="108" text-anchor="middle" font-size="15">|Z| = R, quelle que soit f</text>
-            <text style="fill:var(--ink-soft)" x="290" y="220" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
+            <line x1="40" y1="112" x2="290" y2="112" stroke="var(--accent)" stroke-width="3.4"/>
+            <text style="fill:var(--ink)" x="165" y="100" text-anchor="middle" font-size="16">on doit lire 10 Ω partout</text>
+            <text style="fill:var(--ink-soft)" x="290" y="203" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
             <text style="fill:var(--ink-soft)" x="46" y="54" font-size="13" font-family="'JetBrains Mono', monospace">log |Z|</text>
-            <text style="fill:var(--ink)" x="160" y="246" text-anchor="middle" font-size="16">→ une droite horizontale</text>
+            <text style="fill:var(--ink)" x="160" y="228" text-anchor="middle" font-size="16">→ une droite horizontale</text>
             <!-- panneau 2 : condensateur -->
-            <text style="fill:var(--ink)" x="495" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">condensateur connu</text>
+            <text style="fill:var(--ink)" x="495" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">condensateur de 100 µF</text>
             <g stroke="var(--trait)" stroke-width="1.6">
-              <line x1="375" y1="40" x2="375" y2="200"/>
-              <line x1="375" y1="200" x2="625" y2="200"/>
+              <line x1="375" y1="40" x2="375" y2="185"/>
+              <line x1="375" y1="185" x2="625" y2="185"/>
             </g>
-            <line x1="385" y1="52" x2="615" y2="190" stroke="var(--accent2)" stroke-width="3.4"/>
-            <text style="fill:var(--ink-soft)" x="540" y="98" font-size="15">|Z| = 1/(Cω)</text>
-            <text style="fill:var(--ink-soft)" x="625" y="220" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
-            <text style="fill:var(--ink)" x="495" y="246" text-anchor="middle" font-size="16">→ une pente de −1</text>
+            <line x1="385" y1="50" x2="615" y2="178" stroke="var(--accent2)" stroke-width="3.4"/>
+            <g fill="var(--accent2)">
+              <circle cx="385" cy="50" r="5"/>
+              <circle cx="500" cy="114" r="5"/>
+              <circle cx="615" cy="178" r="5"/>
+            </g>
+            <g font-size="14" font-family="'JetBrains Mono', monospace">
+              <text style="fill:var(--ink)" x="397" y="50">159 Ω à 10 Hz</text>
+              <text style="fill:var(--ink)" x="512" y="112">16 Ω à 100 Hz</text>
+              <text style="fill:var(--ink)" x="590" y="183" text-anchor="end">1,6 Ω à 1 kHz</text>
+            </g>
+            <text style="fill:var(--ink-soft)" x="625" y="203" text-anchor="end" font-size="13" font-family="'JetBrains Mono', monospace">log f</text>
+            <text style="fill:var(--ink)" x="495" y="228" text-anchor="middle" font-size="16">→ f × 10, impédance ÷ 10</text>
             <!-- panneau 3 : deux chaînes -->
             <text style="fill:var(--ink)" x="835" y="22" text-anchor="middle" font-size="18" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">deux chaînes</text>
-            <rect x="700" y="48" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="835" y="72" text-anchor="middle" font-size="16">chaîne 1 : carte son + REW</text>
-            <text style="fill:var(--ink-soft)" x="835" y="94" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">à la maison</text>
-            <rect x="700" y="146" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2"/>
-            <text style="fill:var(--ink)" x="835" y="170" text-anchor="middle" font-size="16">chaîne 2 : GBF + oscilloscope</text>
-            <text style="fill:var(--ink-soft)" x="835" y="192" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">au lycée</text>
-            <path d="M835,108 V142" stroke="var(--wire)" stroke-width="2.2" fill="none"/>
-            <path d="M835,108 l-6,10 h12 z M835,142 l-6,-10 h12 z" fill="var(--wire)"/>
-            <text style="fill:var(--ink-soft)" x="848" y="130" font-size="14">même courbe ?</text>
-            <text style="fill:var(--ink)" x="835" y="246" text-anchor="middle" font-size="16">→ elles doivent concorder</text>
+            <rect x="700" y="44" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
+            <text style="fill:var(--ink)" x="835" y="68" text-anchor="middle" font-size="16">chaîne 1 : carte son + REW</text>
+            <text style="fill:var(--ink-soft)" x="835" y="90" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">à la maison</text>
+            <rect x="700" y="132" width="270" height="56" rx="5" fill="var(--bg-card)" stroke="var(--accent2)" stroke-width="2"/>
+            <text style="fill:var(--ink)" x="835" y="156" text-anchor="middle" font-size="16">chaîne 2 : GBF + oscilloscope</text>
+            <text style="fill:var(--ink-soft)" x="835" y="178" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">au lycée</text>
+            <path d="M835,104 V128" stroke="var(--wire)" stroke-width="2.2" fill="none"/>
+            <path d="M835,104 l-6,10 h12 z M835,128 l-6,-10 h12 z" fill="var(--wire)"/>
+            <text style="fill:var(--ink-soft)" x="848" y="121" font-size="14">même courbe ?</text>
+            <text style="fill:var(--ink)" x="835" y="228" text-anchor="middle" font-size="16">→ elles doivent concorder</text>
           </svg>
         </div>
-        <div class="encadre warn" style="font-size:.66em">
-          <strong>C'est une porte :</strong> si la résistance n'est pas retrouvée à ±3 % et le condensateur
-          sur deux décades, je cherche l'erreur avant d'aller plus loin. Et comme la carte son n'est
-          garantie qu'au-dessus de 20 Hz, je vérifie sa réponse <strong>jusqu'à 10 Hz</strong> sur la
-          résistance connue : le premier pic du caisson peut tomber en dessous.
+        <div class="encadre warn" style="font-size:.6em">
+          <strong>C'est une porte :</strong> résistance retrouvée à ±3 %, condensateur sur sa droite de
+          10 Hz à 1 kHz — sinon, je cherche l'erreur avant d'aller plus loin. La carte son n'étant
+          garantie qu'au-dessus de 20 Hz, je la vérifie aussi <strong>jusqu'à 10 Hz</strong>.
+        </div>
+        <div class="encadre" style="font-size:.6em">
+          <strong>Ensuite seulement :</strong> je mesure le caisson dans sa caisse et le bloc médiums tel
+          qu'il est câblé (pavillons d'aigu compris), et je confronte la courbe à ma
+          <strong>prédiction</strong> de l'accord des évents, calculée d'après leurs cotes.
         </div>
         <aside class="notes">
-          [47 s] Avant de brancher le haut-parleur, je vérifie que la chaîne retrouve des valeurs connues. Sur une résistance, je dois trouver une droite horizontale, à la bonne valeur. Sur un condensateur, une droite qui descend, de pente moins un, parce que son impédance varie comme un sur la fréquence. Puis je recoupe avec une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée : elles doivent donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Et comme la carte son n'est garantie qu'au-dessus de vingt hertz, je la vérifie aussi en dessous. Une fois la courbe mesurée, place au calcul.
+          [59 s] Avant de brancher le haut-parleur, il y a un piège : sur lui, je ne connais pas la bonne réponse. Si l'appareil se trompe, je ne le verrai pas. Alors je fais comme avec une balance qu'on vérifie avec un poids connu. Une résistance de dix ohms doit donner une droite horizontale, à dix ohms, à toutes les fréquences. Un condensateur doit donner une impédance divisée par dix quand la fréquence est multipliée par dix. Puis une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée, doit donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Ensuite seulement, je mesure le caisson et les médiums, et je compare la courbe à ma prédiction de l'accord des évents, faite d'après leurs dimensions. Une fois la courbe mesurée, place au calcul.
         </aside>
       </section>
 

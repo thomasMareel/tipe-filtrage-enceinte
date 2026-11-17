@@ -61,7 +61,7 @@ voir :
      seulement, et la noter dans le rapport.
 5. **Durée : 7 min 30 à 8 min 30 au total.**
    - Total = somme des audios + une respiration d'**une seconde** après chaque vue.
-   - Comparer chaque vue à `duree_visee_s` ; le total visé est 8 min 09.
+   - Comparer chaque vue à `duree_visee_s` ; le total visé est 8 min 15.
    - Hors fourchette : ajuster la vitesse de la voix **globalement**, dans la limite de
      ±10 %. Ne jamais changer le texte, ni la vitesse d'une seule vue.
    - Si l'écart persiste, le dire dans le rapport.

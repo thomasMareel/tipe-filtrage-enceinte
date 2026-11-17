@@ -2,7 +2,7 @@
 
 > Le texte que Thomas dit, vue par vue. Support : `oral/presentation.pdf` (version claire, à projeter) ou `oral/presentation-sombre.pdf`. Même contenu dans `oral/script_oral.json`, pour un programme. Contexte : `oral/CONTEXTE.md`. Vidéo d'entraînement : `oral/CONSIGNES_VIDEO.md`.
 
-- **Durée visée : 8:09** pour les 12 vues présentées (fourchette acceptée : 7 min 30 à 8 min 30), à 150 mots par minute, une seconde de respiration comprise à chaque changement de vue. Le texte compte 1198 mots.
+- **Durée visée : 8:15** pour les 12 vues présentées (fourchette acceptée : 7 min 30 à 8 min 30), à 150 mots par minute, une seconde de respiration comprise à chaque changement de vue. Le texte compte 1212 mots.
 - **Les 15 pages du PDF** : vues 1 à 12 présentées, puis 3 annexes (pages 13 à 15) qui ne se présentent pas ; elles servent pendant les questions sur la faisabilité.
 - **Apparitions successives : aucune.** Chaque vue s'affiche en entier ; on passe à la suivante après la phrase de transition.
 - **Aucun chiffre de ce support n'est une mesure** : rien n'a encore été mesuré sur l'enceinte. La seule courbe (vue 2) est une allure calculée sur un modèle, et le texte le dit.
@@ -50,27 +50,27 @@ Il y en a quatre. Mesurer l'impédance. Bobiner les inductances et les caractér
 
 ## Vue 5 — Mesurer l'impédance Z(f) du haut-parleur
 
-- **Temps visé :** 65 s (de 2:20 à 3:25)
+- **Temps visé :** 59 s (de 2:20 à 3:19)
 - **À montrer :** suivre du doigt le chemin du courant : sortie, résistance, haut-parleur, retour à la masse ; les deux voltmètres, en A puis en B ; la formule : d'abord le courant, puis l'impédance.
 - **Apparitions successives :** aucune.
 
-Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Et avant de mesurer, je prédis l'accord des évents d'après leurs dimensions : la mesure tranchera. Encore faut-il pouvoir faire confiance à l'appareil.
+Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Encore faut-il pouvoir faire confiance à l'appareil.
 
 *Transition vers la vue 6 (dernière phrase ci-dessus) :* « Encore faut-il pouvoir faire confiance à l'appareil. »
 
-## Vue 6 — Étalonner : la chaîne doit retrouver des valeurs connues
+## Vue 6 — D'abord, tester l'appareil sur du connu
 
-- **Temps visé :** 47 s (de 3:25 à 4:12)
-- **À montrer :** la droite horizontale de la résistance ; la droite de pente moins un du condensateur ; les deux chaînes de mesure, à droite ; l'encadré orange : la porte.
+- **Temps visé :** 59 s (de 3:19 à 4:18)
+- **À montrer :** la phrase du haut : sur le haut-parleur, on ne connaît pas la bonne réponse ; la droite horizontale de la résistance de dix ohms ; la droite du condensateur et ses trois valeurs ; les deux chaînes de mesure, à droite ; l'encadré orange : la porte ; l'encadré du bas : ensuite seulement, le haut-parleur.
 - **Apparitions successives :** aucune.
 
-Avant de brancher le haut-parleur, je vérifie que la chaîne retrouve des valeurs connues. Sur une résistance, je dois trouver une droite horizontale, à la bonne valeur. Sur un condensateur, une droite qui descend, de pente moins un, parce que son impédance varie comme un sur la fréquence. Puis je recoupe avec une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée : elles doivent donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Et comme la carte son n'est garantie qu'au-dessus de vingt hertz, je la vérifie aussi en dessous. Une fois la courbe mesurée, place au calcul.
+Avant de brancher le haut-parleur, il y a un piège : sur lui, je ne connais pas la bonne réponse. Si l'appareil se trompe, je ne le verrai pas. Alors je fais comme avec une balance qu'on vérifie avec un poids connu. Une résistance de dix ohms doit donner une droite horizontale, à dix ohms, à toutes les fréquences. Un condensateur doit donner une impédance divisée par dix quand la fréquence est multipliée par dix. Puis une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée, doit donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Ensuite seulement, je mesure le caisson et les médiums, et je compare la courbe à ma prédiction de l'accord des évents, faite d'après leurs dimensions. Une fois la courbe mesurée, place au calcul.
 
 *Transition vers la vue 7 (dernière phrase ci-dessus) :* « Une fois la courbe mesurée, place au calcul. »
 
 ## Vue 7 — De la courbe mesurée au meilleur filtre
 
-- **Temps visé :** 43 s (de 4:12 à 4:55)
+- **Temps visé :** 43 s (de 4:18 à 5:01)
 - **À montrer :** à gauche, la boucle du problème inverse ; à droite, l'entonnoir de l'optimisation ; l'encadré « Contrôle », sans le lire : il sert si une question vient sur la validation du code ; la ligne du bas sur l'aide de l'IA : la dire en regardant les professeurs.
 - **Apparitions successives :** aucune.
 
@@ -80,7 +80,7 @@ Le calcul, je le résume. À gauche, le problème inverse : j'ajuste un modèle 
 
 ## Vue 8 — Bobiner les selfs, et mesurer ce qu'elles coûtent
 
-- **Temps visé :** 47 s (de 4:55 à 5:42)
+- **Temps visé :** 47 s (de 5:01 à 5:48)
 - **À montrer :** la bobine en coupe ; la prise intermédiaire, en orange ; la formule de la masse de cuivre, dans la liste à droite.
 - **Apparitions successives :** aucune.
 
@@ -90,7 +90,7 @@ Deuxième expérience : les inductances, qu'on appelle aussi des selfs. Je les b
 
 ## Vue 9 — Les filtres branchés sur les vrais haut-parleurs
 
-- **Temps visé :** 44 s (de 5:42 à 6:26)
+- **Temps visé :** 44 s (de 5:48 à 6:32)
 - **À montrer :** le pré-ampli et ses deux sorties ; les deux canaux de l'ampli, chacun vers son filtre ; les deux points de mesure en pointillé ; l'encadré orange sur la sécurité.
 - **Apparitions successives :** aucune.
 
@@ -100,7 +100,7 @@ Troisième expérience : le banc électrique. Le pré-ampli a deux sorties, et l
 
 ## Vue 10 — Le micro en champ proche, et le wattmètre
 
-- **Temps visé :** 55 s (de 6:26 à 7:21)
+- **Temps visé :** 55 s (de 6:32 à 7:27)
 - **À montrer :** le micro devant la membrane, puis devant chaque évent ; les deux courbes de polarité : la bonne en vert, le trou en orange ; les trois étiquettes du bas : catalogue, optimisé, actif.
 - **Apparitions successives :** aucune.
 
@@ -110,7 +110,7 @@ Quatrième expérience. À cent hertz, la longueur d'onde fait trois mètres qua
 
 ## Vue 11 — Garde-fous et calendrier
 
-- **Temps visé :** 41 s (de 7:21 à 8:02)
+- **Temps visé :** 41 s (de 7:27 à 8:08)
 - **À montrer :** les trois cartes : décider avant, une porte par étape, sécurité ; la frise, de gauche à droite ; les losanges orange des étapes du concours.
 - **Apparitions successives :** aucune.
 
@@ -120,7 +120,7 @@ Trois garde-fous. Un : je décide avant de mesurer ; les critères, les niveaux 
 
 ## Vue 12 — Questions ?
 
-- **Temps visé :** 7 s (de 8:02 à 8:09)
+- **Temps visé :** 7 s (de 8:08 à 8:15)
 - **À montrer :** laisser la vue affichée pendant les questions ; aller aux annexes si on parle de matériel, de risques ou de critères.
 - **Apparitions successives :** aucune.
 

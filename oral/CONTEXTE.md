@@ -13,7 +13,7 @@
   18 novembre 2026. Ce n'est pas l'épreuve du concours : les professeurs savent que rien
   n'est encore mesuré. Le but est d'expliquer ce qui va être fait, en insistant sur les
   **expériences**.
-- **Format** : environ **8 minutes** d'exposé (script : 8 min 09 au débit de référence),
+- **Format** : environ **8 minutes** d'exposé (script : 8 min 15 au débit de référence),
   suivies de questions, surtout sur la **faisabilité** du sujet.
 - **Support** : `oral/presentation.pdf`, 15 pages au format 4:3. Il contient 12 vues
   présentées et 3 annexes gardées pour les questions. Il est projeté depuis un ordinateur
