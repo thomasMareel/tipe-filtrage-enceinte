@@ -439,6 +439,9 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       de la vue 4 : la vidéo est **en retard** sur les vues 5 et 6 (note en tête de
       `oral/video/RAPPORT.md`). Le JSON du script est la source ; le Markdown et les notes
       HTML se régénèrent depuis lui.
+- [x] **Vue 9 : encadré de sécurité retiré** (17/11/2026, demande de Thomas : « tensions
+      élevées derrière l'ampli, sondes ×10, protocole relu par M. Chevalier »). Le texte dit
+      le mentionne toujours ; la ligne « à montrer » du script est ajustée. PDF réexportés.
 - [x] **Décisions de Thomas du 15/11/2026**, consignées dans
       `DECISIONS-PHASE-0.md` et propagées (feuille de route, MCOT, PARCOURS,
       `criteres_geles.json`) :

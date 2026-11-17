@@ -91,7 +91,7 @@ Deuxième expérience : les inductances, qu'on appelle aussi des selfs. Je les b
 ## Vue 9 — Les filtres branchés sur les vrais haut-parleurs
 
 - **Temps visé :** 44 s (de 5:48 à 6:32)
-- **À montrer :** le pré-ampli et ses deux sorties ; les deux canaux de l'ampli, chacun vers son filtre ; les deux points de mesure en pointillé ; l'encadré orange sur la sécurité.
+- **À montrer :** le pré-ampli et ses deux sorties ; les deux canaux de l'ampli, chacun vers son filtre ; les deux points de mesure en pointillé (la sécurité se dit sans support écrit).
 - **Apparitions successives :** aucune.
 
 Troisième expérience : le banc électrique. Le pré-ampli a deux sorties, et l'ampli deux canaux : un canal pour le caisson, un pour les médiums, chacun avec son filtre. Je branche le filtre du catalogue, puis le filtre optimisé, sur les vrais haut-parleurs. Je relève la réponse de chaque voie, la fréquence où elles se croisent, l'impédance que voit l'ampli, et les pertes dans les bobines. C'est là que le calcul est confronté au réel. Et comme ce banc travaille derrière l'ampli, à des tensions élevées, son protocole sera relu par mon professeur avant la première mise sous tension. Reste le plus important : ce qu'on entend.

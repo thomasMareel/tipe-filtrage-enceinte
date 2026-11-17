@@ -5,7 +5,9 @@
 > du montage, et la vue 6 devient « D'abord, tester l'appareil sur du connu », avec la
 > mesure du haut-parleur et la prédiction de l'accord des évents à la fin. Le script
 > (`oral/script_oral.json`) vise désormais **8 min 15**. La vidéo, ce rapport et le `.srt`
-> sont à régénérer pour ces deux vues.
+> sont à régénérer pour ces deux vues. Le même soir, l'encadré de sécurité du bas de la
+> vue 9 a été retiré, à la demande de Thomas : seule l'image de cette vue change, pas son
+> texte.
 
 **Vidéo (non répertoriée)** : https://youtu.be/boE136EmLqw
 Durée : **7 min 12 s** (431,6 s). Voix « Camille » de Mistral, sous-titres français
