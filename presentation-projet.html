@@ -42,8 +42,9 @@
      (rien n'est encore mesuré), « mettre le paquet sur l'expérience » ; débat
      sur la faisabilité ensuite. Plan validé par Thomas le 15/11/2026.
      12 vues chronométrées + 3 annexes hors chrono pour les questions.
-     Budgets (crochets en tête des notes) : 15+50+40+30+60+50+45+45+45+60+40+5
-     = 485 s, soit 8 min 05.
+     Le texte de l'oral fait foi dans oral/script_oral.json (et .md) : les notes
+     ci-dessous en sont une copie, budgets entre crochets, total 8 min 09.
+     PDF : oral/presentation.pdf (clair) et oral/presentation-sombre.pdf.
      AUCUNE MESURE : la seule courbe de données (vue 2) est calculée sur le modèle
      SUB_TYPIQUE_BR (analyse/io_mesures.py, paramètres plausibles d'un 18″ de
      sono) et l'écran le dit.
@@ -60,9 +61,7 @@
         <div class="auteur">THOMAS MAREEL · PT · ENCADRANT : M. CHEVALIER</div>
         <div class="meta">Présentation du projet · 18 novembre 2026 · ce que je vais mesurer, et comment</div>
         <aside class="notes">
-          [15 s] Bonjour. Mon TIPE part de l'enceinte que j'ai construite : comment calculer son
-          filtre de raccord à cent hertz, non pas pour un haut-parleur idéal, mais pour le vrai.
-          Je vais surtout vous parler des expériences, parce que c'est là que tout se joue.
+          [20 s] Bonjour. Voici l'enceinte que j'ai construite. Mon TIPE consiste à calculer son filtre de raccord, à cent hertz, pour le vrai haut-parleur, et pas pour un haut-parleur idéal. Et je vais surtout vous parler des expériences, parce que c'est là que tout se joue. Commençons par le problème.
         </aside>
       </section>
 
@@ -123,14 +122,7 @@
         </div>
         <p class="legende">allure ATTENDUE · modèle d'un 18″ de sono en bass-reflex · ce n'est pas encore une mesure</p>
         <aside class="notes">
-          [50 s] Mon enceinte a deux voies : un caisson de basses de dix-huit pouces, et des médiums.
-          Entre les deux, un filtre partage le signal autour de cent hertz. Le calcul classique, celui des
-          catalogues, suppose que le haut-parleur est une résistance de huit ohms : c'est la ligne
-          pointillée. Or un haut-parleur dans sa caisse, ce n'est pas ça. Voici l'allure que j'attends
-          pour mon caisson, qui est un bass-reflex à deux évents : deux pics et un creux, et le second
-          pic tombe en pleine zone de raccord. Attention : cette courbe vient d'un modèle, je ne l'ai pas
-          encore mesurée — c'est justement l'objet de ma première expérience. Mais si elle a cette
-          allure, un filtre calculé pour huit ohms ne fera pas ce qu'on lui demande.
+          [50 s] Mon enceinte a deux voies : un caisson de basses de dix-huit pouces, et des médiums. Entre les deux, un filtre partage le signal autour de cent hertz. Le calcul classique suppose que le haut-parleur se comporte comme une résistance de huit ohms : c'est cette ligne pointillée orange. Or un haut-parleur dans sa caisse, ce n'est pas ça. Voici l'allure que j'attends pour mon caisson, un bass-reflex à deux évents : deux pics, un creux, et le deuxième pic tombe en pleine zone de raccord. Attention : cette courbe vient d'un modèle, je ne l'ai pas encore mesurée. Mais si elle a cette allure, un filtre calculé pour huit ohms ne fera pas ce qu'on attend de lui. D'où ma question.
         </aside>
       </section>
 
@@ -190,12 +182,7 @@
           </svg>
         </div>
         <aside class="notes">
-          [40 s] D'où ma question : comment concevoir ce filtre pour qu'il tienne sa cible sur la charge
-          réelle, au moindre coût en composants, en pertes et en cuivre ? Ma démarche a quatre étapes.
-          Je mesure l'impédance réelle. J'en tire un modèle physique du haut-parleur : c'est un problème
-          inverse. Je cherche ensuite les meilleures valeurs de composants, sous contraintes. Enfin je
-          fabrique et je valide. Les expériences encadrent tout : la première fournit les données, les
-          dernières disent si le calcul avait raison.
+          [39 s] Ma problématique : comment concevoir ce filtre pour qu'il tienne sa cible sur la charge réelle, au moindre coût en composants, en pertes et en cuivre ? Pour y répondre, quatre étapes. Un : je mesure l'impédance réelle. Deux : j'en tire un modèle physique du haut-parleur ; c'est un problème inverse. Trois : je cherche les meilleures valeurs de composants, sous contraintes. Quatre : je fabrique, et je valide. La première et la dernière étape sont des expériences : la première fournit les données, la dernière dit si le calcul avait raison. Voyons ces expériences.
         </aside>
       </section>
 
@@ -235,12 +222,7 @@
           avec câblages, réglages et consignes de sécurité.
         </div>
         <aside class="notes">
-          [30 s] Concrètement, il y a quatre expériences : mesurer l'impédance ; bobiner et caractériser
-          les inductances ; tester les filtres au banc électrique ; et mesurer le son au micro, avec la
-          consommation au wattmètre. Elles sont déjà rédigées dans un livret de vingt-trois
-          manipulations, avec les câblages et les consignes de sécurité. Et une règle vaut pour toutes :
-          les critères de comparaison sont écrits et datés avant la première mesure, pour que je ne
-          puisse pas les ajuster après coup.
+          [31 s] Il y en a quatre. Mesurer l'impédance. Bobiner les inductances et les caractériser. Tester les filtres au banc électrique. Et mesurer le son au micro, avec la consommation au wattmètre. Les protocoles sont déjà rédigés, dans un livret de vingt-trois manipulations. Et une règle vaut pour toutes : les critères de comparaison sont écrits et datés avant la première mesure, pour que je ne puisse pas les ajuster après coup. Je commence par la plus importante.
         </aside>
       </section>
 
@@ -250,57 +232,69 @@
         <h2>Mesurer l'impédance <span class="accent">Z(f)</span> du haut-parleur</h2>
         <div class="viz">
           <svg viewBox="0 0 1000 250" font-family="Inter, sans-serif" role="img"
-               aria-label="Principe de la mesure : la sortie de la carte son alimente une résistance connue de 100 ohms en série avec le haut-parleur ; l'entrée 1 lit la tension avant la résistance, l'entrée 2 la tension aux bornes du haut-parleur">
-            <defs>
-              <marker id="fl-i" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--warn)"/>
-              </marker>
-            </defs>
-            <!-- carte son -->
-            <rect x="20" y="15" width="230" height="220" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
-            <text style="fill:var(--ink)" x="135" y="44" text-anchor="middle" font-size="19" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">carte son + REW</text>
-            <g font-family="'JetBrains Mono', monospace" font-size="15" text-anchor="end">
-              <text style="fill:var(--ink-soft)" x="240" y="76">sortie</text>
-              <text style="fill:var(--accent2)" x="240" y="141">entrée 1 · V_A</text>
-              <text style="fill:var(--accent2)" x="240" y="186">entrée 2 · V_B</text>
-              <text style="fill:var(--ink-soft)" x="240" y="221">masse</text>
+               aria-label="Principe de la mesure : une seule sortie de la carte son envoie le courant dans une résistance connue de 100 ohms puis dans le haut-parleur, avant le retour à la masse ; les deux entrées de la carte son sont deux voltmètres qui lisent la tension en A, avant la résistance, et en B, aux bornes du haut-parleur">
+            <!-- carte son : une seule sortie -->
+            <rect x="20" y="45" width="200" height="80" rx="6" fill="var(--bg-card)" stroke="var(--trait)" stroke-width="1.8"/>
+            <text style="fill:var(--ink)" x="120" y="78" text-anchor="middle" font-size="19" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">carte son</text>
+            <text style="fill:var(--ink-soft)" x="120" y="104" text-anchor="middle" font-size="14" font-family="'JetBrains Mono', monospace">sortie casque</text>
+            <!-- le chemin du courant : sortie, R, haut-parleur, retour à la masse -->
+            <g fill="none" stroke="var(--wire)" stroke-width="2.6">
+              <path d="M220,85 H390"/>
+              <path d="M520,85 H670"/>
+              <path d="M810,85 H890 V215 H120 V125"/>
             </g>
-            <!-- circuit principal -->
-            <g fill="none" stroke="var(--wire)" stroke-width="2.4">
-              <path d="M250,70 H390"/>
-              <path d="M520,70 H680"/>
-              <path d="M820,70 H900 V215 H250"/>
+            <g fill="var(--warn)">
+              <polygon points="256,78 270,85 256,92"/>
+              <polygon points="883,143 890,157 897,143"/>
+              <polygon points="664,208 650,215 664,222"/>
             </g>
-            <rect x="390" y="52" width="130" height="36" rx="3" fill="var(--bg)" stroke="var(--wire)" stroke-width="2.4"/>
-            <text style="fill:var(--ink)" x="455" y="76" text-anchor="middle" font-size="17">R = 100 Ω</text>
-            <text style="fill:var(--ink-soft)" x="455" y="110" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">connue à 0,1 %</text>
-            <rect x="680" y="46" width="140" height="48" rx="4" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.8"/>
-            <text style="fill:var(--accent)" x="750" y="78" text-anchor="middle" font-size="22" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">Z(f)</text>
-            <text style="fill:var(--ink-soft)" x="750" y="122" text-anchor="middle" font-size="15">haut-parleur</text>
-            <line x1="548" y1="58" x2="600" y2="58" stroke="var(--warn)" stroke-width="2" marker-end="url(#fl-i)"/>
-            <text style="fill:var(--warn)" x="574" y="48" text-anchor="middle" font-size="17" font-style="italic">I</text>
-            <!-- prises de mesure -->
+            <rect x="390" y="67" width="130" height="36" rx="3" fill="var(--bg)" stroke="var(--wire)" stroke-width="2.6"/>
+            <text style="fill:var(--ink)" x="455" y="91" text-anchor="middle" font-size="17">R = 100 Ω</text>
+            <text style="fill:var(--ink-soft)" x="455" y="124" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', monospace">connue à 0,1 %</text>
+            <line x1="534" y1="72" x2="580" y2="72" stroke="var(--warn)" stroke-width="2"/>
+            <polygon points="578,67 588,72 578,77" fill="var(--warn)"/>
+            <text style="fill:var(--warn)" x="558" y="63" text-anchor="middle" font-size="17" font-style="italic">I</text>
+            <rect x="670" y="61" width="140" height="48" rx="4" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.8"/>
+            <text style="fill:var(--accent)" x="740" y="93" text-anchor="middle" font-size="22" font-family="'Space Grotesk', Inter, sans-serif" font-weight="700">Z(f)</text>
+            <text style="fill:var(--ink-soft)" x="740" y="132" text-anchor="middle" font-size="15">haut-parleur</text>
+            <text style="fill:var(--ink-soft)" x="505" y="242" text-anchor="middle" font-size="14">retour à la masse de la carte son</text>
+            <!-- les deux entrées de la carte son = deux voltmètres -->
             <g fill="none" stroke="var(--accent2)" stroke-width="2">
-              <path d="M340,70 V135 H250"/>
-              <path d="M620,70 V180 H250"/>
+              <path d="M320,85 V141 M320,189 V215"/>
+              <path d="M600,85 V141 M600,189 V215"/>
+            </g>
+            <g fill="var(--bg)" stroke="var(--accent2)" stroke-width="2.6">
+              <circle cx="320" cy="165" r="24"/>
+              <circle cx="600" cy="165" r="24"/>
             </g>
             <g fill="var(--accent2)">
-              <circle cx="340" cy="70" r="5.5"/>
-              <circle cx="620" cy="70" r="5.5"/>
+              <circle cx="320" cy="85" r="5.5"/>
+              <circle cx="600" cy="85" r="5.5"/>
+              <circle cx="320" cy="215" r="4.5"/>
+              <circle cx="600" cy="215" r="4.5"/>
             </g>
-            <circle cx="900" cy="215" r="5" fill="var(--wire)"/>
+            <g font-size="22" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', Inter, sans-serif">
+              <text style="fill:var(--accent2)" x="320" y="173">V</text>
+              <text style="fill:var(--accent2)" x="600" y="173">V</text>
+            </g>
             <g font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">
-              <text style="fill:var(--accent2)" x="334" y="56" text-anchor="end">A</text>
-              <text style="fill:var(--accent2)" x="626" y="56">B</text>
+              <text style="fill:var(--accent2)" x="310" y="74" text-anchor="end">A</text>
+              <text style="fill:var(--accent2)" x="612" y="74">B</text>
+              <text style="fill:var(--accent2)" x="354" y="161">V_A</text>
+              <text style="fill:var(--accent2)" x="634" y="161">V_B</text>
+            </g>
+            <g font-size="14">
+              <text style="fill:var(--ink-soft)" x="354" y="182">entrée 1 de la carte son</text>
+              <text style="fill:var(--ink-soft)" x="634" y="182">entrée 2 de la carte son</text>
             </g>
           </svg>
         </div>
         <div class="formule">\[ I = \frac{V_A - V_B}{R} \quad\Rightarrow\quad Z(f) = R\,\frac{V_B}{V_A - V_B} \quad \text{(module et phase)} \]</div>
         <div class="colonnes">
           <ul class="serre">
-            <li>balayage sinus lent de <strong>10 Hz à 1 kHz</strong></li>
-            <li>quelques mA seulement : sans risque pour le haut-parleur</li>
-            <li>deux niveaux de signal : le résultat ne doit pas en dépendre</li>
+            <li>la résistance connue sert de <strong>capteur de courant</strong> : la carte son ne mesure que des tensions</li>
+            <li>sans elle, la sortie imposerait sa tension quelle que soit Z : <strong>on ne verrait rien</strong></li>
+            <li>balayage sinus lent de <strong>10 Hz à 1 kHz</strong>, quelques mA</li>
           </ul>
           <ul class="serre">
             <li>deux objets : le <strong>caisson dans sa caisse</strong>, le bloc médiums <strong>tel qu'il est câblé</strong> (pavillons d'aigu compris)</li>
@@ -308,15 +302,7 @@
           </ul>
         </div>
         <aside class="notes">
-          [60 s] La première expérience est la clé de voûte : mesurer l'impédance Z en fonction de la
-          fréquence. Le principe : j'envoie un sinus avec ma carte son à travers une résistance connue de
-          cent ohms, en série avec le haut-parleur. Je mesure deux tensions : avant la résistance, et aux
-          bornes du haut-parleur. Leur différence me donne le courant, et le rapport me donne l'impédance,
-          en module et en phase, à chaque fréquence. Le logiciel REW balaie de dix hertz à un kilohertz.
-          Je mesure le caisson dans sa caisse, et le bloc des médiums tel qu'il est câblé, avec les
-          pavillons d'aigu, parce que c'est ce que le filtre voit vraiment. Et avant de mesurer, je fais
-          une prédiction : à partir des dimensions des évents et du volume de la caisse, je calcule la
-          fréquence d'accord. La mesure dira si j'avais raison.
+          [65 s] Première expérience, la clé de voûte : mesurer l'impédance du haut-parleur en fonction de la fréquence. Le signal part de la carte son, traverse une résistance connue de cent ohms, puis le haut-parleur, et revient à la masse. Les deux entrées de la carte son servent de voltmètres : l'une mesure la tension en A, avant la résistance, l'autre en B, aux bornes du haut-parleur. Pourquoi cette résistance ? Parce que la carte son ne mesure que des tensions, pas des courants. Le même courant traverse la résistance et le haut-parleur : la tension aux bornes de la résistance, divisée par cent ohms, me donne ce courant. Et l'impédance, c'est la tension du haut-parleur divisée par ce courant. Le logiciel REW fait ce calcul à chaque fréquence, de dix hertz à un kilohertz, en module et en phase. Et avant de mesurer, je prédis l'accord des évents d'après leurs dimensions : la mesure tranchera. Encore faut-il pouvoir faire confiance à l'appareil.
         </aside>
       </section>
 
@@ -369,14 +355,7 @@
           résistance connue : le premier pic du caisson peut tomber en dessous.
         </div>
         <aside class="notes">
-          [50 s] Mais une mesure ne vaut que si l'appareil sait retrouver une valeur connue. Donc avant de
-          brancher le haut-parleur, je mesure une résistance connue — je dois trouver une droite
-          horizontale à la bonne valeur — et un condensateur, dont l'impédance doit décroître comme un sur
-          la fréquence. Je recoupe ensuite avec une deuxième chaîne, indépendante : le GBF et
-          l'oscilloscope du lycée. Enfin, la carte son n'est garantie qu'au-dessus de vingt hertz, alors
-          que le premier pic peut tomber en dessous : je vérifie donc sa réponse jusqu'à dix hertz. C'est
-          une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur
-          avant d'aller plus loin.
+          [47 s] Avant de brancher le haut-parleur, je vérifie que la chaîne retrouve des valeurs connues. Sur une résistance, je dois trouver une droite horizontale, à la bonne valeur. Sur un condensateur, une droite qui descend, de pente moins un, parce que son impédance varie comme un sur la fréquence. Puis je recoupe avec une deuxième chaîne, indépendante, le GBF et l'oscilloscope du lycée : elles doivent donner la même courbe. C'est une porte : si la résistance n'est pas retrouvée à trois pour cent près, je cherche l'erreur avant d'aller plus loin. Et comme la carte son n'est garantie qu'au-dessus de vingt hertz, je la vérifie aussi en dessous. Une fois la courbe mesurée, place au calcul.
         </aside>
       </section>
 
@@ -433,13 +412,7 @@
         </div>
         <p class="note-ia">chaîne de calcul déjà écrite et testée sur des données fictives, avec l'aide d'une IA (Claude), ce que je déclare · j'en réécrirai seul le noyau</p>
         <aside class="notes">
-          [45 s] Entre les expériences, il y a le calcul, que je résume. D'abord le problème inverse :
-          j'ajuste un modèle physique du haut-parleur, à huit paramètres pour un bass-reflex, jusqu'à ce que
-          sa courbe colle à la mesure, par moindres carrés. Ensuite l'optimisation : les composants
-          n'existent qu'en valeurs normalisées, donc je peux tester toutes les combinaisons, plus de trois
-          cent mille, et garder la meilleure, avec une contrainte : l'ampli ne doit jamais voir moins de
-          quatre ohms. Ce code est déjà écrit et testé sur des données fictives, avec l'aide d'une IA, je
-          le dis clairement ; j'en réécrirai moi-même le cœur.
+          [43 s] Le calcul, je le résume. À gauche, le problème inverse : j'ajuste un modèle physique du haut-parleur, à huit paramètres, jusqu'à ce que sa courbe colle à la mesure ; c'est la méthode des moindres carrés. À droite, l'optimisation : les composants n'existent qu'en valeurs normalisées, donc je peux tester toutes les combinaisons, plus de trois cent mille, et garder la meilleure. Avec une contrainte : l'ampli ne doit jamais voir moins de quatre ohms. Ce code est déjà écrit et testé, avec l'aide d'une IA, je le dis clairement ; j'en réécrirai moi-même le cœur. Mais un filtre, il faut aussi le fabriquer.
         </aside>
       </section>
 
@@ -496,13 +469,7 @@
           </div>
         </div>
         <aside class="notes">
-          [45 s] Deuxième expérience : les inductances. Je les bobine moi-même, à air, sans noyau : un noyau
-          sature, et la valeur changerait avec le volume. Mais le fil a une résistance, qui gaspille de la
-          puissance. Moins de résistance, c'est un fil plus gros, donc beaucoup plus de cuivre : la masse
-          croît comme la puissance trois demis du rapport L sur r. C'est le cœur de l'aspect sobriété. Je
-          mesurerai chaque bobine : son inductance par résonance avec un condensateur connu, la résistance
-          de son fil en quatre fils, et son échauffement au niveau fort. Et grâce à une prise
-          intermédiaire, une même bobine servira au filtre du catalogue et au filtre optimisé.
+          [47 s] Deuxième expérience : les inductances, qu'on appelle aussi des selfs. Je les bobine moi-même, à air, sans noyau : un noyau peut saturer, et la valeur changerait avec le volume. Le problème, c'est la résistance du fil, qui gaspille de la puissance. Moins de résistance, c'est un fil plus gros, donc beaucoup plus de cuivre : la masse croît comme le rapport L sur r, à la puissance trois demis. C'est là qu'est l'enjeu de sobriété. Je mesure chaque bobine : son inductance, la résistance de son fil, et son échauffement à fort niveau. Et grâce à cette prise intermédiaire, une même bobine sert au filtre du catalogue et au filtre optimisé. Ensuite, je les branche.
         </aside>
       </section>
 
@@ -573,13 +540,7 @@
           première mise sous tension.
         </div>
         <aside class="notes">
-          [45 s] Troisième expérience : le banc électrique. Le pré-ampli a deux sorties et l'ampli deux
-          canaux : un pour le caisson, un pour les médiums, chacun avec son filtre. Je branche le filtre du
-          catalogue, puis le filtre optimisé, sur les vrais haut-parleurs, dans le même montage. Je relève
-          la réponse de chaque voie, la fréquence où elles se croisent, l'impédance que voit l'ampli, et les
-          pertes dans les bobines. C'est ici que la prédiction du calcul est confrontée au réel. Ce banc
-          travaille derrière l'ampli, à des tensions élevées : son protocole sera relu par mon professeur
-          avant la première mise sous tension.
+          [44 s] Troisième expérience : le banc électrique. Le pré-ampli a deux sorties, et l'ampli deux canaux : un canal pour le caisson, un pour les médiums, chacun avec son filtre. Je branche le filtre du catalogue, puis le filtre optimisé, sur les vrais haut-parleurs. Je relève la réponse de chaque voie, la fréquence où elles se croisent, l'impédance que voit l'ampli, et les pertes dans les bobines. C'est là que le calcul est confronté au réel. Et comme ce banc travaille derrière l'ampli, à des tensions élevées, son protocole sera relu par mon professeur avant la première mise sous tension. Reste le plus important : ce qu'on entend.
         </aside>
       </section>
 
@@ -628,15 +589,7 @@
         </div>
         <p class="legende">chaque mesure à deux niveaux d'écoute fixés à l'avance · wattmètre de prise : consommation de chaque solution</p>
         <aside class="notes">
-          [60 s] Quatrième expérience : ce qu'on entend vraiment. À cent hertz, la longueur d'onde fait trois
-          mètres quarante : dans une pièce, les réflexions dominent tout. Je mesure donc en champ proche, le
-          micro à deux centimètres de la membrane, puis de chaque évent, et je somme les trois relevés. Je
-          vérifie aussi la polarité : avec ce type de filtre, il faut inverser une des voies, sinon la somme
-          fait un trou au raccord — c'est un test très lisible. Je compare trois solutions : le filtre du
-          catalogue, le filtre optimisé, et un filtre actif à amplificateurs linéaires intégrés, placé avant
-          l'ampli, qui ne voit jamais l'impédance du haut-parleur : c'est ma référence. Chaque mesure est
-          faite à deux niveaux d'écoute fixés à l'avance, et un wattmètre mesure la consommation de chaque
-          solution.
+          [55 s] Quatrième expérience. À cent hertz, la longueur d'onde fait trois mètres quarante : dans une pièce, les réflexions dominent tout. Je mesure donc en champ proche : le micro à deux centimètres de la membrane, puis de chaque évent, et je fais la somme des trois. Je vérifie aussi la polarité : avec ce filtre, il faut inverser l'une des deux voies, sinon la somme fait un trou au raccord. Je compare trois solutions : le filtre du catalogue, le filtre optimisé, et un filtre actif à amplificateurs linéaires intégrés, placé avant l'ampli, qui ne voit jamais l'impédance du haut-parleur : c'est ma référence. Chaque mesure est faite à deux niveaux d'écoute fixés à l'avance, et le wattmètre mesure ce que consomme chaque solution. Pour que tout cela reste honnête et sûr, j'ai prévu des garde-fous.
         </aside>
       </section>
 
@@ -707,12 +660,7 @@
           </svg>
         </div>
         <aside class="notes">
-          [40 s] Pour que tout cela reste honnête et sûr, trois garde-fous. Je décide avant de mesurer :
-          critères, niveaux et cible sont datés dans un registre. Chaque étape a sa porte de validation. Et
-          la sécurité : on ne descend jamais sous la fréquence d'accord à fort niveau, parce que la membrane
-          du dix-huit pouces n'y est plus retenue par l'air des évents. Côté calendrier : commande et
-          étalonnage maintenant, mesure d'impédance en décembre, calcul et MCOT en janvier, bobinage en
-          février, banc et micro en mars, puis l'analyse jusqu'au dépôt de juin.
+          [41 s] Trois garde-fous. Un : je décide avant de mesurer ; les critères, les niveaux d'écoute et la cible sont datés dans un registre. Deux : chaque étape a sa porte de validation. Trois : la sécurité ; on ne descend jamais sous la fréquence d'accord à fort niveau, parce que la membrane n'y est plus retenue par l'air des évents. Côté calendrier : la commande et l'étalonnage maintenant, la mesure d'impédance en décembre, le calcul et la fiche MCOT en janvier, le bobinage en février, le banc et le micro en mars, puis l'analyse jusqu'au dépôt de juin. Voilà mon projet.
         </aside>
       </section>
 
@@ -727,7 +675,7 @@
         </div>
         <div class="meta" style="margin-top:2em">annexes : matériel · risques et parades · critères de comparaison</div>
         <aside class="notes">
-          [5 s] Merci. Je suis prêt pour vos questions, en particulier sur la faisabilité.
+          [7 s] Merci de votre attention. Je suis prêt pour vos questions, en particulier sur la faisabilité.
         </aside>
       </section>
 

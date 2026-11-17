@@ -1,0 +1,12 @@
+# Fichiers lourds de la vidéo d'entraînement : jamais versionnés (dépôt public).
+# Seuls RAPPORT.md et presentation_oral.srt sont commités (oral/CONSIGNES_VIDEO.md).
+images/
+audio/
+*.mp4
+*.mkv
+*.mov
+*.wav
+*.mp3
+*.m4a
+*.png
+*.jpg

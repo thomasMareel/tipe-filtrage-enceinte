@@ -122,14 +122,20 @@ Détail des phases, portes de validation, critères et calendrier :
   avec Thomas, leçons, pièges d'environnement), versionnée depuis le 15/11/2026
   pour suivre le projet d'un compte à l'autre ; index `MEMORY.md`, importé en
   tête de ce fichier.
-- **presentation-projet.html** (+ `presentation-projet.pdf`, `-clair.pdf`, et
-  `presentation-projet-texte.md`, le texte de l'oral) — la **présentation du
-  projet aux professeurs du 18/11/2026** : ~8 min, 12 vues + 3 annexes
-  (matériel, risques, critères) pour le débat sur la faisabilité. Centrée sur les
-  **quatre expériences** (Z(f) et son étalonnage, selfs, banc électrique, micro et
-  wattmètre), à la demande de Thomas ; aucune mesure, la seule courbe est une
-  allure de modèle (`SUB_TYPIQUE_BR`) annoncée comme telle. Le texte de l'oral se
-  régénère depuis les `<aside class="notes">`.
+- **presentation-projet.html** — la **présentation du projet aux professeurs du
+  18/11/2026** : ~8 min, 12 vues + 3 annexes (matériel, risques, critères) pour le
+  débat sur la faisabilité. Centrée sur les **quatre expériences** (Z(f) et son
+  étalonnage, selfs, banc électrique, micro et wattmètre), à la demande de Thomas ;
+  aucune mesure, la seule courbe est une allure de modèle (`SUB_TYPIQUE_BR`)
+  annoncée comme telle. Ses PDF et son texte vivent dans **`oral/`**.
+- **oral/** — tout ce qu'il faut pour l'oral du 18/11 et la **vidéo
+  d'entraînement** faite par une autre session (voix Mistral « Camille »,
+  YouTube) : `presentation.pdf` (claire, à projeter) et `presentation-sombre.pdf`
+  (15 pages 4:3), `script_oral.md` et `script_oral.json` (le texte dit, vue par
+  vue, 8 min 09, nombres en toutes lettres, **source du texte** : les notes du
+  HTML en sont une copie), `CONTEXTE.md` (projet, prononciation, questions),
+  `CONSIGNES_VIDEO.md` (pas à pas de la vidéo). `oral/video/` ne versionne que le
+  rapport et les sous-titres.
 - **dissertation/DISSERTATION-SUJET.html** (+ PDF, 4 pages A4) — « Le filtre et sa
   charge réelle : un bon sujet de TIPE ? », dissertation pour / contre demandée par
   Thomas le 30/09/2026 et rédigée par un atelier multi-agents (arguments vérifiés,
@@ -418,6 +424,11 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
       Plan validé par Thomas ; format Blueprint en PDF, projeté sur l'ordinateur du
       lycée ; pas de consignes des professeurs ; débat sur la faisabilité après les
       8 min. L'aide de Claude y est déclarée (vue 7).
+- [x] **Dossier `oral/` pour la vidéo d'entraînement** (17/11/2026, demande de
+      Thomas) : script de **8 min** (Thomas a confirmé 8 min, pas 14-15 ; PDF seul,
+      **pas de .pptx**, à sa demande), contexte, consignes vidéo ; vue 5 redessinée
+      (une seule sortie, chemin du courant fléché, deux voltmètres) après que Thomas
+      a mal lu l'ancien schéma. Fusionné dans `main` le même jour.
 - [x] **Décisions de Thomas du 15/11/2026**, consignées dans
       `DECISIONS-PHASE-0.md` et propagées (feuille de route, MCOT, PARCOURS,
       `criteres_geles.json`) :
