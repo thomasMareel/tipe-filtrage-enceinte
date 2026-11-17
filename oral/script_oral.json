@@ -112,7 +112,7 @@
     {
       "numero": 4,
       "page_pdf": 4,
-      "titre": "Quatre expériences, une règle",
+      "titre": "Quatre expériences",
       "narree": true,
       "duree_visee_s": 31,
       "debut_vise": "1:49",
@@ -121,8 +121,7 @@
       "texte": "Il y en a quatre. Mesurer l'impédance. Bobiner les inductances et les caractériser. Tester les filtres au banc électrique. Et mesurer le son au micro, avec la consommation au wattmètre. Les protocoles sont déjà rédigés, dans un livret de vingt-trois manipulations. Et une règle vaut pour toutes : les critères de comparaison sont écrits et datés avant la première mesure, pour que je ne puisse pas les ajuster après coup. Je commence par la plus importante.",
       "transition_vers_suivante": "Je commence par la plus importante.",
       "a_montrer": [
-        "les quatre cartes, une par une",
-        "l'encadré du bas : la règle, et le livret de vingt-trois manipulations"
+        "les quatre cartes, une par une"
       ],
       "apparitions_successives": []
     },

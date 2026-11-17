@@ -38,10 +38,10 @@ Ma problématique : comment concevoir ce filtre pour qu'il tienne sa cible sur l
 
 *Transition vers la vue 4 (dernière phrase ci-dessus) :* « Voyons ces expériences. »
 
-## Vue 4 — Quatre expériences, une règle
+## Vue 4 — Quatre expériences
 
 - **Temps visé :** 31 s (de 1:49 à 2:20)
-- **À montrer :** les quatre cartes, une par une ; l'encadré du bas : la règle, et le livret de vingt-trois manipulations.
+- **À montrer :** les quatre cartes, une par une (la règle et le livret se disent sans support écrit).
 - **Apparitions successives :** aucune.
 
 Il y en a quatre. Mesurer l'impédance. Bobiner les inductances et les caractériser. Tester les filtres au banc électrique. Et mesurer le son au micro, avec la consommation au wattmètre. Les protocoles sont déjà rédigés, dans un livret de vingt-trois manipulations. Et une règle vaut pour toutes : les critères de comparaison sont écrits et datés avant la première mesure, pour que je ne puisse pas les ajuster après coup. Je commence par la plus importante.
