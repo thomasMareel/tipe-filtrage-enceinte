@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Fiche de route — Étape 1 : mesurer l'impédance Z(f)</title>
+<link rel="stylesheet" href="../libs/fonts/fonts.css">
+<style>
+  /* Fiche de route imprimable (A4), dans le style clair de la présentation du projet.
+     Source unique : ce fichier ; le PDF se régénère par impression Chrome (A4, fonds compris). */
+  @page { size: A4; margin: 11mm 12mm 11mm 12mm; }
+  :root {
+    --ink: #13222c; --ink-soft: #5a6b76; --accent: #0d6e87; --accent2: #2e8a52;
+    --warn: #c2680f; --trait: #d6dee4; --carte: #ffffff; --fond: #ffffff;
+    --ombre: 0 4px 14px rgba(19,34,44,.07), 0 1px 3px rgba(19,34,44,.06);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--fond); color: var(--ink);
+    font-family: Inter, "Segoe UI", sans-serif; font-size: 9.1pt; line-height: 1.33;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { padding: 0; }
+  .saut { break-before: page; }
+  h1, h2, h3 { font-family: "Space Grotesk", Inter, sans-serif; margin: 0; letter-spacing: -.3px; }
+  .entete { background: linear-gradient(120deg, #0d6e87, #0f7d77 60%, #2e8a52); color: #fff;
+    border-radius: 14px; padding: 12px 18px 13px; margin-bottom: 9px; }
+  .entete .kicker { font-family: "JetBrains Mono", monospace; font-size: 7.6pt; letter-spacing: 1.6px;
+    opacity: .9; text-transform: uppercase; }
+  .entete h1 { font-size: 19pt; margin: 3px 0 2px; color: #fff; }
+  .entete .sous { font-size: 9pt; opacity: .92; }
+  .carte { background: var(--carte); border: 1px solid #e1e8ec; border-radius: 12px; box-shadow: var(--ombre); padding: 8px 12px;
+    margin-bottom: 7px; break-inside: avoid; }
+  .carte h2 { font-size: 11pt; margin-bottom: 5px; }
+  .carte h2 .n { display: inline-block; min-width: 1.6em; height: 1.6em; line-height: 1.6em; text-align: center;
+    border-radius: 50%; background: var(--accent); color: #fff; font-size: 8.5pt; margin-right: 6px; }
+  .etiquette { font-family: "JetBrains Mono", monospace; font-size: 7.2pt; letter-spacing: 1.3px;
+    text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin-bottom: 4px; }
+  .phrase { background: linear-gradient(90deg, rgba(13,110,135,.11), rgba(13,110,135,.03));
+    border-radius: 10px; padding: 8px 12px; margin-bottom: 8px; color: #0a4f61; }
+  .phrase strong { color: #0a4f61; }
+  .trois { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .trois .carte { margin: 0; }
+  ul { margin: 0; padding-left: 14px; }
+  li { margin: 1.5px 0; }
+  .vert { color: var(--accent2); } .ambre { color: var(--warn); } .accent { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 8.8pt; }
+  th { text-align: left; font-family: "Space Grotesk", sans-serif; font-weight: 600; color: #fff;
+    background: linear-gradient(90deg, #0d6e87, #0f7d77); padding: 4px 7px; }
+  th:first-child { border-top-left-radius: 8px; } th:last-child { border-top-right-radius: 8px; }
+  td { padding: 2.6px 7px; border-top: 1px solid #e6ecf0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f6f9fa; }
+  td.q { text-align: center; font-weight: 700; width: 5%; }
+  .petit { font-size: 8.2pt; color: var(--ink-soft); }
+  .route td:first-child { font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--accent);
+    white-space: nowrap; width: 7%; }
+  .route td.ou { white-space: nowrap; width: 12%; color: var(--ink-soft); }
+  .route td.duree { white-space: nowrap; width: 9%; font-family: "JetBrains Mono", monospace; font-size: 8pt; }
+  .route tr.porte td { background: #fbefe2; }
+  .route tr.porte td:first-child { color: var(--warn); }
+  .deux { display: grid; grid-template-columns: 1.05fr 1fr; gap: 8px; }
+  .deux .carte { margin: 0; }
+  .alerte { border-left: 4px solid var(--warn); }
+  .ok { border-left: 4px solid var(--accent2); }
+  .cases li { list-style: none; position: relative; padding-left: 2px; }
+  .cases li::before { content: ""; position: absolute; left: -13px; top: 3px; width: 8px; height: 8px;
+    border: 1.4px solid var(--accent); border-radius: 2px; background: #fff; }
+  .cases { padding-left: 15px; }
+  svg { display: block; width: 100%; height: auto; }
+  .pied { font-size: 7.4pt; color: var(--ink-soft); text-align: center; margin-top: 4px;
+    font-family: "JetBrains Mono", monospace; }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<div class="page">
+  <div class="entete">
+    <div class="kicker">TIPE 2027 · fiche de route · étape 1 sur 4</div>
+    <h1>Mesurer l'impédance Z(f) de l'enceinte</h1>
+    <div class="sous">Le but, ce qu'il te faut, et l'ordre des opérations · état au 25 novembre 2026</div>
+  </div>
+
+  <div class="phrase">
+    <strong>Le but en une phrase :</strong> obtenir les courbes d'impédance (module et phase, de 10 Hz à 1 kHz)
+    du <strong>caisson dans sa caisse</strong> et du <strong>bloc médiums tel qu'il est câblé</strong>
+    (pavillons connectés), avec une chaîne de mesure <strong>d'abord vérifiée sur des composants connus</strong>.
+    Tout le reste du TIPE (modèle du haut-parleur, optimisation, filtres) se calcule sur ces courbes.
+  </div>
+
+  <div class="trois">
+    <div class="carte">
+      <div class="etiquette vert">Tu as déjà</div>
+      <ul>
+        <li>l'enceinte</li>
+        <li>la carte son Focusrite Scarlett Solo (3ᵉ génération) et son câble USB</li>
+        <li>un ordinateur avec <strong>REW</strong> (Room EQ Wizard, gratuit) à installer</li>
+        <li>le wattmètre et le micro XLR : pas utiles à cette étape</li>
+      </ul>
+    </div>
+    <div class="carte">
+      <div class="etiquette accent">Le lycée prête</div>
+      <ul>
+        <li>le GBF (il doit descendre sous 20 Hz)</li>
+        <li>l'oscilloscope numérique <strong>deux voies</strong>, si possible avec export des données</li>
+        <li>le multimètre</li>
+        <li>la résistance de puissance 8 Ω (mesurée par les deux chaînes, pour le recoupement A7)</li>
+        <li>le ballast 10 Ω / 5 W (mesures quatre fils en A1 et B1)</li>
+      </ul>
+    </div>
+    <div class="carte">
+      <div class="etiquette ambre">À vérifier chez toi</div>
+      <ul>
+        <li>fer à souder, étain, ruban adhésif (pour bloquer le gain)</li>
+        <li>mètre ruban rigide, réglet, lampe, une tige graduée (pour sonder les évents)</li>
+        <li>un cahier de laboratoire, pour dater chaque séance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="carte">
+    <h2><span class="n">€</span>À commander maintenant</h2>
+    <table>
+      <tr><th>Qté</th><th style="width:30%">Pièce</th><th style="width:27%">Spécification</th><th>Rôle</th></tr>
+      <tr><td class="q">2</td><td>résistance de 100 Ω</td><td><strong>0,1 %</strong>, ≥ 0,25 W</td><td>la résistance de mesure du jig et la référence d'étalonnage de REW : deux pièces distinctes, étiquetées</td></tr>
+      <tr><td class="q">1</td><td>résistance de 100 Ω</td><td>1 %, ≥ 1 W, film métallique</td><td>la résistance de la chaîne GBF + oscilloscope</td></tr>
+      <tr><td class="q">1</td><td>résistance de 33 Ω</td><td>≥ 0,25 W, tolérance libre</td><td>la protection de la sortie casque</td></tr>
+      <tr><td class="q">1</td><td>résistance de 10 Ω</td><td>0,1 % si possible, sinon 1 %</td><td>le dipôle de validation (droite horizontale attendue)</td></tr>
+      <tr><td class="q">1</td><td>condensateur de 100 µF</td><td>électrolytique</td><td>étalon, de 10 à 100 Hz</td></tr>
+      <tr><td class="q">1</td><td>condensateur de 10 µF</td><td>film MKP</td><td>étalon, de 100 Hz à 1 kHz</td></tr>
+      <tr><td class="q">1</td><td>fiche XLR mâle à souder</td><td>ou un cordon XLR à couper</td><td>l'entrée 1 de la carte son</td></tr>
+      <tr><td class="q">2</td><td>fiche jack 6,35 mm</td><td><strong>stéréo (TRS)</strong>, jamais mono</td><td>l'entrée 2, et la sortie casque</td></tr>
+      <tr><td class="q">—</td><td>cordons, pinces crocodile</td><td></td><td>relier le jig au haut-parleur</td></tr>
+      <tr><td class="q">1</td><td>pied à coulisse</td><td>ou emprunté au lycée</td><td>les cotes des évents</td></tr>
+      <tr><td class="q">1</td><td class="petit">en option : une 33 Ω à 1 %</td><td></td><td class="petit">le repli prévu par le livret (A1)</td></tr>
+    </table>
+    <div class="petit" style="margin-top:5px"><strong>Pas maintenant :</strong> le fil des selfs, les condensateurs du filtre,
+      le shunt de 1 Ω et le ballast de 20 W. Ils servent aux étapes suivantes.</div>
+  </div>
+
+  <div class="deux">
+    <div class="carte ok">
+      <div class="etiquette vert">Ce que l'étape doit produire</div>
+      <ul class="cases">
+        <li>une <strong>prédiction de l'accord des évents</strong>, datée et signée avant la première mesure</li>
+        <li>la <strong>porte d'étalonnage</strong> franchie (voir page 2)</li>
+        <li>la courbe Z(f) du <strong>caisson</strong> et celle du <strong>bloc médiums</strong>, exportées</li>
+        <li>la résistance continue Re de chacun, et la contre-mesure à l'oscilloscope</li>
+      </ul>
+    </div>
+    <div class="carte">
+      <div class="etiquette">Combien de temps</div>
+      <p style="margin:0 0 4px">Environ <strong>13 h</strong> de manipulations d'après le livret (5 h 30
+        d'étalonnage, 7 h sur l'enceinte), en séances de 30 min à 3 h, plus la livraison (3 à 10 jours).</p>
+      <div class="etiquette" style="margin-top:6px">En parallèle, à ne pas oublier</div>
+      <ul>
+        <li>demander le <strong>devis du fil émaillé</strong> avant la commande du 15 décembre</li>
+        <li>vérifier le compte SCEI de M. Chevalier (saisie mi-janvier)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 2 ============================ -->
+<div class="page saut">
+  <div class="carte">
+    <h2><span class="n">→</span>La route, dans l'ordre</h2>
+    <table class="route">
+      <tr><th>Manip</th><th>Ce que tu fais</th><th>Où</th><th>Durée</th></tr>
+      <tr><td>0</td><td><strong>Commander</strong> la liste de la page 1, et faire au lycée l'inventaire des appareils
+        (modèles exacts) avec un essai d'export de l'oscilloscope.</td><td class="ou">chez toi, lycée</td><td class="duree">1 h 30 à 2 h</td></tr>
+      <tr><td>B5</td><td><strong>Cotes des deux évents et de la caisse</strong> (diamètre et longueur de chaque évent,
+        dimensions intérieures), puis <strong>prédiction de l'accord f<sub>b</sub></strong> (formule du livret, à la calculatrice,
+        ou je la calcule d'après tes cotes) : écrite, datée, signée. Rien n'est branché.</td><td class="ou">chez toi</td><td class="duree">45 min à 1 h</td></tr>
+      <tr><td>A1</td><td>Mesurer chaque étalon au <strong>multimètre</strong> : leurs vraies valeurs.</td><td class="ou">au multimètre</td><td class="duree">30 min</td></tr>
+      <tr><td>A2</td><td><strong>Construire le jig</strong> (câblage ci-dessous), l'étalonner dans REW (open, short, reference),
+        puis le valider sur la 10 Ω.</td><td class="ou">chez toi</td><td class="duree">1 h 30</td></tr>
+      <tr><td>A3 · A4 · A5</td><td>Le même jig sur les condensateurs (la phase), à deux niveaux à 12 dB d'écart (la linéarité),
+        et jusqu'à 10 Hz (sous la plage garantie de la carte son).</td><td class="ou">chez toi</td><td class="duree">1 h 20 à 1 h 40</td></tr>
+      <tr><td>A6 · A7</td><td>La <strong>deuxième chaîne</strong> (GBF + oscilloscope) sur les mêmes étalons, puis le
+        recoupement des deux chaînes.</td><td class="ou">lycée</td><td class="duree">2 h 15</td></tr>
+      <tr class="porte"><td>PORTE</td><td><strong>On ne branche le haut-parleur que si</strong> les deux chaînes donnent la même chose
+        sur les étalons : écart moyen ≤ 3 % (repli fixé d'avance : 5 %), écart de phase ≤ 3° et E<sub>n</sub> ≤ 2 en chaque point (écart rapporté à l'incertitude, défini en A7).
+        Sinon, on répare la chaîne (tableau de diagnostic de A7).</td><td class="ou">—</td><td class="duree">—</td></tr>
+      <tr><td>B1</td><td>Résistance continue Re du caisson et du bloc médiums, et contrôle du condensateur des pavillons.</td><td class="ou">chez toi</td><td class="duree">30 à 40 min</td></tr>
+      <tr><td>B2</td><td><strong>Z(f) du caisson dans sa caisse</strong> : reconnaissance, test de linéarité, balayage de
+        référence exporté. Lire les deux pics et le creux.</td><td class="ou">chez toi</td><td class="duree">2 h 30 à 3 h</td></tr>
+      <tr><td>B3</td><td><strong>Z(f) du bloc médiums tel qu'il est câblé</strong>, pavillons connectés.</td><td class="ou">chez toi</td><td class="duree">1 h 30</td></tr>
+      <tr><td>B4</td><td>Contre-mesure au GBF + oscilloscope sur le haut-parleur. <span class="ambre">À organiser :</span>
+        emprunter le matériel ou apporter l'enceinte.</td><td class="ou">à voir avec M. Chevalier</td><td class="duree">1 h 30</td></tr>
+    </table>
+    <div class="petit" style="margin-top:4px">Le détail de chaque manip (réglages, tableaux à remplir) est dans le livret
+      <strong>protocole/PROTOCOLE-EXPERIENCES</strong>, groupes A et B.</div>
+  </div>
+
+  <div class="deux">
+    <div class="carte">
+      <h2><span class="n">⚡</span>Le jig (A2)</h2>
+      <svg viewBox="0 0 460 200" font-family="Inter, sans-serif" aria-label="Câblage du jig : la pointe de la sortie casque passe par 33 ohms jusqu'au point A, la résistance de mesure de 100 ohms va de A à B, le haut-parleur de B à C, et le corps du jack casque revient en C ; l'entrée 1 lit A, l'entrée 2 lit B">
+        <g fill="none" stroke="#2b3d48" stroke-width="2.2" stroke-linejoin="round">
+          <path d="M14,50 H62"/><path d="M116,50 H168"/><path d="M262,50 H412 V66"/><path d="M412,124 V168 H14"/>
+        </g>
+        <rect x="62" y="37" width="54" height="26" rx="5" fill="#fff" stroke="#2b3d48" stroke-width="2"/>
+        <text x="89" y="55" text-anchor="middle" font-size="12" font-weight="600" fill="#13222c">33 Ω</text>
+        <rect x="168" y="37" width="94" height="26" rx="5" fill="#fff" stroke="#0d6e87" stroke-width="2.2"/>
+        <text x="215" y="55" text-anchor="middle" font-size="12" font-weight="600" fill="#0d6e87">100 Ω · 0,1 %</text>
+        <rect x="398" y="66" width="28" height="58" rx="5" fill="#fff" stroke="#2e8a52" stroke-width="2.2"/>
+        <text x="390" y="91" text-anchor="end" font-size="11.5" font-weight="600" fill="#13222c">haut-parleur</text>
+        <text x="390" y="105" text-anchor="end" font-size="10.5" fill="#5a6b76">(ou l'étalon)</text>
+        <g fill="#2e8a52"><circle cx="140" cy="50" r="4.5"/><circle cx="300" cy="50" r="4.5"/><circle cx="210" cy="168" r="4.5"/></g>
+        <g font-family="'JetBrains Mono', monospace" font-weight="700" font-size="13" fill="#2e8a52">
+          <text x="140" y="34" text-anchor="middle">A</text><text x="300" y="34" text-anchor="middle">B</text><text x="210" y="190" text-anchor="middle">C</text>
+        </g>
+        <g font-size="10.5" fill="#5a6b76">
+          <text x="14" y="30">casque : pointe</text>
+          <text x="14" y="160">casque : corps</text>
+        </g>
+        <g fill="none" stroke="#2e8a52" stroke-width="1.6" stroke-dasharray="4 3">
+          <path d="M140,55 V112"/><path d="M300,55 V112"/>
+        </g>
+        <g font-size="10.5" fill="#2e8a52" font-weight="600">
+          <text x="140" y="126" text-anchor="middle">entrée 1 (XLR)</text>
+          <text x="140" y="139" text-anchor="middle" font-weight="400">broche 2 → A, 3 → C</text>
+          <text x="300" y="126" text-anchor="middle">entrée 2 (jack TRS)</text>
+          <text x="300" y="139" text-anchor="middle" font-weight="400">pointe → B, bague → C</text>
+        </g>
+      </svg>
+      <ul class="petit" style="margin-top:2px">
+        <li>non raccordés : la bague du jack casque, la broche 1 du XLR, le corps du jack d'entrée 2</li>
+        <li>REW : sortie gauche seule, entrée droite ; étalonnages open, short, puis reference sur la <strong>seconde</strong> 100 Ω</li>
+        <li>pourquoi deux entrées : Z = 100 Ω × V<sub>B</sub> / (V<sub>A</sub> − V<sub>B</sub>), sans supposer le courant constant</li>
+        <li>niveau : 0,30 V au point A pour le premier balayage, puis environ 0,2 V aux bornes au pic</li>
+      </ul>
+    </div>
+    <div>
+      <div class="carte alerte">
+        <div class="etiquette ambre">Réglages et sécurité</div>
+        <ul>
+          <li><strong>48 V coupé</strong> (voyant éteint) avant chaque branchement</li>
+          <li>AIR, INST et DIRECT MONITOR éteints ; <strong>sorties ligne arrière débranchées</strong></li>
+          <li>GAIN 1 au minimum ; GAIN 2 monté (environ +13 dB) jusqu'à égalité des deux voies à 1 dB près,
+            fils ouverts, <strong>puis bloqué</strong> au ruban adhésif</li>
+          <li>tout se fait en petit signal (quelques mA) : la descente à 10 Hz est autorisée</li>
+          <li>avant B4, débrancher le jig carte son de l'enceinte</li>
+        </ul>
+      </div>
+      <div class="carte ok">
+        <div class="etiquette vert">À la fin, tu m'envoies</div>
+        <ul>
+          <li>les exports REW et les fichiers de l'oscilloscope, nommés et datés</li>
+          <li>des photos du montage et les tableaux du livret remplis</li>
+        </ul>
+        <p class="petit" style="margin:4px 0 0">Avant de les dépouiller, je corrige deux points du code repérés à l'audit :
+          la lecture des exports REW et l'ordre des voies de l'oscilloscope.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pied">Tirée de PARCOURS.md (1-B1 à 1-B4) et du livret (groupes A et B) · 25/11/2026 · aucune mesure encore faite</div>
+</div>
+
+</body>
+</html>

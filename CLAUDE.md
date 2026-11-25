@@ -143,6 +143,13 @@ Détail des phases, portes de validation, critères et calendrier :
   original** ; sa valeur se jouera sur la mesure, les décisions datées, un périmètre
   resserré et l'appropriation du noyau de code. Le HTML fait foi ; figures calculées
   sur le modèle `SUB_TYPIQUE_BR` (aucune mesure).
+- **fiches/** — les **fiches de route** par étape, demandées par Thomas le 25/11/2026
+  (« très synthétique, à suivre ») : deux pages A4, style clair de la présentation.
+  `etape-1-mesurer-z.html` (+ PDF) : le but de la phase 1, ce qu'il a, ce que le lycée
+  prête, la liste d'achats de 1-B4, la route B5 → A1…A7 → porte → B1…B4, le jig et la
+  sécurité. **Résumé, pas une source** : le livret et `PARCOURS.md` font foi ; si l'un
+  change, la fiche se met à jour. PDF par impression Chrome (A4, fonds compris), puis
+  `_alleger_pdf.py`.
 
 ## Ce que la v1 lègue à la v2
 
@@ -418,6 +425,9 @@ captures Chrome headless par slide + img2pdf (dossier _pdfbuild/ gitignoré).
 
 ## État actuel (2026-11-15)
 
+- [x] **Présentation du 18/11 faite** : « très bien passée » (Thomas, 25/11/2026). Il
+      attaque la phase 1 : **fiche de route de l'étape 1** écrite le 25/11
+      (`fiches/etape-1-mesurer-z.pdf`, deux pages A4). Rien n'est encore commandé.
 - [x] **Présentation du projet pour le mercredi 18/11/2026** (demande de Thomas du
       15/11) : `presentation-projet.html`, PDF sombre et clair (15 pages, 0,40 Mo
       chacun après `_alleger_pdf.py`, vérifiés page par page) et texte de l'oral.
